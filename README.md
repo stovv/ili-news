@@ -1,18 +1,24 @@
-# ILI News portal
+# ILI News
 
 ## [ILI](https://ili-nnov.ru/) - One of the popular news portals of Nizhny Novgorod
-
-### Powered by [Next.js](https://nextjs.org/) project
 
 
 ## Getting Started
 
-First, run the development server:
+### Development env
+- Change some environment variables to normal functionality  
+  - `SITE_ROOT` - server domain like `http://test.com` default `http://localhost:3000`.
+  - `BACKEND_URL` - url to backend default `http://localhost:1337`
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### Run the development server:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Run shell command
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    ```
+- Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+
+### Powered by [Next.js](https://nextjs.org/)
