@@ -10,16 +10,38 @@ async function getSecurePost(id){
     });
 }
 
-async function fetchCategories(){
-    return api.get('/categories');
+async function fetchCategories(fields = ['id', 'slug', 'updated_at']){
+    return api.ql(`
+        query{
+            categories{
+                ${fields.join(',\n')}
+            }
+        }
+        `);
 }
 
-async function fetchPosts(){
-    return api.get('/posts');
+async function fetchPosts(fields = ['id', 'slug', 'updated_at']){
+    return api.ql(`
+        query{
+            posts{
+                ${fields.join(',\n')}
+            }
+        }
+    `);
+}
+
+async function getPost(id){
+    return api.get(`/posts/${id}`)
+}
+
+async function getCategory(id){
+    return api.get(`/categories/${id}`)
 }
 
 export {
     getSecurePost,
     fetchCategories,
-    fetchPosts
+    fetchPosts,
+    getPost,
+    getCategory
 }
