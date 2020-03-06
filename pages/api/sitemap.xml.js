@@ -25,11 +25,12 @@ export default async (req, res) => {
         // We create a sitemap.xml for categories
         await fetchCategories()
             .then(response=>{
-                response.data.map(category => {
+                var categories = response.data.data.categories;
+                categories.map(category => {
                     smStream.write({
-                        url: `/categories/${category.slug}`,
+                        url: category.slug ? `/categories/${category.slug}` : `/categories/${category.id}`,
                         lastmod: category.updated_at,
-                        changefreq: EnumChangefreq.WEEKLY,
+                        changefreq: category.change_freq ? category.change_freq :EnumChangefreq.WEEKLY,
                     });
                 });
             })
@@ -40,11 +41,25 @@ export default async (req, res) => {
         // We create a sitemap.xml for posts
         await fetchPosts()
             .then(response=>{
-                response.data.map(post => {
+                var posts = response.data.data.posts;
+
+                // map old posts
+                posts.map(post => {
+                    if (post.slug){
+                        smStream.write({
+                            url: `/${post.slug}`,
+                            lastmod: post.updated_at,
+                            changefreq: post.change_freq ? post.change_freq : EnumChangefreq.HOURLY,
+                        });
+                    }
+                });
+
+                // map all posts by id
+                posts.map(post => {
                     smStream.write({
-                        url: `/${post.slug}`,
+                        url: `/post/${post.id}`,
                         lastmod: post.updated_at,
-                        changefreq: EnumChangefreq.HOURLY,
+                        changefreq: post.change_freq ? post.change_freq : EnumChangefreq.HOURLY,
                     });
                 });
             })
@@ -63,6 +78,7 @@ export default async (req, res) => {
         });
     } catch (e) {
         res.statusCode = 521;
+        console.log(e);
         res.end();
     }
 };
