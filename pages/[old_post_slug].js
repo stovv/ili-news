@@ -1,21 +1,37 @@
 import React from 'react';
 import { withRouter } from 'next/router';
-import Error from 'next/error';
+import Error from './_error';
 import { connect } from "react-redux";
-import {fetchPosts, getPost} from '../../api';
+import {fetchPosts, getPost} from '../api';
 
 
 class Post extends React.Component{
-    static async getInitialProps({ query: { post_id }, store, isServer, pathname}) {
-        var current_post = null;
-        await getPost(post_id)
-            .then(response=>{
-                current_post = response.data;
-            })
-            .catch();
+    static async getInitialProps({ query: { old_post_slug }, store, isServer, pathname}) {
+        var post_id = null;
+        await fetchPosts(['slug', 'id'])
+            .then(response => {
+                response.data.data.posts.map(post =>{
+                    if (post.slug === old_post_slug){
+                        post_id = post.id;
+                    }
+                });
 
+            })
+            .catch(reason => {
+                // TODO Add Reason processing
+            });
+
+        var post = null;
+        await getPost(post_id)
+            .then(response => {
+                post = response.data;
+            })
+            .catch(reason=>{
+                console.log(reason)
+                // TODO Add Reason processing
+            });
         //store.dispatch({ type: "FOO", payload: "foo" });
-        return {post : current_post}
+        return {post : post}
     }
 
     render(){
