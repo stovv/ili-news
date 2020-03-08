@@ -7,6 +7,8 @@ export default class Robots extends React.Component {
 
 User-agent: *
 Allow: /*
+Allow: /post/*
+Allow: /category/*
 
 Disallow: /api/*`);
         res.end();
