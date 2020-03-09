@@ -28,7 +28,7 @@ export default async (req, res) => {
                 var categories = response.data.data.categories;
                 categories.map(category => {
                     smStream.write({
-                        url: category.slug ? `/categories/${category.slug}` : `/categories/${category.id}`,
+                        url: `/categories/${category.slug}`,
                         lastmod: category.updated_at,
                         changefreq: category.change_freq ? category.change_freq :EnumChangefreq.WEEKLY,
                     });
