@@ -5,6 +5,7 @@ import IliThemeProvider from '../theme';
 import {createStore} from "redux";
 import {Provider as StoreProvider} from "react-redux";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const reducer = (state = {foo: ''}, action) => {
   switch (action.type) {
