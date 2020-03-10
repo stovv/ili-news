@@ -8,7 +8,7 @@ import LinkTool from "@editorjs/link";
 import ImageTool from "@editorjs/image";
 
 import {getExternalImage, uploadFile} from "../../api";
-import {BACKEND_URL} from '../../constants';
+import {SITE_URL} from '../../constants';
 
 
 export default {
@@ -65,7 +65,7 @@ export default {
                     return {
                       success: 1,
                       file: {
-                        url: `${BACKEND_URL}\\${response.data[0].url}`,
+                        url: `${SITE_URL}\\${response.data[0].url}`,
                       }
                     };
                   });
@@ -77,7 +77,7 @@ export default {
                     return {
                       success: 1,
                       file: {
-                        url: `${BACKEND_URL}\\${response.data[0].url}`,
+                        url: `${SITE_URL}\\${response.data[0].url}`,
                       }
                     };
                   })

@@ -1,5 +1,5 @@
 import api from './connector.react';
-
+import {SITE_URL} from '../constants';
 
 async function getSecurePost(id){
     let token = localStorage.getItem("token") ? localStorage.getItem("token"): "";
@@ -39,10 +39,11 @@ async function getCategory(id){
 }
 
 
-async function uploadFile(file){
+async function uploadFile(file, baseurl=SITE_URL){
     const formData = new FormData();
     formData.append('files', file);
-    return api.post('/upload', formData, {
+
+    return api.simple_post(`${baseurl}/upload`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
     })
 }
