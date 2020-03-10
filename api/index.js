@@ -38,10 +38,31 @@ async function getCategory(id){
     return api.get(`/categories/${id}`)
 }
 
+
+async function uploadFile(file){
+    const formData = new FormData();
+    formData.append('files', file);
+    return api.post('/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+    })
+}
+
+async function getExternalImage(imageUrl, imageName="externalImage.jpg") {
+    const response = await api.simple_get(imageUrl, {
+      responseType: 'blob',
+    });
+    const mimeType = response.headers['content-type'];
+    const imageFile = new File([response.data], imageName, { type: mimeType });
+    return imageFile;
+  }
+
+
 export {
     getSecurePost,
     fetchCategories,
     fetchPosts,
     getPost,
-    getCategory
+    getCategory,
+    uploadFile,
+    getExternalImage
 }

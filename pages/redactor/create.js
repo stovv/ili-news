@@ -1,14 +1,12 @@
 import dynamic from 'next/dynamic'
+const RedactorSSRSafe = dynamic(import('../../components/redactor/redactor.react'), {
+    ssr: false
+})
 
-const DynamicCreate = dynamic(
-    () => import('../../components/redactor/redactor.react'),
-    { ssr: false }
-)
-
-function create(){
-    return (
-        <DynamicCreate/>
+function Create(){
+    return(
+        <RedactorSSRSafe/>
     )
 }
 
-export default create;
+export default Create;

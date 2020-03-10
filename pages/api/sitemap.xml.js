@@ -1,7 +1,8 @@
 // Import built-in types for API routes
 import { SitemapStream, streamToPromise, EnumChangefreq } from 'sitemap';
 import { createGzip } from 'zlib';
-import {fetchPosts, fetchCategories} from '../../api';
+import { fetchPosts, fetchCategories } from '../../api';
+import { SITE_URL}  from '../../constants';
 
 export default async (req, res) => {
     if (!res) return {};
@@ -13,7 +14,7 @@ export default async (req, res) => {
         // A Transform for turning a Readable stream of either SitemapItemOptions or url strings into a Sitemap.
         // The readable stream it transforms must be in object mode.
         const smStream = new SitemapStream({
-            hostname: process.env.SITE_ROOT || 'http://localhost:3000',
+            hostname: SITE_URL,
         });
 
         const pipeline = smStream.pipe(createGzip());
