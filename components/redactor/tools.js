@@ -27,7 +27,7 @@ export default {
     },
     list: {
         class: List,
-        inlineToolbar: true
+        inlineToolbar: false
     },
     embed: {
         class: Embed,
