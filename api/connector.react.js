@@ -15,7 +15,8 @@ const api = {
     post: base_api.post,
     get: base_api.get,
     put: base_api.put, 
-    simple_get: axios.get
+    simple_get: axios.get,
+    simple_post: axios.post
 }
 
 export default api;
