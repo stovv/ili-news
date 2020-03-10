@@ -1,7 +1,8 @@
 import axios from 'axios';
+import {BACKEND_URL} from '../constants';
 
 const base_api = axios.create({
-    baseURL: process.env.BACKEND_URL || 'http://localhost:1337'
+    baseURL: BACKEND_URL
 });
 
 const api = {
@@ -13,7 +14,8 @@ const api = {
     },
     post: base_api.post,
     get: base_api.get,
-    put: base_api.put
+    put: base_api.put, 
+    simple_get: axios.get
 }
 
 export default api;

@@ -912,6 +912,11 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
+"@editorjs/checklist@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@editorjs/checklist/-/checklist-1.1.0.tgz#1c5a083a48852f3d86d6086d2e1a6057ac5b0429"
+  integrity sha512-rE0weE4iHoN6NM9GpP0XMiighGGrSyAkWWtmkRmn/2vLot3mXrh15KGaRJIP17HOW62yrOy4zJdzLEL+JyNdOg==
+
 "@editorjs/editorjs@^2.16.1":
   version "2.16.1"
   resolved "https://registry.yarnpkg.com/@editorjs/editorjs/-/editorjs-2.16.1.tgz#41a2707fc126518dca513a09aa207aa8b6d9a65c"
@@ -920,10 +925,20 @@
     codex-notifier "^1.1.2"
     codex-tooltip "^1.0.0"
 
+"@editorjs/embed@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@editorjs/embed/-/embed-2.2.1.tgz#90dbcac6e163d20c665fcc1a218d4ba1db80e2f1"
+  integrity sha512-jjhgJf+LkYr8UfsQPavfukCq0+SIkz1MD8vmWkN29uU2zItWsScmfRis3YoLZJ7Rrz+yDeS8GyUjxTg2iQa0Vg==
+
 "@editorjs/header@^2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@editorjs/header/-/header-2.4.0.tgz#0ac14bf68e4a01305bbb20c8ffb754a75a3d374a"
   integrity sha512-gXq7LkMWWno0c6vYDIROn0vqGnbQ/sGENljdtTWSBefCUqzKlqbQaeN4x4IqqvxCvOiH3RtdjJvfv92/ziIxmg==
+
+"@editorjs/image@^2.3.3":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@editorjs/image/-/image-2.3.3.tgz#5bd0e46ab038853948c5e5df9b049cce53f2d998"
+  integrity sha512-IYPCGFVRYyR37m9OeoX4I5SPlMPzHtEgjHzOTeZoU749CI2a7FYVBcMT2j5xoyfDtNSjWT9LAlvPJULv3CFxgg==
 
 "@editorjs/link@^2.1.3":
   version "2.1.3"
@@ -937,6 +952,11 @@
   resolved "https://registry.yarnpkg.com/@editorjs/list/-/list-1.4.0.tgz#e92459a8ac2305bc4385245e329c8b5c8437456a"
   integrity sha512-iYDXGbVXvsAJbSxbjFMP4p7kS1zhQyNDqVNzkfMRhItulzKYlOMlFjTIGHqu5SxPy6NrcckhVFaWdfGDn5/gEA==
 
+"@editorjs/marker@^1.2.0":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@editorjs/marker/-/marker-1.2.2.tgz#d9261a257436bf70179c0fa1e766ab85c823c96b"
+  integrity sha512-BN/IHbVKKahGnMAiBOV5U7XUjfF6JkIkTZ6qNLxtTr7PUPM8UsJV8G8pyll9CX+XRUYYZyokA2kEBHTS4vUyyw==
+
 "@editorjs/paragraph@^2.6.1":
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/@editorjs/paragraph/-/paragraph-2.6.1.tgz#efd21da9912686024abd96eedd0c2258193f7d31"
@@ -946,6 +966,11 @@
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@editorjs/quote/-/quote-2.3.0.tgz#5585cf93a87a1fd4e0c72ba08c90eb8eb06b518d"
   integrity sha512-B+4xEXMWiZki2EQDTJRnzMK8hNwpf7vGJtYIxfE4rOuXi5mke3xkKhrD7yPXcZYucVtCnfCVPOmFaQ3ZgiG2Qw==
+
+"@editorjs/raw@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@editorjs/raw/-/raw-2.1.1.tgz#00cea181d8ce1a2a082352c6644090660c8237c7"
+  integrity sha512-So+Y6fLIO7+JGRa/tOsHho58hASYt1m7lDM/+0fehs+LMdYlloLmj68X2q7Wxk60R8aCrUscXt/fOggcg7giPQ==
 
 "@emotion/is-prop-valid@^0.8.3":
   version "0.8.6"
@@ -1498,7 +1523,7 @@ babel-plugin-transform-react-remove-prop-types@0.4.24:
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.4.24.tgz#f2edaf9b4c6a5fbe5c1d678bfb531078c1555f3a"
   integrity sha512-eqj0hVcJUR57/Ug2zE1Yswsw4LhuqqHhD+8v120T1cl3kjg76QwtyBrdIk4WVwK+lAhBJVYCd/v+4nc4y+8JsA==
 
-babel-runtime@^6.26.0:
+babel-runtime@6.x.x, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
@@ -5401,6 +5426,13 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
+react-no-ssr@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-no-ssr/-/react-no-ssr-1.1.0.tgz#313b48d2e26020f969ed98e472f10481604e3cc8"
+  integrity sha1-MTtI0uJgIPlp7ZjkcvEEgWBOPMg=
+  dependencies:
+    babel-runtime "6.x.x"
 
 react-overlays@^2.1.0:
   version "2.1.1"

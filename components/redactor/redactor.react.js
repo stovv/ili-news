@@ -1,9 +1,9 @@
 import React from 'react';
 import EditorJs from 'react-editor-js';
 import tools from './tools';
-import inital_data from './inital_data';
+import initial_data from './initial_data';
 
-import {Container, Row, Col} from "react-bootstrap";
+import {Container} from "react-bootstrap";
 
 
 
@@ -11,8 +11,13 @@ class Redactor extends React.Component {
     render() {
         return (
             <Container>
-                        <h2>Use Redactor Tovarish!</h2>
-                        <EditorJs data={inital_data} tools={tools} />;
+                <h2>Use Redactor Tovarish!</h2>
+                <EditorJs 
+                    data={initial_data} 
+                    tools={tools} 
+                    hideToolbar={false}
+                    enableReInitialize
+                />;
             </Container>
         );
     }

@@ -95,5 +95,5 @@ export default {
         }
     },
     ],
-    version: "2.12.4"
+    version: "2.16.1"
 }
