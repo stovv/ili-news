@@ -65,7 +65,7 @@ export default {
                     return {
                       success: 1,
                       file: {
-                        url: `${SITE_URL}\\${response.data[0].url}`,
+                        url: `${SITE_URL}/${response.data[0].url}`,
                       }
                     };
                   });
@@ -77,7 +77,7 @@ export default {
                     return {
                       success: 1,
                       file: {
-                        url: `${SITE_URL}\\${response.data[0].url}`,
+                        url: `${SITE_URL}/${response.data[0].url}`,
                       }
                     };
                   })
