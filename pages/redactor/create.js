@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-const RedactorSSRSafe = dynamic(import('../../components/redactor/redactor.react'), {
+const RedactorSSRSafe = dynamic(import('../../components/redactor'), {
     ssr: false
 })
 
