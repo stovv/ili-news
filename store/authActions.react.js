@@ -16,14 +16,14 @@ const signOutAction = {
 
 export function loginAction(loginData){
    return async dispatch => {
-        dispatch(signOutAction());
+        dispatch(signOutAction);
         await login(loginData.login, loginData.password)
             .then(response=>{
                 dispatch(signInAction(response.data));
             })
             .catch(reason=>{
                 console.log('ERROR', reason);
-                dispatch(signOutAction());
+                dispatch(signOutAction);
             })
    };
 };

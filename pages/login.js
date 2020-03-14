@@ -6,6 +6,11 @@ import {loginAction} from "../store/authActions.react";
 
 
 class LoginPage extends React.Component {
+    constructor(props){
+        super(props);
+        this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(this.props.isLoggedIn === true){
             Router.push('/');
