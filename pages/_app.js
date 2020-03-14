@@ -1,30 +1,18 @@
-import * as React from 'react';
-import App from 'next/app';
-import withRedux from "next-redux-wrapper";
+import App, {Container} from 'next/app';
+import React from 'react';
 import IliThemeProvider from '../theme';
-import {createStore} from "redux";
+
+import { makeStore } from "../store";
+import withRedux from "next-redux-wrapper";
 import {Provider as StoreProvider} from "react-redux";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const reducer = (state = {foo: ''}, action) => {
-  switch (action.type) {
-      case 'FOO':
-          return {...state, foo: action.payload};
-      default:
-          return state
-  }
-};
-
-const makeStore = (initialState, options) => {
-  return createStore(reducer, initialState);
-};
 
 class IliApp extends App {
 
   static async getInitialProps({Component, ctx}) {
       // we can dispatch from here too
-      ctx.store.dispatch({type: 'FOO', payload: 'foo'});
       const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
       return {pageProps};
 

@@ -6,7 +6,7 @@ import {fetchPosts, getPost} from '../api';
 
 
 class Post extends React.Component{
-    static async getInitialProps({ query: { old_post_slug }, store, isServer, pathname}) {
+    static async getInitialProps({ query: { old_post_slug }}) {
         var post_id = null;
         await fetchPosts(['slug', 'id'])
             .then(response => {
@@ -30,17 +30,22 @@ class Post extends React.Component{
                 console.log(reason)
                 // TODO Add Reason processing
             });
-        //store.dispatch({ type: "FOO", payload: "foo" });
         return {post : post}
     }
 
     render(){
-        //console.log(this.props);
         if (this.props.post === null){
             return <Error statusCode={404}/>;
         }
+        // TODO Use this.props.user for head component
         return (<p>{this.props.post.content}</p>);
     }
 }
 
-export default connect()(withRouter(Post));
+function mapStateToProps(state){
+    return {
+        user: state.auth.user
+    }
+}
+
+export default connect(mapStateToProps)(withRouter(Post));

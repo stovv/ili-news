@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const WhiteListName = styled.input`
+export const WhiteListName = styled.input`
     margin: 1em 0 0 0;
     padding: 0 0 0 4em;
     line-height: 1.5em;
@@ -13,5 +13,3 @@ const WhiteListName = styled.input`
         -webkit-text-fill-color: rgba(55, 53, 47, 0.2);
     }
 `;
-
-export {WhiteListName}

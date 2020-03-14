@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {BACKEND_URL} from '../constants';
+import {BACKEND_URL} from '../tools/constants';
 
 const base_api = axios.create({
     baseURL: BACKEND_URL
