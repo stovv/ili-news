@@ -23,7 +23,7 @@ if (typeof localStorage !== "undefined") {
 }
 
 
-const authReducer = (state = initialState, action) => {
+function authReducer(state, action){
    switch (action.type) {
        case SING_OUT:
            removeCookie("auth");
@@ -40,7 +40,7 @@ const authReducer = (state = initialState, action) => {
            setCookie("auth", authObj);
            return authObj;
        default:
-           return state;
+           return initialState;
    }
 };
 
