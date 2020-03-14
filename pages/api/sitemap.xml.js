@@ -2,7 +2,7 @@
 import { SitemapStream, streamToPromise, EnumChangefreq } from 'sitemap';
 import { createGzip } from 'zlib';
 import { fetchPosts, fetchCategories } from '../../api';
-import { SITE_URL}  from '../../constants';
+import {SITE_URL}  from '../../tools/constants';
 
 export default async (req, res) => {
     if (!res) return {};

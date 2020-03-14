@@ -1,5 +1,5 @@
 import api from './connector.react';
-import {SITE_URL} from '../constants';
+import {SITE_URL} from '../tools/constants';
 
 async function getSecurePost(id){
     let token = localStorage.getItem("token") ? localStorage.getItem("token"): "";
@@ -55,7 +55,18 @@ async function getExternalImage(imageUrl, imageName="externalImage.jpg") {
     const mimeType = response.headers['content-type'];
     const imageFile = new File([response.data], imageName, { type: mimeType });
     return imageFile;
-  }
+}
+
+async function login(user, password, baseurl=SITE_URL){
+    return api.simple_post(`${baseurl}/auth/local`, {
+            identifier: user,
+            password: password,
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+}
 
 
 export {
@@ -65,5 +76,6 @@ export {
     getPost,
     getCategory,
     uploadFile,
-    getExternalImage
+    getExternalImage,
+    login
 }

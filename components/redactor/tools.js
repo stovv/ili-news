@@ -8,7 +8,7 @@ import LinkTool from "@editorjs/link";
 import ImageTool from "@editorjs/image";
 
 import {getExternalImage, uploadFile} from "../../api";
-import {SITE_URL} from '../../constants';
+import {SITE_URL} from '../../tools/constants';
 
 
 export default {
