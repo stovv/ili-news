@@ -4,7 +4,7 @@ import tools from './tools';
 import initial_data from './initial_data';
 
 import {Container} from "react-bootstrap";
-import {WhiteListName} from '../forms/input.react';
+import {Inputs} from '../forms';
 
 
 
@@ -13,30 +13,37 @@ class Redactor extends React.Component {
         super(props);
         this.state = {
             post_name: "",
-            content : {}
+            content : {},
         }
         this.handleSave = this.handleSave.bind(this);
     }
 
-    handleSave(event) {
-        console.log(event);
+    handleSave() {
+        this.editorInstance.save()
+            .then(outputData => {
+                this.setState({content: outputData})
+            }).catch(reason=>{
+                console.log('Error saving:', reason);
+            })
     }
       
+    componentDidMount() {
+        this.editorInstance;
+    }
 
     render() {
-        console.log(this.state);
         return (
             <Container>
-                <WhiteListName 
+                <Inputs.WhiteListName 
                     placeholder="Великолепное название поста..."
                     onChange={event=>this.setState({post_name: event.target.value})}
                 />
                 <EditorJs 
                     data={initial_data} 
-                    tools={tools} 
+                    tools={tools}
+                    instanceRef={instance => this.editorInstance = instance}
                     hideToolbar={false}
-                    onChange={event => this.handleSave(event)}
-                    enableReInitialize
+                    onChange={()=>this.handleSave()}
                 />;
             </Container>
         );

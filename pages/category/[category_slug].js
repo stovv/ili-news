@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'next/router';
+import {connect} from 'react-redux';
 import Error from '../_error';
 import {fetchCategories, getCategory} from '../../api';
 
@@ -34,6 +35,7 @@ class Category extends React.Component {
     }
 
     render() {
+        // TODO Use this.props.user for head component
         if (this.props.category === null){
             return (<Error statusCode={404}/>);
         }
@@ -41,4 +43,10 @@ class Category extends React.Component {
     }
 }
 
-export default withRouter(Category);
+function mapStateToProps(state){
+    return {
+        user: state.auth.user
+    }
+}
+
+export default connect(mapStateToProps)(withRouter(Category));

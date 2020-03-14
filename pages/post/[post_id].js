@@ -14,9 +14,11 @@ class Post extends React.Component{
             .then(response=>{
                 current_post = response.data;
             })
-            .catch();
+            .catch(reason=>{
+                //TODO Add Toast
+                console.log(reason);
+            });
 
-        //store.dispatch({ type: "FOO", payload: "foo" });
         return {post : current_post, amp: amp}
     }
 
@@ -24,10 +26,16 @@ class Post extends React.Component{
         if (this.props.post === null){
             return <Error statusCode={404}/>;
         }
-        //console.log(this.props)
         // TODO AMP Checking
+        // TODO Use this.props.user for head component
         return (<p>{this.props.post.content} {this.props.amp}</p>);
     }
 }
 
-export default connect()(withRouter(Post));
+function mapStateToProps(state){
+    return {
+        user: state.auth.user
+    }
+}
+
+export default connect(mapStateToProps)(withRouter(Post));
