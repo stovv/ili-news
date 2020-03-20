@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
-export const WhiteListName = styled.input`
-    margin: 1em 0 0 0;
+export const BlankInput = styled.input`
+    font-family: 'M PLUS 1p', sans-serif;
+    margin: 0;
     padding: 0 0 0 4em;
     line-height: 1.5em;
     outline: none;

@@ -1,5 +1,5 @@
 const light = {
-    bg: {
+    colors: {
       primary: '#eff0f5',
       secondary: '#ffffff',
       inset: '#e2e4e8',
@@ -17,7 +17,7 @@ const light = {
   }
   
   const dark = {
-    bg: {
+    colors: {
       primary: '#050505',
       secondary: '#111111',
       inset: '#111111',

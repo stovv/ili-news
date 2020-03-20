@@ -11,13 +11,14 @@ if (typeof localStorage !== "undefined") {
     } else {
         initialState = {
             isLoggedIn: false,
-            user: {}
+            user_id: null,
+            jsw: ""
         }
     }
 } else {
     initialState = {
         isLoggedIn: false,
-        user: {},
+        user_id: null,
         jwt: ""
     };
 }
@@ -35,7 +36,7 @@ function authReducer(state, action){
            const authObj = {
                isLoggedIn: true,
                jwt: action.payload.jwt,
-               user: action.payload.user
+               user_id: action.payload.user.id
            };
            setCookie("auth", authObj);
            return authObj;

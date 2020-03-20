@@ -6,8 +6,8 @@ import styled from 'styled-components';
 class PleaseAuth extends Component {
     render() {
         const Center = styled.div`
-        margin: 40vh 44vw;
-       `
+                        margin: 40vh 44vw;
+                    `;
 
         return (
             <Center>
