@@ -1,7 +1,7 @@
 import React from 'react';
 import Router from 'next/router';
 import {connect} from 'react-redux'
-import {LoginForm} from '../components/forms';
+import {LoginForm} from '../components';
 import {loginAction} from "../store/authActions.react";
 
 
