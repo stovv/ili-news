@@ -10,7 +10,9 @@ Allow: /*
 Allow: /post/*
 Allow: /category/*
 
-Disallow: /api/*`);
+Disallow: /api/*
+Disallow: /smisol
+Disallow: /smisol/*`);
         res.end();
     }
 }

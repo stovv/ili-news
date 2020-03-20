@@ -1,5 +1,4 @@
 import api from './connector.react';
-import {SITE_URL} from '../tools/constants';
 
 async function getSecurePost(id){
     let token = localStorage.getItem("token") ? localStorage.getItem("token"): "";
@@ -39,11 +38,11 @@ async function getCategory(id){
 }
 
 
-async function uploadFile(file, baseurl=SITE_URL){
+async function uploadFile(file){
     const formData = new FormData();
     formData.append('files', file);
 
-    return api.simple_post(`${baseurl}/upload`, formData, {
+    return api.post('/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
     })
 }
@@ -57,25 +56,61 @@ async function getExternalImage(imageUrl, imageName="externalImage.jpg") {
     return imageFile;
 }
 
-async function login(user, password, baseurl=SITE_URL){
-    return api.simple_post(`${baseurl}/auth/local`, {
-            identifier: user,
-            password: password,
-        }, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+async function login(user, password){
+    return api.post('/auth/local', {
+        identifier: user,
+        password: password,
+    }, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
 }
 
 
+async function me(jwt, user_id){
+    return api.get(`/users/${user_id}`,{
+        headers: {
+            "Authorization": "Bearer " + jwt
+        }
+    });
+}
+
+async function create_draft(jwt, data){
+    return api.post("/drafts",data,{ 
+        headers: { "Authorization": "Bearer " + jwt}
+    });
+}
+
+async function update_draft(jwt, id, data){
+    return api.put(`/drafts/${id}`,data,{ 
+        headers: { "Authorization": "Bearer " + jwt}
+    });
+}
+
+async function get_draft(jwt, id){
+    return api.get(`/drafts/${id}`,{ 
+        headers: { "Authorization": "Bearer " + jwt}
+    });
+}
+
+async function update_user(jwt, user_id, data){
+    return api.put(`/users/${user_id}`, data, {
+        headers: { "Authorization": "Bearer " + jwt}
+    });
+}
+
 export {
-    getSecurePost,
-    fetchCategories,
-    fetchPosts,
     getPost,
     getCategory,
     uploadFile,
     getExternalImage,
-    login
+    login,
+    me,
+    create_draft,
+    fetchCategories,
+    fetchPosts,
+    update_user,
+    update_draft,
+    get_draft
 }
