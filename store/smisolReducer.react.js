@@ -2,7 +2,7 @@ import {GET_DRAFTS, OPEN_DRAFT, UPDATE_DRAFT, CLOSE_DRAFT} from "../tools/consta
 
 
 let initialState = {
-    draft: {},
+    draft: null,
     drafts: {}
 }
 
@@ -18,6 +18,7 @@ function smisolReducer(state, action){
         case GET_DRAFTS:
             const getObj = {
                 ...state,
+                draft: null,
                 drafts: action.payload
             };
             sessionStorage.setItem("smisol", JSON.stringify(getObj));

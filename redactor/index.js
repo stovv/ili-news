@@ -6,12 +6,11 @@ import Head from 'next/head';
 import tools from './tools';
 import initial_data from './initial_data';
 import toaster from 'toasted-notes';
+import {Flex, Box} from 'rebass';
 
 import {
-    Containers,
     Inputs,
     Buttons,
-    EmptyHeader,
     BlackToast
 } from "../components";
 
@@ -24,7 +23,7 @@ class Redactor extends React.Component {
         this.state = {
             in_save: false,
             in_editor_save: false,
-            label: props.draft.label ? props.draft.label : undefined,
+            label: props.draft.title ? props.draft.title : undefined,
             initial_content: props.draft.blocks ? props.draft.blocks : initial_data
         }
         this.autosave = this.autosave.bind(this);
@@ -52,7 +51,7 @@ class Redactor extends React.Component {
             }
             if (this.state.in_save){
                 this.props.dispatch(updateDraft(this.props.jwt, this.props.draft.id, {
-                    label: this.state.label
+                    title: this.state.label
                 }
                 )).then(response=>{
                         this.setState({in_save: false});
@@ -72,6 +71,7 @@ class Redactor extends React.Component {
       
     componentDidMount() {
         this.autosave();
+        document.addEventListener("keydown", this.handleKeyDown.bind(this));
     }
 
     handleKeyDown(event) {
@@ -79,15 +79,11 @@ class Redactor extends React.Component {
             event.preventDefault();
             toaster.notify(({ onClose }) => (
                 <BlackToast onClose={onClose}>
-                    🚀 Все сохраняется автоматически 😊
+                    🚀 Все сохраняется автоматически 
                 </BlackToast>
               ), { position: "bottom"}
             );
         }
-    }
-
-    componentWillMount(){
-        document.addEventListener("keydown", this.handleKeyDown.bind(this));
     }
 
     componentWillUnmount(){
@@ -104,15 +100,30 @@ class Redactor extends React.Component {
                     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
                     crossOrigin="anonymous"/>
            </Head>
-            <EmptyHeader>
-                <Inputs.BlankInput fixed
-                        placeholder="Великолепное название..."
-                        onChange={event => this.setState({in_save: true, label: event.target.value})}
-                        defaultValue={this.state.label}
-                />
-                <Buttons.SimpleButton outline>Предосмотр</Buttons.SimpleButton>
-            </EmptyHeader>
-            <Containers.SimpleContainer>
+           
+            <Box mx='auto' sx={{
+                maxWidth: 1440,
+                mx: 'auto',
+                px: 3,
+            }}>
+                <Flex>
+                    <Box width={[5/6, 5/9, 8/10]}>
+                        <Inputs.BlankInput fixed
+                                    placeholder="Великолепное название..."
+                                    onChange={event => this.setState({in_save: true, label: event.target.value})}
+                                    defaultValue={this.state.label}
+                        />
+                    </Box>
+                    <Box width={[1/6, 4/9, 2/10]} py="1%" ml={20}>
+                        <Buttons.SimpleButton outline>Предосмотр</Buttons.SimpleButton>
+                    </Box>
+                </Flex>
+            </Box>
+            <Box sx={{
+                    maxWidth: 1000,
+                    mx: 'auto',
+                    px: 3,
+                }}>
                 <EditorJs 
                     data={this.state.initial_content}
                     tools={tools}
@@ -120,7 +131,7 @@ class Redactor extends React.Component {
                     hideToolbar={false}
                     onChange={()=>this.setState({in_editor_save : true})}
                 />
-            </Containers.SimpleContainer>
+            </Box>
             </>
         );
     }

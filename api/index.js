@@ -19,6 +19,26 @@ async function fetchCategories(fields = ['id', 'slug', 'updated_at']){
         `);
 }
 
+async function fetchTop(){
+    return api.ql(`
+        query{
+            tops{
+                post{
+                    id,
+                    title,
+                    cover{
+                        url
+                    },
+                    tag{
+                        name,
+                        color
+                    }
+                }
+            }
+        }
+        `);
+}
+
 async function fetchPosts(fields = ['id', 'slug', 'updated_at']){
     return api.ql(`
         query{
@@ -100,6 +120,7 @@ async function update_user(jwt, user_id, data){
     });
 }
 
+
 export {
     getPost,
     getCategory,
@@ -110,6 +131,7 @@ export {
     create_draft,
     fetchCategories,
     fetchPosts,
+    fetchTop,
     update_user,
     update_draft,
     get_draft

@@ -16,8 +16,13 @@ class Drafts extends React.Component {
     }
 
     handleNewDraft(){
-        this.props.dispatch(createNewDraft(this.props.jwt, this.props.user_id));
-        Router.push('/smisol/create');
+        this.props.dispatch(createNewDraft(this.props.jwt, this.props.user_id))
+            .then(response=>{
+                Router.push('/smisol/create');
+            })
+            .catch(reason=>{
+                console.log("REASON", reason);
+            });
     }
 
     render(){
