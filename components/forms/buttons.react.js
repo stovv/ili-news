@@ -10,7 +10,7 @@ export const SimpleButton = styled.button`
     border-radius: 5px;
     display: inline-block;
     transition: all 0.4s ease 0s;
-    margin: 0 20px;
+    width: 100%;
     :hover {
         color: ${props => props.outline ? "#ffffff" : props.theme.colors.primary};
         background: ${props => props.outline ? props.theme.colors.primary : "#ffffff"};

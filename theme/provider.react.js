@@ -16,7 +16,7 @@ export default class IliThemeProvider extends React.Component {
   }
 
   render() {
-    const theme = true ? darkTheme : lightTheme;
+    const theme = false ? darkTheme : lightTheme;
 
     const body = (
       <ThemeProvider theme={theme}>{this.props.children}</ThemeProvider>

@@ -62,7 +62,7 @@ export function openDraft(jwt, draft_id){
                 dispatch(openDraftAction(response.data));
             })
             .catch(reason=>{
-                console.log("TEST");
+                console.log("REASON", reason);
             });
     };
 }
@@ -75,7 +75,7 @@ export function updateDraft(jwt, draft_id, data){
                 dispatch(updateDraftAction(response.data));
             })
             .catch(reason=>{
-                console.log("TEST");
+                console.log("REASON", reason);
             });
     };
 }

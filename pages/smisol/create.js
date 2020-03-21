@@ -6,13 +6,13 @@ import {PleaseAuth} from '../../components';
 class Create extends React.Component {
 
     shouldComponentUpdate(){
-        return false;
+        return this.props.draft == null;
     }
 
     render(){
         let RedactorSSRSafe = dynamic(import('../../redactor'), {
             ssr: false
-        })
+        });
 
         if (!this.props.isLoggedIn){
             return (<PleaseAuth/>);

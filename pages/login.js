@@ -13,7 +13,7 @@ class LoginPage extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(this.props.isLoggedIn === true){
-            Router.push('/');
+            Router.back();
         }
     }
 

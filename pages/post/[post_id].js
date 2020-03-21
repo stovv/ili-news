@@ -2,8 +2,7 @@ import React from 'react';
 import { withRouter } from 'next/router';
 import Error from 'next/error';
 import { connect } from "react-redux";
-import {fetchPosts, getPost} from '../../api';
-import { useAmp } from 'next/amp';
+import {getPost} from '../../api';
 
 export const config = { amp: 'hybrid' };
 
@@ -23,12 +22,13 @@ class Post extends React.Component{
     }
 
     render(){
+        const {post, amp} = this.props;
         if (this.props.post === null){
             return <Error statusCode={404}/>;
         }
         // TODO AMP Checking
         // TODO Use this.props.user for head component
-        return (<p>{this.props.post.content} {this.props.amp}</p>);
+        return (<p>{post.title} {amp}</p>);
     }
 }
 

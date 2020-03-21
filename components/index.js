@@ -9,9 +9,11 @@ import DotLoader from './loaders/dotLoader.react';
 import HeaderPreLoader from './loaders/headerPreloader.react';
 
 // useful components
-import * as Containers from './containers.react';
 import EmptyHeader from './headers/emptyHeader.react';
+import Header from './headers/header.react';
 
+import Tag from './tag.react';
+import TopCard from './cards/topCard.react.js';
 import BlackToast from './toasts/blackToast.react';
 
 export {
@@ -21,7 +23,9 @@ export {
     Buttons,
     DotLoader,
     HeaderPreLoader,
-    Containers,
     EmptyHeader,
-    BlackToast
+    Header,
+    BlackToast,
+    Tag,
+    TopCard
 }
