@@ -8,10 +8,10 @@ const TagBox = styled.div`
 `;
 
 const TagTitle = styled.div`
-  font-family: Helvetica;
+  font-family: ${props=>props.theme.fontFamily};
   font-size: 16px;
   font-weight: bold;
-  text-decoration: lowercase;
+  text-transform: lowercase;
   color: #ffffff;
 `;
 

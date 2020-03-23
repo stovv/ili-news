@@ -12,11 +12,11 @@ class Drafts extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(getDrafts(this.props.jwt, this.props.user_id));
+        this.props.dispatch(getDrafts(this.props.user_id));
     }
 
     handleNewDraft(){
-        this.props.dispatch(createNewDraft(this.props.jwt, this.props.user_id))
+        this.props.dispatch(createNewDraft(this.props.user_id))
             .then(response=>{
                 Router.push('/smisol/create');
             })
@@ -38,7 +38,6 @@ class Drafts extends React.Component {
 function mapStateToProps(state) {
     return {
         user_id: state.auth.user_id,
-        jwt: state.auth.jwt,
         isLoggedIn: state.auth.isLoggedIn,
         drafts: state.smisol.drafts
     };

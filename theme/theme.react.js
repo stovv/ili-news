@@ -47,11 +47,12 @@ const light = {
     ],
     fontWeights: {
       body: 400,
-      subheading: 500,
+      medium: 500,
       link: 600,
       bold: 700,
       heading: 800,
     },
+    fontFamily: "Lato",
     lineHeights: {
       body: 1.5,
       heading: 1.3,

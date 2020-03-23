@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import styled, {withTheme} from 'styled-components';
 import {Flex, Box } from 'rebass';
 
@@ -7,8 +8,8 @@ import {
 } from '../../assets';
 
 
-const MenuLink = styled.a`
-  font-family: Helvetica;
+const MenuLink = styled.text`
+  font-family: ${props=>props.theme.fontFamily};
   font-size: ${props=> props.theme.fontSizes[3]};
   text-decoration: none;
   text-transform: lowercase;
@@ -16,6 +17,7 @@ const MenuLink = styled.a`
   :hover{
     color: ${props=> props.theme.text.hover};
   }
+  cursor:pointer;
   border-bottom: ${props => props.selected ? `4px solid ${props.theme.colors.primary}` : "none"};
 `;
 
@@ -29,9 +31,9 @@ class Header extends React.Component {
             <Flex bg={this.props.theme.colors.secondary}>
                 <Box width={2/8}>
                     <Box width="80px" height="80px" ml="20%">
-                        <a href="/">
-                            <Logo width="90%" primary={this.props.theme.colors.primary} background={this.props.theme.colors.secondary}/>
-                        </a>
+                        <Link href="/">
+                            <a><Logo width="90%" primary={this.props.theme.colors.primary} background={this.props.theme.colors.secondary}/></a>
+                        </Link>
                     </Box>
                 </Box>
                 
@@ -41,9 +43,11 @@ class Header extends React.Component {
                         return (
                             <React.Fragment key={item.slug}>
                             <Box mr={index < this.props.categories.length -1 ? "80px" : 0}>
-                                <MenuLink href={`/category/${item.slug}`} selected={this.route === `/category/${item.slug}`}>
-                                    {item.title}
-                                </MenuLink>
+                                <Link href={`/category/${item.slug}`}>
+                                    <MenuLink  selected={this.route === `/category/${item.slug}`}>
+                                        {item.title}
+                                    </MenuLink>
+                                </Link>
                             </Box>
                             </React.Fragment>
                         )})

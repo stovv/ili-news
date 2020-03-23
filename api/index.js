@@ -1,10 +1,19 @@
 import api from './connector.react';
+import {getCookie} from '../tools/cookie.react';
 
-async function getSecurePost(id){
+function getJwt(){
+    var auth = getCookie('auth');
+    if (auth) {
+        auth = JSON.parse(decodeURIComponent(auth));
+        return auth.jwt ? auth.jwt : null;
+    }else return null;
+}
+
+async function getSecurePost(id, jwt){
     let token = localStorage.getItem("token") ? localStorage.getItem("token"): "";
     return api.get(`/posts/${id}`, {
         headers: {
-            "Authorization": "Bearer " + token
+            'Authorization': `Bearer ${jwt}`
         }
     });
 }
@@ -63,7 +72,9 @@ async function uploadFile(file){
     formData.append('files', file);
 
     return api.post('/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: { 'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${jwt}`
+                },
     })
 }
 
@@ -88,35 +99,40 @@ async function login(user, password){
 }
 
 
-async function me(jwt, user_id){
+async function me(user_id){
+    const jwt = getJwt();
     return api.get(`/users/${user_id}`,{
         headers: {
-            "Authorization": "Bearer " + jwt
+            'Authorization': `Bearer ${jwt}`
         }
     });
 }
 
-async function create_draft(jwt, data){
+async function create_draft(data){
+    const jwt = getJwt();
     return api.post("/drafts",data,{ 
-        headers: { "Authorization": "Bearer " + jwt}
+        headers: { 'Authorization': `Bearer ${jwt}`}
     });
 }
 
-async function update_draft(jwt, id, data){
+async function update_draft(id, data){
+    const jwt = getJwt();
     return api.put(`/drafts/${id}`,data,{ 
-        headers: { "Authorization": "Bearer " + jwt}
+        headers: { 'Authorization': `Bearer ${jwt}`}
     });
 }
 
-async function get_draft(jwt, id){
+async function get_draft(id){
+    const jwt = getJwt();
     return api.get(`/drafts/${id}`,{ 
-        headers: { "Authorization": "Bearer " + jwt}
+        headers: { 'Authorization': `Bearer ${jwt}`}
     });
 }
 
-async function update_user(jwt, user_id, data){
+async function update_user(user_id, data){
+    const jwt = getJwt();
     return api.put(`/users/${user_id}`, data, {
-        headers: { "Authorization": "Bearer " + jwt}
+        headers: { 'Authorization': `Bearer ${jwt}`}
     });
 }
 
