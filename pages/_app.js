@@ -6,14 +6,17 @@ import {Provider as StoreProvider} from "react-redux";
 import IliThemeProvider from '../theme';
 import { makeStore } from "../store";
 import Head from 'next/head';
+
 import {
   Header,
   HeaderPreLoader
 } from '../components';
 import {fetchCategories} from '../api';
 import 'toasted-notes/src/styles.css';
+import '../assets/fonts/lato/lato.css';
 
 const header_ignore = ["/smisol/create", "/smisol/drafts", "/login"];
+
 
 class IliApp extends App {
 
@@ -39,19 +42,28 @@ class IliApp extends App {
   render() {
     const { Component, pageProps, store, categories} = this.props;
     return (
+      <>
+      <Head>
+        <meta charSet="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0"
+        />
+      </Head>
       <StoreProvider store={store}>
         <style jsx global>{`
-          body { margin: 0 }
+          body { 
+            margin: 0;
+            font-family: 'Lato';
+          }
         `}</style>
-        <Head>
-          <link href="https://fonts.googleapis.com/css?family=Marmelad&display=swap" rel="stylesheet"/>
-        </Head>
         <IliThemeProvider>
             { !header_ignore.includes(this.props.router.route) && <Header categories={categories} route={this.props.router.asPath}/>}
-            <HeaderPreLoader/>
+            <HeaderPreLoader />
             <Component {...pageProps} />
         </IliThemeProvider>
       </StoreProvider>
+      </>
     );
   }
 }

@@ -22,11 +22,11 @@ class FrontPage extends React.Component {
   render() {
     const {top} = this.props;
     return (
-      <Box py={64} px={[20, 50, 100, 200]} bg={this.props.theme.colors.primary} >
-        <Flex >
+      <Box py={64} bg={this.props.theme.colors.primary} >
+        <Flex style={{maxWidth: '1700px'}} mx='auto'>
           {top.map((item, index)=>
             <React.Fragment key={index}>
-              <Box width={1/3} >
+              <Box width={1/3} mx={20}>
                 <TopCard post={item.post}/>
               </Box>
             </React.Fragment>

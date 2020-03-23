@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 /* eslint-disable react/prefer-stateless-function */
 class HeaderPreLoader extends React.Component {
   static defaultProps = {
-    color: '#29D',
+    color: '#eb5757',
     startPosition: 0.3,
     stopDelayMs: 200,
     height: 3,

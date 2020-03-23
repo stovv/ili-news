@@ -36,7 +36,7 @@ class Redactor extends React.Component {
             if (this.state.in_editor_save){
                 this.editorInstance.save()
                     .then(outputData => {
-                        this.props.dispatch(updateDraft(this.props.jwt, this.props.draft.id, {
+                        this.props.dispatch(updateDraft(this.props.draft.id, {
                             blocks: outputData
                         })).then(response=>{
                             this.setState({in_editor_save: false});
@@ -50,7 +50,7 @@ class Redactor extends React.Component {
                     });
             }
             if (this.state.in_save){
-                this.props.dispatch(updateDraft(this.props.jwt, this.props.draft.id, {
+                this.props.dispatch(updateDraft(this.props.draft.id, {
                     title: this.state.label
                 }
                 )).then(response=>{
@@ -93,14 +93,6 @@ class Redactor extends React.Component {
     render() {
         return (
             <>
-            <Head>
-               <link
-                    rel="stylesheet"
-                    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-                    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-                    crossOrigin="anonymous"/>
-           </Head>
-           
             <Box mx='auto' sx={{
                 maxWidth: 1440,
                 mx: 'auto',
@@ -140,7 +132,6 @@ class Redactor extends React.Component {
 function mapStateToProps(state){
     return {
         draft: state.smisol.draft,
-        jwt: state.auth.jwt,
         isLoggedIn: state.auth.isLoggedIn
     };
 }

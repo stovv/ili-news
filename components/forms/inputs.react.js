@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const BlankInput = styled.input`
-    font-family: 'M PLUS 1p', sans-serif;
+    font-family: ${props=>props.theme.fontFamily};
     margin: 0;
     line-height: 1.5em;
     outline: none;

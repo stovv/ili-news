@@ -12,7 +12,7 @@ const Container = styled.div`
 `;
 
 const Text = styled.h3`
-    font-family: 'M PLUS 1p', sans-serif;
+    font-family: ${props=>props.theme.fontFamily};
     text-align: center;
     font-size: 16px;
     color: #ffffff;
