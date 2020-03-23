@@ -59,7 +59,7 @@ class IliApp extends App {
         `}</style>
         <IliThemeProvider>
             { !header_ignore.includes(this.props.router.route) && <Header categories={categories} route={this.props.router.asPath}/>}
-            <HeaderPreLoader />
+            <HeaderPreLoader/>
             <Component {...pageProps} />
         </IliThemeProvider>
       </StoreProvider>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-class NewsFeed extends React.Component {
+class ZenFeed extends React.Component {
     constructor(props) {
         super(props);
         this.state = {  }
@@ -10,4 +10,4 @@ class NewsFeed extends React.Component {
     }
 }
  
-export default NewsFeed;
+export default ZenFeed;
