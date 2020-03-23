@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'next/router';
 import Error from 'next/error';
 import { connect } from "react-redux";
-import {getPost} from '../../api';
+import {getPost} from '../../../api';
 
 export const config = { amp: 'hybrid' };
 
