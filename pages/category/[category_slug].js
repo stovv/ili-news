@@ -39,7 +39,15 @@ class Category extends React.Component {
         if (this.props.category === null){
             return (<Error statusCode={404}/>);
         }
-        return ( <p>{this.props.category.title}</p> );
+        return (
+            <>
+            <Head>
+                <title>{this.props.category.title}</title>
+                <meta name="description" content={this.props.category.description}/>
+            </Head>
+            <p>{this.props.category.title}</p>
+            </>
+        );
     }
 }
 

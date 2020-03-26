@@ -10,11 +10,16 @@ import HeaderPreLoader from './loaders/headerPreloader.react';
 
 // useful components
 import EmptyHeader from './headers/emptyHeader.react';
-import Header from './headers/header.react';
+import HeaderNavBar from './headers/header.react';
 
 import Tag from './tag.react';
 import TopCard from './cards/topCard.react.js';
 import BlackToast from './toasts/blackToast.react';
+
+// Component Tools
+import Heading from './typography/heading.react';
+import Paragraph from './typography/paragraph.react';
+import List from './typography/list.react';
 
 export {
     LoginForm,
@@ -24,8 +29,14 @@ export {
     DotLoader,
     HeaderPreLoader,
     EmptyHeader,
-    Header,
+    HeaderNavBar,
     BlackToast,
     Tag,
-    TopCard
+    TopCard,
+
+    // Component tools
+    Heading,
+    Paragraph,
+    List
+
 }

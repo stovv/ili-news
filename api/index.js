@@ -68,6 +68,8 @@ async function getCategory(id){
 
 
 async function uploadFile(file){
+    const jwt = getJwt();
+    
     const formData = new FormData();
     formData.append('files', file);
 

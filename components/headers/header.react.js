@@ -8,7 +8,7 @@ import {
 } from '../../assets';
 
 
-const MenuLink = styled.text`
+const MenuLink = styled.span`
   font-family: ${props=>props.theme.fontFamily};
   font-size: ${props=> props.theme.fontSizes[3]};
   text-decoration: none;
@@ -21,7 +21,7 @@ const MenuLink = styled.text`
   border-bottom: ${props => props.selected ? `4px solid ${props.theme.colors.primary}` : "none"};
 `;
 
-class Header extends React.Component {
+class HeaderNavBar extends React.Component {
     constructor(props){
         super(props);
         this.route = props.route ? props.route : "";
@@ -62,4 +62,4 @@ class Header extends React.Component {
 }
 
 
-export default withTheme(Header);
+export default withTheme(HeaderNavBar);

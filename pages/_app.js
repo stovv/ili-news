@@ -8,12 +8,13 @@ import { makeStore } from "../store";
 import Head from 'next/head';
 
 import {
-  Header,
+  HeaderNavBar,
   HeaderPreLoader
 } from '../components';
 import {fetchCategories} from '../api';
 import 'toasted-notes/src/styles.css';
 import '../assets/fonts/lato/lato.css';
+import './style.css';
 
 const header_ignore = ["/smisol/create", "/smisol/drafts", "/login"];
 
@@ -45,20 +46,11 @@ class IliApp extends App {
       <>
       <Head>
         <meta charSet="utf-8" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0"/>
       </Head>
       <StoreProvider store={store}>
-        <style jsx global>{`
-          body { 
-            margin: 0;
-            font-family: 'Lato';
-          }
-        `}</style>
         <IliThemeProvider>
-            { !header_ignore.includes(this.props.router.route) && <Header categories={categories} route={this.props.router.asPath}/>}
+            { !header_ignore.includes(this.props.router.route) && <HeaderNavBar categories={categories} route={this.props.router.asPath}/>}
             <HeaderPreLoader/>
             <Component {...pageProps} />
         </IliThemeProvider>

@@ -67,7 +67,7 @@ export default async (req, res) => {
             .catch(reason=>{
                 throw reason;
             });
-        
+
         smStream.end();
 
         // cache the response

@@ -51,7 +51,7 @@ export default {
         class: LinkTool,
         inlineToolbar: true,
         config: {
-          endpoint: 'http://localhost:8008/fetchUrl', // Your backend endpoint for url data fetching
+          endpoint: `${BACKEND_URL}/fetch-url`, // Your backend endpoint for url data fetching
         }
     },
     image: {
