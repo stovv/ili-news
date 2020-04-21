@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { withRouter } from 'next/router';
 
 import Error from '../../_error';
-import {Public} from '../../api';
+import {Public} from '../../../api';
 
 import {BACKEND_URL, SITE_URL} from '../../../constants';
 
@@ -15,7 +15,7 @@ export const config = { amp: 'hybrid' };
 class Post extends React.Component{
     static async getInitialProps({ query: { post_id, amp}, store, isServer, pathname, }) {
         var current_post = null;
-        await getPost(post_id)
+        await Public.getPost(post_id)
             .then(response=>{
                 current_post = response.data;
             })

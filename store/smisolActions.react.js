@@ -1,5 +1,5 @@
 import {GET_DRAFTS, OPEN_DRAFT, UPDATE_DRAFT, CLOSE_DRAFT} from '../tools/constants';
-import {me, create_draft, update_draft, get_draft} from '../api';
+import {Redactor, Auth} from '../api';
 
 
 const getDraftAction = (data) => {
@@ -31,7 +31,7 @@ const closeDraftAction = {
 
 export function getDrafts(user_id){
     return async dispatch => {
-        await me(user_id)
+        await Auth.me(user_id)
             .then(response=>{
                 dispatch(getDraftAction(response.data.drafts));
             })
@@ -43,7 +43,7 @@ export function getDrafts(user_id){
 
 export function createNewDraft(){
     return async dispatch => {
-        await create_draft()
+        await Redactor.create_draft()
             .then(response=>{
                 dispatch(openDraftAction(response.data));
             })
@@ -55,7 +55,7 @@ export function createNewDraft(){
 
 export function openDraft(draft_id){
     async dispatch => {
-        await get_draft(draft_id)
+        await Redactor.get_draft(draft_id)
             .then(response=>{
                 dispatch(openDraftAction(response.data));
             })
@@ -68,7 +68,7 @@ export function openDraft(draft_id){
 
 export function updateDraft(draft_id, data){
     return async dispatch => {
-        await update_draft(draft_id, data)
+        await Redactor.update_draft(draft_id, data)
             .then(response=>{
                 dispatch(updateDraftAction(response.data));
             })

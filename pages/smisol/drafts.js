@@ -1,9 +1,8 @@
 import React from 'react';
 import Router from 'next/router';
 import {connect} from 'react-redux';
-import PleaseAuth from '../../components/Forms/pleaseAuth.react.js';
 import {getDrafts, createNewDraft} from '../../store/smisolActions.react';
-import {Buttons} from '../../components';
+import { Form } from '../../components';
 
 class Drafts extends React.Component {
     constructor(props){
@@ -27,10 +26,11 @@ class Drafts extends React.Component {
 
     render(){
         if (!this.props.isLoggedIn){
-            return (<PleaseAuth/>);
+            Router.push('/smisol/create');
+            return null;
         }
         return (<p>
-            <Buttons.SimpleButton onClick={()=>this.handleNewDraft()}>+ Create New</Buttons.SimpleButton>
+            <Form.Buttons.SimpleButton onClick={()=>this.handleNewDraft()}>+ Create New</Form.Buttons.SimpleButton>
         </p>);
     }
 }

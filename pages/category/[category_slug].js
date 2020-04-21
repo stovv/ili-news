@@ -2,13 +2,13 @@ import React from 'react';
 import { withRouter } from 'next/router';
 import {connect} from 'react-redux';
 import Error from '../_error';
-import {fetchCategories, getCategory} from '../../api';
+import {Public} from '../../api';
 
 
 class Category extends React.Component {
     static async getInitialProps({ query: { category_slug } }) {
         var category_id = null;
-        await fetchCategories(['slug', 'id'])
+        await Public.fetchCategories(['slug', 'id'])
             .then(response => {
                 response.data.data.categories.map(category =>{
                     if (category.slug === category_slug){
@@ -22,7 +22,7 @@ class Category extends React.Component {
 
             var cat = null;
             if (category_id != null){
-                await getCategory(category_id)
+                await Public.getCategory(category_id)
                     .then(response => {
                         cat = response.data;
                     })

@@ -2,7 +2,6 @@ import React from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 import {connect} from 'react-redux'
-import {LoginForm} from '../components';
 import {loginAction} from "../store/authActions.react";
 
 
@@ -17,7 +16,7 @@ class LoginPage extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount(): void {
+    componentDidMount(){
         if(this.props.isLoggedIn === true){
             Router.back();
         }
@@ -43,7 +42,6 @@ class LoginPage extends React.Component {
         }
         return (
             <>
-                <LoginForm onChange={this.handleLoginSubmit}/>
                 <Head>
                     <link
                         rel="stylesheet"

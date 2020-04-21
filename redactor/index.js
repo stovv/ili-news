@@ -9,10 +9,9 @@ import toaster from 'toasted-notes';
 import {Flex, Box} from 'rebass';
 
 import {
-    Inputs,
-    Buttons,
-    BlackToast
-} from "../components";
+    Toasts,
+    Form
+} from '../components';
 
 import {updateDraft} from '../store/smisolActions.react';
 
@@ -78,9 +77,9 @@ class Redactor extends React.Component {
         if (event.ctrlKey && event.which === 83) {
             event.preventDefault();
             toaster.notify(({ onClose }) => (
-                <BlackToast onClose={onClose}>
+                <Toasts.Emoji onClose={onClose}>
                     🚀 Все сохраняется автоматически 
-                </BlackToast>
+                </Toasts.Emoji>
               ), { position: "bottom"}
             );
         }
@@ -103,7 +102,7 @@ class Redactor extends React.Component {
                         
                     </Box>
                     <Box width={[1/6, 4/9, 2/10]} py="1%" ml={20}>
-                        <Buttons.SimpleButton outline>Предосмотр</Buttons.SimpleButton>
+                        <Form.Buttons.SimpleButton outline>Предосмотр</Form.Buttons.SimpleButton>
                     </Box>
                 </Flex>
             </Box>
@@ -112,7 +111,7 @@ class Redactor extends React.Component {
                     mx: 'auto',
                     px: 3,
                 }}>
-                <Inputs.BlankInput fixed
+                <Form.Inputs.BlankInput fixed
                                 placeholder="Великолепное название..."
                                 onChange={event => this.setState({in_save: true, label: event.target.value})}
                                 defaultValue={this.state.label}

@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
+import Router from 'next/router';
 import React from 'react';
 import {connect} from 'react-redux';
-import {PleaseAuth} from '../../components';
 
 class Create extends React.Component {
 
@@ -15,7 +15,10 @@ class Create extends React.Component {
         });
 
         if (!this.props.isLoggedIn){
-            return (<PleaseAuth/>);
+            if (windows !== undefined){
+                Router.push('/login')
+            }
+            return null;
         }
         if (this.props.draft == null){
             return (
