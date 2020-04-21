@@ -20,7 +20,7 @@ const Text = styled.h3`
 `;
 
 
-class BlackToast extends React.Component{
+class EmojiToast extends React.Component{
     constructor(props){
         super(props);
         this.onClose = props.onClose;
@@ -37,4 +37,4 @@ class BlackToast extends React.Component{
     }
 }
 
-export default BlackToast;
+export default EmojiToast;

@@ -1,8 +1,8 @@
 // Import built-in types for API routes
 import { SitemapStream, streamToPromise, EnumChangefreq } from 'sitemap';
 import { createGzip } from 'zlib';
-import { fetchPosts, fetchCategories } from '../../api';
-import {SITE_URL}  from '../../tools/constants';
+import {Public} from '../../api';
+import {SITE_URL}  from '../../constants';
 
 export default async (req, res) => {
     if (!res) return {};
@@ -24,7 +24,7 @@ export default async (req, res) => {
         //smStream.write({ url: '/contact', lastmod: process.env.siteUpdatedAt, changefreq: EnumChangefreq.MONTHLY });
         
         // We create a sitemap.xml for categories
-        await fetchCategories()
+        await Public.fetchCategories()
             .then(response=>{
                 var categories = response.data.data.categories;
                 categories.map(category => {
@@ -40,7 +40,7 @@ export default async (req, res) => {
             });
 
         // We create a sitemap.xml for posts
-        await fetchPosts()
+        await Public.fetchPosts()
             .then(response=>{
                 var posts = response.data.data.posts;
 
@@ -72,7 +72,7 @@ export default async (req, res) => {
 
         // cache the response
         // streamToPromise.then(sm => sitemap = sm)
-        streamToPromise(pipeline);
+        await streamToPromise(pipeline);
         // stream the response
         pipeline.pipe(res).on('error', e => {
             throw e;

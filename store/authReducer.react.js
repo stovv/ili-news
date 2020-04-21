@@ -12,7 +12,7 @@ if (typeof localStorage !== "undefined") {
         initialState = {
             isLoggedIn: false,
             user_id: null,
-            jsw: ""
+            jwt: ""
         }
     }
 } else {

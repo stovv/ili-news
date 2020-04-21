@@ -1,40 +1,38 @@
 import React from 'react';
-import {Flex, Box} from 'rebass';
-import {withTheme} from 'styled-components';
+import { Flex, Box } from 'rebass';
 
-import {fetchTop} from '../api';
-import {TopCard} from '../components';
+import { TopPosts, NewsPostsComps } from '../compilations';
+import { Containers } from '../components';
+import { BACKEND_URL } from '../constants';
+import { Public } from '../api';
+import { Mocks } from '../assets';
+
+
 
 
 class FrontPage extends React.Component {
   static async getInitialProps() {
-    var top_posts = [];
-    await fetchTop()
+    var topPosts = [];
+    await Public.fetchTopPosts()
       .then(response=>{
-        top_posts = response.data.data.tops ? response.data.data.tops : [];
+        topPosts = response.data.tops ? response.data.tops : [];
       })
       .catch(reason=>{
         console.log("REASON", reason.response);
       });
-    return { top: top_posts};
+    return { topPosts };
   }
 
   render() {
-    const {top} = this.props;
+    const {topPosts} = this.props;
+    console.log(JSON.stringify(topPosts[0]));
     return (
-      <Box py={64} bg={this.props.theme.colors.primary} >
-        <Flex style={{maxWidth: '1700px'}} mx='auto'>
-          {top.map((item, index)=>
-            <React.Fragment key={index}>
-              <Box width={1/3} mx={20}>
-                <TopCard post={item.post}/>
-              </Box>
-            </React.Fragment>
-          )}
-        </Flex>
-      </Box>
+      <React.Fragment>
+        <TopPosts posts={topPosts}/>
+        <NewsPostsComps compilation={Mocks.testPosts} news={Mocks.testPosts} posts={Mocks.testPosts}/>
+      </React.Fragment>
     );
   }
 }
 
-export default withTheme(FrontPage);
+export default FrontPage;

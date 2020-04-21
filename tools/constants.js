@@ -1,6 +1,3 @@
-export const BACKEND_URL = "https://xpan.ili-nnov.ru";
-export const SITE_URL = process.env.SITE_ROOT || 'http://localhost:3000';
-
 export const SING_IN = 'SING_IN';
 export const SING_OUT = 'SING_OUT';
 

@@ -1,9 +1,10 @@
 import React from "react";
+import {SITE_URL} from "../constants";
 
-export default class Robots extends React.Component {
+class Robots extends React.Component {
     static getInitialProps({ res }) {
         res.setHeader("Content-Type", "text/plain");
-        res.write(`Sitemap: ${process.env.SITE_ROOT || 'http://localhost:3000'}/api/sitemap.xml
+        res.write(`Sitemap: ${SITE_URL}/api/sitemap.xml
 
 User-agent: *
 Allow: /*
@@ -16,3 +17,5 @@ Disallow: /smisol/*`);
         res.end();
     }
 }
+
+export default Robots;

@@ -1,42 +1,23 @@
-// forms and buttons
-import LoginForm from './forms/login.react';
-import PleaseAuth from './forms/pleaseAuth.react';
-import * as Inputs from './forms/inputs.react';
-import * as Buttons from './forms/buttons.react';
+// Simple Components
+import * as Form from './Forms';
+import * as Headers from './Headers';
+import * as Images from './Images';
+import * as Typography from './Typography';
+import * as Containers from './Containers.react';
 
-// loaders
-import DotLoader from './loaders/dotLoader.react';
-import HeaderPreLoader from './loaders/headerPreloader.react';
+// Fragments
+import * as Cards from './Cards';
+import * as Errors from './Errors';
+import * as Toasts from './Toasts';
 
-// useful components
-import EmptyHeader from './headers/emptyHeader.react';
-import HeaderNavBar from './headers/header.react';
-
-import Tag from './tag.react';
-import TopCard from './cards/topCard.react.js';
-import BlackToast from './toasts/blackToast.react';
-
-// Component Tools
-import Heading from './typography/heading.react';
-import Paragraph from './typography/paragraph.react';
-import List from './typography/list.react';
 
 export {
-    LoginForm,
-    PleaseAuth,
-    Inputs,
-    Buttons,
-    DotLoader,
-    HeaderPreLoader,
-    EmptyHeader,
-    HeaderNavBar,
-    BlackToast,
-    Tag,
-    TopCard,
-
-    // Component tools
-    Heading,
-    Paragraph,
-    List
-
+    Cards,
+    Errors,
+    Toasts,
+    Form,
+    Headers,
+    Images,
+    Typography,
+    Containers
 }

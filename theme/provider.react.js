@@ -1,9 +1,9 @@
 import React from 'react';
 import { lightTheme, darkTheme } from "./theme.react";
-import useDarkMode from 'use-dark-mode';
 import {ThemeProvider} from 'styled-components';
+import {connect} from 'react-redux';
 
-export default class IliThemeProvider extends React.Component {
+class IliThemeProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,8 +16,7 @@ export default class IliThemeProvider extends React.Component {
   }
 
   render() {
-    const theme = false ? darkTheme : lightTheme;
-
+    const theme = this.props.mode === 'dark' ? darkTheme : lightTheme;
     const body = (
       <ThemeProvider theme={theme}>{this.props.children}</ThemeProvider>
     );
@@ -30,3 +29,11 @@ export default class IliThemeProvider extends React.Component {
     return body;
   }
 }
+
+function mapStateToProps(state) {
+  return{
+    //mode: state.page.mode
+  }
+}
+
+export default connect(mapStateToProps)(IliThemeProvider)
