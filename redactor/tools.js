@@ -7,8 +7,8 @@ import Checklist from "@editorjs/checklist";
 import LinkTool from "@editorjs/link";
 import ImageTool from "@editorjs/image";
 
-import {getExternalImage, uploadFile} from "../api";
-import {BACKEND_URL} from '../tools/constants';
+import {File} from '../api'
+import {BACKEND_URL} from '../constants';
 
 
 export default {
@@ -60,7 +60,7 @@ export default {
           
           uploader: {
               uploadByFile(file){
-                return uploadFile(file)
+                return File.uploadFile(file)
                   .then(response => {
                     return {
                       success: 1,
@@ -77,8 +77,8 @@ export default {
                   });
               },
               async uploadByUrl(url){
-                var imageFile = await getExternalImage(url);
-                return uploadFile(imageFile)
+                var imageFile = await File.getExternalImage(url);
+                return File.uploadFile(imageFile)
                   .then(response=>{
                     return {
                       success: 1,
