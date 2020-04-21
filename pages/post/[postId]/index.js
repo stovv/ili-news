@@ -1,11 +1,13 @@
 import React from 'react';
-import { withRouter } from 'next/router';
-import Error from 'next/error';
 import Head from 'next/head';
+
 import { connect } from "react-redux";
-import {getPost} from '../../../api';
-import generate_jsx from '../../../tools/generator.react';
-import {BACKEND_URL, SITE_URL} from '../../../tools/constants';
+import { withRouter } from 'next/router';
+
+import Error from '../../_error';
+import {Public} from '../../api';
+
+import {BACKEND_URL, SITE_URL} from '../../../constants';
 
 
 export const config = { amp: 'hybrid' };
@@ -35,6 +37,10 @@ class Post extends React.Component{
             amp: amp
         }
     }
+    //shouldComponentUpdate(nextProps, nextState) {
+        //return (nextProps.ids !== this.props.ids
+        //    || nextProps.data !== this.props.data);
+    //}
 
     render(){
         const {blocks, amp, error} = this.props;

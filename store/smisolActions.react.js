@@ -41,17 +41,15 @@ export function getDrafts(user_id){
     };
 };
 
-export function createNewDraft(user_id){
+export function createNewDraft(){
     return async dispatch => {
-        await create_draft({
-            user: user_id
-        })
-        .then(response=>{
-            dispatch(openDraftAction(response.data));
-        })
-        .catch(reason=>{
-            console.log("REASON", reason);
-        })
+        await create_draft()
+            .then(response=>{
+                dispatch(openDraftAction(response.data));
+            })
+            .catch(reason=>{
+                console.log("REASON", reason);
+            })
     };
 }
 

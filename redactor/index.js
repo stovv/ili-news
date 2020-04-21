@@ -100,11 +100,7 @@ class Redactor extends React.Component {
             }}>
                 <Flex>
                     <Box width={[5/6, 5/9, 8/10]}>
-                        <Inputs.BlankInput fixed
-                                    placeholder="Великолепное название..."
-                                    onChange={event => this.setState({in_save: true, label: event.target.value})}
-                                    defaultValue={this.state.label}
-                        />
+                        
                     </Box>
                     <Box width={[1/6, 4/9, 2/10]} py="1%" ml={20}>
                         <Buttons.SimpleButton outline>Предосмотр</Buttons.SimpleButton>
@@ -112,10 +108,15 @@ class Redactor extends React.Component {
                 </Flex>
             </Box>
             <Box sx={{
-                    maxWidth: 1000,
+                    maxWidth: 740,
                     mx: 'auto',
                     px: 3,
                 }}>
+                <Inputs.BlankInput fixed
+                                placeholder="Великолепное название..."
+                                onChange={event => this.setState({in_save: true, label: event.target.value})}
+                                defaultValue={this.state.label}
+                    />
                 <EditorJs 
                     data={this.state.initial_content}
                     tools={tools}

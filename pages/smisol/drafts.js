@@ -1,7 +1,7 @@
 import React from 'react';
 import Router from 'next/router';
 import {connect} from 'react-redux';
-import PleaseAuth from '../../components/forms/pleaseAuth.react.js';
+import PleaseAuth from '../../components/Forms/pleaseAuth.react.js';
 import {getDrafts, createNewDraft} from '../../store/smisolActions.react';
 import {Buttons} from '../../components';
 
@@ -16,7 +16,7 @@ class Drafts extends React.Component {
     }
 
     handleNewDraft(){
-        this.props.dispatch(createNewDraft(this.props.user_id))
+        this.props.dispatch(createNewDraft())
             .then(response=>{
                 Router.push('/smisol/create');
             })

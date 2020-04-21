@@ -1,17 +1,15 @@
 const light = {
     colors: {
       primary: '#eb5757',
-      secondary: '#ffffff',
-      inset: '#e2e4e8',
-      input: 'rgba(65,67,78,0.12)'
+      backgroundSecondary: '#f6f6f6',
+      backgroundPrimary: '#ffffff',
+      backgroundInvert: '#4a4a4a',
     },
     text: {
       primary: '#050505',
       hover: '#eb5757',
-      secondary: '#2f3037',
-      tertiary: '#525560',
-      quarternary: '#9194a1',
-      placeholder: 'rgba(82,85,96,0.5)',
+      secondary: '#4a4a4a',
+      secondarySecondary: '#0e0e0e',
       onPrimary: '#ffffff'
     },
   }
@@ -58,7 +56,13 @@ const light = {
       heading: 1.3,
       code: 1.6,
     },
-    space: [ 0, 6, 12, 18, 24 ],
+    spacing: {
+      xxs: '4px',
+      xs: '8px',
+      s: '12px',
+      m: '16px',
+      block: '20px'
+    },
     breakpoints: [ '32em', '48em', '64em' ]
     // ...
   };
