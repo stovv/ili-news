@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex, Box } from 'rebass';
 
-import { TopPosts, NewsPostsComps } from '../compilations';
+import {TopPosts, NewsPostsComps, CategoryLine, CompsBannerAd} from '../compilations';
 import { Containers } from '../components';
 import { BACKEND_URL } from '../constants';
 import { Public } from '../api';
@@ -22,14 +22,20 @@ class FrontPage extends React.Component {
       });
     return { topPosts };
   }
-
+s
   render() {
     const {topPosts} = this.props;
-    console.log(JSON.stringify(topPosts[0]));
+
     return (
       <React.Fragment>
         <TopPosts posts={topPosts}/>
         <NewsPostsComps compilation={Mocks.testPosts} news={Mocks.testPosts} posts={Mocks.testPosts}/>
+        <CategoryLine posts={Mocks.testPosts}/>
+        <CompsBannerAd posts={Mocks.testPosts} bannerContent={{
+            text: "Стань членом клуба 'ИЛИ ПРЕМИУМ' и получай подарки за чтение новостей",
+            buttonText: "Присоеденится",
+            buttonLink: "/test"
+        }} bannerAdContent={{}} />
       </React.Fragment>
     );
   }

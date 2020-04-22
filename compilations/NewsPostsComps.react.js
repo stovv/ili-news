@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Flex, Box } from 'rebass';
 
-import NewsBlock from "./News.react";
+import NewsBlock from "./Banners/News.react";
 import {Cards, Containers} from '../components';
 
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Box} from 'rebass';
 import styled, {withTheme} from 'styled-components';
-import { Typography } from '../components';
+import { Typography } from '../../components';
 
 
 const Divider = styled.hr`
@@ -41,7 +41,7 @@ class NewsBlock extends React.Component
 {
     render(){
         const { news, theme } = this.props;
-        console.log(news);
+
         return(
             <Box bg={theme.colors.backgroundSecondary} px={theme.spacing.m} py={["24px"]} maxWidth={["296px"]}
             sx={{float: "right"}}>

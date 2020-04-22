@@ -36,24 +36,40 @@ const Types =(theme)=> ({
         }
     },
     bottomRight: {
-        wrap:{},
-        heading:{},
-        text:{}
+        wrap:{
+            sx:{
+                bottom: "30px",
+                position: "absolute",
+                right: theme.spacing.m,
+            }
+        },
+        heading:{
+            textAlign: "right",
+            margin: `0 0 ${theme.spacing.m} 0`
+        },
+        text:{
+            margin: "0",
+            textAlign: "right",
+            maxHeight: "96px",
+            maxWidth: "460px",
+        }
     }
 });
 
+/*maxWidth={["576px"]} maxHeight={["116px"]}*/
+
 class Large extends React.Component{
     render(){
-        const { theme, heading, children, type, url, tight, full} = this.props;
+        const { theme, heading, children, type, url, tight, height} = this.props;
         var TextPosition = Types(theme)[type];
         if (TextPosition === undefined){
             TextPosition = Object.values(Types(theme))[0];
         }
         return (
 
-            <Simple url={url} maxWidth={!full && "624px"} blackout
+            <Simple url={url} blackout height={height}
                     transform={tight && "translate(0, -20%)"} hover>
-                    <Box maxWidth={["576px"]} maxHeight={["116px"]} {...TextPosition.wrap}>
+                    <Box  {...TextPosition.wrap}>
                         {
                             heading &&
                             <TagLabel type="large" color={theme.text.onPrimary} {...TextPosition.heading}
@@ -69,11 +85,11 @@ class Large extends React.Component{
 
 Large.propTypes = {
     heading: PropTypes.string,
+    height: PropTypes.string,
     children: PropTypes.string,
     type: PropTypes.string,
     url: PropTypes.string,
     tight: PropTypes.bool,
-    full: PropTypes.bool,
 }
 
 export default withTheme(Large);
