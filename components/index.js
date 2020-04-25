@@ -10,6 +10,11 @@ import * as Cards from './Cards';
 import * as Errors from './Errors';
 import * as Toasts from './Toasts';
 
+// EditorJS blocks to Components converter
+import UniversalBlock from "./UniversalBlock";
+
+// EditorJS components, Post components
+import {EditorComponents, PostComponents} from './Redactor';
 
 export {
     Cards,
@@ -19,5 +24,8 @@ export {
     Headers,
     Images,
     Typography,
-    Containers
+    Containers,
+    UniversalBlock,
+    EditorComponents,
+    PostComponents
 }

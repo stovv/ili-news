@@ -15,16 +15,23 @@ class Drafts extends React.Component {
     }
 
     handleNewDraft(){
-        this.props.dispatch(createNewDraft())
-            .then(response=>{
-                Router.push('/smisol/create');
-            })
-            .catch(reason=>{
-                console.log("REASON", reason);
-            });
+        if (typeof window !== "undefined"){
+            this.props.dispatch(createNewDraft())
+                .then(response=>{
+
+                    Router.push("/smisol/create");
+                })
+                .catch(reason=>{
+                    console.log("REASON", reason);
+                });
+        }
     }
 
     render(){
+        if (typeof window === "undefined"){
+            return null
+        }
+        
         if (!this.props.isLoggedIn){
             Router.push('/smisol/create');
             return null;

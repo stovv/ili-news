@@ -31,7 +31,7 @@ class LoginPage extends React.Component {
     handleSubmit = async (event) => {
         event.preventDefault();
         const {dispatch} = this.props;
-        dispatch(this.state);
+        dispatch(loginAction(this.state));
     };
 
     render() {

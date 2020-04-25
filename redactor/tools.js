@@ -7,16 +7,21 @@ import Checklist from "@editorjs/checklist";
 import LinkTool from "@editorjs/link";
 import ImageTool from "@editorjs/image";
 
+import { EditorComponents } from '../components';
+
 import {File} from '../api'
 import {BACKEND_URL} from '../constants';
 
 
 export default {
+    callout:{
+        class: EditorComponents.CalloutEditor
+    },
     header: {
         class: Header,
         config: {
           placeholder: 'Заголовок',
-          levels: [2, 3, 4],
+          levels: [1, 2, 3, 4, 5],
           defaultLevel: 2
         },
         inlineToolbar: true
@@ -51,13 +56,12 @@ export default {
         class: LinkTool,
         inlineToolbar: true,
         config: {
-          endpoint: `${BACKEND_URL}/fetch-url`, // Your backend endpoint for url data fetching
+          endpoint: `${BACKEND_URL}/fetcher/fetchUrl`, // Your backend endpoint for url data fetching
         }
     },
     image: {
         class: ImageTool,
         config: {
-          
           uploader: {
               uploadByFile(file){
                 return File.uploadFile(file)

@@ -11,6 +11,7 @@ import { Containers } from '../components';
 
 
 import 'toasted-notes/src/styles.css';
+import 'emoji-mart/css/emoji-mart.css';
 import '../assets/fonts/lato/lato.css';
 import './style.css';
 
@@ -44,7 +45,7 @@ class IliApp extends App {
           <Head>
             <meta charSet="utf-8" />
              <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0"/>
-              <title></title>
+              <title>ИЛИ</title>
           </Head>
           <StoreProvider store={store}>
             <IliThemeProvider>

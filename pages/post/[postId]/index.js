@@ -1,21 +1,26 @@
 import React from 'react';
-import Head from 'next/head';
 
 import { connect } from "react-redux";
-import { withRouter } from 'next/router';
+import { withTheme } from 'styled-components';
+import { NextSeo } from 'next-seo';
+import {Flex, Box} from 'rebass';
+import YandexShare from 'react-yandex-share';
 
 import Error from '../../_error';
 import {Public} from '../../../api';
+import { UniversalBlock, Containers, Typography, Images, Cards} from '../../../components';
 
 import {BACKEND_URL, SITE_URL} from '../../../constants';
+
+import {Mocks} from '../../../assets';
 
 
 export const config = { amp: 'hybrid' };
 
 class Post extends React.Component{
-    static async getInitialProps({ query: { post_id, amp}, store, isServer, pathname, }) {
+    static async getInitialProps({ query: { postId, amp }, store, isServer, pathname, }) {
         var current_post = null;
-        await Public.getPost(post_id)
+        await Public.getPost(postId)
             .then(response=>{
                 current_post = response.data;
             })
@@ -24,15 +29,20 @@ class Post extends React.Component{
                 console.log(reason);
             });
 
+        let publichDate = current_post.publish_at || new Date();
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const publish_at = publichDate.toLocaleString("ru-RU", options).replace('г.', '');
+
         return {
             error: current_post ? null : 404,
-            created_at: current_post.publication_date ? current_post.publication_date : current_post.created_at,
+            publish_at,
             title : current_post.title,
-            cover: `${BACKEND_URL}/${current_post.cover.url}`,
-            current_url: `${SITE_URL}/post/${post_id}`,
+            cover: `${current_post.cover.url}`,
+            current_url: `${SITE_URL}/post/${postId}`,
             description: current_post.description,
             blocks: current_post.blocks.blocks,
-            meta_tags: current_post.meta_tags,
+            //meta_tags: current_post.meta_tags,
+            rubric: current_post.rubric,
             authors: current_post.users ? current_post.users : [],
             amp: amp
         }
@@ -43,41 +53,100 @@ class Post extends React.Component{
     //}
 
     render(){
-        const {blocks, amp, error} = this.props;
+        const {
+            blocks, amp, error, title, theme, publish_at,
+            current_url, description, rubric, cover
+        } = this.props;
         
         if (error !== null){
             return <Error statusCode={error}/>;
         }
         // TODO AMP Checking
         // TODO Use this.props.user for head component
-
         return (
             <>
-            <Head>
-                <title>{this.props.title}</title>
-                <meta name="title" content={this.props.title}/>
-                <meta name="description" content={this.props.description}/>
-                <meta property="article:published_time" content={this.props.created_at}/>
-                {/*TODO: Add author url*/}
-                {this.props.authors.map(item=><meta property="article:author" content={item.id}/>)}
-                {this.props.meta_tags.map((item,index)=><React.Fragment key={index}><meta property="article:tag" content={item.tag}/></React.Fragment>)}
+            <NextSeo title={title}
+                     description={description}
+                     canonical={SITE_URL}
+                     openGraph={{
+                         url: `${current_url}`,
+                         locale: 'ru_RU',
+                         type: "website",
+                         title: {title},
+                         description: {description},
+                         images: [
+                             {
+                                 url: 'https://www.example.ie/og-image-01.jpg',
+                                 width: 800,
+                                 height: 600,
+                                 alt: 'Og Image Alt',
+                             },
+                             {
+                                 url: 'https://www.example.ie/og-image-02.jpg',
+                                 width: 900,
+                                 height: 800,
+                                 alt: 'Og Image Alt Second',
+                             },
+                             { url: 'https://www.example.ie/og-image-03.jpg' },
+                             { url: 'https://www.example.ie/og-image-04.jpg' },
+                         ],
+                         site_name: 'Молодежный журнал ИЛИ',
+                         article: {
+                             // TODO: Add schedule post
+                             publishedTime: new Date(),
+                             modifiedTime: new Date(),
+                             // TODO: Add authors links
+                             authors: [
+                                 'https://www.example.com/authors/@firstnameA-lastnameA',
+                                 'https://www.example.com/authors/@firstnameB-lastnameB',
+                             ],
+                             // TODO Add meta tags
+                             tags: []
+                         }
+                     }}
+                     twitter={{
+                         handle: '@handle',
+                         site: '@site',
+                         cardType: 'summary_large_image',
+                     }}/>
+            <Containers.Default>
+                <Typography.Heading level={4} color={theme.text.hover}
+                                    margin={`32px 0 ${theme.spacing.m} 0`}>{rubric.slug}</Typography.Heading>
+                <Typography.Heading level={1} breakWord
+                                    margin={`${theme.spacing.m} 0`}>{title}</Typography.Heading>
+                <Flex>
+                    <Typography.Heading margin={`0 0 ${theme.spacing.m} 0`} level={4} color={theme.text.secondary}>{publish_at}</Typography.Heading>
+                    <Box  my="auto" ml="auto">
+                        <YandexShare
+                            content={{ title }}
+                            theme={{ lang: 'ru', limit: 3, size: "m", popupPosition: "outer",
+                                services: 'vkontakte,facebook,odnoklassniki,twitter,viber,whatsapp,telegram' }}
+                        />
+                    </Box>
+                </Flex>
+                <Images.Simple url={cover} width="100%" height="560px"/>
 
-                <meta property="og:locale" content="ru_RU"/>
-                <meta property="og:type" content="website"/>
-                <meta property="og:url" content={this.props.current_url}/>
-                <meta property="og:title" content={this.props.title}/>
-                <meta property="og:description" content={this.props.description}/>
-                <meta property="og:image" content={this.props.cover}/>
-                
-                <meta property="og:site_name" content="Молодежный журнал ИЛИ"/>
+                <Flex mt={["64px"]}>
+                    <Box width={[9/12]} >
+                        {
+                            blocks.map((item, index)=>
+                                <React.Fragment key={index}>
+                                    <UniversalBlock block={item}/>
+                                </React.Fragment>
+                            )
+                        }
+                    </Box>
+                    <Box width={[3/12]} pl={["2%"]}>
+                        {/* TODO ADD Ads*/}
+                        <Box width={["100%"]} height={["584px"]} bg={theme.colors.backgroundInvert}/>
+                        <Typography.CardText type="large" weight="bold" margin="59px 0 30px 0">Лучшее за неделю</Typography.CardText>
+                        <Box>
+                            <Cards.Mini heading="проект ломоносов" coverUrl={'/uploads/156d396b108c45dba51b844cc2bbac79.jpg'} >Побег из деревни: История Марии Константиновой</Cards.Mini>
+                        </Box>
+                    </Box>
+                </Flex>
 
-                <meta property="twitter:card" content="summary_large_image"/>
-                <meta property="twitter:url" content={this.props.current_url}/>
-                <meta property="twitter:title" content={this.props.title}/>
-                <meta property="twitter:description" content={this.props.description}/>
-                <meta property="twitter:image" content={this.props.cover}/>
-            </Head>
-            {generate_jsx(blocks)}
+            </Containers.Default>
             </>
         );
     }
@@ -89,4 +158,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps)(withRouter(Post));
+export default connect(mapStateToProps)(withTheme(Post));

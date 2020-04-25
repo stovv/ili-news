@@ -39,9 +39,11 @@ const light = {
       '18px', // 2
       '20px', // 3
       '22px', // 4
-      '26px', // 5
-      '32px', // 6
-      '40px'  // 7
+      '24px', // 5
+      '28px', // 6
+      '30px', // 7
+      '40px', // 8
+      '56px'  // 9
     ],
     fontWeights: {
       body: 400,
@@ -50,7 +52,7 @@ const light = {
       bold: 700,
       heading: 800,
     },
-    fontFamily: "Lato",
+    fontFamily: "Lato, sans-serif",
     lineHeights: {
       body: 1.5,
       heading: 1.3,

@@ -2,21 +2,29 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-const ParagraphComponent = styled.p``;
+const ParagraphComponent = styled.p`
+  font-family: ${props=>props.theme.fontFamily};
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: ${props => props.theme.text.primary};
+
+`;
 
 
 class Paragraph extends React.Component{
-    constructor(props){
-        super(props);
-        this.state={
-            text: props.data.text,
-        };
-    }
-
     render(){
-        const {text} = this.state;
+        const {data} = this.props;
+
+        if (data == null){
+            return null
+        }
+
         return (
-            <ParagraphComponent>{text}</ParagraphComponent>
+            <ParagraphComponent>{data.text}</ParagraphComponent>
         )
     }
 

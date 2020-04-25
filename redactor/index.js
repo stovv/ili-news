@@ -13,6 +13,8 @@ import {
     Form
 } from '../components';
 
+import {RedactorTypogrphy} from './style';
+
 import {updateDraft} from '../store/smisolActions.react';
 
 
@@ -92,6 +94,7 @@ class Redactor extends React.Component {
     render() {
         return (
             <>
+            <RedactorTypogrphy/>
             <Box mx='auto' sx={{
                 maxWidth: 1440,
                 mx: 'auto',
@@ -106,16 +109,18 @@ class Redactor extends React.Component {
                     </Box>
                 </Flex>
             </Box>
+            <Box maxWidth={900} mx="auto">
+                <Form.Inputs.TitleArea fixed
+                                       placeholder="Заголовок"
+                                       onChange={event => this.setState({in_save: true, label: event.target.value})}
+                                       defaultValue={this.state.label}
+                />
+            </Box>
             <Box sx={{
-                    maxWidth: 740,
+                    maxWidth: 860,
                     mx: 'auto',
                     px: 3,
                 }}>
-                <Form.Inputs.BlankInput fixed
-                                placeholder="Великолепное название..."
-                                onChange={event => this.setState({in_save: true, label: event.target.value})}
-                                defaultValue={this.state.label}
-                    />
                 <EditorJs 
                     data={this.state.initial_content}
                     tools={tools}

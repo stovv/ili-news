@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 
 const H1 = styled.h1`
     font-family: ${props=>props.theme.fontFamily};
-    color: ${props=>props.color ? props.color : props.theme.colors.black};
+    color: ${props=>props.color ? props.color : props.theme.text.primary};
     max-width: ${props=> props.maxWidth && props.maxWidth};
     max-height: ${props=> props.maxHeight && props.maxHeight};
     margin: ${props=>props.margin};
     text-transform: ${props=>props.textTransform};
     text-align: ${props=>props.textAlign};
+    overflow-wrap: ${props=> props.breakWord ? 'break-word' : 'unset'};
     font-size: 56px;
     font-weight: bold;
     font-stretch: normal;
@@ -21,65 +22,86 @@ const H1 = styled.h1`
 
 const H2 = styled.h2`
     font-family: ${props=>props.theme.fontFamily};
-    color: ${props=>props.color ? props.color : props.theme.colors.black};
+    color: ${props=>props.color ? props.color : props.theme.text.primary};
     max-width: ${props=> props.maxWidth && props.maxWidth};
     max-height: ${props=> props.maxHeight && props.maxHeight};
     margin: ${props=>props.margin};
     text-transform: ${props=>props.textTransform};
     text-align: ${props=>props.textAlign};
+    overflow-wrap: ${props=> props.breakWord ? 'break-word' : 'unset'};
     font-size: 40px;
     font-weight: bold;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.12;
+    line-height: 1.2;
     letter-spacing: normal;
 `;
 
 const H3 = styled.h3`
     font-family: ${props=>props.theme.fontFamily};
-    color: ${props=>props.color ? props.color : props.theme.colors.black};
+    color: ${props=>props.color ? props.color : props.theme.text.primary};
     max-width: ${props=> props.maxWidth && props.maxWidth};
     max-height: ${props=> props.maxHeight && props.maxHeight};
     margin: ${props=>props.margin};
     text-transform: ${props=>props.textTransform};
     text-align: ${props=>props.textAlign};
+    overflow-wrap: ${props=> props.breakWord ? 'break-word' : 'unset'};
     font-size: 30px;
     font-weight: bold;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.12;
+    line-height: 1.27;
     letter-spacing: normal;
 `;
 
 const H4 = styled.h4`
     font-family: ${props=>props.theme.fontFamily};
-    color: ${props=>props.color ? props.color : props.theme.colors.black};
+    color: ${props=>props.color ? props.color : props.theme.text.primary};
     max-width: ${props=> props.maxWidth && props.maxWidth};
     max-height: ${props=> props.maxHeight && props.maxHeight};
     margin: ${props=>props.margin};
     text-transform: ${props=>props.textTransform};
     text-align: ${props=>props.textAlign};
+    overflow-wrap: ${props=> props.breakWord ? 'break-word' : 'unset'};
     font-size: 24px;
     font-weight: bold;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.12;
+    line-height: 1.33;
     letter-spacing: normal;
 `;
 
 const H5 = styled.h5`
     font-family: ${props=>props.theme.fontFamily};
-    color: ${props=>props.color ? props.color : props.theme.colors.black};
+    color: ${props=>props.color ? props.color : props.theme.text.primary};
     max-width: ${props=> props.maxWidth && props.maxWidth};
     max-height: ${props=> props.maxHeight && props.maxHeight};
     margin: ${props=>props.margin};
     text-transform: ${props=>props.textTransform};
     text-align: ${props=>props.textAlign};
+    overflow-wrap: ${props=> props.breakWord ? 'break-word' : 'unset'};
     font-size: 20px;
     font-weight: bold;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.12;
+    line-height: 1.2;
+    letter-spacing: normal;
+`;
+
+const H6 = styled.h6`
+    font-family: ${props=>props.theme.fontFamily};
+    color: ${props=>props.color ? props.color : props.theme.text.primary};
+    max-width: ${props=> props.maxWidth && props.maxWidth};
+    max-height: ${props=> props.maxHeight && props.maxHeight};
+    margin: ${props=>props.margin};
+    text-transform: ${props=>props.textTransform};
+    text-align: ${props=>props.textAlign};
+    overflow-wrap: ${props=> props.breakWord ? 'break-word' : 'unset'};
+    font-size: 18px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
     letter-spacing: normal;
 `;
 
@@ -89,13 +111,22 @@ const headings = {
     3: H3,
     4: H4,
     5: H5,
+    6: H6,
 };
 
 class Heading extends React.Component{
     render(){
-        var {level, children, ...props} = this.props;
+        var {level, children, data, ...props} = this.props;
+
+        if (typeof data !== 'undefined'){
+            const HeadingComp = headings[data.level + 1];
+            return(
+                <HeadingComp>{data.text}</HeadingComp>
+            );
+        }
+
         const headingsKeys = Object.keys(headings);
-        if (level > headingsKeys.length){
+        if (level > headingsKeys.length || level == null){
             level = headingsKeys[headingsKeys.length];
         }
         const HeadingComponent = headings[level];
@@ -112,6 +143,8 @@ Heading.propTypes = {
     margin: PropTypes.string,
     textTransform: PropTypes.string,
     textAlign: PropTypes.string,
+    data: PropTypes.object,
+    breakWord: PropTypes.bool,
     width: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number

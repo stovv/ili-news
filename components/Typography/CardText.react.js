@@ -20,7 +20,7 @@ const XLarge = styled.p`
   bottom: ${props=>props.bottom};
   user-select: none;
   font-size: 36px;
-  font-weight: 600;
+  font-weight: ${props=> props.weight ? props.weight : "600" };
   font-stretch: normal;
   font-style: normal;
   line-height: 1.04;
@@ -45,7 +45,7 @@ const Large = styled.p`
   bottom: ${props=>props.bottom};
   user-select: none;
   font-size: 28px;
-  font-weight: 600;
+  font-weight: ${props=> props.weight ? props.weight : "600" };
   font-stretch: normal;
   font-style: normal;
   line-height: 1.04;
@@ -69,7 +69,7 @@ const Normal = styled.p`
   bottom: ${props=>props.bottom};
   user-select: none;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: ${props=> props.weight ? props.weight : "600" };
   font-stretch: normal;
   font-style: normal;
   line-height: 1.04;
@@ -93,7 +93,7 @@ const Small = styled.p`
   bottom: ${props=>props.bottom};
   user-select: none;
   font-size: 18px;
-  font-weight: 700;
+  font-weight: ${props=> props.weight ? props.weight : "700" };
   font-stretch: normal;
   font-style: normal;
   line-height: 1.04;
@@ -125,6 +125,7 @@ class CardText extends React.Component {
 CardText.propTypes = {
     type: PropTypes.string.isRequired,
     color: PropTypes.string,
+    weight: PropTypes.string,
     margin: PropTypes.string,
     position: PropTypes.string,
     right: PropTypes.string,

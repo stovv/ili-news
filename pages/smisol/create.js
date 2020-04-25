@@ -15,7 +15,7 @@ class Create extends React.Component {
         });
 
         if (!this.props.isLoggedIn){
-            if (windows !== undefined){
+            if (typeof window !== "undefined"){
                 Router.push('/login')
             }
             return null;

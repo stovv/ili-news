@@ -9,7 +9,8 @@ class TopPosts extends React.Component {
 
     render(){
         const {posts, theme} = this.props;
-        const {id, title, description, cover, tag} = posts[0].post;
+        console.log(posts);
+        const {id, title, description, cover, } = posts[0].post;
 
         return (
             <React.Fragment>
@@ -20,7 +21,7 @@ class TopPosts extends React.Component {
                                 <Typography.TagLabel type="large"
                                                      color={theme.text.onPrimary}
                                                      margin={`0 0 ${theme.spacing.m} 0`}
-                                                     textTransform="lowercase">{tag.name}</Typography.TagLabel>
+                                                     textTransform="lowercase">test</Typography.TagLabel>
                                 <Typography.Heading level={1}
                                                     color={theme.text.onPrimary}
                                                     maxWidth="816px"

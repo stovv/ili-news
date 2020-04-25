@@ -17,6 +17,7 @@ const signOutAction = {
 export function loginAction(loginData){
    return async dispatch => {
         dispatch(signOutAction);
+        console.log(loginData);
         await Auth.login(loginData.login, loginData.password)
             .then(response=>{
                 dispatch(signInAction(response.data));

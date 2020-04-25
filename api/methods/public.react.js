@@ -49,10 +49,10 @@ export async function fetchTopPosts(){
                     description,
                     cover{
                         url
-                    },               
-                    tag{
-                        name
                     },
+                    rubric{
+                       slug
+                    }
                     created_at
                 }
             }

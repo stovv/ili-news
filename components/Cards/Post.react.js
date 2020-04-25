@@ -4,14 +4,13 @@ import {Box} from 'rebass';
 import { withTheme } from 'styled-components';
 
 import { Simple } from '../Images';
-import {Upper} from '../Animations';
 import { TagLabel, CardText } from '../Typography';
 
 class Post extends React.Component{
 
     render(){
         const { theme, float } = this.props;
-        const {id, title, cover, tag, created_at } = this.props.post || {};
+        const {id, title, cover, created_at } = this.props.post || {};
 
         var date = new Date(created_at);
         var options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -31,7 +30,7 @@ class Post extends React.Component{
 
                         <TagLabel type="normal" color={theme.text.hover}
                                   textTransform="lowercase" margin={`${theme.spacing.xs} 0`}>
-                            {tag.name}
+                            test
                         </TagLabel>
                         <CardText type="normal" maxWidth={["240px"]} margin="0">
                             {title}
