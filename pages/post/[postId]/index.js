@@ -72,23 +72,10 @@ class Post extends React.Component{
                          url: `${current_url}`,
                          locale: 'ru_RU',
                          type: "website",
-                         title: {title},
-                         description: {description},
+                         title: title,
+                         description: description,
                          images: [
-                             {
-                                 url: 'https://www.example.ie/og-image-01.jpg',
-                                 width: 800,
-                                 height: 600,
-                                 alt: 'Og Image Alt',
-                             },
-                             {
-                                 url: 'https://www.example.ie/og-image-02.jpg',
-                                 width: 900,
-                                 height: 800,
-                                 alt: 'Og Image Alt Second',
-                             },
-                             { url: 'https://www.example.ie/og-image-03.jpg' },
-                             { url: 'https://www.example.ie/og-image-04.jpg' },
+                             { url: `${BACKEND_URL}${cover}` },
                          ],
                          site_name: 'Молодежный журнал ИЛИ',
                          article: {
