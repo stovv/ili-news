@@ -1,7 +1,79 @@
 import api from "../connector.react";
 
 export async function getPost(id){
-    return api.get(`/posts/${id}`)
+    return api.ql(`
+    query{
+      post(id:${id}){
+        rubric{
+          id,
+          slug
+        },
+        title,
+        description,
+        publish_at,
+        authors(limit: 4){
+          id,
+          name,
+          secondName
+        },
+        cover{
+          caption, 
+          alternativeText,
+          hash,
+          ext
+        }
+        blocks,
+        comment_thread{
+            id
+        },
+        rating{
+          id,
+          likes,
+          dislikes,
+          views
+        },
+        updated_at
+      }
+    }
+    `);
+}
+
+export async function getReadMore(rubricId){
+    return api.ql(`
+        query{
+          ratings(limit: 3, sort: "views:DESC,likes:DESC,dislikes:DESC", where: { post: { rubric: { id: ${rubricId} } } }){
+            post{
+              id,
+              title
+            }
+          }
+        }
+    `)
+}
+
+export async function getPopularDuringWeek(){
+
+    let today = new Date();
+    today.setHours(0,0,0,0);
+    let day = today.getDay();
+    let diff = today.getDate() - day + (day === 0 ? -6:1);
+    let start = new Date(today.setDate(diff))
+    let end = new Date(today.setDate(start.getDate() + 7))
+
+    return api.ql(`
+       query{
+          ratings(sort: "views:DESC,likes:DESC,dislikes:DESC", where:{post: {publish_at_gte: "${start.getUTCDate()}", publish_at_lt: "${end.getUTCDate()}"}}){
+            post{
+              id,
+              title,
+              rubric{
+                slug
+              }
+            }
+          }
+        }
+    `);
+
 }
 
 export async function getCategory(id){
@@ -48,7 +120,10 @@ export async function fetchTopPosts(){
                     title,
                     description,
                     cover{
-                        url
+                        caption, 
+                        alternativeText,
+                        hash,
+                        ext
                     },
                     rubric{
                        slug
@@ -58,4 +133,22 @@ export async function fetchTopPosts(){
             }
         }
         `);
+}
+
+export async function viewPost(raitingId, clientId){
+    return api.put(`/ratings/view/${raitingId}`, {
+        clientIp: clientId
+    });
+}
+
+export async function likeUp(raitingId, clientId){
+    return api.put(`/ratings/likeup/${raitingId}`, {
+        clientIp: clientId
+    })
+}
+
+export async function dislikeUp(raitingId, clientId){
+    return api.put(`/ratings/dislikeup/${raitingId}`, {
+        clientIp: clientId
+    })
 }

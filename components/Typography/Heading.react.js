@@ -18,6 +18,12 @@ const H1 = styled.h1`
     font-style: normal;
     line-height: 1.12;
     letter-spacing: normal;
+    ${({hover, theme}) => hover && `
+       transition: all 0.4s ease 0s;
+       &:hover{
+           color: ${theme.text.hover};
+       }
+    `}
 `;
 
 const H2 = styled.h2`
@@ -35,6 +41,12 @@ const H2 = styled.h2`
     font-style: normal;
     line-height: 1.2;
     letter-spacing: normal;
+    ${({hover, theme}) => hover && `
+       transition: all 0.4s ease 0s;
+       &:hover{
+           color: ${theme.text.hover};
+       }
+    `}
 `;
 
 const H3 = styled.h3`
@@ -52,6 +64,12 @@ const H3 = styled.h3`
     font-style: normal;
     line-height: 1.27;
     letter-spacing: normal;
+    ${({hover, theme}) => hover && `
+       transition: all 0.4s ease 0s;
+       &:hover{
+           color: ${theme.text.hover};
+       }
+    `}
 `;
 
 const H4 = styled.h4`
@@ -69,6 +87,12 @@ const H4 = styled.h4`
     font-style: normal;
     line-height: 1.33;
     letter-spacing: normal;
+    ${({hover, theme}) => hover && `
+       transition: all 0.4s ease 0s;
+       &:hover{
+           color: ${theme.text.hover};
+       }
+    `}
 `;
 
 const H5 = styled.h5`
@@ -86,6 +110,12 @@ const H5 = styled.h5`
     font-style: normal;
     line-height: 1.2;
     letter-spacing: normal;
+    ${({hover, theme}) => hover && `
+       transition: all 0.4s ease 0s;
+       &:hover{
+           color: ${theme.text.hover};
+       }
+    `}
 `;
 
 const H6 = styled.h6`
@@ -103,6 +133,12 @@ const H6 = styled.h6`
     font-style: normal;
     line-height: 1.2;
     letter-spacing: normal;
+    ${({hover, theme}) => hover && `
+       transition: all 0.4s ease 0s;
+       &:hover{
+           color: ${theme.text.hover};
+       }
+    `}
 `;
 
 const headings = {
@@ -145,6 +181,7 @@ Heading.propTypes = {
     textAlign: PropTypes.string,
     data: PropTypes.object,
     breakWord: PropTypes.bool,
+    hover: PropTypes.bool,
     width: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number

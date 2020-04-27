@@ -1,15 +1,17 @@
 // EditorJS components
-import {CalloutEditor} from "./Callout";
+import { CalloutEditor } from "./Callout";
 
 // Main components
-import {Callout} from "./Callout";
+import { Callout } from "./Callout";
+import { ReadMore } from './ReadMore';
 
 const EditorComponents = {
     CalloutEditor
 };
 
 const PostComponents = {
-    Callout
+    Callout,
+    ReadMore
 };
 
 export {

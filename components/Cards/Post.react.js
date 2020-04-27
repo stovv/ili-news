@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Box} from 'rebass';
 import { withTheme } from 'styled-components';
 
-import { Simple } from '../Images';
+import { Lazy } from '../Images';
 import { TagLabel, CardText } from '../Typography';
 
 class Post extends React.Component{
@@ -18,7 +18,7 @@ class Post extends React.Component{
 
         return (
             <Box height="100%" width="100%" >
-                <Simple url={cover.url} maxWidth={["296px"]} maxHeight={["248px"]} overflow="visible" hover float={float}>
+                <Lazy cover={cover} maxWidth={["296px"]} maxHeight={["248px"]} overflow="visible" hover float={float}>
                     <Box bg={theme.colors.backgroundPrimary}
                          maxWidth={["264px"]} px={[theme.spacing.s]}
                          sx={{
@@ -39,7 +39,7 @@ class Post extends React.Component{
                             {publishDate}
                         </TagLabel>
                     </Box>
-                </Simple>
+                </Lazy>
             </Box>
         );
     }

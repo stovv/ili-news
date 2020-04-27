@@ -15,9 +15,9 @@ const Blackout = styled.div`
 class BannerWithButton extends React.Component {
 
     render(){
-        const {coverUrl, buttonLink, buttonText, children, theme} = this.props;
+        const {cover, buttonLink, buttonText, children, theme} = this.props;
         return(
-            <Images.Simple url={coverUrl}>
+            <Images.Lazy cover={cover}>
                 <Box height="100%" sx={{
                     background: `linear-gradient(to right, rgba(229, 103, 82, 0), ${theme.colors.primary})`
                 }}>
@@ -30,7 +30,7 @@ class BannerWithButton extends React.Component {
                                   maxWidth="361px" maxHeight="148px" textAlign="right">{children}</CardText>
                     </Box>
                 </Box>
-            </Images.Simple>
+            </Images.Lazy>
         );
     }
 }
@@ -38,7 +38,7 @@ class BannerWithButton extends React.Component {
 BannerWithButton.propTypes = {
     buttonText: PropTypes.string,
     buttonLink: PropTypes.string,
-    coverUrl: PropTypes.string,
+    cover: PropTypes.object,
 }
 
 export default withTheme(BannerWithButton);

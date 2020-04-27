@@ -8,9 +8,14 @@ import {Upper} from '../Animations';
 
 const Simple = styled.div`
     position: ${props => props.withParent ? 'absolute' : 'relative'};
-    background: ${props=> props.external ? `url(${props.url})` : `url(${BACKEND_URL}${props.url})` } center;
+    ${ ({withLoading, error, errorSrc, loading, loadingSrc, actualSrc, url}) => withLoading 
+        ? `background: url(${error ? errorSrc : (loading ? loadingSrc : actualSrc)}) center`
+        : `
+           background: url(${url}) center
+        `
+    };
     background-size: cover;
-    cursor: ${props=> props.hover ? 'pointer' : 'auto'};
+    cursor: ${props=> props.hover && 'pointer'};
     width: ${props=> props.width ? props.width : '100%'};
     height: ${props=> props.height ? props.height : '100%'};
     max-width: ${props=> props.maxWidth && props.maxWidth};
@@ -70,7 +75,7 @@ class SimpleImage extends React.Component {
 
             return(
                 <OverlayContainer {...props}>
-                    <Simple {...props} withParent/>
+                    <Simple {...props} withParent />
                     <ChildrenContainer {...props}>
                         {children}
                     </ChildrenContainer>
@@ -83,8 +88,8 @@ class SimpleImage extends React.Component {
 SimpleImage.propTypes = {
     blur: PropTypes.bool,
     hover: PropTypes.bool,
-    external: PropTypes.bool,
-    url: PropTypes.string.isRequired,
+    withLoading: PropTypes.bool,
+    url: PropTypes.string,
     transform: PropTypes.string,
     overflow: PropTypes.string,
     blackout: PropTypes.bool,

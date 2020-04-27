@@ -69,7 +69,7 @@ export default {
                     return {
                       success: 1,
                       file: {
-                        url: `${BACKEND_URL}/${response.data[0].url}`,
+                        url: `${BACKEND_URL}${response.data[0].url}`,
                       }
                     };
                   })
@@ -87,7 +87,7 @@ export default {
                     return {
                       success: 1,
                       file: {
-                        url: `${BACKEND_URL}/${response.data[0].url}`,
+                        url: `${BACKEND_URL}${response.data[0].url}`,
                       }
                     };
                   })

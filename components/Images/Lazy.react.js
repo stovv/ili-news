@@ -1,23 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
-
-const ImageStyle = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  border-radius: ${props => props.borderRadius};
-  background: url("${props => props.error ? props.errorSrc : (props.loading ? props.loadingSrc : props.actualSrc)}") center;
-  filter: ${props => props.error || props.loading ? "blur(24px)" : "unset"};
-  display: ${props=> props.visible ? 'block' : 'none'};
-`;
+import { Simple } from '../Images';
+import { geImageLink } from './tools';
 
 
-const Lazy = ({ StyledImage=ImageStyle, src, ...props }) => {
+const Lazy = ({cover, ...props }) => {
     const [isImageLoaded, setImageLoaded] = React.useState(false);
     const [hasError, setHasError] = React.useState(false);
 
-    const Thumb = src.replace('large', 'thumb');
+    var Thumb = ``;
+    var Cover = ``
+    if (typeof cover === "object"){
+        Thumb = geImageLink(cover, 'small');
+        Cover = geImageLink(cover);
+    }else{
+        Thumb = cover;
+        Cover = cover;
+    }
 
     React.useEffect(() => {
         const img = new Image();
@@ -25,13 +24,15 @@ const Lazy = ({ StyledImage=ImageStyle, src, ...props }) => {
         img.onload = () => setImageLoaded(true);
         img.onerror = () => setHasError(true);
 
-        img.src = src;
-    }, [src])
+        img.src = Cover;
+    }, [Cover])
 
     return (
-        <StyledImage
+        <Simple
+            external
+            withLoading
             loadingSrc={Thumb}
-            actualSrc={src}
+            actualSrc={Cover}
             errorSrc={Thumb}
             loading={!isImageLoaded}
             error={hasError}

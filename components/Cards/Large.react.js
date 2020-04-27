@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import { Box } from 'rebass';
 
-import {Simple} from '../Images';
+import {Lazy} from '../Images';
 import { TagLabel, CardText } from '../Typography';
 
 
@@ -60,14 +60,14 @@ const Types =(theme)=> ({
 
 class Large extends React.Component{
     render(){
-        const { theme, heading, children, type, url, tight, height} = this.props;
+        const { theme, heading, children, type, cover, tight, height} = this.props;
         var TextPosition = Types(theme)[type];
         if (TextPosition === undefined){
             TextPosition = Object.values(Types(theme))[0];
         }
         return (
 
-            <Simple url={url} blackout height={height}
+            <Lazy cover={cover} blackout height={height}
                     transform={tight && "translate(0, -20%)"} hover>
                     <Box  {...TextPosition.wrap}>
                         {
@@ -78,7 +78,7 @@ class Large extends React.Component{
                         <CardText type="large" {...TextPosition.text}
                                   color={theme.text.onPrimary}>{children}</CardText>
                     </Box>
-            </Simple>
+            </Lazy>
         );
     }
 }
@@ -88,7 +88,7 @@ Large.propTypes = {
     height: PropTypes.string,
     children: PropTypes.string,
     type: PropTypes.string,
-    url: PropTypes.string,
+    cover: PropTypes.object,
     tight: PropTypes.bool,
 }
 

@@ -4,6 +4,7 @@ import * as Headers from './Headers';
 import * as Images from './Images';
 import * as Typography from './Typography';
 import * as Containers from './Containers.react';
+import * as Links from './Links.react';
 
 // Fragments
 import * as Cards from './Cards';
@@ -25,6 +26,7 @@ export {
     Images,
     Typography,
     Containers,
+    Links,
     UniversalBlock,
     EditorComponents,
     PostComponents

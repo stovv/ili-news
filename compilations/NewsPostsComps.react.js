@@ -28,7 +28,7 @@ class NewsPostsComps extends React.Component {
                     <Box width={2/4} height="100%" >
                         <Flex flexDirection="column" height="100%">
                             <Box height={["75%"]} width="100%" mx="auto">
-                                <Cards.Large url={cover.url} heading={tag.name} type="topRight" >{title}</Cards.Large>
+                                <Cards.Large cover={cover} heading={tag.name} type="topRight" >{title}</Cards.Large>
                             </Box>
                             <Box height={["25%"]}>
                                 <Flex>
@@ -36,7 +36,7 @@ class NewsPostsComps extends React.Component {
                                         compilation.slice(1, 3).map((item, index)=>
                                             <React.Fragment key={index}>
                                                 <Box width={1/2} mt="32px">
-                                                    <Cards.Mini heading={item.post.tag.name} coverUrl={item.post.cover.url}>
+                                                    <Cards.Mini heading={item.post.tag.name} cover={item.post.cover}>
                                                         {item.post.title}
                                                     </Cards.Mini>
                                                 </Box>

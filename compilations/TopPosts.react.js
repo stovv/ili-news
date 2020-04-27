@@ -14,7 +14,7 @@ class TopPosts extends React.Component {
 
         return (
             <React.Fragment>
-                <Images.Simple url={cover.url}  blur height="384px" blackout>
+                <Images.Lazy cover={cover}  blur height="384px" blackout>
                     <Flex mt={[81]}>
                         <Box>
                             <Containers.Default>
@@ -30,11 +30,11 @@ class TopPosts extends React.Component {
                             </Containers.Default>
                         </Box>
                     </Flex>
-                </Images.Simple>
+                </Images.Lazy>
                 <Containers.Default>
                     <Flex height="400px" >
                         <Box width={[2/4]} pb={["20px"]} height="490px">
-                            <Cards.Large url={cover.url} type="bottomLeft" tight>{description}</Cards.Large>
+                            <Cards.Large cover={cover} type="bottomLeft" tight>{description}</Cards.Large>
                         </Box>
                         {
                             posts.slice(1).map((item, index) => (
