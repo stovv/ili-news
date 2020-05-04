@@ -13,7 +13,7 @@ import {UniversalBlock, Containers, Typography, Images, Cards, Form, PostCompone
 import { Icons } from '../../../assets';
 import { Public } from '../../../api';
 import { getFormatedDate } from '../../../tools';
-import { SITE_URL } from '../../../constants';
+import {SITE_URL, YANDEX_VERIFICATION} from '../../../constants';
 
 
 export const config = { amp: 'hybrid' };
@@ -142,6 +142,9 @@ class Post extends React.Component{
                                  site: '@site',
                                  cardType: 'summary_large_image',
                              }}/>
+                     <Head>
+                         <meta name="yandex-verification" content={YANDEX_VERIFICATION} />
+                     </Head>
                     <Containers.Default>
                         <Typography.Heading level={4} color={theme.text.hover}
                                             margin={`32px 0 ${theme.spacing.m} 0`}>{rubric.slug}</Typography.Heading>
