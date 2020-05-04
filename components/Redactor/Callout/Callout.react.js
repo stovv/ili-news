@@ -60,9 +60,10 @@ class Callout extends React.Component {
                         <Flex height="fit-content" py="10px" px="24px">
                             <Box my="auto" width={1/10} height="100%" style={{
                                 cursor: 'pointer'
-                            }} onClick={() => this.setState({reactionShown: true})}>
+                            }}>
                                 <Box id="emoji"  m="0 5px">
-                                    <Emoji emoji={this.state.emoji} size={45} />
+                                    <Emoji emoji={this.state.emoji} size={45}
+                                           onClick={() => this.setState({reactionShown: true})} />
                                 </Box>
                             </Box>
                             <Box my="auto" width={9/10}>

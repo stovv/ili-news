@@ -14,9 +14,14 @@ import { Icons } from '../../../assets';
 import { Public } from '../../../api';
 import { getFormatedDate } from '../../../tools';
 import {SITE_URL, YANDEX_VERIFICATION} from '../../../constants';
+import {Emoji} from "emoji-mart";
 
 
 export const config = { amp: 'hybrid' };
+const iconSpacing = {
+    margin: "auto 9px"
+};
+
 
 class Post extends React.Component{
     static async getInitialProps({ query: { postId, amp }, store, isServer, pathname, req}) {
@@ -106,42 +111,38 @@ class Post extends React.Component{
             authorsLinks.push(`${SITE_URL}/user/${item.id}`);
         });
 
-        const iconSpacing = {
-            margin: "auto 9px"
-        }
-
         try {
             return (
                 <>
                     <NextSeo title={title}
-                             description={description}
-                             canonical={`${SITE_URL}/post/${postId}`}
-                             openGraph={{
-                                 url: `${SITE_URL}/post/${postId}`,
-                                 locale: 'ru_RU',
-                                 type: "article",
-                                 title: title,
-                                 description: description,
-                                 image: {
-                                     url: Images.Tools.geImageLink(cover),
-                                     width: cover.width,
-                                     height: cover.height,
-                                 },
-                                 site_name: 'Молодежный журнал ИЛИ',
-                                 article: {
-                                     section: rubric.slug,
-                                     publishedTime: publish_at || new Date(),
-                                     modifiedTime: updated_at || new Date(),
-                                     authors: authorsLinks,
-                                     // TODO Add meta tags
-                                     tags: []
-                                 }
-                             }}
-                             twitter={{
-                                 handle: '@handle',
-                                 site: '@site',
-                                 cardType: 'summary_large_image',
-                             }}/>
+                         description={description}
+                         canonical={`${SITE_URL}/post/${postId}`}
+                         openGraph={{
+                             url: `${SITE_URL}/post/${postId}`,
+                             locale: 'ru_RU',
+                             type: "article",
+                             title: title,
+                             description: description,
+                             images: [{
+                                 url: Images.Tools.geImageLink(cover),
+                                 width: cover.width,
+                                 height: cover.height,
+                             }],
+                             site_name: 'Молодежный журнал ИЛИ',
+                             article: {
+                                 section: rubric.slug,
+                                 publishedTime: publish_at || new Date(),
+                                 modifiedTime: updated_at || new Date(),
+                                 authors: authorsLinks,
+                                 // TODO Add meta tags
+                                 tags: []
+                             }
+                         }}
+                         twitter={{
+                             handle: '@handle',
+                             site: '@site',
+                             cardType: 'summary_large_image',
+                         }}/>
                     <Containers.Default>
                         <Typography.Heading level={4} color={theme.text.hover}
                                             margin={`32px 0 ${theme.spacing.m} 0`}>{rubric.slug}</Typography.Heading>
@@ -187,10 +188,17 @@ class Post extends React.Component{
                                 <PostComponents.ReadMore post data={readMoreLinks}/>
                             </Box>
                             <Box width={[3/12]} pl={["2%"]}>
-                                {/* TODO ADD Ads*/}
-                                <Box  width={["100%"]} height={["584px"]} bg={theme.colors.backgroundInvert}>
-                                    <div id="yandex_rtb_R-A-351229-6" >
-
+                                <Box  width={["100%"]} height={["584px"]} bg={theme.colors.backgroundInvert} sx={{position: 'relative'}}>
+                                    <Box style={{top: "50%", left: "50%", marginRight: "-50%", position: 'absolute',
+                                        transform: "translate(-50%, -50%)", zIndex: 100}}>
+                                        <Emoji emoji='money_mouth_face' set='apple' size={50}/>
+                                        <Typography.Heading margin={`10px 0`} level={1} color={theme.text.onPrimary}>
+                                            РЕК<br/>
+                                            ЛАМА
+                                        </Typography.Heading>
+                                        <Emoji emoji='money_with_wings' set='apple' size={50} />
+                                    </Box>
+                                    <div id="yandex_rtb_R-A-351229-6" style={{zIndex: 200}}>
                                     </div>
                                 </Box>
                                 {
