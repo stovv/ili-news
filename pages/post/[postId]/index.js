@@ -190,7 +190,7 @@ class Post extends React.Component{
                             <Box width={[3/12]} pl={["2%"]}>
                                 <Box  width={["100%"]} height={["584px"]} bg={theme.colors.backgroundInvert} sx={{position: 'relative'}}>
                                     <Box style={{top: "50%", left: "50%", marginRight: "-50%", position: 'absolute',
-                                        transform: "translate(-50%, -50%)", zIndex: 100}}>
+                                        transform: "translate(-50%, -50%)", zIndex: 1}}>
                                         <Emoji emoji='money_mouth_face' set='apple' size={50}/>
                                         <Typography.Heading margin={`10px 0`} level={1} color={theme.text.onPrimary}>
                                             РЕК<br/>
@@ -198,7 +198,7 @@ class Post extends React.Component{
                                         </Typography.Heading>
                                         <Emoji emoji='money_with_wings' set='apple' size={50} />
                                     </Box>
-                                    <div id="yandex_rtb_R-A-351229-6" style={{zIndex: 200}}>
+                                    <div id="yandex_rtb_R-A-351229-6">
                                     </div>
                                 </Box>
                                 {
