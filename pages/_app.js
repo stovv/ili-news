@@ -16,7 +16,7 @@ import '../assets/fonts/lato/lato.css';
 import './style.css';
 
 //const header_ignore = ["/smisol/create", "/smisol/drafts", "/login"];
-
+const yParams = { accounts: [62554705], options: { webvisor: true }};
 
 class IliApp extends App {
   static async getInitialProps({Component, ctx}) {
@@ -38,6 +38,8 @@ class IliApp extends App {
       return {pageProps};
   }
 
+
+
   render() {
     const { Component, pageProps, store, categories} = this.props;
     return (
@@ -57,6 +59,9 @@ class IliApp extends App {
                 </Containers.AppContainer>
             </IliThemeProvider>
           </StoreProvider>
+          <div>
+              <YMInitializer accounts={yParams.accounts} options={yParams.options} version="2" />
+          </div>
       </>
     );
   }
