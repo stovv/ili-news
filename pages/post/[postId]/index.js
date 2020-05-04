@@ -1,4 +1,6 @@
 import React from 'react';
+import Head from 'next/head';
+import ScriptTag from 'react-script-tag';
 import { connect } from "react-redux";
 import { withTheme } from 'styled-components';
 import { NextSeo } from 'next-seo';
@@ -58,7 +60,33 @@ class Post extends React.Component{
     }
 
     shouldComponentUpdate(nextProps){
-        return nextProps.postId !== this.props.postId;
+        //return nextProps.postId !== this.props.postId;
+    }
+
+    componentDidMount(){
+        const yaDiv = document.createElement('div')
+        yaDiv.setAttribute('id', 'yandex_rtb_R-A-351229-6"')
+        document.body.appendChild(yaDiv)
+        const yaScript = document.createElement('script')
+        yaScript.setAttribute('type', 'text/javascript')
+        yaScript.innerHTML = `(function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            console.log("Hello");
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-351229-6",
+                renderTo: "yandex_rtb_R-A-351229-6",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");`
+        document.head.appendChild(yaScript)
     }
 
     render(){
@@ -87,19 +115,21 @@ class Post extends React.Component{
                 <>
                     <NextSeo title={title}
                              description={description}
-                             canonical={SITE_URL}
+                             canonical={`${SITE_URL}/post/${postId}`}
                              openGraph={{
                                  url: `${SITE_URL}/post/${postId}`,
                                  locale: 'ru_RU',
-                                 type: "website",
+                                 type: "article",
                                  title: title,
                                  description: description,
-                                 images: [
-                                     { url: Images.Tools.geImageLink(cover) },
-                                 ],
-                                 canonical: SITE_URL,
+                                 image: {
+                                     url: Images.Tools.geImageLink(cover),
+                                     width: cover.width,
+                                     height: cover.height,
+                                 },
                                  site_name: 'Молодежный журнал ИЛИ',
                                  article: {
+                                     section: rubric.slug,
                                      publishedTime: publish_at || new Date(),
                                      modifiedTime: updated_at || new Date(),
                                      authors: authorsLinks,
@@ -158,7 +188,11 @@ class Post extends React.Component{
                             </Box>
                             <Box width={[3/12]} pl={["2%"]}>
                                 {/* TODO ADD Ads*/}
-                                <Box width={["100%"]} height={["584px"]} bg={theme.colors.backgroundInvert}/>
+                                <Box  width={["100%"]} height={["584px"]} bg={theme.colors.backgroundInvert}>
+                                    <div id="yandex_rtb_R-A-351229-6" >
+
+                                    </div>
+                                </Box>
                                 {
                                     popularPosts.length > 0 &&
                                     <>

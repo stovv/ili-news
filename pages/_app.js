@@ -1,11 +1,11 @@
 import React from 'react';
 import App from 'next/app';
 import Head from 'next/head';
-
 import withRedux from "next-redux-wrapper";
+import { Provider as StoreProvider } from "react-redux";
+import { YMInitializer } from 'react-yandex-metrika';
 
 import IliThemeProvider from '../theme';
-import { Provider as StoreProvider } from "react-redux";
 import { makeStore } from "../store";
 import { Containers } from '../components';
 
@@ -46,6 +46,7 @@ class IliApp extends App {
             <meta charSet="utf-8" />
              <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0"/>
               <title>ИЛИ</title>
+              <YMInitializer accounts={[62554705]} options={{webvisor: true}} version="2" />
           </Head>
           <StoreProvider store={store}>
             <IliThemeProvider>

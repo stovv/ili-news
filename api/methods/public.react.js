@@ -20,7 +20,9 @@ export async function getPost(id){
           caption, 
           alternativeText,
           hash,
-          ext
+          ext,
+          width,
+          height
         }
         blocks,
         comment_thread{

@@ -13,7 +13,7 @@ import Heading from "../../Typography/Heading.react";
 
 
 const Wrapper = styled.div`
-    margin: 10px;
+    margin: 10px 0;
 `;
 
 const CalloutBox = styled.div`
@@ -57,11 +57,11 @@ class Callout extends React.Component {
             return(
                 <Wrapper>
                     <CalloutBox ref={el=>this.PickerRef=el}>
-                        <Flex height="fit-content" py="18px" px="24px">
+                        <Flex height="fit-content" py="10px" px="24px">
                             <Box my="auto" width={1/10} height="100%" style={{
                                 cursor: 'pointer'
                             }} onClick={() => this.setState({reactionShown: true})}>
-                                <Box id="emoji"  sx={{margin: "0 5px"}}>
+                                <Box id="emoji"  m="0 5px">
                                     <Emoji emoji={this.state.emoji} size={45} />
                                 </Box>
                             </Box>

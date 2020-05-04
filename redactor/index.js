@@ -13,7 +13,7 @@ import {
     Form
 } from '../components';
 
-import {RedactorTypogrphy} from './style';
+import {RedactorTypogrphy, RedactorEmojiPicker} from './style';
 
 import {updateDraft} from '../store/smisolActions.react';
 
@@ -95,6 +95,7 @@ class Redactor extends React.Component {
         return (
             <>
             <RedactorTypogrphy/>
+            <RedactorEmojiPicker/>
             <Box mx='auto' sx={{
                 maxWidth: 1440,
                 mx: 'auto',

@@ -52,6 +52,11 @@ export const RedactorTypogrphy = () =>(
           letter-spacing: normal;
         }
         
+        span {
+          text-transform: uppercase;
+          color: #eb5757;
+        }
+        
         body {
           font-family: Lato,sans-serif;
           font-size: 18px;
@@ -65,3 +70,44 @@ export const RedactorTypogrphy = () =>(
     </style>
 )
 
+
+export const RedactorEmojiPicker = () =>(
+    <style jsx>
+        {`
+        .reactions {
+            position: absolute;
+            top: 60%;
+            left: 5%;
+            transform: translate(0, 50%);
+        
+        }
+        .reactions .reactions-counter {
+            display: flex;
+        }
+        
+        .reactions .emoji-mart-anchors {
+            display: none;
+        }
+        .reactions .emoji-mart-search {
+            display: none;
+        }
+        
+        .reactions .emoji-mart-bar {
+            display: none;
+        }
+        .reactions .emoji-mart-scroll {
+            overflow: auto;
+            width: fit-content;
+            margin: 0;
+            padding: 0;
+            height: auto;
+        }
+        
+        
+        .reactions .emoji-mart-category-label {
+            display: none;
+        }
+    `}
+    </style>
+);
+//span
