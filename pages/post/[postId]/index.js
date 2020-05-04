@@ -142,9 +142,6 @@ class Post extends React.Component{
                                  site: '@site',
                                  cardType: 'summary_large_image',
                              }}/>
-                     <Head>
-                         <meta name="yandex-verification" content={YANDEX_VERIFICATION} />
-                     </Head>
                     <Containers.Default>
                         <Typography.Heading level={4} color={theme.text.hover}
                                             margin={`32px 0 ${theme.spacing.m} 0`}>{rubric.slug}</Typography.Heading>
