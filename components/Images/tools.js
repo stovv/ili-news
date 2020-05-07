@@ -1,12 +1,42 @@
 import {BACKEND_URL} from "../../constants";
 
-export function geImageLink(cover, type){
+export function getImageLink(cover, type){
+    if ( cover.formats == null ){
+        return {
+            url: `${BACKEND_URL}${cover.url}`,
+            width: cover.width,
+            height: cover.height,
+            mime: cover.mime
+        };
+    }
     switch (type) {
         case 'small':
-            return `${BACKEND_URL}/uploads/small_${cover.hash}${cover.ext}`;
+            return {
+                url: `${BACKEND_URL}${cover.formats.small.url}`,
+                width: cover.formats.small.width,
+                height: cover.formats.small.height,
+                mime: cover.formats.small.mime
+            };
         case 'medium':
-            return `${BACKEND_URL}/uploads/medium_${cover.hash}${cover.ext}`;
+            return {
+                url: `${BACKEND_URL}${cover.formats.medium.url}`,
+                width: cover.formats.medium.width,
+                height: cover.formats.medium.height,
+                mime: cover.formats.medium.mime
+            };
+        case 'thumbnail':
+            return {
+                url: `${BACKEND_URL}${cover.formats.thumbnail.url}`,
+                width: cover.formats.thumbnail.width,
+                height: cover.formats.thumbnail.height,
+                mime: cover.formats.thumbnail.mime
+            };
         default:
-            return `${BACKEND_URL}/uploads/${cover.hash}${cover.ext}`;
+            return {
+                url: `${BACKEND_URL}${cover.url}`,
+                width: cover.width,
+                height: cover.height,
+                mime: cover.mime
+            };
     }
 }

@@ -141,6 +141,7 @@ const H6 = styled.h6`
     `}
 `;
 
+
 const headings = {
     1: H1,
     2: H2,
@@ -148,6 +149,7 @@ const headings = {
     4: H4,
     5: H5,
     6: H6,
+    7: H6
 };
 
 class Heading extends React.Component{

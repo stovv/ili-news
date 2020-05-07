@@ -1,4 +1,4 @@
-import {RESTORE_AUTH_STATE, SING_IN, SING_OUT} from "../tools/constants";
+import {RESTORE_AUTH_STATE, SING_IN, SING_OUT, SAVE_CLIENT_IP} from "../tools/constants";
 import { Auth } from '../api';
 
 function signInAction(data){
@@ -6,6 +6,15 @@ function signInAction(data){
        type: SING_IN,
        payload: data
    };
+};
+
+export function saveIpAction(ip) {
+    return {
+      type: SAVE_CLIENT_IP,
+      payload: {
+          ip
+      }
+    };
 };
 
 

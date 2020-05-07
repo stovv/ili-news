@@ -20,7 +20,7 @@ export const Default = ({children, mt, mb})=>
 </Common>
 
 
-Default.PropTypes = {
+Default.propTypes = {
     mt: PropTypes.string,
     mb: PropTypes.string
 }

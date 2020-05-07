@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Simple } from '../Images';
-import { geImageLink } from './tools';
+import { getImageLink } from './tools';
 
 
 const Lazy = ({cover, ...props }) => {
@@ -11,8 +11,8 @@ const Lazy = ({cover, ...props }) => {
     var Thumb = ``;
     var Cover = ``
     if (typeof cover === "object"){
-        Thumb = geImageLink(cover, 'small');
-        Cover = geImageLink(cover);
+        Thumb = getImageLink(cover, 'thumbnail')['url'];
+        Cover = getImageLink(cover)['url'];
     }else{
         Thumb = cover;
         Cover = cover;

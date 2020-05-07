@@ -24,7 +24,7 @@ class Paragraph extends React.Component{
         }
 
         return (
-            <ParagraphComponent>{data.text}</ParagraphComponent>
+            <ParagraphComponent dangerouslySetInnerHTML={{__html: data.text}}/>
         )
     }
 

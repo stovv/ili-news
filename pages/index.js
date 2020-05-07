@@ -1,12 +1,11 @@
 import React from 'react';
-import Head from "next/head";
-import {Flex, Box} from 'rebass';
 
 import {TopPosts, NewsPostsComps, CategoryLine, CompsBannerAd} from '../compilations';
 import {Containers} from '../components';
-import {BACKEND_URL, YANDEX_VERIFICATION} from '../constants';
+import {SITE_INFO, SITE_URL, YANDEX_VERIFICATION} from '../constants';
 import {Public} from '../api';
 import {Mocks} from '../assets';
+import {NextSeo} from "next-seo";
 
 
 class FrontPage extends React.Component {
@@ -27,20 +26,39 @@ class FrontPage extends React.Component {
 
         return (
             <React.Fragment>
-                <Head>
-                    <meta name="yandex-verification" content={YANDEX_VERIFICATION}/>
-                </Head>
+                <NextSeo title={SITE_INFO.TITLE}
+                         description={SITE_INFO.DESCRIPTION}
+                         canonical={SITE_URL}
+                         openGraph={{
+                             url: SITE_URL,
+                             locale: 'ru_RU',
+                             type: "website",
+                             title: SITE_INFO.TITLE,
+                             description: SITE_INFO.DESCRIPTION,
+                             images: [SITE_INFO.IMAGE],
+                             site_name: SITE_INFO.TITLE,
+                         }}
+                         twitter={{
+                             handle: '@handle',
+                             site: '@site',
+                             cardType: 'summary_large_image',
+                         }}/>
+                <meta name="yandex-verification" content={YANDEX_VERIFICATION}/>
                 <TopPosts posts={topPosts}/>
-                <NewsPostsComps compilation={Mocks.testPosts} news={Mocks.testPosts} posts={Mocks.testPosts}/>
+
+            </React.Fragment>
+        );
+    }
+}
+
+/*<NewsPostsComps compilation={Mocks.testPosts} news={Mocks.testPosts} posts={Mocks.testPosts}/>
                 <CategoryLine posts={Mocks.testPosts}/>
                 <CompsBannerAd posts={Mocks.testPosts} bannerContent={{
                     text: "Стань членом клуба 'ИЛИ ПРЕМИУМ' и получай подарки за чтение новостей",
                     buttonText: "Присоеденится",
                     buttonLink: "/test"
                 }} bannerAdContent={{}}/>
-            </React.Fragment>
-        );
-    }
-}
+*
+* */
 
 export default FrontPage;

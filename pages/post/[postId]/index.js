@@ -13,7 +13,8 @@ import {UniversalBlock, Containers, Typography, Images, Cards, Form, PostCompone
 import { Icons } from '../../../assets';
 import { Public } from '../../../api';
 import { getFormatedDate } from '../../../tools';
-import {SITE_URL, YANDEX_VERIFICATION} from '../../../constants';
+import { saveIpAction } from '../../../store/authActions.react';
+import { SITE_URL, YANDEX_VERIFICATION } from '../../../constants';
 import {Emoji} from "emoji-mart";
 
 
@@ -29,20 +30,23 @@ class Post extends React.Component{
         let readMoreLinks = null;
         let popularPosts = null;
 
-        const clientIp = (req.headers['x-forwarded-for'] || '').split(',').pop() ||
-            req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
+        if (store.getState().auth.ip.length === 0 && req != null){
+            const clientIp = (req.headers['x-forwarded-for'] || '').split(',').pop() ||
+                req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
+            await store.dispatch(saveIpAction(clientIp));
+        }
 
         //todo Add some logged client Id
         await Public.getPost(postId)
             .then(response=>current_post = response.data.post)
             .catch(reason=>{
                 //TODO Add Toast
-                console.log(reason);
+                console.log(reason.response.statusText);
             });
 
-        await Public.viewPost(current_post.rating.id, clientIp);
+        await Public.viewPost(current_post.rating.id, store.getState().auth.ip);
 
-        await Public.getReadMore(current_post.rubric.id)
+        await Public.getReadMore(current_post.rubric.id, postId)
             .then(response=>readMoreLinks = response.data.ratings)
             .catch(reason => {
                 console.log(reason);
@@ -52,50 +56,20 @@ class Post extends React.Component{
             .then(response=> popularPosts = response.data.ratings)
             .catch(reason=> console.log(reason));
 
-
         return {
-            error: current_post ? null : 404,
+            error: current_post != null ? null : 404,
             current_post,
             readMoreLinks,
             popularPosts,
-            clientIp,
+            clientIp: store.getState().auth.ip,
             postId,
+            store,
             amp: amp
         }
     }
 
-    shouldComponentUpdate(nextProps){
-        //return nextProps.postId !== this.props.postId;
-    }
-
-    componentDidMount(){
-        const yaDiv = document.createElement('div')
-        yaDiv.setAttribute('id', 'yandex_rtb_R-A-351229-6"')
-        document.body.appendChild(yaDiv)
-        const yaScript = document.createElement('script')
-        yaScript.setAttribute('type', 'text/javascript')
-        yaScript.innerHTML = `(function(w, d, n, s, t) {
-        w[n] = w[n] || [];
-        w[n].push(function() {
-            console.log("Hello");
-            Ya.Context.AdvManager.render({
-                blockId: "R-A-351229-6",
-                renderTo: "yandex_rtb_R-A-351229-6",
-                async: true
-            });
-        });
-        t = d.getElementsByTagName("script")[0];
-        s = d.createElement("script");
-        s.type = "text/javascript";
-        s.src = "//an.yandex.ru/system/context.js";
-        s.async = true;
-        t.parentNode.insertBefore(s, t);
-    })(this, this.document, "yandexContextAsyncCallbacks");`
-        document.head.appendChild(yaScript)
-    }
-
     render(){
-        const {amp, error, current_post, postId, theme, readMoreLinks, popularPosts, clientIp } = this.props;
+        const {amp, error, current_post, postId, theme, readMoreLinks, popularPosts, clientIp, store } = this.props;
 
         if (error !== null){
             return <Error statusCode={error}/>;
@@ -124,7 +98,7 @@ class Post extends React.Component{
                              title: title,
                              description: description,
                              images: [{
-                                 url: Images.Tools.geImageLink(cover),
+                                 url: Images.Tools.getImageLink(cover),
                                  width: cover.width,
                                  height: cover.height,
                              }],
@@ -144,8 +118,8 @@ class Post extends React.Component{
                              cardType: 'summary_large_image',
                          }}/>
                     <Containers.Default>
-                        <Typography.Heading level={4} color={theme.text.hover}
-                                            margin={`32px 0 ${theme.spacing.m} 0`}>{rubric.slug}</Typography.Heading>
+                        <Typography.Heading level={4} color={theme.text.hover} textTransform="lowercase"
+                                            margin={`32px 0 ${theme.spacing.m} 0`}>{rubric.title}</Typography.Heading>
                         <Typography.Heading level={1} breakWord maxWidth="80%"
                                             margin={`${theme.spacing.m} 0`}>{title}</Typography.Heading>
                         <Flex>
@@ -188,19 +162,7 @@ class Post extends React.Component{
                                 <PostComponents.ReadMore post data={readMoreLinks}/>
                             </Box>
                             <Box width={[3/12]} pl={["2%"]}>
-                                <Box  width={["100%"]} height={["584px"]} bg={theme.colors.backgroundInvert} sx={{position: 'relative'}}>
-                                    <Box style={{top: "50%", left: "50%", marginRight: "-50%", position: 'absolute',
-                                        transform: "translate(-50%, -50%)", zIndex: 1}}>
-                                        <Emoji emoji='money_mouth_face' set='apple' size={50}/>
-                                        <Typography.Heading margin={`10px 0`} level={1} color={theme.text.onPrimary}>
-                                            РЕК<br/>
-                                            ЛАМА
-                                        </Typography.Heading>
-                                        <Emoji emoji='money_with_wings' set='apple' size={50} />
-                                    </Box>
-                                    <div id="yandex_rtb_R-A-351229-6">
-                                    </div>
-                                </Box>
+                                <Form.AdBlock id={'R-A-351229-6'} width={["100%"]} height={["584px"]}/>
                                 {
                                     popularPosts.length > 0 &&
                                     <>
@@ -227,6 +189,7 @@ class Post extends React.Component{
                 </>
             );
         }catch (e) {
+            console.log("ERROR", e)
             return <Error statusCode={404}/>
         }
 

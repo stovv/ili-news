@@ -26,7 +26,7 @@ class CategoryLine extends React.Component {
     }
 }
 
-CategoryLine.PropTypes = {
+CategoryLine.propTypes = {
     posts: PropTypes.array.isRequired
 }
 

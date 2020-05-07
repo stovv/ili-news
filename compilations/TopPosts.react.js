@@ -4,37 +4,44 @@ import { withTheme } from 'styled-components';
 
 import {Images, Cards, Typography, Containers} from '../components';
 import {Upper} from "../components/Animations";
+import {PostLink} from "../components/Links.react";
 
 class TopPosts extends React.Component {
+
+    shouldComponentUpdate(nextProps, nextState){
+        return false;
+    }
 
     render(){
         const {posts, theme} = this.props;
         console.log(posts);
-        const {id, title, description, cover, } = posts[0].post;
+        const {id, title, description, cover, rubric } = posts[0].post;
 
         return (
             <React.Fragment>
                 <Images.Lazy cover={cover}  blur height="384px" blackout>
-                    <Flex mt={[81]}>
-                        <Box>
-                            <Containers.Default>
-                                <Typography.TagLabel type="large"
-                                                     color={theme.text.onPrimary}
-                                                     margin={`0 0 ${theme.spacing.m} 0`}
-                                                     textTransform="lowercase">test</Typography.TagLabel>
-                                <Typography.Heading level={1}
-                                                    color={theme.text.onPrimary}
-                                                    maxWidth="816px"
-                                                    margin={` ${theme.spacing.m} 0 0 0`}
-                                >{title}</Typography.Heading>
-                            </Containers.Default>
-                        </Box>
-                    </Flex>
+                    <Containers.Default>
+                        <Flex mt={[81]}>
+                            <Box>
+                                    <Typography.TagLabel type="large"
+                                                         color={theme.text.onPrimary}
+                                                         margin={`0 0 ${theme.spacing.m} 0`}
+                                                         textTransform="lowercase">{rubric.title}</Typography.TagLabel>
+                                    <Typography.Heading level={1}
+                                                        color={theme.text.onPrimary}
+                                                        maxWidth="816px"
+                                                        margin={` ${theme.spacing.m} 0 0 0`}
+                                    >{title}</Typography.Heading>
+                            </Box>
+                        </Flex>
+                    </Containers.Default>
                 </Images.Lazy>
                 <Containers.Default>
                     <Flex height="400px" >
                         <Box width={[2/4]} pb={["20px"]} height="490px">
-                            <Cards.Large cover={cover} type="bottomLeft" tight>{description}</Cards.Large>
+                            <PostLink postId={id}>
+                                <Cards.Large cover={cover} type="bottomLeft" tight>{description}</Cards.Large>
+                            </PostLink>
                         </Box>
                         {
                             posts.slice(1).map((item, index) => (

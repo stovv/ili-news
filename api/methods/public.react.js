@@ -6,7 +6,8 @@ export async function getPost(id){
       post(id:${id}){
         rubric{
           id,
-          slug
+          slug,
+          title
         },
         title,
         description,
@@ -19,10 +20,11 @@ export async function getPost(id){
         cover{
           caption, 
           alternativeText,
-          hash,
-          ext,
+          url,
           width,
-          height
+          mime,
+          height,
+          formats
         }
         blocks,
         comment_thread{
@@ -37,13 +39,14 @@ export async function getPost(id){
         updated_at
       }
     }
+    
     `);
 }
 
-export async function getReadMore(rubricId){
+export async function getReadMore(rubricId, postId){
     return api.ql(`
         query{
-          ratings(limit: 3, sort: "views:DESC,likes:DESC,dislikes:DESC", where: { post: { rubric: { id: ${rubricId} } } }){
+          ratings(limit: 3, sort: "views:DESC,likes:DESC,dislikes:DESC", where: { post: { id_ne: ${postId} , rubric: { id: ${rubricId} } } }){
             post{
               id,
               title
@@ -51,6 +54,34 @@ export async function getReadMore(rubricId){
           }
         }
     `)
+}
+
+export async function getMenu(type){
+    return api.ql(`
+    query{
+      menus(where: {type: "${type}"}){
+        id,
+        item{
+         ... on ComponentLinksItem{
+          post{
+            id,
+            title
+          },
+          category{
+            id,
+            slug,
+            title
+          },
+          rubric{
+            id,
+            slug,
+            title
+          }
+         }
+        }
+      }
+    }
+    `);
 }
 
 export async function getPopularDuringWeek(){
@@ -124,11 +155,14 @@ export async function fetchTopPosts(){
                     cover{
                         caption, 
                         alternativeText,
-                        hash,
-                        ext
+                        formats,
+                        width,
+                        height,
+                        url,
+                        mime
                     },
                     rubric{
-                       slug
+                       title
                     }
                     created_at
                 }

@@ -1,4 +1,4 @@
-import {SING_IN, SING_OUT} from "../tools/constants";
+import {SING_IN, SING_OUT, SAVE_CLIENT_IP} from "../tools/constants";
 import {getCookie, setCookie, removeCookie} from '../tools/cookie.react';
 
 
@@ -12,14 +12,16 @@ if (typeof localStorage !== "undefined") {
         initialState = {
             isLoggedIn: false,
             user_id: null,
-            jwt: ""
+            jwt: "",
+            ip: ""
         }
     }
 } else {
     initialState = {
         isLoggedIn: false,
         user_id: null,
-        jwt: ""
+        jwt: "",
+        ip: ""
     };
 }
 
@@ -29,17 +31,27 @@ function authReducer(state, action){
        case SING_OUT:
            removeCookie("auth");
            return {
+               ...state,
                isLoggedIn: false
            };
 
        case SING_IN:
            const authObj = {
+               ...state,
                isLoggedIn: true,
                jwt: action.payload.jwt,
                user_id: action.payload.user.id
            };
            setCookie("auth", authObj);
            return authObj;
+       case SAVE_CLIENT_IP:{
+           const authObj = {
+               ...state,
+               ip: action.payload.ip
+           };
+           setCookie("auth", authObj);
+           return authObj;
+       }
        default:
            return initialState;
    }

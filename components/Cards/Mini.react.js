@@ -6,7 +6,7 @@ import {withTheme} from "styled-components";
 import { Simple } from '../Images';
 import TagLabel from "../Typography/Tag.react";
 import {CardText} from "../Typography";
-import {geImageLink} from "../Images/tools";
+import {getImageLink} from "../Images/tools";
 
 class Mini extends React.Component
 {
@@ -33,7 +33,7 @@ class Mini extends React.Component
                           }
                       }}>
                     <Box width="128px">
-                        <Simple url={geImageLink(cover, 'small')} />
+                        <Simple url={getImageLink(cover, 'small')} />
                     </Box>
                     <Box ml={theme.spacing.xs} my="14px">
                         <TagLabel type="small" color={theme.text.hover}

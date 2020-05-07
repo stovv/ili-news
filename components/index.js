@@ -1,6 +1,6 @@
 // Simple Components
 import * as Form from './Forms';
-import * as Headers from './Headers';
+import * as Menus from './Menus';
 import * as Images from './Images';
 import * as Typography from './Typography';
 import * as Containers from './Containers.react';
@@ -22,7 +22,7 @@ export {
     Errors,
     Toasts,
     Form,
-    Headers,
+    Menus,
     Images,
     Typography,
     Containers,

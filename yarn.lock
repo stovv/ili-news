@@ -7408,6 +7408,13 @@ react-id-generator@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-id-generator/-/react-id-generator-3.0.0.tgz#20fba0a12355924f1d7b4bfe2ac262c0ad02c7ef"
   integrity sha512-egmdswpzA/z8UlignCZKmJqrO0EaqmW13M8756wE+V/6NtYf0CdvDjkGpat/Q/djXfg7F/C0267Gff1RHgpfIQ==
 
+react-infinite-scroll-component@^5.0.4:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/react-infinite-scroll-component/-/react-infinite-scroll-component-5.0.4.tgz#45ca72c75bfe1ad5cf46d032247a8e0af65593ca"
+  integrity sha512-wl6MXreH57z6X6uILpRbvt2iaETZDX4HdnHaPy0vp9fVQ01ALM+zvFrG2xk2nsxynXxob2IEFan9eI1CDV2V0A==
+  dependencies:
+    throttle-debounce "^2.1.0"
+
 react-is@16.8.6:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
