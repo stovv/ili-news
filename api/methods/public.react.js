@@ -25,7 +25,7 @@ export async function getPost(id){
           mime,
           height,
           formats
-        }
+        },
         blocks,
         comment_thread{
             id
@@ -92,6 +92,8 @@ export async function getPopularDuringWeek(){
     let diff = today.getDate() - day + (day === 0 ? -6:1);
     let start = new Date(today.setDate(diff))
     let end = new Date(today.setDate(start.getDate() + 7))
+
+    console.log("DATE", start, end);
 
     return api.ql(`
        query{
@@ -163,8 +165,8 @@ export async function fetchTopPosts(){
                     },
                     rubric{
                        title
-                    }
-                    created_at
+                    },
+                    publish_at
                 }
             }
         }
@@ -187,4 +189,74 @@ export async function dislikeUp(raitingId, clientId){
     return api.put(`/ratings/dislikeup/${raitingId}`, {
         clientIp: clientId
     })
+}
+
+export async function fetchTheme(start = 0){
+    return api.ql(`
+        query{
+            themes(sort: "created_at:DESC", limit: 1, where: {published: true}, start: ${start}){
+            id,
+              title,
+              posts{
+                id,
+                title,
+                cover{
+                  caption, 
+                  alternativeText,
+                  url,
+                  width,
+                  mime,
+                  height,
+                  formats
+                },
+            }
+          }
+        }
+    `);
+}
+
+export async function fetchNews(limit = 6) {
+    return api.ql(`
+          query{
+            posts(sort: "publish_at:DESC", limit: ${limit}, where: {rubric:{id: 17}}){
+            id,
+            title,
+            publish_at
+          }
+        }
+    `);
+}
+
+export async function fetchSimplePosts(skipPostIds = [], skipRubricIds = [17], skipCategorieIds = [], limit = 2) {
+    return api.ql(`
+        query{
+            posts(sort: "publish_at:DESC", limit: ${limit}, 
+              where: {
+                id_nin: [${",".join(skipPostIds)}],
+                rubric:{
+                  id_nin: [${",".join(skipRubricIds)}], 
+                  category:{
+                    id_nin: [${",".join(skipCategorieIds)}]
+                  }
+                }
+              }){
+            id,
+            title,
+            publish_at,
+            cover{
+              caption, 
+              alternativeText,
+              url,
+              width,
+              mime,
+              height,
+              formats
+            },
+            rubric{
+              slug,
+              title
+            },
+          }
+        }
+        `);
 }

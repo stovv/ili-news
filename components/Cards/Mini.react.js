@@ -12,7 +12,6 @@ class Mini extends React.Component
 {
     render(){
         const {heading, cover, children, theme, link, ...props} = this.props;
-        console.log(cover);
         if ( typeof cover === "undefined"){
             return (<></>);
         }

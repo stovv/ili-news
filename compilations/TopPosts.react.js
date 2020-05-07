@@ -14,7 +14,6 @@ class TopPosts extends React.Component {
 
     render(){
         const {posts, theme} = this.props;
-        console.log(posts);
         const {id, title, description, cover, rubric } = posts[0].post;
 
         return (
@@ -38,9 +37,9 @@ class TopPosts extends React.Component {
                 </Images.Lazy>
                 <Containers.Default>
                     <Flex height="400px" >
-                        <Box width={[2/4]} pb={["20px"]} height="490px">
+                        <Box width={[2/4]} pb={["20px"]} height="490px" sx={{transform: "translate(0, -20%)"}}>
                             <PostLink postId={id}>
-                                <Cards.Large cover={cover} type="bottomLeft" tight>{description}</Cards.Large>
+                                <Cards.Large cover={cover} type="bottomLeft">{description}</Cards.Large>
                             </PostLink>
                         </Box>
                         {

@@ -9,5 +9,4 @@ export const SITE_INFO = {
         width: 112,
         height: 112
     }
-
 }

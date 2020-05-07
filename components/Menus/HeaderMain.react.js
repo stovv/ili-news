@@ -18,7 +18,7 @@ const MenuLink = styled.a`
   max-height: 22px;
   font-family: ${props=> props.theme.fontFamily};
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 600;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.12;
@@ -51,7 +51,6 @@ class HeaderNavBar extends React.Component {
     }
     render(){
         const { menus, route } = this.props;
-        console.log(menus);
         return(
             <Default>
                 <Flex bg={this.props.theme.colors.secondary} height={["72px"]}>

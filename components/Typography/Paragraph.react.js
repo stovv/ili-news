@@ -5,10 +5,10 @@ import styled from 'styled-components';
 const ParagraphComponent = styled.p`
   font-family: ${props=>props.theme.fontFamily};
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 400;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.33;
+  line-height: 1.4;
   letter-spacing: normal;
   color: ${props => props.theme.text.primary};
 

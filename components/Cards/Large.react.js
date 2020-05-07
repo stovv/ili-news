@@ -66,9 +66,7 @@ class Large extends React.Component{
             TextPosition = Object.values(Types(theme))[0];
         }
         return (
-
-            <Lazy cover={cover} blackout height={height}
-                    transform={tight && "translate(0, -20%)"} hover>
+            <Lazy cover={cover} blackout height={height} hover>
                     <Box  {...TextPosition.wrap}>
                         {
                             heading &&

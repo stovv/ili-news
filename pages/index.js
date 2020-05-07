@@ -10,7 +10,7 @@ import {NextSeo} from "next-seo";
 
 class FrontPage extends React.Component {
     static async getInitialProps() {
-        var topPosts = [];
+        let topPosts = [];
         await Public.fetchTopPosts()
             .then(response => {
                 topPosts = response.data.tops ? response.data.tops : [];
@@ -18,7 +18,24 @@ class FrontPage extends React.Component {
             .catch(reason => {
                 console.log("REASON", reason.response);
             });
-        return {topPosts};
+
+        let lastTheme = null;
+        let newsFeed = null;
+        let posts = null;
+        try {
+            await Public.fetchTheme()
+                .then(response => lastTheme = response.data.themes[0])
+                .catch(reason => console.log(reason.response.statusText));
+            await Public.fetchNews()
+                .then(response => newsFeed = response.data.posts)
+                .catch(reason => console.log(reason.response.statusText));
+            await Public.fetchPosts()
+                .then(response => posts = response.data.posts)
+                .catch (reason => console.log(reason.response.statusText));
+        }catch (e) {
+            console.log(e);
+        }
+        return {topPosts, lastTheme, newsFeed, posts};
     }
 
     render() {

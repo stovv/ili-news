@@ -12,7 +12,7 @@ const H1 = styled.h1`
     text-transform: ${props=>props.textTransform};
     text-align: ${props=>props.textAlign};
     overflow-wrap: ${props=> props.breakWord ? 'break-word' : 'unset'};
-    font-size: 56px;
+    font-size: 48px;
     font-weight: bold;
     font-stretch: normal;
     font-style: normal;
@@ -58,7 +58,7 @@ const H3 = styled.h3`
     text-transform: ${props=>props.textTransform};
     text-align: ${props=>props.textAlign};
     overflow-wrap: ${props=> props.breakWord ? 'break-word' : 'unset'};
-    font-size: 30px;
+    font-size: 28px;
     font-weight: bold;
     font-stretch: normal;
     font-style: normal;
@@ -81,7 +81,7 @@ const H4 = styled.h4`
     text-transform: ${props=>props.textTransform};
     text-align: ${props=>props.textAlign};
     overflow-wrap: ${props=> props.breakWord ? 'break-word' : 'unset'};
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     font-stretch: normal;
     font-style: normal;

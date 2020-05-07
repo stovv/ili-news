@@ -14,9 +14,9 @@ class Post extends React.Component{
 
     render(){
         const { theme, float } = this.props;
-        const {id, title, cover, created_at, rubric } = this.props.post || {};
+        const {id, title, cover, publish_at, rubric } = this.props.post || {};
 
-        var date = new Date(created_at);
+        var date = new Date(publish_at);
         var options = { year: 'numeric', month: 'long', day: 'numeric' };
         const publishDate = date.toLocaleString("ru-RU", options).replace('г.', '');
 

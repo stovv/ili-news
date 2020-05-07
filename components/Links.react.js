@@ -18,7 +18,7 @@ export const UniversalLink = ({ item, component }) => {
             </Component>
         </CategoryLink>;
     }else if (item.rubric !== null) {
-        return <RubricLink rubricId={item.rubric.id}>
+        return <RubricLink rubricSlug={item.rubric.slug}>
             <Component>
                 {item.rubric.title}
             </Component>
@@ -33,7 +33,7 @@ export const UniversalLink = ({ item, component }) => {
 }
 
 
-export const PostLink = ({postId, children}) => (
+export const PostLink = ({postId, children, ...props}) => (
     <Link href={"/post/[postId]"} as={`/post/${postId}`} passHref>
         <a style={noDecoration}>
             {children}
@@ -41,8 +41,8 @@ export const PostLink = ({postId, children}) => (
     </Link>
 );
 
-export const RubricLink = ({ rubricId, children }) => (
-    <Link href={"/rubric/[rubricId]"} as={`/rubric/${rubricId}`} passHref>
+export const RubricLink = ({ rubricSlug, children }) => (
+    <Link href={"/rubric/[rubricSlug]"} as={`/rubric/${rubricSlug}`} passHref>
         {children}
     </Link>
 );
@@ -58,10 +58,7 @@ CategoryLink.propTypes = {
 }
 
 RubricLink.propTypes = {
-    rubricId: PropTypes.oneOf([
-        PropTypes.string,
-        PropTypes.node
-    ]).isRequired,
+    rubricSlug: PropTypes.string.isRequired,
 }
 
 PostLink.propTypes = {

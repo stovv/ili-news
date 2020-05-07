@@ -97,11 +97,13 @@ class Post extends React.Component{
                              type: "article",
                              title: title,
                              description: description,
-                             images: [{
-                                 url: Images.Tools.getImageLink(cover),
-                                 width: cover.width,
-                                 height: cover.height,
-                             }],
+                             images: [
+                                 {
+                                    url: Images.Tools.getImageLink(cover)['url'],
+                                    width: cover.width,
+                                    height: cover.height,
+                                 }
+                             ],
                              site_name: 'Молодежный журнал ИЛИ',
                              article: {
                                  section: rubric.slug,
@@ -136,7 +138,7 @@ class Post extends React.Component{
                         <Images.Lazy cover={cover} width="100%" height="560px"/>
 
                         <Flex mt={["64px"]} >
-                            <Box width={[9/12]} >
+                            <Box width={[9/12]} pr={["10%"]}>
                                 {
                                     blocks.map((item, index)=>
                                         <React.Fragment key={index}>
