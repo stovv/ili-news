@@ -93,7 +93,7 @@ export async function getPopularDuringWeek(){
     let start = new Date(today.setDate(diff))
     let end = new Date(today.setDate(start.getDate() + 7))
 
-    console.log("DATE", start, end);
+    //console.log("DATE", start, end);
 
     return api.ql(`
        query{
@@ -200,6 +200,9 @@ export async function fetchTheme(start = 0){
               posts{
                 id,
                 title,
+                rubric{
+                    title,
+                },
                 cover{
                   caption, 
                   alternativeText,
@@ -259,4 +262,49 @@ export async function fetchSimplePosts(skipPostIds = [], skipRubricIds = [17], s
           }
         }
         `);
+}
+
+export async function fetchCatPosts(limit = 4, category, skipPostIds = [], start = 0){
+    return api.ql(`
+        query{
+            posts(sort: "publish_at:DESC", limit: ${limit}, start: ${start},
+              where: {
+                id_nin: [${skipPostIds.join(",")}],
+                rubric:{ 
+                  category:{
+                    id: ${category}
+                  }
+                }
+              }){
+            id,
+            title,
+            publish_at,
+            cover{
+              caption, 
+              alternativeText,
+              url,
+              width,
+              mime,
+              height,
+              formats
+            },
+            rubric{
+              slug,
+              title
+            },
+          }
+        }
+    `);
+}
+
+export async function fetcFrontPageCategories() {
+    return api.ql(`
+        query{
+            categories(where: {rubrics: {id_nin: [13, 17]}}){
+              id,
+              slug,
+              title
+            }
+        }
+    `);
 }
