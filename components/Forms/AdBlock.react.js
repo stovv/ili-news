@@ -8,15 +8,19 @@ import { Typography } from "../index";
 
 class YandexRTB extends React.Component {
     componentDidMount(){
+
+        const {id, uid, infinity} = this.props;
+
         const yaScript = document.createElement('script')
         yaScript.setAttribute('type', 'text/javascript')
         yaScript.innerHTML = `(function(w, d, n, s, t) {
             w[n] = w[n] || [];
             w[n].push(function() {
                 Ya.Context.AdvManager.render({
-                    blockId: "${this.props.id}",
-                    renderTo: "yandex_rtb_${this.props.id}",
-                    async: true
+                    blockId: "${id}",
+                    async: true,
+                    ${infinity ? `renderTo: "yandex_rtb_${id}_${uid}"` : `renderTo: "yandex_rtb_${id}"`},
+                    ${infinity && `pageNumber: ${uid}`}
                 });
             });
             t = d.getElementsByTagName("script")[0];
@@ -25,12 +29,13 @@ class YandexRTB extends React.Component {
             s.src = "//an.yandex.ru/system/context.js";
             s.async = true;
             t.parentNode.insertBefore(s, t);
-        })(this, this.document, "yandexContextAsyncCallbacks");`
+        })(this, this.document, "yandexContextAsyncCallbacks");
+        `
         document.head.appendChild(yaScript);
     }
 
     render(){
-        const { id, width, height, theme } = this.props;
+        const { id, infinity, uid, width, height, theme } = this.props;
         return(
             <Box  width={width} height={height} bg={theme.colors.backgroundInvert} sx={{position: 'relative'}}>
                 <Box style={{top: "50%", left: "50%", marginRight: "-50%", position: 'absolute',
@@ -42,7 +47,7 @@ class YandexRTB extends React.Component {
                     </Typography.Heading>
                     <Emoji emoji='money_with_wings' set='apple' size={50} />
                 </Box>
-                <div id={`yandex_rtb_${id}`}>
+                <div id={infinity ? `yandex_rtb_${id}_${uid}` : `yandex_rtb_${id}`}>
                 </div>
             </Box>
         );
@@ -51,6 +56,8 @@ class YandexRTB extends React.Component {
 
 YandexRTB.propTypes = {
     id: PropTypes.string.isRequired,
+    infinity: PropTypes.bool,
+    uid: PropTypes.number,
     height: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
