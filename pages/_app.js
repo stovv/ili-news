@@ -38,8 +38,6 @@ class IliApp extends App {
       return {pageProps, header};
   }
 
-
-
   render() {
     const { Component, pageProps, store, header} = this.props;
     return (

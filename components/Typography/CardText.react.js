@@ -96,8 +96,22 @@ const Small = styled.p`
   font-weight: ${props=> props.weight ? props.weight : "700" };
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.04;
+  line-height: 1.09;
   letter-spacing: normal;
+  ${({hideOwerflow, maxLines}) => hideOwerflow && `
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: ${maxLines};
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+  `}
+  
+  ${({hover, theme}) => hover && `
+      :hover{
+          transition: all 0.4s ease-in-out;
+          color: ${theme.text.hover};
+      }
+  `}
 `;
 
 const cardTexts = {
@@ -134,6 +148,7 @@ CardText.propTypes = {
     bottom: PropTypes.string,
     textTransform: PropTypes.string,
     textAlign: PropTypes.string,
+    hideOwerflow: PropTypes.bool,
     width: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number

@@ -4,13 +4,14 @@ import { Flex, Box } from 'rebass';
 
 import NewsBlock from "./Banners/News.react";
 import {Cards, Containers} from '../components';
+import {PostLink} from "../components/Links.react";
 
 
 class NewsPostsComps extends React.Component {
     render(){
         const {compilation, news, posts} = this.props;
 
-        const {id, title, description, cover, tag} = compilation[compilation.length - 1].post;
+        const {id, title, description, cover, tag} = compilation.posts[0];
         return (
             <Containers.Default>
                 <Flex height={["672px"]} marginTop={["55px"]}>
@@ -19,7 +20,9 @@ class NewsPostsComps extends React.Component {
                             {
                                 posts.slice(0,2).map((item,index)=>
                                     <React.Fragment key={index}>
-                                        <Cards.Post post={item.post}>{title}</Cards.Post>
+                                        <Box height="50%" >
+                                            <Cards.Post post={item}/>
+                                        </Box>
                                     </React.Fragment>
                                 )
                             }
@@ -28,16 +31,18 @@ class NewsPostsComps extends React.Component {
                     <Box width={2/4} height="100%" >
                         <Flex flexDirection="column" height="100%">
                             <Box height={["75%"]} width="100%" mx="auto">
-                                <Cards.Large cover={cover} heading={tag.name} type="topRight" >{title}</Cards.Large>
+                                <PostLink postId={id}>
+                                    <Cards.Large cover={cover} heading={compilation.title} type="topRight" >{title}</Cards.Large>
+                                </PostLink>
                             </Box>
                             <Box height={["25%"]}>
                                 <Flex>
                                     {
-                                        compilation.slice(1, 3).map((item, index)=>
+                                        compilation.posts.slice(1, 3).map((item, index)=>
                                             <React.Fragment key={index}>
-                                                <Box width={1/2} mt="32px">
-                                                    <Cards.Mini heading={item.post.tag.name} cover={item.post.cover}>
-                                                        {item.post.title}
+                                                <Box width={1/2} mt="32px" mr="20px">
+                                                    <Cards.Mini heading={compilation.title} cover={item.cover} id={item.id}>
+                                                        {item.title}
                                                     </Cards.Mini>
                                                 </Box>
                                             </React.Fragment>

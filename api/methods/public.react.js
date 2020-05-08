@@ -232,11 +232,11 @@ export async function fetchSimplePosts(skipPostIds = [], skipRubricIds = [17], s
         query{
             posts(sort: "publish_at:DESC", limit: ${limit}, 
               where: {
-                id_nin: [${",".join(skipPostIds)}],
+                id_nin: [${skipPostIds.join(",")}],
                 rubric:{
-                  id_nin: [${",".join(skipRubricIds)}], 
+                  id_nin: [${skipRubricIds.join(",")}], 
                   category:{
-                    id_nin: [${",".join(skipCategorieIds)}]
+                    id_nin: [${skipCategorieIds.join(",")}]
                   }
                 }
               }){

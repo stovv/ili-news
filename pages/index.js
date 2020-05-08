@@ -29,9 +29,9 @@ class FrontPage extends React.Component {
             await Public.fetchNews()
                 .then(response => newsFeed = response.data.posts)
                 .catch(reason => console.log(reason.response.statusText));
-            await Public.fetchPosts()
+            await Public.fetchSimplePosts()
                 .then(response => posts = response.data.posts)
-                .catch (reason => console.log(reason.response.statusText));
+                .catch (reason => console.log(reason));
         }catch (e) {
             console.log(e);
         }
@@ -39,7 +39,7 @@ class FrontPage extends React.Component {
     }
 
     render() {
-        const {topPosts} = this.props;
+        const {topPosts, lastTheme, newsFeed, posts} = this.props;
 
         return (
             <React.Fragment>
@@ -62,13 +62,13 @@ class FrontPage extends React.Component {
                          }}/>
                 <meta name="yandex-verification" content={YANDEX_VERIFICATION}/>
                 <TopPosts posts={topPosts}/>
-
+                <NewsPostsComps compilation={lastTheme} news={newsFeed} posts={posts}/>
             </React.Fragment>
         );
     }
 }
 
-/*<NewsPostsComps compilation={Mocks.testPosts} news={Mocks.testPosts} posts={Mocks.testPosts}/>
+/*
                 <CategoryLine posts={Mocks.testPosts}/>
                 <CompsBannerAd posts={Mocks.testPosts} bannerContent={{
                     text: "Стань членом клуба 'ИЛИ ПРЕМИУМ' и получай подарки за чтение новостей",

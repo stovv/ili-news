@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Box} from 'rebass';
 import styled, {withTheme} from 'styled-components';
 import { Typography } from '../../components';
+import {PostLink} from "../../components/Links.react";
 
 
 const Divider = styled.hr`
@@ -15,16 +16,21 @@ const Divider = styled.hr`
 `;
 
 
-const Block = ({title, createdDate, divider, theme})=>{
+const Block = ({title, createdDate, divider, theme, id})=>{
     var date = new Date(createdDate);
     const publishDate = date.toLocaleString("ru-RU", { year: 'numeric', month: 'long', day: 'numeric' }).replace('г.', '');
     return(
         <>
+            <PostLink postId={id}>
             <Typography.CardText type="small"
                                  maxWidth="255px"
                                  maxHeight="38px"
+                                 hideOwerflow
+                                 maxLines={2}
+                                 hover
                                  color={theme.text.secondarySecondary}
                                  margin={`0 0 ${theme.spacing.xs} 0`}>{title}</Typography.CardText>
+            </PostLink>
             <Typography.TagLabel type="small"
                                  color={theme.text.secondary}
                                  margin={`${theme.spacing.xs} 0 0 0`}>{publishDate}</Typography.TagLabel>
@@ -54,8 +60,9 @@ class NewsBlock extends React.Component
                     news.slice(0,6).map((item, index) =>
                         <React.Fragment>
                             <Block theme={theme}
-                                   title={item.post.title}
-                                   createdDate={item.post.created_at}
+                                   title={item.title}
+                                   createdDate={item.publish_at}
+                                   id={item.id}
                                    divider={index < news.slice(0,6).length-1}/>
                         </React.Fragment>
                     )
