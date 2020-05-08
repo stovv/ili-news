@@ -204,7 +204,7 @@ class FrontPage extends React.Component {
                     text: "Стань членом клуба 'ИЛИ ПРЕМИУМ' и получай подарки за чтение новостей",
                     buttonText: "Присоеденится",
                     buttonLink: "/test"
-                }} bannerAdContent="R-A-351229-6"/>
+                }} bannerAdId="R-A-351229-6"/>
                 <InfiniteScroll
                     dataLength={this.state.items.length}
                     next={this.fetchMore}

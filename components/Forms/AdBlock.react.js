@@ -8,9 +8,6 @@ import { Typography } from "../index";
 
 class YandexRTB extends React.Component {
     componentDidMount(){
-        const yaDiv = document.createElement('div')
-        yaDiv.setAttribute('id', `yandex_rtb_${this.props.id}`)
-        document.body.appendChild(yaDiv)
         const yaScript = document.createElement('script')
         yaScript.setAttribute('type', 'text/javascript')
         yaScript.innerHTML = `(function(w, d, n, s, t) {
