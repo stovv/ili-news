@@ -70,7 +70,7 @@ class Category extends React.Component {
         this.state = {
             prevBlocks: props.prevBlocks,
             items: [],
-            uid: props.uid,
+            uid: props.uid ? props.uid : 10,
             start: props.start,
             hasMore: true
         }
@@ -150,6 +150,7 @@ class Category extends React.Component {
                     </Flex>
                     {
                         items.map((item, index) =>{
+                            console.log(item)
                             if ( item.posts.length > 0 ){
                                 empty = false;
                             }
