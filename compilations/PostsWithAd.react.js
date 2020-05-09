@@ -24,7 +24,7 @@ class PostsWithAd extends React.Component {
                     return(
                         <Flex height="248px" my="100px" >
                             <Box width={3/4} mx="15px">
-                                <Form.AdBlock uid={uid} id="R-A-351229-11" width="100%" height="100%" infinity/>
+                                <Form.AdBlock uid={uid} id="R-A-351229-8" width="100%" height="100%" infinity/>
                             </Box>
                             <Box width={[1/4]}>
                                 <Cards.Post post={posts[0]} noPreFetch/>
@@ -39,7 +39,7 @@ class PostsWithAd extends React.Component {
                                 <Cards.Post post={posts[0]} noPreFetch/>
                             </Box>
                             <Box width={3/4} mx="15px">
-                                <Form.AdBlock id="R-A-351229-11" uid={uid} width="100%" height="100%" infinity/>
+                                <Form.AdBlock id="R-A-351229-8" uid={uid} width="100%" height="100%" infinity/>
                             </Box>
                         </Flex>
                     );

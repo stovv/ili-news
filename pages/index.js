@@ -161,7 +161,7 @@ class FrontPage extends React.Component {
                     items.push(
                         <Containers.Default>
                             <Box mx="auto" my="48px" height={["280px"]} width={["100%"]}>
-                                <Form.AdBlock id="R-A-351229-11" width="100%" height="100%" infinity uid={this.state.uid}/>
+                                <Form.AdBlock id="R-A-351229-8" width="100%" height="100%" infinity uid={this.state.uid}/>
                             </Box>
                         </Containers.Default>
                     )
