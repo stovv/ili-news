@@ -1,6 +1,4 @@
 import React from 'react';
-import Head from 'next/head';
-import ScriptTag from 'react-script-tag';
 import { connect } from "react-redux";
 import { withTheme } from 'styled-components';
 import { NextSeo } from 'next-seo';
@@ -15,7 +13,6 @@ import { Public } from '../../../api';
 import { getFormatedDate } from '../../../tools';
 import { saveIpAction } from '../../../store/authActions.react';
 import { SITE_URL, YANDEX_VERIFICATION } from '../../../constants';
-import {Emoji} from "emoji-mart";
 
 
 export const config = { amp: 'hybrid' };
