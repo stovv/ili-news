@@ -47,7 +47,12 @@ class YandexRTB extends React.Component {
                     </Typography.Heading>
                     <Emoji emoji='money_with_wings' set='apple' size={50} />
                 </Box>
-                <div id={infinity ? `yandex_rtb_${id}_${uid}` : `yandex_rtb_${id}`}>
+                <div id={infinity ? `yandex_rtb_${id}_${uid}` : `yandex_rtb_${id}`} style={{
+                    position: 'relative',
+                    overflow: 'hidden',
+                    width: '100%',
+                    height: '100%'
+                }}>
                 </div>
             </Box>
         );

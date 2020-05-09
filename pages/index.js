@@ -102,11 +102,15 @@ class FrontPage extends React.Component {
         let items = [];
         let offsets = this.state.offsets;
         let prevBlocks = this.state.prevBlocks;
+        if ( prevBlocks.length > 5 ){
+            prevBlocks = prevBlocks.slice(-3);
+        }
 
 
         for (let i = 0; i < 4; i++){
 
             let type = randomChoice(['cat', 'ad']);
+
             while (['ad'].includes(type) && (prevBlocks[prevBlocks.length - 1] === type ||
                 (prevBlocks.length > 1 && prevBlocks[prevBlocks.length - 2] === type))) {
                 type = randomChoice(['cat', 'ad']);

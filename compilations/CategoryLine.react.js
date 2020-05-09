@@ -10,15 +10,18 @@ class CategoryLine extends React.Component {
         const { posts, category } = this.props;
         return(
             <Containers.Default mt="62px" mb="120px">
-                <CategoryLink categorySlug={category.slug}>
-                    <Typography.CardText type="large">{category.title}</Typography.CardText>
-                </CategoryLink>
+                {
+                    category &&
+                    <CategoryLink categorySlug={category.slug}>
+                        <Typography.CardText type="large">{category.title}</Typography.CardText>
+                    </CategoryLink>
+                }
                 <Flex height="248px">
                     {
                         posts.slice(0,4).map((item, index)=>
                             <React.Fragment key={index}>
                                 <Box width={[1/4]}>
-                                    <Cards.Post post={item}/>
+                                    <Cards.Post post={item} noPreFetch/>
                                 </Box>
                             </React.Fragment>
                         )
@@ -30,7 +33,7 @@ class CategoryLine extends React.Component {
 }
 
 CategoryLine.propTypes = {
-    category: PropTypes.string,
+    category: PropTypes.object,
     posts: PropTypes.array.isRequired
 }
 

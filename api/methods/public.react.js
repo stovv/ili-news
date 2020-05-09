@@ -115,11 +115,39 @@ export async function getCategory(id){
     return api.get(`/categories/${id}`)
 }
 
+export async function getRubric(id){
+    return api.get(`/rubrics/${id}`)
+}
+
 export async function fetchPosts(fields = ['id', 'slug', 'updated_at']){
     return api.ql(`
         query{
             posts{
                 ${fields.join(',\n')}
+            }
+        }
+    `);
+}
+
+export async function loadPosts(rubric, category, start, limit){
+    return api.ql(`
+        query{
+            posts(sort: "publish_at:DESC", where: { rubric: { ${rubric != null ? `id: ${rubric},` : ''}, ${category != null ? `category:{ id: ${category}},` : ''} } }, limit: ${limit}, start: ${start}){
+                title,
+                id,
+                publish_at,
+                rubric{
+                    title,
+                },
+                cover{
+                  caption, 
+                  alternativeText,
+                  url,
+                  width,
+                  mime,
+                  height,
+                  formats
+                },
             }
         }
     `);
@@ -140,6 +168,16 @@ export async function fetchCategories(fields = ['id', 'slug', 'updated_at']){
     return api.ql(`
         query{
             categories{
+                ${fields.join(',\n')}
+            }
+        }
+        `);
+}
+
+export async function fetchRubrics(fields = ['id', 'slug', 'updated_at']){
+    return api.ql(`
+        query{
+            rubrics{
                 ${fields.join(',\n')}
             }
         }

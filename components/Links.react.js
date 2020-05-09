@@ -34,7 +34,7 @@ export const UniversalLink = ({ item, component }) => {
 
 
 export const PostLink = ({postId, children, ...props}) => (
-    <Link href={"/post/[postId]"} as={`/post/${postId}`} passHref>
+    <Link href={"/post/[postId]"} as={`/post/${postId}`} passHref {...props}>
         <a style={noDecoration}>
             {children}
         </a>
