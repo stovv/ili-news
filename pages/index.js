@@ -1,13 +1,13 @@
 import React from 'react';
-import {Box} from 'rebass';
-
-import {TopPosts, NewsPostsComps, CategoryLine, CompsBannerAd} from '../compilations';
-import {Containers, Form} from '../components';
-import {SITE_INFO, SITE_URL, YANDEX_VERIFICATION} from '../constants';
-import {Public} from '../api';
-import {Mocks} from '../assets';
-import {NextSeo} from "next-seo";
+import { Box } from 'rebass';
+import { NextSeo } from "next-seo";
 import InfiniteScroll from "react-infinite-scroll-component";
+
+
+import { Public } from '../api';
+import { Containers, Form } from '../components';
+import { TopPosts, NewsPostsComps, CategoryLine, CompsBannerAd } from '../compilations';
+import { SITE_INFO, SITE_URL, YANDEX_VERIFICATION } from '../constants';
 
 
 
@@ -37,13 +37,13 @@ class FrontPage extends React.Component {
         try {
             await Public.fetchTheme()
                 .then(response => lastTheme = response.data.themes[0])
-                .catch(reason => console.log(reason.response.statusText));
+                .catch(reason => console.log(reason));
             await Public.fetchTheme(1)
                 .then(response => nextTheme = response.data.themes[0])
-                .catch(reason => console.log(reason.response.statusText));
+                .catch(reason => console.log(reason));
             await Public.fetchNews()
                 .then(response => newsFeed = response.data.posts)
-                .catch(reason => console.log(reason.response.statusText));
+                .catch(reason => console.log(reason));
             await Public.fetchSimplePosts()
                 .then(response => posts = response.data.posts)
                 .catch (reason => console.log(reason));

@@ -38,7 +38,7 @@ class Post extends React.Component{
             .then(response=>current_post = response.data.post)
             .catch(reason=>{
                 //TODO Add Toast
-                console.log(reason.response.statusText);
+                console.log(reason);
             });
 
         await Public.viewPost(current_post.rating.id, store.getState().auth.ip);

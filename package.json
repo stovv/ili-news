@@ -20,6 +20,7 @@
     "@editorjs/quote": "^2.3.0",
     "@editorjs/raw": "^2.1.2",
     "@editorjs/table": "^1.2.2",
+    "@rebass/hide": "^1.0.0-2",
     "@zeit/next-css": "^1.0.1",
     "acorn": "^7.1.1",
     "axios": "^0.19.2",

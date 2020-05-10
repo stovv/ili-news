@@ -9,23 +9,23 @@ const noDecoration = {
 };
 
 
-export const UniversalLink = ({ item, component }) => {
+export const UniversalLink = ({ item, component, route }) => {
     const Component = component;
     if (item.category !== null) {
         return <CategoryLink categorySlug={item.category.slug}>
-            <Component>
+            <Component active={route === `/category/${item.category.slug}`}>
                 {item.category.title}
             </Component>
         </CategoryLink>;
     }else if (item.rubric !== null) {
         return <RubricLink rubricSlug={item.rubric.slug}>
-            <Component>
+            <Component active={route === `/rubric/${item.rubric.slug}`}>
                 {item.rubric.title}
             </Component>
         </RubricLink>;
     }else if (item.post !== null){
         return <PostLink postId={item.post.id}>
-            <Component>
+            <Component active={route === `/post/${item.post.id}`}>
                 {item.post.title}
             </Component>
         </PostLink>

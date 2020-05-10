@@ -13,19 +13,24 @@ class Post extends React.Component{
     }
 
     render(){
-        const { theme, float, noPreFetch } = this.props;
+        const { theme, float, noPreFetch, full } = this.props;
         const {id, title, cover, publish_at, rubric } = this.props.post || {};
 
         var date = new Date(publish_at);
         var options = { year: 'numeric', month: 'long', day: 'numeric' };
         const publishDate = date.toLocaleString("ru-RU", options).replace('г.', '');
 
+        const additionalProps = {
+            maxWidth: full ? undefined : ["296px"],
+            maxHeight: full ? undefined : ["248px"],
+        };
+
         return (
             <PostLink postId={id} prefetch={!noPreFetch}>
                 <Box height="100%" width="100%" >
-                    <Lazy cover={cover} maxWidth={["296px"]} maxHeight={["248px"]} overflow="visible" hover float={float}>
+                    <Lazy cover={cover} {...additionalProps} overflow="visible" hover float={float}>
                         <Box bg={theme.colors.backgroundPrimary}
-                             maxWidth={["264px"]} px={[theme.spacing.s]}
+                             maxWidth={full ? undefined : ["264px"]} px={[theme.spacing.s]}
                              sx={{
                                  position: "absolute",
                                  bottom: "-75px",
@@ -56,6 +61,7 @@ class Post extends React.Component{
 
 Post.propTypes = {
     post: PropTypes.object.isRequired,
+    full: PropTypes.bool,
     float: PropTypes.string,
     noPreFetch: PropTypes.bool,
 }

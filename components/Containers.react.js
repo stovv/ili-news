@@ -10,6 +10,14 @@ const Common = styled.div`
 
 const Def = styled.div`
   margin: 0 80px;
+  
+  @media screen and  (max-width: 1405px) {
+      margin: 0 10px;
+  }
+`;
+
+const Min = styled.div`
+  margin: 0 ${props => props.theme.spacing.m};
 `;
 
 export const Default = ({children, mt, mb})=>
@@ -19,12 +27,23 @@ export const Default = ({children, mt, mb})=>
     </Def>
 </Common>
 
+export const Mini = ({children, mt, mb})=>
+    <Common mt={mt} mb={mb}>
+        <Min>
+            {children}
+        </Min>
+    </Common>
+
 
 Default.propTypes = {
     mt: PropTypes.string,
     mb: PropTypes.string
 }
 
+Mini.propTypes = {
+    mt: PropTypes.string,
+    mb: PropTypes.string
+}
 
 export const AppContainer = styled.div`
     background-color: ${props=> props.theme.colors.backgroundPrimary};

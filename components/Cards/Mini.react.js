@@ -12,14 +12,14 @@ import {PostLink} from "../Links.react";
 class Mini extends React.Component
 {
     render(){
-        const {heading, cover, children, theme, id, ...props} = this.props;
+        const {heading, cover, children, theme, id, full, ...props} = this.props;
         if ( typeof cover === "undefined"){
             return (<></>);
         }
 
         return(
             <PostLink postId={id}>
-                <Flex bg={theme.colors.backgroundPrimary} width="100%" minHeight="128px" maxHeight="128px"
+                <Flex bg={theme.colors.backgroundPrimary} width="100%" minHeight="128px" maxHeight={full ? undefined : "128px"}
                       sx={{
                           cursor: 'pointer',
                           transition: "all .4s ease-in-out",
@@ -28,7 +28,7 @@ class Mini extends React.Component
                               transform: "scale(1.00009)"
                           }
                       }}>
-                    <Box width="128px">
+                    <Box width={ full ? 2/3 : "128px"}>
                         <Simple url={getImageLink(cover, 'thumbnail')['url']} />
                     </Box>
                     <Box ml={theme.spacing.xs} my="14px">
@@ -36,7 +36,7 @@ class Mini extends React.Component
                                   margin={`0 0 ${theme.spacing.xs} 0`} textTransform="lowercase">
                             {heading}
                         </TagLabel>
-                        <CardText hideOwerflow maxLines={4} type="small" width="156px" height="76px" color={theme.text.secondarySecondary}>
+                        <CardText hideOwerflow maxLines={4} type="small" width={ full ? 1/3 : "156px"} height={ full ? "100%" : "76px"} color={theme.text.secondarySecondary}>
                             {children}
                         </CardText>
                     </Box>

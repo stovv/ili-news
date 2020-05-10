@@ -20,7 +20,7 @@ class CategoryLine extends React.Component {
                     {
                         posts.slice(0,4).map((item, index)=>
                             <React.Fragment key={index}>
-                                <Box width={[1/4]}>
+                                <Box width={[1/4]} mr={index !== posts.slice(0,4).length - 1 && "5px"} >
                                     <Cards.Post post={item} noPreFetch/>
                                 </Box>
                             </React.Fragment>
