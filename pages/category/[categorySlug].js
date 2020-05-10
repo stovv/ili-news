@@ -7,8 +7,9 @@ import {SITE_URL} from "../../constants";
 import {Images, Typography, Containers, Form} from "../../components";
 import {Emoji} from "emoji-mart";
 import { withTheme } from 'styled-components';
-import {CategoryLine, CompsBannerAd, PostsWithAd} from "../../compilations";
+import {CategoryLine, CompsBannerAd, PostsWithAd, TagBar} from "../../compilations";
 import InfiniteScroll from "react-infinite-scroll-component";
+import {RubricLink} from "../../components/Links.react";
 
 
 function randomChoice(arr){
@@ -128,6 +129,17 @@ class Category extends React.Component {
             return (<Error statusCode={404}/>);
         }
 
+        let tags = [];
+        category.rubrics.map(rubric => {
+            tags.push({
+                text: rubric.title,
+                link: RubricLink,
+                linkProps: {
+                    rubricSlug: rubric.slug
+                }
+            })
+        });
+
         return (
             <>
                 <NextSeo title={category.title}
@@ -144,13 +156,13 @@ class Category extends React.Component {
                              site: '@site',
                              cardType: 'summary_large_image',
                          }}/>
-                <Containers.Default>
-                    <Flex justifyContent="center" m="88px 0 14px 0">
-                        <Typography.Heading level={1} margin="auto 20px auto 0">{category.title}</Typography.Heading>
-                    </Flex>
+                <Flex justifyContent="center" m="88px 0 14px 0">
+                    <Typography.Heading level={1} margin="auto 20px auto 0">{category.title}</Typography.Heading>
+                </Flex>
+                <TagBar tags={tags}/>
+                <Containers.Default mt={0}>
                     {
                         items.map((item, index) =>{
-                            console.log(item)
                             if ( item.posts.length > 0 ){
                                 empty = false;
                             }

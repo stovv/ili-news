@@ -43,7 +43,9 @@ export const PostLink = ({postId, children, ...props}) => (
 
 export const RubricLink = ({ rubricSlug, children }) => (
     <Link href={"/rubric/[rubricSlug]"} as={`/rubric/${rubricSlug}`} passHref>
-        {children}
+        <a style={noDecoration}>
+            {children}
+        </a>
     </Link>
 );
 

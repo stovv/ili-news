@@ -91,7 +91,6 @@ class Rubric extends React.Component {
 
             while (prevBlocks[prevBlocks.length - 1] === limit || (prevBlocks.length > 1 && prevBlocks[prevBlocks.length - 2] === limit)) {
                 limit = randomChoice([1, 4, 6, 8]);
-                console.log()
             }
             prevBlocks.push(limit);
             let posts = null;
@@ -123,6 +122,7 @@ class Rubric extends React.Component {
 
     render() {
         // TODO Use this.props.user for head component
+        let empty = true;
         const { rubric, rubricSlug, theme, items } = this.props;
 
         if (rubric === null){
@@ -147,7 +147,7 @@ class Rubric extends React.Component {
                          site: '@site',
                          cardType: 'summary_large_image',
                      }}/>
-                <Containers.Default>
+
                     <Flex justifyContent="center" m="88px 0 14px 0">
                         <Typography.Heading level={1} margin="auto 20px auto 0">{rubric.title}</Typography.Heading>
                         {
@@ -163,17 +163,23 @@ class Rubric extends React.Component {
                             <Typography.Heading level={5} margin="auto 20px auto 0" color={theme.text.secondary}>{rubric.subtitle}</Typography.Heading>
                         </Flex>
                     }
+                <Containers.Default mt={'52px'}>
                     {
-                        items.map((item, index) =>
-                            <React.Fragment key={index}>
-                                <PostsWithAd posts={item.posts} uid={item.uid}/>
-                            </React.Fragment>
-                        )
+                        items.map((item, index) =>{
+                            if ( item.posts.length > 0 ){
+                                empty = false;
+                            }
+                            return(
+                                <React.Fragment key={index}>
+                                    <PostsWithAd posts={item.posts} uid={item.uid}/>
+                                </React.Fragment>
+                            );
+                        })
                     }
                     <InfiniteScroll
                         dataLength={this.state.items.length}
                         next={this.fetchMore}
-                        hasMore={this.state.hasMore}
+                        hasMore={!empty && this.state.hasMore}
                         loader={<Form.Loader/>}>
                         {this.state.items}
                     </InfiniteScroll>

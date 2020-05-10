@@ -22,7 +22,7 @@ class PostsWithAd extends React.Component {
             switch (type) {
                 case 'left':{
                     return(
-                        <Flex height="248px" my="100px" >
+                        <Flex height="248px" mb="100px" >
                             <Box width={3/4} mx="15px">
                                 <Form.AdBlock uid={uid} id="R-A-351229-8" width="100%" height="100%" infinity/>
                             </Box>
@@ -34,7 +34,7 @@ class PostsWithAd extends React.Component {
                 }
                 case 'right':{
                     return(
-                        <Flex height="248px" my="100px">
+                        <Flex height="248px" mb="100px">
                             <Box width={[1/4]}>
                                 <Cards.Post post={posts[0]} noPreFetch/>
                             </Box>
@@ -49,7 +49,7 @@ class PostsWithAd extends React.Component {
         }
         else if ( posts.length === 4 ){
             return(
-                <Flex height="248px" my="100px">
+                <Flex height="248px" mb="100px">
                     {
                         posts.map((item, index)=>
                             <React.Fragment key={index}>
@@ -67,7 +67,7 @@ class PostsWithAd extends React.Component {
             for (let i = 0, j = posts.length; i < j; i += 3) {
                 let tempPosts = posts.slice(i, i + 3);
                 items.push(
-                    <Flex height="248px" my={(i > 0 && i < posts.length -1) && "90px"}>
+                    <Flex height="248px" mb={i < posts.length -1 && "90px"}>
                         {
                             tempPosts.map((item, index)=>
                                 <React.Fragment key={index}>
@@ -95,7 +95,7 @@ class PostsWithAd extends React.Component {
             for (let i = 0, j = posts.length; i < j; i += 4) {
                 let tempPosts = posts.slice(i, i + 4);
                 items.push(
-                    <Flex height="248px" my="100px">
+                    <Flex height="248px" mb="100px">
                         {
                             tempPosts.map((item, index)=>
                                 <React.Fragment key={index}>
@@ -117,7 +117,7 @@ class PostsWithAd extends React.Component {
             for (let i = 0, j = posts.length; i < j; i += 4) {
                 let tempPosts = posts.slice(i, i + 4);
                 items.push(
-                    <Flex height="248px" my="100px">
+                    <Flex height="248px" mb="100px">
                         {
                             tempPosts.map((item, index)=>
                                 <React.Fragment key={index}>

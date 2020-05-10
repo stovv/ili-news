@@ -4,6 +4,7 @@ const light = {
       backgroundSecondary: '#f6f6f6',
       backgroundPrimary: '#ffffff',
       backgroundInvert: '#4a4a4a',
+      hover: "#050505"
     },
     text: {
       primary: '#050505',
