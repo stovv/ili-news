@@ -65,7 +65,7 @@ class TopPosts extends React.Component {
                     {
                         posts.map((item, index) => (
                             <React.Fragment key={index}>
-                                <Box width="100%" height="70vw" mx="auto" my={"40px"}>
+                                <Box width="100%" height="350px" mx="auto" my={"40px"}>
                                     <Cards.Post post={item.post}/>
                                 </Box>
                             </React.Fragment>

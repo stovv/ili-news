@@ -27,7 +27,7 @@ class PostsWithAd extends React.Component {
                                 <Form.AdBlock uid={uid} id="R-A-351229-8" width="100%" height="100%" infinity/>
                             </Box>
                             <Box width={[1/4]}>
-                                <Cards.Post post={posts[0]} noPreFetch/>
+                                <Cards.Post post={posts[0]}/>
                             </Box>
                         </Flex>
                     );
@@ -36,7 +36,7 @@ class PostsWithAd extends React.Component {
                     return(
                         <Flex height="248px" mb="100px">
                             <Box width={[1/4]}>
-                                <Cards.Post post={posts[0]} noPreFetch/>
+                                <Cards.Post post={posts[0]}/>
                             </Box>
                             <Box width={3/4} mx="15px">
                                 <Form.AdBlock id="R-A-351229-8" uid={uid} width="100%" height="100%" infinity/>
@@ -54,7 +54,7 @@ class PostsWithAd extends React.Component {
                         posts.map((item, index)=>
                             <React.Fragment key={index}>
                                 <Box width={[1/4]}>
-                                    <Cards.Post post={item} noPreFetch/>
+                                    <Cards.Post post={item}/>
                                 </Box>
                             </React.Fragment>
                         )
@@ -72,7 +72,7 @@ class PostsWithAd extends React.Component {
                             tempPosts.map((item, index)=>
                                 <React.Fragment key={index}>
                                     <Box width={[1/3]}>
-                                        <Cards.Post post={item} noPreFetch/>
+                                        <Cards.Post post={item}/>
                                     </Box>
                                 </React.Fragment>
                             )
@@ -100,7 +100,7 @@ class PostsWithAd extends React.Component {
                             tempPosts.map((item, index)=>
                                 <React.Fragment key={index}>
                                     <Box width={[1/4]}>
-                                        <Cards.Post post={item} noPreFetch/>
+                                        <Cards.Post post={item}/>
                                     </Box>
                                 </React.Fragment>
                             )
@@ -122,7 +122,7 @@ class PostsWithAd extends React.Component {
                             tempPosts.map((item, index)=>
                                 <React.Fragment key={index}>
                                     <Box width={[1/4]}>
-                                        <Cards.Post post={item} noPreFetch/>
+                                        <Cards.Post post={item}/>
                                     </Box>
                                 </React.Fragment>
                             )
