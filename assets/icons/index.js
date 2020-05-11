@@ -5,6 +5,7 @@ import LikeIcon from './thumbs-up';
 import DisLikeIcon from './thumbs-down';
 import SearchIcon from './search';
 import HamburgerMenuIcon from './hamburger';
+import HelpIcon from "./help-icon";
 
 export {
     BookmarkIcon,
@@ -13,5 +14,6 @@ export {
     DisLikeIcon,
     EyeIcon,
     LikeIcon,
-    SearchIcon
+    SearchIcon,
+    HelpIcon
 }

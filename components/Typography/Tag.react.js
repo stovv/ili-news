@@ -15,7 +15,7 @@ const Large = styled.p`
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.04;
+  line-height: 1.33;
   letter-spacing: normal;
 `;
 

@@ -1269,6 +1269,13 @@
   resolved "https://registry.yarnpkg.com/@reach/visually-hidden/-/visually-hidden-0.1.4.tgz#0dc4ecedf523004337214187db70a46183bd945b"
   integrity sha512-QHbzXjflSlCvDd6vJwdwx16mSB+vUCCQMiU/wK/CgVNPibtpEiIbisyxkpZc55DyDFNUIqP91rSUsNae+ogGDQ==
 
+"@rebass/forms@^4.0.6":
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/@rebass/forms/-/forms-4.0.6.tgz#19a3af64f855baa65dec65aecadda5cd95a09dd7"
+  integrity sha512-20dHAlb5V0Na2HxCr73Jjoc4hD1ElimmlBpQtclXMoXUsjJ7ORdCNL1S9R54MX5f7iU2VrLGHU42eL7+nONNPQ==
+  dependencies:
+    reflexbox "^4.0.6"
+
 "@rebass/hide@^1.0.0-2":
   version "1.0.0-2"
   resolved "https://registry.yarnpkg.com/@rebass/hide/-/hide-1.0.0-2.tgz#0f1d94a133aa113e8503370eb47b3cd81db68641"

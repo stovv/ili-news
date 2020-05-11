@@ -2,16 +2,27 @@ import React from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 import {connect} from 'react-redux'
+import { Flex, Box } from 'rebass';
+import { Input } from '@rebass/forms';
+
+import { Public } from '../api';
+import {Form, Images, Typography} from '../components';
+import {BallPulseSync, BallRotate} from 'react-pure-loaders';
+import { Icons, Logo } from '../assets'
 import {loginAction} from "../store/authActions.react";
+import {withTheme} from "styled-components";
+import Link from "next/link";
 
 
 class LoginPage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            login: null,
+            login: "",
+            cover: "",
             password: null,
             rememberMe: false,
+            loading: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -20,6 +31,11 @@ class LoginPage extends React.Component {
         if(this.props.isLoggedIn === true){
             Router.back();
         }
+        Public.randomUnsplashImage()
+            .then(response => {
+                this.setState({cover: response.request.responseURL})
+            })
+            .catch(reason => console.log(reason));
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -28,13 +44,16 @@ class LoginPage extends React.Component {
         }
     }
 
-    handleSubmit = async (event) => {
-        event.preventDefault();
+    handleSubmit () {
+        this.setState({loading: true})
         const {dispatch} = this.props;
-        dispatch(loginAction(this.state));
+        dispatch(loginAction(this.state))
+            .then(response => console.log(response))
+            .catch(response => this.setState({loading: false}));
     };
 
     render() {
+        const { theme } = this.props;
         var card_style = {
             width: '30vw',
             height: '30vh',
@@ -43,44 +62,66 @@ class LoginPage extends React.Component {
         return (
             <>
                 <Head>
-                    <link
-                        rel="stylesheet"
-                        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-                        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-                        crossOrigin="anonymous"/>
                     <title>Login | ИЛИ</title>
                 </Head>
-                <main className="main-content" style={card_style}>
-                    <div className="bg-white rounded shadow-7 w-400 mw-100 p-6" >
-                        <h5 className="mb-7">Sign into your account</h5>
-                        <form id="login" onSubmit={this.handleSubmit} >
-                            <div className="form-group">
-                                <input onChange={event => this.setState({login: event.target.value})}
-                                       type="text"
-                                       className="form-control"
-                                       name="phone_number"
-                                       placeholder="eg. user@email.com" />
-                            </div>
-                            <div className="form-group">
-                                <input onChange={event => this.setState({password: event.target.value})} type="password" className="form-control"
-                                       name="customer_pin"
-                                       placeholder="Enter your pin"/>
-                            </div>
-                            <div className="form-group flexbox py-3">
-                                <div className="">
-                                    <input type="checkbox" onChange={event => this.setState({rememberMe: event.target.checked})} className="remember"/>
-                                    <label className="remember">Remember me</label>
-                                </div>
-                                <a className="text-muted small-2" href="/reset">Forgot password?</a>
-                            </div>
-                            <div className="form-group">
-                                <button className="btn btn-block btn-primary" type="submit">Login</button>
-                            </div>
-                        </form>
-                        <hr className="w-30"/>
-                        <p className="text-center text-muted small-2">Don't have an account? <a href="/register">Register here</a></p>
-                    </div>
-                </main>
+                <Box height="100vh" bg={theme.colors.backgroundInvert}>
+                    <Flex height="100%" width="100%" maxHeight="900px" maxWidth="1440px" sx={{
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        position: "absolute",
+                        boxShadow: "0px 0px 38px -7px rgba(0,0,0,0.75)"
+                    }}>
+                        <Box width={[3/5]} bg={theme.colors.backgroundInverted}>
+                            <Images.Simple url={this.state.cover}/>
+                        </Box>
+                        <Box width={[2/5]} bg={theme.colors.backgroundInverted} height="100%">
+                            <Flex flexDirection="column">
+                                <Box ml="auto" mr="36px" mt="36px">
+                                    <Icons.HelpIcon/>
+                                </Box>
+                                <Box width={["150px"]} height={["150px"]} mx="auto">
+                                    <Link href="/">
+                                        <a><Logo width="100%" primary={this.props.theme.colors.primary} background={this.props.theme.colors.secondary}/></a>
+                                    </Link>
+                                </Box>
+                                <Box mx="auto">
+                                    <Typography.TagLabel type="large" color={theme.text.onPrimary} textAlign="center">
+                                        Присоединись первым<br/>
+                                        к обновлённому журналу
+                                    </Typography.TagLabel>
+                                </Box>
+                                <Box mx="104px" mt="160px">
+                                    <Input
+                                        sx={{outlineColor: theme.colors.primary, color: theme.text.onPrimary}}
+                                        onChange={(e)=>this.setState({login: e.target.value})}
+                                        type='email'
+                                        placeholder='email'
+                                    />
+                                </Box>
+                                <Box mx="104px" mt={theme.spacing.block}>
+                                    <Input
+                                        sx={{outlineColor: theme.colors.primary, color: theme.text.onPrimary}}
+                                        onChange={(e)=>this.setState({password: e.target.value})}
+                                        type='password'
+                                        placeholder='пароль'
+                                    />
+                                </Box>
+                                <Box width="364px" height="56px" mx="auto" mt="136px">
+                                    <Form.Buttons.SimpleButton onClick={()=>this.handleSubmit()}>
+                                        {
+                                            this.state.loading
+                                                ? <Flex justifyContent="center" margin="10px 0">
+                                                    <BallRotate color={theme.colors.backgroundPrimary}  loading/>
+                                                </Flex>
+                                                : "Войти"
+                                        }
+                                    </Form.Buttons.SimpleButton>
+                                </Box>
+                            </Flex>
+                        </Box>
+                    </Flex>
+                </Box>
             </>
         )
     }
@@ -94,4 +135,4 @@ function mapStateToProps(state) {
    };
 }
 
-export default connect(mapStateToProps)(LoginPage);
+export default connect(mapStateToProps)(withTheme(LoginPage));

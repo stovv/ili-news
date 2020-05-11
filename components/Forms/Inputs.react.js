@@ -81,26 +81,26 @@ export class TitleArea extends React.Component {
         return(
             <Flex>
                 {
-                     ! withoutLabel &&
-                     <Box my="auto" sx={{
-                         visibility: this.state.focused ? 'visible' : 'hidden'
-                     }}>
-                         <Label>Заголовок</Label>
-                     </Box>
+                    ! withoutLabel &&
+                    <Box my="auto" sx={{
+                        visibility: this.state.focused ? 'visible' : 'hidden'
+                    }}>
+                        <Label>Заголовок</Label>
+                    </Box>
                 }
-            <BlankInput
-                id={this.inputId}
-                placeholder={this.props.placeholder}
-                value={this.props.defaultValue}
-                onChange={this.props.onChange}
-                idealHeight={this.state.idealHeight + 'px'}
-                onFocus={()=>this.setState({focused: true})}
-                onBlur={()=>this.setState({focused: false})}
-                label={!withoutLabel}
-                inverted={inverted}
-                fontSizeIndex={fontSizeIndex}
-                ref={this.changeHeight}
-            />
+                <BlankInput
+                    id={this.inputId}
+                    placeholder={this.props.placeholder}
+                    value={this.props.defaultValue}
+                    onChange={this.props.onChange}
+                    idealHeight={this.state.idealHeight + 'px'}
+                    onFocus={()=>this.setState({focused: true})}
+                    onBlur={()=>this.setState({focused: false})}
+                    label={!withoutLabel}
+                    inverted={inverted}
+                    fontSizeIndex={fontSizeIndex}
+                    ref={this.changeHeight}
+                />
             </Flex>
         );
     }

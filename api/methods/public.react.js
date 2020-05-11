@@ -346,3 +346,7 @@ export async function fetcFrontPageCategories() {
         }
     `);
 }
+
+export async function randomUnsplashImage(){
+    return api.simple_get(`https://source.unsplash.com/1600x900/?write`)
+}
