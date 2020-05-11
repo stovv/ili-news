@@ -9,12 +9,12 @@ import {Upper} from '../Animations';
 const Simple = styled.div`
     position: ${props => props.withParent ? 'absolute' : 'relative'};
     ${ ({withLoading, error, errorSrc, loading, loadingSrc, actualSrc, url}) => withLoading 
-        ? `background: url(${error ? errorSrc : (loading ? loadingSrc : actualSrc)}) center`
+        ? `background: url(${error ? errorSrc : (loading ? loadingSrc : actualSrc)}) center no-repeat`
         : `
-           background: url(${url}) center
+           background: url(${url}) center no-repeat
         `
     };
-    background-size: cover;
+    background-size: ${props => props.bgSize ? props.bgSize : 'cover'};
     cursor: ${props=> props.hover && 'pointer'};
     width: ${props=> props.width ? props.width : '100%'};
     height: ${props=> props.height ? props.height : '100%'};
@@ -92,6 +92,7 @@ SimpleImage.propTypes = {
     url: PropTypes.string,
     transform: PropTypes.string,
     overflow: PropTypes.string,
+    bgSize: PropTypes.string,
     blackout: PropTypes.bool,
     zIndex: PropTypes.number,
     float: PropTypes.string,

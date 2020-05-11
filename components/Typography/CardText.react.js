@@ -114,7 +114,47 @@ const Small = styled.p`
   `}
 `;
 
+const XSmall = styled.p`
+  font-family: ${props=>props.theme.fontFamily};
+  color: ${props=>props.color ? props.color : props.theme.colors.black};
+  max-width: ${props=> props.maxWidth && props.maxWidth};
+  max-height: ${props=> props.maxHeight && props.maxHeight};
+  margin: ${props=>props.margin};
+  text-transform: ${props=>props.textTransform};
+  text-align: ${props=>props.textAlign};
+  position: ${props=>props.position};
+  width: ${props=>props.width};
+  height: ${props=>props.height};
+  right: ${props=>props.right};
+  left: ${props=>props.left};
+  top: ${props=>props.top};
+  bottom: ${props=>props.bottom};
+  user-select: none;
+  font-size: 14px;
+  font-weight: ${props=> props.weight ? props.weight : "700" };
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.29;
+  letter-spacing: normal;
+  ${({hideOwerflow, maxLines}) => hideOwerflow && `
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: ${maxLines};
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+  `}
+  
+  ${({hover, theme}) => hover && `
+      :hover{
+          transition: all 0.4s ease-in-out;
+          color: ${theme.text.hover};
+      }
+  `}
+`;
+
+
 const cardTexts = {
+    xsmall: XSmall,
     small: Small,
     normal: Normal,
     large: Large,

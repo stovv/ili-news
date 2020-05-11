@@ -12,7 +12,7 @@ const Large = styled.p`
   text-align: ${props=>props.textAlign};
   user-select: none;
   font-size: 24px;
-  font-weight: bold;
+  font-weight: ${props=>props.weight ? props.weight : "bold"};
   font-stretch: normal;
   font-style: normal;
   line-height: 1.33;
@@ -27,9 +27,9 @@ const Normal = styled.p`
   margin: ${props=>props.margin};
   text-transform: ${props=>props.textTransform};
   text-align: ${props=>props.textAlign};
+  font-weight: ${props=>props.weight ? props.weight : "bold"};
   user-select: none;
   font-size: 16px;
-  font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.04;
@@ -44,9 +44,9 @@ const Small = styled.p`
   margin: ${props=>props.margin};
   text-transform: ${props=>props.textTransform};
   text-align: ${props=>props.textAlign};
+  font-weight: ${props=>props.weight ? props.weight : "bold"};
   user-select: none;
   font-size: 14px;
-  font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.04;
@@ -79,6 +79,7 @@ TagLabel.propTypes = {
     margin: PropTypes.string,
     textTransform: PropTypes.string,
     textAlign: PropTypes.string,
+    weight: PropTypes.string,
     width: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number

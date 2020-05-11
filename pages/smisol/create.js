@@ -21,9 +21,7 @@ class Create extends React.Component {
             return null;
         }
         if (this.props.draft == null){
-            return (
-                <p>NO Draft</p>
-            );
+            Router.push('/smisol/drafts');
         }
         return (<RedactorSSRSafe/>);
     }

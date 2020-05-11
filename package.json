@@ -52,6 +52,7 @@
     "react-spring": "^8.0.27",
     "react-stack-grid": "^0.7.1",
     "react-ticker": "^1.2.2",
+    "react-window-size": "^1.2.2",
     "react-yandex-metrika": "^2.6.0",
     "react-yandex-share": "^1.0.7",
     "rebass": "^4.0.7",

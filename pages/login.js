@@ -40,7 +40,9 @@ class LoginPage extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(this.props.isLoggedIn === true){
-            Router.back();
+            // TODO: change after public login update
+            //Router.back();
+            Router.push('/smisol/drafts');
         }
     }
 

@@ -6,7 +6,9 @@ import { PostComponents } from '../Redactor';
 const Components = {
     header: Typography.Heading,
     paragraph: Typography.Paragraph,
-    callout: PostComponents.Callout
+    callout: PostComponents.Callout,
+    image: PostComponents.Image,
+    quote: PostComponents.Quote,
 };
 
 export default Components;

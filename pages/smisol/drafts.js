@@ -1,8 +1,9 @@
 import React from 'react';
 import Router from 'next/router';
 import {connect} from 'react-redux';
+import { Flex, Box } from 'rebass';
 import {getDrafts, createNewDraft} from '../../store/smisolActions.react';
-import { Form } from '../../components';
+import { Form, Menus } from '../../components';
 
 class Drafts extends React.Component {
     constructor(props){
@@ -18,7 +19,6 @@ class Drafts extends React.Component {
         if (typeof window !== "undefined"){
             this.props.dispatch(createNewDraft())
                 .then(response=>{
-
                     Router.push("/smisol/create");
                 })
                 .catch(reason=>{
@@ -36,9 +36,19 @@ class Drafts extends React.Component {
             Router.push('/smisol/create');
             return null;
         }
-        return (<p>
-            <Form.Buttons.SimpleButton onClick={()=>this.handleNewDraft()}>+ Create New</Form.Buttons.SimpleButton>
-        </p>);
+        return (
+            <>
+                <Menus.HeaderRedactor/>
+                <Flex height="100vh">
+                    <Box width={2/12} >
+                        <Menus.LeftMenu/>
+                    </Box>
+                    <Box width={10/12}>
+                        <p><Form.Buttons.SimpleButton onClick={()=>this.handleNewDraft()}>+ Create New</Form.Buttons.SimpleButton></p>
+                    </Box>
+                </Flex>
+            </>
+        );
     }
 }
 

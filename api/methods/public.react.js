@@ -350,3 +350,15 @@ export async function fetcFrontPageCategories() {
 export async function randomUnsplashImage(){
     return api.simple_get(`https://source.unsplash.com/1600x900/?write`)
 }
+
+export async function findImage(hash){
+    return api.ql(`
+    query{
+      files(where: {hash: "${hash}"}){
+        id,
+        name,
+        formats
+      }
+    }
+    `);
+}
