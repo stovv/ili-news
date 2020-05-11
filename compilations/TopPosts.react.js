@@ -11,12 +11,12 @@ import {CardText} from "../components/Typography";
 class TopPosts extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState){
-        return false;
+        return nextProps.width != this.props.width;
     }
 
     render(){
-        const {posts, theme} = this.props;
-        const {id, title, description, cover, rubric, width } = posts[0].post;
+        const {posts, theme, width} = this.props;
+        const {id, title, description, cover, rubric } = posts[0].post;
 
         if (width > 1023){
             return (

@@ -9,6 +9,11 @@ import { Containers, Cards, Form } from '../components';
 
 class CompsBannerAd extends React.Component {
 
+    shouldComponentUpdate(nextProps, nextState){
+        return nextProps.width != this.props.width;
+    }
+
+
     render(){
         const { theme, bannerContent, bannerAdId, mobilebannerAdId, width } = this.props;
         const posts = theme.posts;

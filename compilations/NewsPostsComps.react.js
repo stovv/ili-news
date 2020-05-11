@@ -9,10 +9,15 @@ import {PostLink} from "../components/Links.react";
 
 
 class NewsPostsComps extends React.Component {
-    render(){
-        const {compilation, news, posts} = this.props;
 
-        const {id, title, description, cover, tag, width} = compilation.posts[0];
+    shouldComponentUpdate(nextProps, nextState){
+        return nextProps.width != this.props.width;
+    }
+
+    render(){
+        const {compilation, news, posts, width} = this.props;
+
+        const {id, title, description, cover, tag, } = compilation.posts[0];
 
 
         if ( width > 1023 ){

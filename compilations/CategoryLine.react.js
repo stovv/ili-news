@@ -7,6 +7,11 @@ import { Cards, Containers, Typography } from '../components';
 import {CategoryLink} from "../components/Links.react";
 class CategoryLine extends React.Component {
 
+    shouldComponentUpdate(nextProps, nextState){
+        return nextProps.width != this.props.width;
+    }
+
+
     render() {
         const { posts, category, width } = this.props;
 
