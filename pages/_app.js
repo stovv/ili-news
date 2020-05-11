@@ -10,6 +10,7 @@ import IliThemeProvider from '../theme';
 import { makeStore } from "../store";
 import { Containers, Menus, Form } from '../components';
 import { Public } from '../api';
+import * as CommonActions from '../store/commonActions.react';
 
 import 'nprogress/nprogress.css'; //styles of nprogress
 import 'toasted-notes/src/styles.css';
@@ -32,6 +33,32 @@ class IliApp extends App {
 
       return {pageProps, header};
   }
+
+    constructor(props){
+        super(props);
+        const { store } = props;
+        if (typeof window !== "undefined"){
+            store.dispatch(CommonActions.setPageSize(window.innerWidth, window.innerHeight));
+        }
+
+        this.handleWindowResize = this.handleWindowResize.bind(this);
+    }
+
+    handleWindowResize = () => {
+        this.props.store.dispatch(CommonActions.setPageSize(window.innerWidth, window.innerHeight));
+    }
+
+    componentDidMount() {
+        if (typeof window !== 'undefined'){
+            window.addEventListener('resize', this.handleWindowResize);
+        }
+    }
+
+    componentWillUnmount() {
+        if (typeof window !== 'undefined'){
+            window.removeEventListener('resize', this.handleWindowResize);
+        }
+    }
 
   render() {
     const { Component, pageProps, store, header} = this.props;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box } from 'rebass';
 import { NextSeo } from "next-seo";
+import { connect } from 'react-redux';
 import InfiniteScroll from "react-infinite-scroll-component";
 
 
@@ -158,13 +159,24 @@ class FrontPage extends React.Component {
                 }
 
                 case 'ad':{
-                    items.push(
-                        <Containers.Default>
-                            <Box mx="auto" my="48px" height={["280px"]} width={["100%"]}>
-                                <Form.AdBlock id="R-A-351229-8" width="100%" height="100%" infinity uid={this.state.uid}/>
-                            </Box>
-                        </Containers.Default>
-                    )
+                    if (this.props.width > 1023){
+                        items.push(
+                            <Containers.Default>
+                                <Box mx="auto" my="48px" height={["280px"]} width={["100%"]}>
+                                    <Form.AdBlock id="R-A-351229-8" width="100%" height="100%" infinity uid={this.state.uid}/>
+                                </Box>
+                            </Containers.Default>
+                        )
+                    }else{
+                        items.push(
+                            <Containers.Default>
+                                <Box mx="auto" my="48px" height={["280px"]} width={["100%"]}>
+                                    <Form.AdBlock id="R-A-351229-7" width="100%" height="100%" infinity uid={this.state.uid}/>
+                                </Box>
+                            </Containers.Default>
+                        )
+                    }
+
                     this.state.uid += 1;
                     break;
                 }
@@ -210,7 +222,7 @@ class FrontPage extends React.Component {
                     text: "Стань членом клуба 'ИЛИ ПРЕМИУМ' и получай подарки за чтение новостей",
                     buttonText: "Присоеденится",
                     buttonLink: "/test"
-                }} bannerAdId="R-A-351229-6"/>
+                }} bannerAdId="R-A-351229-6" mobilebannerAdId="R-A-351229-7"/>
                 <InfiniteScroll
                     dataLength={this.state.items.length}
                     next={this.fetchMore}
@@ -224,4 +236,11 @@ class FrontPage extends React.Component {
     }
 }
 
-export default FrontPage;
+
+function mapStateToProps(state){
+    return {
+        width: state.common.pageSize.width
+    }
+}
+
+export default connect(mapStateToProps)(FrontPage);

@@ -233,10 +233,11 @@ export async function fetchTheme(start = 0){
     return api.ql(`
         query{
             themes(sort: "created_at:DESC", limit: 1, where: {published: true}, start: ${start}){
-            id,
+              id,
               title,
               posts{
                 id,
+                publish_at,
                 title,
                 rubric{
                     title,

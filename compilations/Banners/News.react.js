@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Box} from 'rebass';
+import { connect } from 'react-redux';
 import styled, {withTheme} from 'styled-components';
 import { Typography } from '../../components';
 import {PostLink} from "../../components/Links.react";
@@ -16,59 +17,109 @@ const Divider = styled.hr`
 `;
 
 
-const Block = ({title, createdDate, divider, theme, id})=>{
+const Block = ({title, createdDate, divider, theme, id, width})=>{
     var date = new Date(createdDate);
     const publishDate = date.toLocaleString("ru-RU", { year: 'numeric', month: 'long', day: 'numeric' }).replace('г.', '');
-    return(
-        <>
-            <PostLink postId={id}>
-            <Typography.CardText type="small"
-                                 maxWidth="255px"
-                                 maxHeight="38px"
-                                 hideOwerflow
-                                 maxLines={2}
-                                 hover
-                                 color={theme.text.secondarySecondary}
-                                 margin={`0 0 ${theme.spacing.xs} 0`}>{title}</Typography.CardText>
-            </PostLink>
-            <Typography.TagLabel type="small"
-                                 color={theme.text.secondary}
-                                 margin={`${theme.spacing.xs} 0 0 0`}>{publishDate}</Typography.TagLabel>
-            {
-                divider &&
-                <Divider />
-            }
-        </>
-    );
+
+    if ( width > 1023 ){
+        return(
+            <>
+                <PostLink postId={id}>
+                    <Typography.CardText type="small"
+                                         maxWidth="255px"
+                                         maxHeight="38px"
+                                         hideOwerflow
+                                         maxLines={2}
+                                         hover
+                                         color={theme.text.secondarySecondary}
+                                         margin={`0 0 ${theme.spacing.xs} 0`}>{title}</Typography.CardText>
+                </PostLink>
+                <Typography.TagLabel type="small"
+                                     color={theme.text.secondary}
+                                     margin={`${theme.spacing.xs} 0 0 0`}>{publishDate}</Typography.TagLabel>
+                {
+                    divider &&
+                    <Divider />
+                }
+            </>
+        );
+    }else{
+        return(
+            <>
+                <PostLink postId={id}>
+                    <Typography.CardText type="small"
+                                         maxHeight="38px"
+                                         hideOwerflow
+                                         maxLines={2}
+                                         hover
+                                         color={theme.text.secondarySecondary}
+                                         margin={`0 0 ${theme.spacing.xs} 0`}>{title}</Typography.CardText>
+                </PostLink>
+                <Typography.TagLabel type="small"
+                                     color={theme.text.secondary}
+                                     margin={`${theme.spacing.xs} 0 0 0`}>{publishDate}</Typography.TagLabel>
+                {
+                    divider &&
+                    <Divider />
+                }
+            </>
+        );
+    }
+
+
 }
 
 
 class NewsBlock extends React.Component
 {
     render(){
-        const { news, theme } = this.props;
+        const { news, theme, width } = this.props;
 
-        return(
-            <Box bg={theme.colors.backgroundSecondary} px={theme.spacing.m} py={["24px"]} maxWidth={["296px"]}
-            sx={{float: "right"}}>
-                <Typography.Heading level={4} margin="0 0 32px 0"
-                                    color={theme.text.hover}
-                                    textTransform="uppercase">
-                    Новости города
-                </Typography.Heading>
-                {
-                    news.slice(0,6).map((item, index) =>
-                        <React.Fragment>
-                            <Block theme={theme}
-                                   title={item.title}
-                                   createdDate={item.publish_at}
-                                   id={item.id}
-                                   divider={index < news.slice(0,6).length-1}/>
-                        </React.Fragment>
-                    )
-                }
-            </Box>
-        );
+        if ( width > 1023 ){
+            return(
+                <Box bg={theme.colors.backgroundSecondary} px={theme.spacing.m} py={["24px"]} maxWidth={["296px"]}
+                     sx={{float: "right"}}>
+                    <Typography.Heading level={4} margin="0 0 32px 0"
+                                        color={theme.text.hover}
+                                        textTransform="uppercase">
+                        Новости города
+                    </Typography.Heading>
+                    {
+                        news.slice(0,6).map((item, index) =>
+                            <React.Fragment>
+                                <Block theme={theme}
+                                       title={item.title}
+                                       createdDate={item.publish_at}
+                                       id={item.id}
+                                       divider={index < news.slice(0,6).length-1}/>
+                            </React.Fragment>
+                        )
+                    }
+                </Box>
+            );
+        }else{
+            return(
+                <Box bg={theme.colors.backgroundSecondary} px={theme.spacing.m} py={["24px"]}>
+                    <Typography.Heading level={4} margin="0 0 32px 0"
+                                        color={theme.text.hover}
+                                        textTransform="uppercase">
+                        Новости города
+                    </Typography.Heading>
+                    {
+                        news.slice(0,6).map((item, index) =>
+                            <React.Fragment>
+                                <Block theme={theme}
+                                       width={width}
+                                       title={item.title}
+                                       createdDate={item.publish_at}
+                                       id={item.id}
+                                       divider={index < news.slice(0,6).length-1}/>
+                            </React.Fragment>
+                        )
+                    }
+                </Box>
+            );
+        }
     };
 }
 
@@ -78,4 +129,10 @@ NewsBlock.propTypes = {
     news: PropTypes.object.isRequired,
 }
 
-export default withTheme(NewsBlock);
+function mapStateToProps(state){
+    return{
+        width: state.common.pageSize.width
+    }
+}
+
+export default  connect(mapStateToProps)(withTheme(NewsBlock));

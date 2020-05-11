@@ -5,6 +5,8 @@ import { withTheme } from 'styled-components';
 
 import {Images, Cards, Typography, Containers} from '../components';
 import {PostLink} from "../components/Links.react";
+import { connect } from "react-redux";
+import {CardText} from "../components/Typography";
 
 class TopPosts extends React.Component {
 
@@ -14,24 +16,24 @@ class TopPosts extends React.Component {
 
     render(){
         const {posts, theme} = this.props;
-        const {id, title, description, cover, rubric } = posts[0].post;
+        const {id, title, description, cover, rubric, width } = posts[0].post;
 
-        return (
-            <React.Fragment>
-                <Hide xsmall small medium>
+        if (width > 1023){
+            return (
+                <React.Fragment>
                     <Images.Lazy cover={cover}  blur height="384px" blackout>
                         <Containers.Default>
                             <Flex mt={[81]}>
                                 <Box>
-                                        <Typography.TagLabel type="large"
-                                                             color={theme.text.onPrimary}
-                                                             margin={`0 0 ${theme.spacing.m} 0`}
-                                                             textTransform="lowercase">{rubric.title}</Typography.TagLabel>
-                                        <Typography.Heading level={1}
-                                                            color={theme.text.onPrimary}
-                                                            maxWidth="816px"
-                                                            margin={` ${theme.spacing.m} 0 0 0`}
-                                        >{title}</Typography.Heading>
+                                    <Typography.TagLabel type="large"
+                                                         color={theme.text.onPrimary}
+                                                         margin={`0 0 ${theme.spacing.m} 0`}
+                                                         textTransform="lowercase">{rubric.title}</Typography.TagLabel>
+                                    <Typography.Heading level={1}
+                                                        color={theme.text.onPrimary}
+                                                        maxWidth="816px"
+                                                        margin={` ${theme.spacing.m} 0 0 0`}
+                                    >{title}</Typography.Heading>
                                 </Box>
                             </Flex>
                         </Containers.Default>
@@ -54,28 +56,31 @@ class TopPosts extends React.Component {
                             }
                         </Flex>
                     </Containers.Default>
-                </Hide>
-                <Hide large xlarge>
-                    <Containers.Mini mt="24px">
-                            <Box width="90vw" height="90vw" mx="auto" mb="64px">
-                                <PostLink postId={id}>
-                                    <Cards.Large heading={rubric.title}  cover={cover} description={description} type="bottomLeft">{title}</Cards.Large>
-                                </PostLink>
-                            </Box>
-                            {
-                                posts.slice(1).map((item, index) => (
-                                    <React.Fragment key={index}>
-                                        <Box width="70vw" height="70vw" mb={["100px"]} mx="auto">
-                                            <Cards.Post post={item.post} float="right" full/>
-                                        </Box>
-                                    </React.Fragment>
-                                ))
-                            }
-                    </Containers.Mini>
-                </Hide>
-            </React.Fragment>
-        );
+                </React.Fragment>
+            );
+        }else{
+            return (
+                <Containers.Mini>
+                    <CardText type="normal" color={theme.colors.primary}>Популярное</CardText>
+                    {
+                        posts.map((item, index) => (
+                            <React.Fragment key={index}>
+                                <Box width="100%" height="70vw" mx="auto" my={"40px"}>
+                                    <Cards.Post post={item.post}/>
+                                </Box>
+                            </React.Fragment>
+                        ))
+                    }
+                </Containers.Mini>
+            );
+        }
     }
 }
 
-export default withTheme(TopPosts);
+function mapStateToProps(state){
+    return {
+        width: state.common.pageSize.width
+    }
+}
+
+export default connect(mapStateToProps)(withTheme(TopPosts));
