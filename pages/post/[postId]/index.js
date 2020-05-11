@@ -66,7 +66,7 @@ class Post extends React.Component{
     }
 
     render(){
-        const {amp, error, current_post, postId, theme, readMoreLinks, popularPosts, clientIp, store } = this.props;
+        const {amp, error, current_post, postId, theme, readMoreLinks, popularPosts, clientIp, store, width } = this.props;
 
         if (error !== null){
             return <Error statusCode={error}/>;
@@ -117,10 +117,23 @@ class Post extends React.Component{
                              cardType: 'summary_large_image',
                          }}/>
                     <Containers.Default>
-                        <Typography.Heading level={4} color={theme.text.hover} textTransform="lowercase"
-                                            margin={`32px 0 ${theme.spacing.m} 0`}>{rubric.title}</Typography.Heading>
-                        <Typography.Heading level={1} breakWord maxWidth="80%"
-                                            margin={`${theme.spacing.m} 0`}>{title}</Typography.Heading>
+                        {
+                            width > 1023
+                                ?
+                                <>
+                                    <Typography.Heading level={4} color={theme.text.hover} textTransform="lowercase"
+                                                        margin={`32px 0 ${theme.spacing.m} 0`}>{rubric.title}</Typography.Heading>
+                                    <Typography.Heading level={1} breakWord maxWidth="80%"
+                                                        margin={`${theme.spacing.m} 0`}>{title}</Typography.Heading>
+                                </>
+                                :
+                                <>
+                                    <Typography.Heading level={5} color={theme.text.hover} textTransform="lowercase"
+                                                        margin={`32px 0 ${theme.spacing.m} 0`}>{rubric.title}</Typography.Heading>
+                                    <Typography.Heading level={3} breakWord margin={`${theme.spacing.m} 0`}>{title}</Typography.Heading>
+                                </>
+                        }
+
                         <Flex>
                             <Typography.Heading margin={`0 0 ${theme.spacing.m} 0`} level={4} color={theme.text.secondary}>{publishedDate}</Typography.Heading>
                             <Form.AuthorList authors={authors}/>
@@ -132,10 +145,10 @@ class Post extends React.Component{
                                 />
                             </Box>
                         </Flex>
-                        <Images.Lazy cover={cover} width="100%" height="560px"/>
+                        <Images.Lazy cover={cover} width="100%" height={width > 1023 ? "560px" : "229px"}/>
 
                         <Flex mt={["64px"]} >
-                            <Box width={[9/12]} pr={["10%"]}>
+                            <Box width={width > 1023 ? [9/12] : '100%' } pr={width > 1023 ? ["10%"] : '0'}>
                                 {
                                     blocks.map((item, index)=>
                                         <React.Fragment key={index}>
@@ -160,28 +173,32 @@ class Post extends React.Component{
                                 </Flex>
                                 <PostComponents.ReadMore post data={readMoreLinks}/>
                             </Box>
-                            <Box width={[3/12]} pl={["2%"]}>
-                                <Form.AdBlock id={'R-A-351229-6'} width={["100%"]} height={["584px"]}/>
-                                {
-                                    popularPosts.length > 0 &&
-                                    <>
-                                        <Typography.CardText type="large" weight="bold" margin="59px 0 30px 0">Лучшее за неделю</Typography.CardText>
+                            {
+                                width > 1023
+                                    && <Box width={[3/12]} pl={["2%"]}>
+                                        <Form.AdBlock id={'R-A-351229-6'} width={["100%"]} height={["584px"]}/>
                                         {
-                                            popularPosts.slice(0, 4).map((item, index)=>
-                                            <React.Fragment key={index}>
-                                            <Box mb="48px">
-                                            <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover}
-                                            link={Links.PostLink} postId={item.post.id}>
-                                            {item.post.title}
-                                            </Cards.Mini>
-                                            </Box>
-                                            </React.Fragment>
-                                            )
+                                            popularPosts.length > 0 &&
+                                            <>
+                                                <Typography.CardText type="large" weight="bold" margin="59px 0 30px 0">Лучшее за неделю</Typography.CardText>
+                                                {
+                                                    popularPosts.slice(0, 4).map((item, index)=>
+                                                        <React.Fragment key={index}>
+                                                            <Box mb="48px">
+                                                                <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover}
+                                                                            link={Links.PostLink} postId={item.post.id}>
+                                                                    {item.post.title}
+                                                                </Cards.Mini>
+                                                            </Box>
+                                                        </React.Fragment>
+                                                    )
 
+                                                }
+                                            </>
                                         }
-                                    </>
-                                }
-                            </Box>
+                                    </Box>
+                            }
+
                         </Flex>
 
                     </Containers.Default>
@@ -197,8 +214,10 @@ class Post extends React.Component{
 
 function mapStateToProps(state){
     return {
-        user: state.auth.user
+        user: state.auth.user,
+        width: state.common.pageSize.width
     }
 }
+
 
 export default connect(mapStateToProps)(withTheme(Post));

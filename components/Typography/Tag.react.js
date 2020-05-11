@@ -32,7 +32,7 @@ const Normal = styled.p`
   font-size: 16px;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.04;
+  line-height: 1.33;
   letter-spacing: normal;
 `;
 
@@ -49,7 +49,7 @@ const Small = styled.p`
   font-size: 14px;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.04;
+  line-height: 1.33;
   letter-spacing: normal;
 `;
 

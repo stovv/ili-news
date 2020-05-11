@@ -72,7 +72,7 @@ const Normal = styled.p`
   font-weight: ${props=> props.weight ? props.weight : "600" };
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.04;
+  line-height: 1.33;
   letter-spacing: normal;
 `;
 
