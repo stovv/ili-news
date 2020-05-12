@@ -2,6 +2,7 @@ import React from 'react';
 import { Box } from 'rebass';
 import { NextSeo } from "next-seo";
 import { connect } from 'react-redux';
+import TrackVisibility from 'react-on-screen';
 import InfiniteScroll from "react-infinite-scroll-component";
 
 
@@ -14,6 +15,14 @@ import { SITE_INFO, SITE_URL, YANDEX_VERIFICATION } from '../constants';
 
 function randomChoice(arr){
     return arr[Math.floor(Math.random() * arr.length)];
+}
+
+const Offscreen = ({children}) => {
+    return (
+        <TrackVisibility partialVisibility>
+            {({ isVisible }) => isVisible && <>{children}</>}
+        </TrackVisibility>
+    );
 }
 
 
@@ -193,7 +202,7 @@ class FrontPage extends React.Component {
     }
 
     render() {
-        const {topPosts, lastTheme, nextTheme, newsFeed, posts, catLine} = this.props;
+        const {topPosts, lastTheme, nextTheme, newsFeed, posts, catLine, width} = this.props;
 
         return (
             <React.Fragment>
@@ -216,21 +225,30 @@ class FrontPage extends React.Component {
                          }}/>
                 <meta name="yandex-verification" content={YANDEX_VERIFICATION}/>
                 <TopPosts posts={topPosts}/>
-                <NewsPostsComps compilation={lastTheme} news={newsFeed} posts={posts}/>
-                <CategoryLine posts={catLine.posts} category={catLine.category}/>
-                <CompsBannerAd theme={nextTheme} bannerContent={{
-                    text: "Стань членом клуба 'ИЛИ ПРЕМИУМ' и получай подарки за чтение новостей",
-                    buttonText: "Присоеденится",
-                    buttonLink: "/test"
-                }} bannerAdId="R-A-351229-6" mobilebannerAdId="R-A-351229-7"/>
-                <InfiniteScroll
-                    dataLength={this.state.items.length}
-                    next={this.fetchMore}
-                    hasMore={true}
-                    loader={<Form.Loader/>}
-                >
-                    {this.state.items}
-                </InfiniteScroll>
+                {
+                    width > 1023
+                        ? <NewsPostsComps compilation={lastTheme} news={newsFeed} posts={posts}/>
+                        : <Offscreen>
+                            <NewsPostsComps compilation={lastTheme} news={newsFeed} posts={posts}/>
+                          </Offscreen>
+                }
+
+                <Offscreen>
+                    <CategoryLine posts={catLine.posts} category={catLine.category}/>
+                    <CompsBannerAd theme={nextTheme} bannerContent={{
+                        text: "Стань членом клуба 'ИЛИ ПРЕМИУМ' и получай подарки за чтение новостей",
+                        buttonText: "Присоеденится",
+                        buttonLink: "/test"
+                    }} bannerAdId="R-A-351229-6" mobilebannerAdId="R-A-351229-7"/>
+                    <InfiniteScroll
+                        dataLength={this.state.items.length}
+                        next={this.fetchMore}
+                        hasMore={true}
+                        loader={<Form.Loader/>}
+                    >
+                        {this.state.items}
+                    </InfiniteScroll>
+                </Offscreen>
             </React.Fragment>
         );
     }

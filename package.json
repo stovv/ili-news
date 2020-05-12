@@ -50,6 +50,7 @@
     "react-id-generator": "^3.0.0",
     "react-iframe": "^1.8.0",
     "react-infinite-scroll-component": "^5.0.4",
+    "react-on-screen": "^2.1.1",
     "react-pure-loaders": "^3.0.1",
     "react-redux": "^7.2.0",
     "react-spring": "^8.0.27",
