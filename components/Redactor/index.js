@@ -6,6 +6,7 @@ import { Callout } from "./Callout";
 import { ReadMore } from './ReadMore';
 import { Image } from './Image';
 import { Quote } from './Quote';
+import { Embed } from './Embed';
 
 const EditorComponents = {
     CalloutEditor
@@ -15,7 +16,8 @@ const PostComponents = {
     Callout,
     ReadMore,
     Image,
-    Quote
+    Quote,
+    Embed
 };
 
 export {

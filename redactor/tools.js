@@ -80,8 +80,19 @@ export default {
         inlineToolbar: true,
         config: {
             services: {
-              youtube: true,
-              coub: true
+                youtube: true,
+                coub: true,
+                instagram: true,
+                "yandex-music-playlist": true,
+                "yandex-music-album": true,
+                "yandex-music-track": true,
+                twitter: true,
+                vine: true,
+                vimeo: true,
+                "twitch-video": true,
+                "twitch-channel": true,
+                gfycat: true,
+                imgur: true
             }
         }
     },

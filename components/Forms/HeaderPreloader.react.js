@@ -10,6 +10,7 @@ class HeaderPreloader extends React.Component {
         startPosition: 0.5,
         stopDelayMs: 200,
         height: 4,
+        showSpinner: false
     };
 
     timer = null;

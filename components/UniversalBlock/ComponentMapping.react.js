@@ -9,6 +9,7 @@ const Components = {
     callout: PostComponents.Callout,
     image: PostComponents.Image,
     quote: PostComponents.Quote,
+    embed: PostComponents.Embed,
 };
 
 export default Components;

@@ -51,11 +51,11 @@ class Quote extends React.Component {
                         width > 1023
                             ?
                             <TagLabel type="large" weight="500" margin={0}>
-                                <em>{data.text}</em>
+                                <em><div dangerouslySetInnerHTML={data.text}/></em>
                             </TagLabel>
                             :
                             <CardText type="normal" weight="500"  margin={0}>
-                                <em>{data.text}</em>
+                                <em><div dangerouslySetInnerHTML={data.text}/></em>
                             </CardText>
                     }
                 </QuoteBox>
@@ -67,14 +67,14 @@ class Quote extends React.Component {
                     <Box mt="35px" mb="40px">
                         <CardText type="xlarge" textAlign="center" margin="0 0 23px 0">« »</CardText>
                         <TagLabel type="large" weight="500" textAlign="center" margin="0">
-                            <em>{data.text}</em>
+                            <em><div dangerouslySetInnerHTML={data.text}/></em>
                         </TagLabel>
                     </Box>
                     :
                     <Box mt="50px" mb="50px">
                         <CardText type="large" textAlign="center" margin="0 0 5px 0">« »</CardText>
                         <CardText type="normal" weight="500" textAlign="center" margin="0">
-                            <em>{data.text}</em>
+                            <em><div dangerouslySetInnerHTML={data.text}/></em>
                         </CardText>
                     </Box>
             );

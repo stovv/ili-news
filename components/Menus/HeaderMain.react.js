@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import styled, { withTheme } from 'styled-components';
 import { Flex, Box } from 'rebass';
-import { Hide } from '@rebass/hide'
+import {connect} from 'react-redux';
 
 import {
     Logo,
@@ -51,42 +51,18 @@ class HeaderNavBar extends React.Component {
         this.route = props.route ? props.route : "";
     }
     render(){
-        const { menus, route } = this.props;
+        const { menus, route, width } = this.props;
         console.log("ROUTE", route);
-        return(
-            <>
-            <Hide large xlarge>
-                <Mini>
-                    <Flex bg={this.props.theme.colors.secondary} height={["56px"]}>
-                        <Box float="left" my="auto">
-                            <Icons.HamburgerMenuIcon/>
-                        </Box>
-                        <Box mx="auto" height="100%" sx={{position:"relative"}}>
-                            <Box width={["55px"]} height={["55px"]}  sx={{
-                                top: "50%",
-                                left: "50%",
-                                position: "absolute",
-                                transform: "translate(-50%, -50%)"
-                            }}>
-                                <Link href="/">
-                                    <a><Logo width="100%" primary={this.props.theme.colors.primary} background={this.props.theme.colors.secondary}/></a>
-                                </Link>
-                            </Box>
-                        </Box>
-                        <Box float="right" my="auto">
-                            <Click.SimpleClick >
-                                <Icons.SearchIcon />
-                            </Click.SimpleClick>
-                        </Box>
-                    </Flex>
-                </Mini>
-            </Hide>
-            <Hide xsmall small medium >
+
+
+        if ( width > 1023 ){
+
+            return (
                 <Default>
                     <Flex bg={this.props.theme.colors.secondary} height={["72px"]}>
                         <Box width={1/8} height="100%" sx={{position:"relative"}}>
                             <Box width={["55px"]} height={["55px"]}  sx={{
-                                left: "-22%",
+                                left: width > 1400 ? "-22%" : "50%",
                                 top: "50%",
                                 position: "absolute",
                                 transform: "translate(-50%, -50%)"
@@ -116,9 +92,36 @@ class HeaderNavBar extends React.Component {
                         </Box>
                     </Flex>
                 </Default>
-            </Hide>
-            </>
-        );
+            );
+
+        }else{
+            return (
+                <Mini>
+                    <Flex bg={this.props.theme.colors.secondary} height={["56px"]}>
+                        <Box float="left" my="auto">
+                            <Icons.HamburgerMenuIcon/>
+                        </Box>
+                        <Box mx="auto" height="100%" sx={{position:"relative"}}>
+                            <Box width={["55px"]} height={["55px"]}  sx={{
+                                top: "50%",
+                                left: "50%",
+                                position: "absolute",
+                                transform: "translate(-50%, -50%)"
+                            }}>
+                                <Link href="/">
+                                    <a><Logo width="100%" primary={this.props.theme.colors.primary} background={this.props.theme.colors.secondary}/></a>
+                                </Link>
+                            </Box>
+                        </Box>
+                        <Box float="right" my="auto">
+                            <Click.SimpleClick >
+                                <Icons.SearchIcon />
+                            </Click.SimpleClick>
+                        </Box>
+                    </Flex>
+                </Mini>
+            );
+        }
     }
 }
 
@@ -128,4 +131,11 @@ HeaderNavBar.propTypes = {
     route: PropTypes.string.isRequired
 }
 
-export default withTheme(HeaderNavBar);
+function mapStateToProps(state){
+    return {
+        width: state.common.pageSize.width
+    }
+}
+
+
+export default connect(mapStateToProps)(withTheme(HeaderNavBar));
