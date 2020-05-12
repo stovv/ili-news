@@ -19,7 +19,7 @@ function randomChoice(arr){
 
 const Offscreen = ({children}) => {
     return (
-        <TrackVisibility partialVisibility>
+        <TrackVisibility partialVisibility once>
             {({ isVisible }) => isVisible && <>{children}</>}
         </TrackVisibility>
     );
