@@ -1,5 +1,6 @@
 # ILI News
-![Ili-News Speed](https://api.speedbadge.io/v1?url=dev.ili-nnov.ru)
+![Ili-News Desktop Speed](https://api.speedbadge.io/v1?url=dev.ili-nnov.ru&strat=desktop&showStratLabel=true)
+![Ili-News Mobile Speed](https://api.speedbadge.io/v1?url=dev.ili-nnov.ru&strat=mobile&showStratLabel=true)
 ### [ILI](https://ili-nnov.ru/) - One of the popular news portals of Nizhny Novgorod
 
 ## Getting Started
