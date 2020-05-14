@@ -303,7 +303,7 @@ class Rubric extends React.Component {
                             </Containers.Default>
                         </>
                         : <Containers.Default>
-                            <Flex heigth={"300px"}>
+                            <Flex heigth={"300px"} mt="50px">
                                 <Box width={width > 1023 ? [9/12] : '100%' } pr={width > 1023 ? ["10%"] : '0'} >
                                     {
                                         items.map(item=>Object.values(item.posts).map((post, index)=>{
@@ -339,7 +339,10 @@ class Rubric extends React.Component {
                                 </Box>
                                 {
                                     width > 1023
-                                    && <Box width={[3/12]} pl={["2%"]}>
+                                    && <Box width={[3/12]} pl={["2%"]} height="max-content" sx={{
+                                        position: "sticky",
+                                        top: "20px"
+                                    }}>
                                         <Form.AdBlock id={'R-A-351229-6'} width={["100%"]} height={["584px"]}/>
                                         {
                                             popularPosts.length > 0 &&
