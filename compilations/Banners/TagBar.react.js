@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import Ticker from 'react-ticker';
 import styled, { withTheme } from "styled-components";
 import {TagLabel} from "../../components/Typography";
+import {connect} from "react-redux";
 
 
 const TagWrap = styled.div`
-    border-radius: 40px;
+    border-radius: ${props => props.mini ? '10px' : '40px'};
     box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.25);
     background-color: ${props => props.theme.colors.primary};
     margin: 10px ${props=> props.theme.spacing.m} 10px 0;
@@ -19,16 +20,20 @@ const TagWrap = styled.div`
     }
 `;
 
-const Tag = ({children, theme}) =>(
-    <TagWrap>
-        <TagLabel type="large" level={3} color={theme.text.onPrimary} margin={0}>{children}</TagLabel>
+const Tag = ({children, theme, mini}) =>(
+    <TagWrap min={mini}>
+        {
+            mini
+                ? <TagLabel type="normal" color={theme.text.onPrimary} margin={0}>{children}</TagLabel>
+                : <TagLabel type="large" color={theme.text.onPrimary} margin={0}>{children}</TagLabel>
+        }
     </TagWrap>
 );
 
 
 class TagBar extends React.Component {
 
-    constructor(props) {
+    constructor(props) {//width
         super(props);
         this.stop = this.stop.bind(this);
         this.start = this.start.bind(this);
@@ -77,7 +82,7 @@ class TagBar extends React.Component {
     }
 
     render(){
-        const { theme, tags } = this.props;
+        const { theme, tags, width } = this.props;
         return(
             <div style={{margin: "64px 0 52px 0"}}
                 onMouseOver={()=>{
@@ -97,7 +102,7 @@ class TagBar extends React.Component {
                         const props = tags[this.state.tagIndex].linkProps;
                         return(
                             <Link {...props}>
-                                <Tag theme={theme}>{tags[this.state.tagIndex].text}</Tag>
+                                <Tag theme={theme} mini={width <= 1023}>{tags[this.state.tagIndex].text}</Tag>
                             </Link>
                         )
                     }}
@@ -111,4 +116,13 @@ TagBar.propTypes = {
     tags: PropTypes.object.isRequired
 }
 
-export default withTheme(TagBar);
+
+
+function mapStateToProps(state){
+    return{
+        width: state.common.pageSize.width
+    }
+}
+
+
+export default connect(mapStateToProps)(withTheme(TagBar));

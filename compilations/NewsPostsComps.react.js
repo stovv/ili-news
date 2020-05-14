@@ -68,7 +68,6 @@ class NewsPostsComps extends React.Component {
                 </Containers.Default>
             );
         }else{
-            console.log(compilation.posts);
             return (
                 <Containers.Mini>
                     {

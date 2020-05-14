@@ -41,10 +41,10 @@ const OverlayContainer = styled.div`
   float: ${props=>props.float};
   ${({transform, hover}) => hover && `
        cursor: pointer;
-       transition: all .4s ease-in-out;
+       transition: all .3s ease-out;
        &:hover{
-           box-shadow: 0px 10px 100px -5px rgba(0, 0, 0, 0.7);
-           transform: scale(1.00009) ${transform ? transform : ''};
+           box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.7);
+           transform: translateY(-3px) ${transform ? transform : ''};
        }
   `}
 `;

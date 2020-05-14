@@ -156,7 +156,7 @@ class Post extends React.Component{
                                         </React.Fragment>
                                     )
                                 }
-                                <Flex mt={["71px"]} mb={["47px"]} mx={["26px"]}>
+                                <Flex mt={["71px"]} mb={["47px"]} mx={["4px", "26px"]}>
                                     <Box mr="auto" display="flex">
                                         <Form.LikeBar rating={rating} clientId={clientIp}/>
                                         <Form.Comments threadId={comment_thread.id}/>
@@ -186,7 +186,7 @@ class Post extends React.Component{
                                                         <React.Fragment key={index}>
                                                             <Box mb="48px">
                                                                 <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover}
-                                                                            link={Links.PostLink} postId={item.post.id}>
+                                                                            link={Links.PostLink} id={item.post.id}>
                                                                     {item.post.title}
                                                                 </Cards.Mini>
                                                             </Box>

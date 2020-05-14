@@ -32,12 +32,12 @@ class CompsBannerAd extends React.Component {
                                 </Box>
                                 <Box width={4/12}  pl="32px">
                                     <Box mb="48px" height="128px" width="100%">
-                                        <Cards.Mini cover={posts[1].cover} heading={posts[1].rubric.title}>
+                                        <Cards.Mini cover={posts[1].cover} heading={posts[1].rubric.title} id={posts[1].id}>
                                             {posts[1].title}
                                         </Cards.Mini>
                                     </Box>
                                     <Box height="128px" width="100%">
-                                        <Cards.Mini cover={posts[2].cover} heading={posts[2].rubric.title}>
+                                        <Cards.Mini cover={posts[2].cover} heading={posts[2].rubric.title} id={posts[2].id}>
                                             {posts[2].title}
                                         </Cards.Mini>
                                     </Box>

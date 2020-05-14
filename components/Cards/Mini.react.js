@@ -22,10 +22,10 @@ class Mini extends React.Component
                 <Flex bg={theme.colors.backgroundPrimary} width="100%" minHeight="128px" maxHeight={full ? undefined : "128px"}
                       sx={{
                           cursor: 'pointer',
-                          transition: "all .4s ease-in-out",
+                          transition: "all .3s ease-out",
                           "&:hover":{
-                              boxShadow: "0px 10px 100px -5px rgba(0, 0, 0, 0.7)",
-                              transform: "scale(1.00009)"
+                              boxShadow: "0px 5px 30px -5px rgba(0, 0, 0, 0.4)",
+                              transform: "translateY(-3px)"
                           }
                       }}>
                     <Box width={ full ? 2/3 : "128px"}>

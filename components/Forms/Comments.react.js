@@ -5,6 +5,7 @@ import { Flex, Box } from 'rebass';
 
 import { Icons } from "../../assets";
 import { CardText } from "../Typography";
+import {connect} from "react-redux";
 
 
 const iconSpacing = {
@@ -28,9 +29,9 @@ class Comments extends React.Component {
     }
 
     render(){
-        const { threadId, theme } = this.props;
+        const { threadId, theme, width } = this.props;
         return(
-            <Flex ml="65px">
+            <Flex ml={width > 1023 ? "65px" : "20px"}>
                 <Box display="flex" mr="28px">
                     <Icons.CommentsIcon style={iconSpacing}/>
                     {
@@ -47,4 +48,11 @@ Comments.propTypes = {
     threadId: PropTypes.number.isRequired,
 }
 
-export default withTheme(Comments);
+function mapStateToProps(state){
+    return{
+        width: state.common.pageSize.width
+    }
+}
+
+
+export default connect(mapStateToProps)(withTheme(Comments));

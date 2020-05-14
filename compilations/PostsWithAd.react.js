@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Flex, Box } from 'rebass';
 
 import {Cards, Containers, Form, Typography} from '../components';
+import {connect} from "react-redux";
 
 
 function randomChoice(arr){
@@ -12,92 +13,46 @@ function randomChoice(arr){
 class PostsWithAd extends React.Component {
 
     offset = "50px";
-
     render() {
-        const { posts, uid } = this.props;
+        const { posts, uid, width, mobileAdId } = this.props;
 
-        if ( posts.length === 1 ){
-            let type = randomChoice(['left', 'right']);
+        if (width > 1023){
+            if ( posts.length === 1 ){
+                let type = randomChoice(['left', 'right']);
 
-            switch (type) {
-                case 'left':{
-                    return(
-                        <Flex height="248px" mb="100px" >
-                            <Box width={3/4} mx="15px">
-                                <Form.AdBlock uid={uid} id="R-A-351229-8" width="100%" height="100%" infinity/>
-                            </Box>
-                            <Box width={[1/4]}>
-                                <Cards.Post post={posts[0]}/>
-                            </Box>
-                        </Flex>
-                    );
-                }
-                case 'right':{
-                    return(
-                        <Flex height="248px" mb="100px">
-                            <Box width={[1/4]}>
-                                <Cards.Post post={posts[0]}/>
-                            </Box>
-                            <Box width={3/4} mx="15px">
-                                <Form.AdBlock id="R-A-351229-8" uid={uid} width="100%" height="100%" infinity/>
-                            </Box>
-                        </Flex>
-                    );
-                }
-            }
-
-        }
-        else if ( posts.length === 4 ){
-            return(
-                <Flex height="248px" mb="100px">
-                    {
-                        posts.map((item, index)=>
-                            <React.Fragment key={index}>
-                                <Box width={[1/4]}>
-                                    <Cards.Post post={item}/>
+                switch (type) {
+                    case 'left':{
+                        return(
+                            <Flex height="248px" mb="100px" >
+                                <Box width={3/4} mx="15px">
+                                    <Form.AdBlock uid={uid} id="R-A-351229-8" width="100%" height="100%" infinity/>
                                 </Box>
-                            </React.Fragment>
-                        )
+                                <Box width={[1/4]}>
+                                    <Cards.Post post={posts[0]}/>
+                                </Box>
+                            </Flex>
+                        );
                     }
-                </Flex>
-            );
-        }
-        else if ( posts.length === 6 ) {
-            let items = [];
-            for (let i = 0, j = posts.length; i < j; i += 3) {
-                let tempPosts = posts.slice(i, i + 3);
-                items.push(
-                    <Flex height="248px" mb={i < posts.length -1 && "90px"}>
-                        {
-                            tempPosts.map((item, index)=>
-                                <React.Fragment key={index}>
-                                    <Box width={[1/3]}>
-                                        <Cards.Post post={item}/>
-                                    </Box>
-                                </React.Fragment>
-                            )
-                        }
-                    </Flex>
-                );
+                    case 'right':{
+                        return(
+                            <Flex height="248px" mb="100px">
+                                <Box width={[1/4]}>
+                                    <Cards.Post post={posts[0]}/>
+                                </Box>
+                                <Box width={3/4} mx="15px">
+                                    <Form.AdBlock id="R-A-351229-8" uid={uid} width="100%" height="100%" infinity/>
+                                </Box>
+                            </Flex>
+                        );
+                    }
+                }
+
             }
-            return(
-                <Flex my={this.offset}>
-                    <Box width={3/4}>
-                        {items}
-                    </Box>
-                    <Box width={1/4}>
-                        <Form.AdBlock uid={uid} infinity width="100%" height="100%" id="R-A-351229-6"/>
-                    </Box>
-                </Flex>
-            );
-        }else if ( posts.length === 8 ) {
-            let items = [];
-            for (let i = 0, j = posts.length; i < j; i += 4) {
-                let tempPosts = posts.slice(i, i + 4);
-                items.push(
+            else if ( posts.length === 4 ){
+                return(
                     <Flex height="248px" mb="100px">
                         {
-                            tempPosts.map((item, index)=>
+                            posts.map((item, index)=>
                                 <React.Fragment key={index}>
                                     <Box width={[1/4]}>
                                         <Cards.Post post={item}/>
@@ -108,7 +63,72 @@ class PostsWithAd extends React.Component {
                     </Flex>
                 );
             }
-            return items;
+            else if ( posts.length === 6 ) {
+                let items = [];
+                for (let i = 0, j = posts.length; i < j; i += 3) {
+                    let tempPosts = posts.slice(i, i + 3);
+                    items.push(
+                        <Flex height="248px" mb={i < posts.length -1 && "90px"}>
+                            {
+                                tempPosts.map((item, index)=>
+                                    <React.Fragment key={index}>
+                                        <Box width={[1/3]}>
+                                            <Cards.Post post={item}/>
+                                        </Box>
+                                    </React.Fragment>
+                                )
+                            }
+                        </Flex>
+                    );
+                }
+                return(
+                    <Flex my={this.offset}>
+                        <Box width={3/4}>
+                            {items}
+                        </Box>
+                        <Box width={1/4}>
+                            <Form.AdBlock uid={uid} infinity width="100%" height="100%" id="R-A-351229-6"/>
+                        </Box>
+                    </Flex>
+                );
+            }else if ( posts.length === 8 ) {
+                let items = [];
+                for (let i = 0, j = posts.length; i < j; i += 4) {
+                    let tempPosts = posts.slice(i, i + 4);
+                    items.push(
+                        <Flex height="248px" mb="100px">
+                            {
+                                tempPosts.map((item, index)=>
+                                    <React.Fragment key={index}>
+                                        <Box width={[1/4]}>
+                                            <Cards.Post post={item}/>
+                                        </Box>
+                                    </React.Fragment>
+                                )
+                            }
+                        </Flex>
+                    );
+                }
+                return items;
+            }
+        }else{
+            return(
+                <>
+                    {
+                        posts.map((item, index)=>
+                            <React.Fragment key={index}>
+                                <Box width="100%" height="350px" mx="auto" my={"40px"}>
+                                    <Cards.Post post={item}/>
+                                </Box>
+                            </React.Fragment>
+                        )
+                    }
+                    <Box width="100%" height="350px" mx="auto" my={"40px"}>
+                        <Form.AdBlock id={mobileAdId} uid={uid}/>
+                    </Box>
+                </>
+            ) ;
+
         }
 
         if (posts.length > 0){
@@ -139,7 +159,15 @@ class PostsWithAd extends React.Component {
 
 PostsWithAd.propTypes = {
     posts: PropTypes.array.isRequired,
-    uid: PropTypes.number
+    uid: PropTypes.number,
+    mobileAdId: PropTypes.string,
 }
 
-export default PostsWithAd;
+function mapStateToProps(state){
+    return{
+        width: state.common.pageSize.width
+    }
+}
+
+
+export default connect(mapStateToProps)(PostsWithAd);

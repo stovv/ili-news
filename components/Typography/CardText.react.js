@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from "prop-types";
 
 
-const XLarge = styled.p`
+const XXLarge = styled.p`
   font-family: ${props=>props.theme.fontFamily};
   color: ${props=>props.color ? props.color : props.theme.colors.black};
   max-width: ${props=> props.maxWidth && props.maxWidth};
@@ -25,7 +25,44 @@ const XLarge = styled.p`
   font-style: normal;
   line-height: 1.04;
   letter-spacing: normal;
+  ${({hover, theme}) => hover && `
+      :hover{
+          transition: all 0.4s ease-in-out;
+          color: ${theme.text.hover};
+      }
+  `}
 `;
+
+const XLarge = styled.p`
+  font-family: ${props=>props.theme.fontFamily};
+  color: ${props=>props.color ? props.color : props.theme.colors.black};
+  max-width: ${props=> props.maxWidth && props.maxWidth};
+  max-height: ${props=> props.maxHeight && props.maxHeight};
+  margin: ${props=>props.margin};
+  text-transform: ${props=>props.textTransform};
+  text-align: ${props=>props.textAlign};
+  position: ${props=>props.position};
+  width: ${props=>props.width};
+  height: ${props=>props.height};
+  right: ${props=>props.right};
+  left: ${props=>props.left};
+  top: ${props=>props.top};
+  bottom: ${props=>props.bottom};
+  user-select: none;
+  font-size: 30px;
+  font-weight: ${props=> props.weight ? props.weight : "600" };
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.04;
+  letter-spacing: normal;
+  ${({hover, theme}) => hover && `
+      :hover{
+          transition: all 0.4s ease-in-out;
+          color: ${theme.text.hover};
+      }
+  `}
+`;
+
 
 
 const Large = styled.p`
@@ -50,6 +87,12 @@ const Large = styled.p`
   font-style: normal;
   line-height: 1.04;
   letter-spacing: normal;
+  ${({hover, theme}) => hover && `
+      :hover{
+          transition: all 0.4s ease-in-out;
+          color: ${theme.text.hover};
+      }
+  `}
 `;
 
 const Normal = styled.p`
@@ -74,6 +117,12 @@ const Normal = styled.p`
   font-style: normal;
   line-height: 1.33;
   letter-spacing: normal;
+  ${({hover, theme}) => hover && `
+      :hover{
+          transition: all 0.4s ease-in-out;
+          color: ${theme.text.hover};
+      }
+  `}
 `;
 
 const Small = styled.p`
@@ -158,7 +207,8 @@ const cardTexts = {
     small: Small,
     normal: Normal,
     large: Large,
-    xlarge: XLarge
+    xlarge: XLarge,
+    xxlarge: XXLarge
 }
 
 class CardText extends React.Component {

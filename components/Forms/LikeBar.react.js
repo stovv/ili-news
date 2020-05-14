@@ -7,6 +7,7 @@ import { Icons } from '../../assets';
 import { CardText } from '../Typography';
 import {Typography} from "../index";
 import {Public} from "../../api";
+import {connect} from "react-redux";
 
 
 class LikeBar extends React.Component {
@@ -19,11 +20,6 @@ class LikeBar extends React.Component {
         }
         this.likeUp = this.likeUp.bind(this);
         this.dislikeUp = this.dislikeUp.bind(this);
-    }
-    iconStyle = {
-        margin: "auto 9px auto 0",
-        transition: "all 0.4s ease 0s",
-        cursor: "pointer"
     }
 
     likeUp(){
@@ -53,18 +49,27 @@ class LikeBar extends React.Component {
     }
 
     render(){
-        const { theme } = this.props;
+        const { theme, width } = this.props;
+
         return(
             <Flex>
-                <Box display="flex" mr="14px">
-                    <Icons.LikeIcon style={this.iconStyle} onClick={()=>this.likeUp()}/>
+                <Box display="flex" mr={"14px"}>
+                    <Icons.LikeIcon style={{
+                        margin: width > 1023 ? "auto 9px auto 0" : "auto 4px auto 0",
+                        transition: "all 0.4s ease 0s",
+                        cursor: "pointer"
+                    }} onClick={()=>this.likeUp()}/>
                     {
                         this.state.likes > 0 &&
                         <CardText type="normal" margin="0" color={theme.text.secondary}>{this.state.likes}</CardText>
                     }
                 </Box>
                 <Box display="flex">
-                    <Icons.DisLikeIcon style={this.iconStyle} onClick={()=>this.dislikeUp()}/>
+                    <Icons.DisLikeIcon style={{
+                        margin: width > 1023 ? "auto 9px auto 0" : "auto 4px auto 0",
+                        transition: "all 0.4s ease 0s",
+                        cursor: "pointer"
+                    }} onClick={()=>this.dislikeUp()}/>
                     {
                         this.state.dislikes > 0 &&
                         <CardText type="normal" margin="0" color={theme.text.secondary}>{this.state.dislikes}</CardText>
@@ -80,4 +85,12 @@ LikeBar.propTypes = {
     clientId: PropTypes.string.isRequired,
 }
 
-export default withTheme(LikeBar);
+
+function mapStateToProps(state){
+    return{
+        width: state.common.pageSize.width
+    }
+}
+
+
+export default connect(mapStateToProps)(withTheme(LikeBar));

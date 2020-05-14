@@ -4,15 +4,60 @@ import Error from '../_error';
 import { Public } from '../../api';
 import { Flex, Box } from 'rebass';
 import {SITE_URL} from "../../constants";
-import {Images, Typography, Containers, Form} from "../../components";
+import {Images, Typography, Containers, Form, Cards, Links} from "../../components";
 import {Emoji} from "emoji-mart";
 import { withTheme } from 'styled-components';
 import {CategoryLine, CompsBannerAd, PostsWithAd} from "../../compilations";
 import InfiniteScroll from "react-infinite-scroll-component";
+import {CardText} from "../../components/Typography";
+import {PostLink} from "../../components/Links.react";
+import {connect} from "react-redux";
 
 function randomChoice(arr){
     return arr[Math.floor(Math.random() * arr.length)];
 }
+
+const isToday = (date) => {
+    const today = new Date()
+    return date.getDate() === today.getDate() &&
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear();
+};
+
+const isYesterday = (date) => {
+    let yesterday = new Date()
+    yesterday.setDate(yesterday.getDate() - 1);
+    return date.getDate() === yesterday.getDate() &&
+        date.getMonth() === yesterday.getMonth() &&
+        date.getFullYear() === yesterday.getFullYear();
+};
+
+function TimeString(date){
+    let postDate = new Date(date);
+    var options = { minute: '2-digit', hour: '2-digit' };
+    return postDate.toLocaleString("ru-RU", options).replace('г.', '');
+}
+
+function isEqualDate(date, otherDate){
+    const dateL = new Date(date);
+    const dateR = new Date(otherDate);
+    return dateL.getDate() === dateR.getDate() &&
+        dateL.getMonth() === dateR.getMonth() &&
+        dateL.getFullYear() === dateR.getFullYear();
+}
+
+function DateSting( date ){
+    let postDate = new Date(date);
+    if (isToday(postDate)){
+        return "Cегодня";
+    }else if (isYesterday(postDate)){
+        return "Вчера"
+    }
+    var options = { month: 'long', day: 'numeric' };
+    return postDate.toLocaleString("ru-RU", options).replace('г.', '');
+}
+
+
 
 class Rubric extends React.Component {
     static async getInitialProps({ query: { rubricSlug } }) {
@@ -39,6 +84,15 @@ class Rubric extends React.Component {
                     console.log(reason);
                     // TODO Add Reason processing
                 });
+        } else{
+            return {};
+        }
+
+        let popularPosts = null;
+        if ( !rubric.cover ){
+            await Public.getPopularDuringWeek()
+                .then(response=> popularPosts = response.data.ratings)
+                .catch(reason=> console.log(reason));
         }
 
 
@@ -62,7 +116,7 @@ class Rubric extends React.Component {
             uid += 1;
         }
 
-        return { rubric, rubricSlug, prevBlocks, uid, start, items};
+        return { rubric, rubricSlug, prevBlocks, uid, start, items, popularPosts};
     }
 
     constructor(props){
@@ -71,14 +125,16 @@ class Rubric extends React.Component {
             prevBlocks: props.prevBlocks,
             items: [],
             uid: props.uid,
+            latestDate: null,
             start: props.start,
             hasMore: true
         }
-        this.fetchMore = this.fetchMore.bind(this);
+        this.fetchMoreWithCover = this.fetchMoreWithCover.bind(this);
+        this.fetchMoreWithoutCover = this.fetchMoreWithoutCover.bind(this);
     }
 
 
-    async fetchMore(){
+    async fetchMoreWithCover(){
         let items = [];
         let start = this.state.start;
         let prevBlocks = this.state.prevBlocks;
@@ -120,11 +176,68 @@ class Rubric extends React.Component {
     }
 
 
+    async fetchMoreWithoutCover(){
+
+        const { theme } = this.props;
+
+        let items = [];
+        let start = this.state.start;
+        let prevBlocks = this.state.prevBlocks;
+        if ( prevBlocks.length > 5 ){
+            prevBlocks = prevBlocks.slice(-4);
+        }
+
+        let limit = 16;
+        let posts = null;
+        await Public.loadPosts( this.props.rubric.id,null, start, limit)
+            .then(response => posts = response.data.posts)
+            .catch(reason => console.log(reason));
+
+
+        if ( posts == null || posts.length === 0){
+            this.setState({
+                hasMore: false
+            })
+            return;
+        }
+
+        items.push(
+            posts.map((post, index)=>{
+                let dateHeading = null;
+                if (this.state.latestDate === null || !isEqualDate(this.state.latestDate, post.publish_at)){
+                    dateHeading = (
+                        <Typography.Heading color={theme.text.hover} margin={`${this.state.latestDate === null ? "32px" : "85px"} 0 40px auto`}
+                                            level={2}>{DateSting(post.publish_at)}</Typography.Heading>
+                    );
+                    this.state.latestDate = post.publish_at;
+                }
+                return (
+                    <React.Fragment key={index}>
+                        {dateHeading}
+                        <Flex mb="30px">
+                            <Typography.CardText margin="0 35px auto 0" type="xlarge" color={theme.text.primary}>{TimeString(post.publish_at)}</Typography.CardText>
+                            <PostLink postId={post.id}>
+                                <Typography.CardText hover margin="auto 0 auto 0" type="large" color={theme.text.secondary}>{post.title}</Typography.CardText>
+                            </PostLink>
+                        </Flex>
+                    </React.Fragment>
+                );
+            })
+        );
+
+        start += limit;
+        this.setState({
+            items: this.state.items.concat([
+                items
+            ]),
+            start,
+        })
+    }
+
     render() {
         // TODO Use this.props.user for head component
         let empty = true;
-        const { rubric, rubricSlug, theme, items } = this.props;
-
+        const { rubric, rubricSlug, theme, items, width, popularPosts} = this.props;
         if (rubric === null){
             return (<Error statusCode={404}/>);
         }
@@ -148,46 +261,122 @@ class Rubric extends React.Component {
                          cardType: 'summary_large_image',
                      }}/>
 
-                    <Flex justifyContent="center" m="88px 0 14px 0">
-                        <Typography.Heading level={1} margin="auto 20px auto 0">{rubric.title}</Typography.Heading>
-                        {
-                            rubric.emoji &&
-                            <Box my="auto">
-                                <Emoji emoji={{ id: rubric.emoji }} size={48}/>
-                            </Box>
-                        }
-                    </Flex>
+                <Flex justifyContent="center" m="88px 0 14px 0">
+                    <Typography.Heading level={1} margin="auto 20px auto 0">{rubric.title}</Typography.Heading>
                     {
-                        ( rubric.subtitle != null && rubric.subtitle.length > 0 ) &&
-                        <Flex justifyContent="center">
-                            <Typography.Heading level={5} margin="auto 20px auto 0" color={theme.text.secondary}>{rubric.subtitle}</Typography.Heading>
-                        </Flex>
+                        rubric.emoji &&
+                        <Box my="auto">
+                            <Emoji emoji={{id: rubric.emoji}} size={48}/>
+                        </Box>
                     }
-                <Containers.Default mt={'52px'}>
-                    {
-                        items.map((item, index) =>{
-                            if ( item.posts.length > 0 ){
-                                empty = false;
+                </Flex>
+                {
+                    rubric.cover
+                        ? <>
+                            {
+                                (rubric.subtitle != null && rubric.subtitle.length > 0) &&
+                                <Flex justifyContent="center">
+                                    <Typography.Heading level={5} margin="auto 20px auto 0"
+                                                        color={theme.text.secondary}>{rubric.subtitle}</Typography.Heading>
+                                </Flex>
                             }
-                            return(
-                                <React.Fragment key={index}>
-                                    <PostsWithAd posts={item.posts} uid={item.uid}/>
-                                </React.Fragment>
-                            );
-                        })
-                    }
-                    <InfiniteScroll
-                        dataLength={this.state.items.length}
-                        next={this.fetchMore}
-                        hasMore={!empty && this.state.hasMore}
-                        loader={<Form.Loader/>}>
-                        {this.state.items}
-                    </InfiniteScroll>
-                </Containers.Default>
+                            <Containers.Default mt={'52px'}>
+                                {
+                                    items.map((item, index) => {
+                                        if (item.posts.length > 0) {
+                                            empty = false;
+                                        }
+                                        return (
+                                            <React.Fragment key={index}>
+                                                <PostsWithAd posts={item.posts} uid={item.uid} mobileAdId="R-A-351229-6"/>
+                                            </React.Fragment>
+                                        );
+                                    })
+                                }
+                                <InfiniteScroll
+                                    dataLength={this.state.items.length}
+                                    next={this.fetchMoreWithCover}
+                                    hasMore={!empty && this.state.hasMore}
+                                    loader={<Form.Loader/>}>
+                                    {this.state.items}
+                                </InfiniteScroll>
+                            </Containers.Default>
+                        </>
+                        : <Containers.Default>
+                            <Flex heigth={"300px"}>
+                                <Box width={width > 1023 ? [9/12] : '100%' } pr={width > 1023 ? ["10%"] : '0'} >
+                                    {
+                                        items.map(item=>Object.values(item.posts).map((post, index)=>{
+                                            empty = false;
+                                            let dateHeading = null;
+                                            if (this.state.latestDate === null || !isEqualDate(this.state.latestDate, post.publish_at)){
+                                                dateHeading = (
+                                                    <Typography.Heading color={theme.text.hover} margin={`${this.state.latestDate === null ? "32px" : "85px"} 0 40px auto`}
+                                                                        level={2}>{DateSting(post.publish_at)}</Typography.Heading>
+                                                );
+                                                this.state.latestDate = post.publish_at;
+                                            }
+                                            return (
+                                                <React.Fragment key={index}>
+                                                    {dateHeading}
+                                                    <Flex mb="30px">
+                                                        <Typography.CardText margin="0 35px auto 0" type="xlarge" color={theme.text.primary}>{TimeString(post.publish_at)}</Typography.CardText>
+                                                        <PostLink postId={post.id}>
+                                                            <Typography.CardText hover margin="auto 0 auto 0" type="large" color={theme.text.secondary}>{post.title}</Typography.CardText>
+                                                        </PostLink>
+                                                    </Flex>
+                                                </React.Fragment>
+                                            );
+                                        }))
+                                    }
+                                    <InfiniteScroll
+                                        dataLength={this.state.items.length}
+                                        next={this.fetchMoreWithoutCover}
+                                        hasMore={!empty && this.state.hasMore}
+                                        loader={<Form.Loader/>}>
+                                        {this.state.items}
+                                    </InfiniteScroll>
+                                </Box>
+                                {
+                                    width > 1023
+                                    && <Box width={[3/12]} pl={["2%"]}>
+                                        <Form.AdBlock id={'R-A-351229-6'} width={["100%"]} height={["584px"]}/>
+                                        {
+                                            popularPosts.length > 0 &&
+                                            <>
+                                                <Typography.CardText type="large" weight="bold" margin="59px 0 30px 0">Лучшее за неделю</Typography.CardText>
+                                                {
+                                                    popularPosts.slice(0, 4).map((item, index)=>
+                                                        <React.Fragment key={index}>
+                                                            <Box mb="48px">
+                                                                <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover}
+                                                                            link={Links.PostLink} id={item.post.id}>
+                                                                    {item.post.title}
+                                                                </Cards.Mini>
+                                                            </Box>
+                                                        </React.Fragment>
+                                                    )
+
+                                                }
+                                            </>
+                                        }
+                                    </Box>
+                                }
+                            </Flex>
+                        </Containers.Default>
+                }
             </>
         );
     }
 }
 
 
-export default withTheme(Rubric);
+function mapStateToProps(state){
+    return {
+        user: state.auth.user,
+        width: state.common.pageSize.width
+    }
+}
+
+
+export default connect(mapStateToProps)(withTheme(Rubric));

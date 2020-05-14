@@ -167,7 +167,7 @@ class Category extends React.Component {
                                 empty = false;
                             }
                             return <React.Fragment key={index}>
-                                <PostsWithAd posts={item.posts} uid={item.uid}/>
+                                <PostsWithAd posts={item.posts} uid={item.uid} mobileAdId="R-A-351229-6"/>
                             </React.Fragment>
                         })
                     }

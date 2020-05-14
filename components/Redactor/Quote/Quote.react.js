@@ -65,7 +65,7 @@ class Quote extends React.Component {
                     width > 1023
                     ?
                     <Box mt="35px" mb="40px">
-                        <CardText type="xlarge" textAlign="center" margin="0 0 23px 0">« »</CardText>
+                        <CardText type="xxlarge" textAlign="center" margin="0 0 23px 0">« »</CardText>
                         <TagLabel type="large" weight="500" textAlign="center" margin="0">
                             <em><div dangerouslySetInnerHTML={{__html: data.text}}/></em>
                         </TagLabel>

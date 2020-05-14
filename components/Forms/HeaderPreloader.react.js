@@ -10,7 +10,6 @@ class HeaderPreloader extends React.Component {
         startPosition: 0.5,
         stopDelayMs: 200,
         height: 4,
-        showSpinner: false
     };
 
     timer = null;
@@ -106,6 +105,10 @@ class HeaderPreloader extends React.Component {
 
         if (options) {
             NProgress.configure(options);
+        }else{
+            NProgress.configure({
+                showSpinner: false
+            });
         }
 
         Router.events.on('routeChangeStart', this.routeChangeStart);
