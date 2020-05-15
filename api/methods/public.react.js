@@ -9,8 +9,10 @@ export async function getPost(id){
           slug,
           title,
           infinityScroll,
-          cover
+          cover,
+          withEventDate
         },
+        event_date,
         title,
         description,
         publish_at,
@@ -142,11 +144,13 @@ export async function loadPosts(rubric, category, start, limit, skipPostIds ){
                     limit: ${limit}, start: ${start}
                 ){
                 id,
+                event_date,
                 rubric{
                   id,
                   slug,
                   title,
                   infinityScroll,
+                  withEventDate,
                   cover
                 },
                 title,

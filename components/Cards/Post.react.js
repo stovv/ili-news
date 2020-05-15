@@ -6,7 +6,7 @@ import { withTheme } from 'styled-components';
 import windowSize from 'react-window-size';
 
 import { Lazy } from '../Images';
-import { TagLabel, CardText } from '../Typography';
+import {TagLabel, CardText, Heading} from '../Typography';
 import { PostLink } from "../Links.react";
 
 class Post extends React.Component{
@@ -15,8 +15,8 @@ class Post extends React.Component{
     }
 
     render(){
-        const { theme, float, noPreFetch, full, width } = this.props;
-        const { id, title, cover, publish_at, rubric } = this.props.post || {};
+        const { theme, float, full, width } = this.props;
+        const { id, title, cover, publish_at, rubric, event_date } = this.props.post || {};
 
         var date = new Date(publish_at);
         var options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -27,12 +27,35 @@ class Post extends React.Component{
             maxHeight: full ? undefined : ["248px"],
         };
 
+        const EventDate = () => {
+            if (event_date){
+                const date = new Date(event_date);
+                let options = { month: 'long' };
+                console.log();
+                return (
+                    <>
+                        <Box height="100%" width="100%" bg="#000000" sx={{opacity: '0.4', position: 'absolute'}}/>
+                        <Box style={{position: 'absolute', top: "50%", transform: 'translateY(-50%)'}} width="100%">
+                            <Heading level={1} color="#fff" textAlign="center" margin="0 0">{date.getDate()}</Heading>
+                            <Heading level={1} color="#fff" textAlign="center" margin="0 0">{date.toLocaleDateString('ru-RU', options)}</Heading>
+                        </Box>
+                    </>
+                );
+            }
+            return (<></>);
+        }
+
 
         if (width > 1023){
             return (
-                <PostLink postId={id} prefetch={!noPreFetch}>
+                <PostLink postId={id}>
                     <Box height="100%" width="100%" >
                         <Lazy cover={cover} {...additionalProps} overflow="visible" hover float={float}>
+                            {
+                                ( rubric.withEventDate && event_date ) && <>
+                                    <EventDate/>
+                                </>
+                            }
                             <Box bg={theme.colors.backgroundPrimary}
                                  maxWidth={full ? undefined : ["264px"]} px={[theme.spacing.s]}
                                  sx={{
