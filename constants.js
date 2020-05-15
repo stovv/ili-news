@@ -5,7 +5,7 @@ export const SITE_INFO = {
     TITLE: "ИЛИ",
     DESCRIPTION: "Молодежный журнал ИЛИ. Новости, Люди Спецроекты и События Нижнего Новгорода",
     IMAGE: {
-        url: "https://xpan.ili-nnov.ru/uploads/icon_8e0834e6c9.png",
+        url: "https://xpan.ili-nnov.ru/uploads/icon_4398f688b4.png",
         width: 112,
         height: 112
     }

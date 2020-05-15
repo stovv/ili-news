@@ -43,7 +43,7 @@ class YandexRTB extends React.Component {
         const { id, infinity, uid, width, height, theme } = this.props;
         if (typeof window !== "undefined"){
             return(
-                <Box  width={width} height={height} sx={{position: 'relative'}}>
+                <Box  width={width} height={height} sx={{position: 'relative'}} >
                     {/* <Box style={{top: "50%", left: "50%", marginRight: "-50%", position: 'absolute',
                         transform: "translate(-50%, -50%)", zIndex: 1}}>
                         <Emoji emoji='money_mouth_face' set='apple' size={50}/>

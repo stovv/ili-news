@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import {Box} from 'rebass';
 import { connect } from 'react-redux';
 import styled, {withTheme} from 'styled-components';
-import { Typography } from '../../components';
-import {PostLink} from "../../components/Links.react";
+import { Typography, Links } from '../../components';
 
 
 const Divider = styled.hr`
@@ -24,7 +23,7 @@ const Block = ({title, createdDate, divider, theme, id, width})=>{
     if ( width > 1023 ){
         return(
             <>
-                <PostLink postId={id}>
+                <Links.PostLink postId={id}>
                     <Typography.CardText type="small"
                                          maxWidth="255px"
                                          maxHeight="38px"
@@ -33,7 +32,7 @@ const Block = ({title, createdDate, divider, theme, id, width})=>{
                                          hover
                                          color={theme.text.secondarySecondary}
                                          margin={`0 0 ${theme.spacing.xs} 0`}>{title}</Typography.CardText>
-                </PostLink>
+                </Links.PostLink>
                 <Typography.TagLabel type="small"
                                      color={theme.text.secondary}
                                      margin={`${theme.spacing.xs} 0 0 0`}>{publishDate}</Typography.TagLabel>
@@ -46,7 +45,7 @@ const Block = ({title, createdDate, divider, theme, id, width})=>{
     }else{
         return(
             <>
-                <PostLink postId={id}>
+                <Links.PostLink postId={id}>
                     <Typography.CardText type="small"
                                          maxHeight="38px"
                                          hideOwerflow
@@ -54,7 +53,7 @@ const Block = ({title, createdDate, divider, theme, id, width})=>{
                                          hover
                                          color={theme.text.secondarySecondary}
                                          margin={`0 0 ${theme.spacing.xs} 0`}>{title}</Typography.CardText>
-                </PostLink>
+                </Links.PostLink>
                 <Typography.TagLabel type="small"
                                      color={theme.text.secondary}
                                      margin={`${theme.spacing.xs} 0 0 0`}>{publishDate}</Typography.TagLabel>
@@ -79,14 +78,16 @@ class NewsBlock extends React.Component
             return(
                 <Box bg={theme.colors.backgroundSecondary} px={theme.spacing.m} py={["24px"]} maxWidth={["296px"]}
                      sx={{float: "right"}}>
-                    <Typography.Heading level={4} margin="0 0 32px 0"
-                                        color={theme.text.hover}
-                                        textTransform="uppercase">
-                        Новости города
-                    </Typography.Heading>
+                    <Links.RubricLink rubricSlug="news">
+                        <Typography.Heading level={4} margin="0 0 32px 0"
+                                            color={theme.text.hover}
+                                            textTransform="uppercase">
+                            Новости города
+                        </Typography.Heading>
+                    </Links.RubricLink>
                     {
                         news.slice(0,6).map((item, index) =>
-                            <React.Fragment>
+                            <React.Fragment key={index}>
                                 <Block theme={theme}
                                        title={item.title}
                                        createdDate={item.publish_at}
@@ -100,14 +101,16 @@ class NewsBlock extends React.Component
         }else{
             return(
                 <Box bg={theme.colors.backgroundSecondary} px={theme.spacing.m} py={["24px"]}>
-                    <Typography.Heading level={4} margin="0 0 32px 0"
-                                        color={theme.text.hover}
-                                        textTransform="uppercase">
-                        Новости города
-                    </Typography.Heading>
+                    <Links.RubricLink rubricSlug="news">
+                        <Typography.Heading level={4} margin="0 0 32px 0"
+                                            color={theme.text.hover}
+                                            textTransform="uppercase">
+                            Новости города
+                        </Typography.Heading>
+                    </Links.RubricLink>
                     {
                         news.slice(0,6).map((item, index) =>
-                            <React.Fragment>
+                            <React.Fragment key={index}>
                                 <Block theme={theme}
                                        width={width}
                                        title={item.title}

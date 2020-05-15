@@ -178,7 +178,7 @@ class Rubric extends React.Component {
 
     async fetchMoreWithoutCover(){
 
-        const { theme } = this.props;
+        const { theme, width } = this.props;
 
         let items = [];
         let start = this.state.start;
@@ -207,19 +207,33 @@ class Rubric extends React.Component {
                 if (this.state.latestDate === null || !isEqualDate(this.state.latestDate, post.publish_at)){
                     dateHeading = (
                         <Typography.Heading color={theme.text.hover} margin={`${this.state.latestDate === null ? "32px" : "85px"} 0 40px auto`}
-                                            level={2}>{DateSting(post.publish_at)}</Typography.Heading>
+                                            level={width > 1023 ? 2 : 3}>{DateSting(post.publish_at)}</Typography.Heading>
                     );
                     this.state.latestDate = post.publish_at;
                 }
                 return (
                     <React.Fragment key={index}>
-                        {dateHeading}
-                        <Flex mb="30px">
-                            <Typography.CardText margin="0 35px auto 0" type="xlarge" color={theme.text.primary}>{TimeString(post.publish_at)}</Typography.CardText>
-                            <PostLink postId={post.id}>
-                                <Typography.CardText hover margin="auto 0 auto 0" type="large" color={theme.text.secondary}>{post.title}</Typography.CardText>
-                            </PostLink>
-                        </Flex>
+                        {
+                            width > 1023
+                                ? <>
+                                    {dateHeading}
+                                    <Flex mb="30px">
+                                        <Typography.CardText margin="0 35px auto 0" type="xlarge" color={theme.text.primary}>{TimeString(post.publish_at)}</Typography.CardText>
+                                        <PostLink postId={post.id}>
+                                            <Typography.CardText hover margin="auto 0 auto 0" type="large" color={theme.text.secondary}>{post.title}</Typography.CardText>
+                                        </PostLink>
+                                    </Flex>
+                                </>
+                                : <>
+                                    {dateHeading}
+                                    <Flex mb="30px">
+                                        <Typography.CardText margin={"0 10px auto 0"} type="normal" color={theme.text.primary}>{TimeString(post.publish_at)}</Typography.CardText>
+                                        <PostLink postId={post.id}>
+                                            <Typography.CardText hover wrap margin="auto 0 auto 0" type="normal" color={theme.text.secondary}>{post.title}</Typography.CardText>
+                                        </PostLink>
+                                    </Flex>
+                                </>
+                        }
                     </React.Fragment>
                 );
             })
@@ -262,24 +276,38 @@ class Rubric extends React.Component {
                      }}/>
 
                 <Flex justifyContent="center" m="88px 0 14px 0">
-                    <Typography.Heading level={1} margin="auto 20px auto 0">{rubric.title}</Typography.Heading>
                     {
-                        rubric.emoji &&
-                        <Box my="auto">
-                            <Emoji emoji={{id: rubric.emoji}} size={48}/>
-                        </Box>
+                        width > 1023
+                            ? <>
+                                <Typography.Heading level={1} margin="auto 20px auto 0">{rubric.title}</Typography.Heading>
+                                {
+                                    rubric.emoji &&
+                                    <Box my="auto">
+                                        <Emoji emoji={{id: rubric.emoji}} size={48}/>
+                                    </Box>
+                                }
+                            </>
+                            : <Box>
+                                {
+                                    rubric.emoji &&
+                                    <Flex justifyContent="center" mb="10px">
+                                        <Emoji emoji={{id: rubric.emoji}} size={48}/>
+                                    </Flex>
+                                }
+                                <Typography.Heading level={3} margin="auto 0 auto 0" textAlign="center">{rubric.title}</Typography.Heading>
+                            </Box>
                     }
                 </Flex>
                 {
+                    (rubric.subtitle != null && rubric.subtitle.length > 0) &&
+                    <Flex justifyContent="center">
+                        <Typography.Heading level={width > 1023 ? 5 : 6} margin={`auto ${width > 1023 ? '20px' : 0} auto 0`} textAlign="center"
+                                            color={theme.text.secondary}>{rubric.subtitle}</Typography.Heading>
+                    </Flex>
+                }
+                {
                     rubric.cover
                         ? <>
-                            {
-                                (rubric.subtitle != null && rubric.subtitle.length > 0) &&
-                                <Flex justifyContent="center">
-                                    <Typography.Heading level={5} margin="auto 20px auto 0"
-                                                        color={theme.text.secondary}>{rubric.subtitle}</Typography.Heading>
-                                </Flex>
-                            }
                             <Containers.Default mt={'52px'}>
                                 {
                                     items.map((item, index) => {
@@ -302,71 +330,108 @@ class Rubric extends React.Component {
                                 </InfiniteScroll>
                             </Containers.Default>
                         </>
-                        : <Containers.Default>
-                            <Flex heigth={"300px"} mt="50px">
-                                <Box width={width > 1023 ? [9/12] : '100%' } pr={width > 1023 ? ["10%"] : '0'} >
-                                    {
-                                        items.map(item=>Object.values(item.posts).map((post, index)=>{
-                                            empty = false;
-                                            let dateHeading = null;
-                                            if (this.state.latestDate === null || !isEqualDate(this.state.latestDate, post.publish_at)){
-                                                dateHeading = (
-                                                    <Typography.Heading color={theme.text.hover} margin={`${this.state.latestDate === null ? "32px" : "85px"} 0 40px auto`}
-                                                                        level={2}>{DateSting(post.publish_at)}</Typography.Heading>
-                                                );
-                                                this.state.latestDate = post.publish_at;
-                                            }
-                                            return (
-                                                <React.Fragment key={index}>
-                                                    {dateHeading}
-                                                    <Flex mb="30px">
-                                                        <Typography.CardText margin="0 35px auto 0" type="xlarge" color={theme.text.primary}>{TimeString(post.publish_at)}</Typography.CardText>
-                                                        <PostLink postId={post.id}>
-                                                            <Typography.CardText hover margin="auto 0 auto 0" type="large" color={theme.text.secondary}>{post.title}</Typography.CardText>
-                                                        </PostLink>
-                                                    </Flex>
-                                                </React.Fragment>
-                                            );
-                                        }))
-                                    }
-                                    <InfiniteScroll
-                                        dataLength={this.state.items.length}
-                                        next={this.fetchMoreWithoutCover}
-                                        hasMore={!empty && this.state.hasMore}
-                                        loader={<Form.Loader/>}>
-                                        {this.state.items}
-                                    </InfiniteScroll>
-                                </Box>
-                                {
-                                    width > 1023
-                                    && <Box width={[3/12]} pl={["2%"]} height="max-content" sx={{
-                                        position: "sticky",
-                                        top: "20px"
-                                    }}>
-                                        <Form.AdBlock id={'R-A-351229-6'} width={["100%"]} height={["584px"]}/>
-                                        {
-                                            popularPosts.length > 0 &&
-                                            <>
-                                                <Typography.CardText type="large" weight="bold" margin="59px 0 30px 0">Лучшее за неделю</Typography.CardText>
+                        : <>
+                            {
+                                width > 1023
+                                    ? <Containers.Default>
+                                        <Flex heigth={"300px"} mt="50px">
+                                            <Box width={[9/12]} pr={["10%"]} >
                                                 {
-                                                    popularPosts.slice(0, 4).map((item, index)=>
-                                                        <React.Fragment key={index}>
-                                                            <Box mb="48px">
-                                                                <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover}
-                                                                            link={Links.PostLink} id={item.post.id}>
-                                                                    {item.post.title}
-                                                                </Cards.Mini>
-                                                            </Box>
-                                                        </React.Fragment>
-                                                    )
+                                                    items.map(item=>Object.values(item.posts).map((post, index)=>{
+                                                        empty = false;
+                                                        let dateHeading = null;
+                                                        if (this.state.latestDate === null || !isEqualDate(this.state.latestDate, post.publish_at)){
+                                                            dateHeading = (
+                                                                <Typography.Heading color={theme.text.hover} margin={`${this.state.latestDate === null ? "32px" : "85px"} 0 40px auto`}
+                                                                                    level={2}>{DateSting(post.publish_at)}</Typography.Heading>
+                                                            );
+                                                            this.state.latestDate = post.publish_at;
+                                                        }
 
+                                                        return (
+                                                            <React.Fragment key={index}>
+                                                                {dateHeading}
+                                                                <Flex mb="30px">
+                                                                    <Typography.CardText margin={"0 35px auto 0"} type="xlarge" color={theme.text.primary}>{TimeString(post.publish_at)}</Typography.CardText>
+                                                                    <PostLink postId={post.id}>
+                                                                        <Typography.CardText hover margin="auto 0 auto 0" type="large" color={theme.text.secondary}>{post.title}</Typography.CardText>
+                                                                    </PostLink>
+                                                                </Flex>
+                                                            </React.Fragment>
+                                                        );
+                                                    }))
                                                 }
-                                            </>
+                                                <InfiniteScroll
+                                                    dataLength={this.state.items.length}
+                                                    next={this.fetchMoreWithoutCover}
+                                                    hasMore={!empty && this.state.hasMore}
+                                                    loader={<Form.Loader/>}>
+                                                    {this.state.items}
+                                                </InfiniteScroll>
+                                            </Box>
+                                            <Box width={[3/12]} pl={["2%"]} height="max-content" sx={{
+                                                position: "sticky",
+                                                top: "20px"
+                                            }}>
+                                                <Form.AdBlock id={'R-A-351229-6'} width={["100%"]} height={["584px"]}/>
+                                                {
+                                                    popularPosts.length > 0 &&
+                                                    <>
+                                                        <Typography.CardText type="large" weight="bold" margin="59px 0 30px 0">Лучшее за неделю</Typography.CardText>
+                                                        {
+                                                            popularPosts.slice(0, 4).map((item, index)=>
+                                                                <React.Fragment key={index}>
+                                                                    <Box mb="48px">
+                                                                        <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover}
+                                                                                    link={Links.PostLink} id={item.post.id}>
+                                                                            {item.post.title}
+                                                                        </Cards.Mini>
+                                                                    </Box>
+                                                                </React.Fragment>
+                                                            )
+
+                                                        }
+                                                    </>
+                                                }
+                                            </Box>
+                                        </Flex>
+                                    </Containers.Default>
+                                    : <Containers.Mini>
+                                        {
+                                            items.map(item=>Object.values(item.posts).map((post, index)=>{
+                                                empty = false;
+                                                let dateHeading = null;
+                                                if (this.state.latestDate === null || !isEqualDate(this.state.latestDate, post.publish_at)){
+                                                    dateHeading = (
+                                                        <Typography.Heading color={theme.text.hover} margin={`${this.state.latestDate === null ? "32px" : "85px"} 0 40px auto`}
+                                                                            level={3}>{DateSting(post.publish_at)}</Typography.Heading>
+                                                    );
+                                                    this.state.latestDate = post.publish_at;
+                                                }
+
+                                                return (
+                                                    <React.Fragment key={index}>
+                                                        {dateHeading}
+                                                        <Flex mb="30px">
+                                                            <Typography.CardText margin={"0 10px auto 0"} type="normal" color={theme.text.primary}>{TimeString(post.publish_at)}</Typography.CardText>
+                                                            <PostLink postId={post.id}>
+                                                                <Typography.CardText hover wrap margin="auto 0 auto 0" type="normal" color={theme.text.secondary}>{post.title}</Typography.CardText>
+                                                            </PostLink>
+                                                        </Flex>
+                                                    </React.Fragment>
+                                                );
+                                            }))
                                         }
-                                    </Box>
-                                }
-                            </Flex>
-                        </Containers.Default>
+                                        <InfiniteScroll
+                                            dataLength={this.state.items.length}
+                                            next={this.fetchMoreWithoutCover}
+                                            hasMore={!empty && this.state.hasMore}
+                                            loader={<Form.Loader/>}>
+                                            {this.state.items}
+                                        </InfiniteScroll>
+                                    </Containers.Mini>
+                            }
+                        </>
                 }
             </>
         );

@@ -20,7 +20,7 @@ class TopPosts extends React.Component {
 
         if (width > 1023){
             return (
-                <React.Fragment>
+                <>
                     <Images.Lazy cover={cover}  blur height="384px" blackout>
                         <Containers.Default>
                             <Flex mt={[81]}>
@@ -56,16 +56,16 @@ class TopPosts extends React.Component {
                             }
                         </Flex>
                     </Containers.Default>
-                </React.Fragment>
+                </>
             );
         }else{
             return (
                 <Containers.Mini>
-                    <CardText type="normal" color={theme.colors.primary}>Популярное</CardText>
+                    <CardText type="normal" margin={`${theme.spacing.block} 0 0 0`} color={theme.colors.primary}>Популярное</CardText>
                     {
                         posts.map((item, index) => (
                             <React.Fragment key={index}>
-                                <Box width="100%" height="350px" mx="auto" my={"40px"}>
+                                <Box width="100%" height="350px" mx="auto" mb="40px" mt={index === 0 ? "24px" : "40px"}>
                                     <Cards.Post post={item.post}/>
                                 </Box>
                             </React.Fragment>

@@ -12,11 +12,11 @@ const TagWrap = styled.div`
     background-color: ${props => props.theme.colors.primary};
     margin: 10px ${props=> props.theme.spacing.m} 10px 0;
     padding:  ${props => props.theme.spacing.xs} 32px;
-    transition: all 0.4s ease-in-out;
+    transition: all 0.1s ease-out;
     &:hover{
         background-color: ${props => props.theme.colors.hover};
-        box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.80);
-        transform: scale(1.005);
+        box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.50);
+        transform: translateY(-3px);
     }
 `;
 
@@ -25,7 +25,7 @@ const Tag = ({children, theme, mini}) =>(
         {
             mini
                 ? <TagLabel type="normal" color={theme.text.onPrimary} margin={0}>{children}</TagLabel>
-                : <TagLabel type="large" color={theme.text.onPrimary} margin={0}>{children}</TagLabel>
+                : <TagLabel type="large" weight="400" color={theme.text.onPrimary} margin={0}>{children}</TagLabel>
         }
     </TagWrap>
 );

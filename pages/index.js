@@ -205,7 +205,7 @@ class FrontPage extends React.Component {
         const {topPosts, lastTheme, nextTheme, newsFeed, posts, catLine, width} = this.props;
 
         return (
-            <React.Fragment>
+            <>
                 <NextSeo title={SITE_INFO.TITLE}
                          description={SITE_INFO.DESCRIPTION}
                          canonical={SITE_URL}
@@ -249,7 +249,7 @@ class FrontPage extends React.Component {
                         {this.state.items}
                     </InfiniteScroll>
                 </Offscreen>
-            </React.Fragment>
+            </>
         );
     }
 }

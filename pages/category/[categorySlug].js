@@ -10,6 +10,7 @@ import { withTheme } from 'styled-components';
 import {CategoryLine, CompsBannerAd, PostsWithAd, TagBar} from "../../compilations";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {RubricLink} from "../../components/Links.react";
+import {connect} from "react-redux";
 
 
 function randomChoice(arr){
@@ -122,7 +123,7 @@ class Category extends React.Component {
 
     render() {
         // TODO Use this.props.user for head component
-        const { category, categorySlug, theme, items } = this.props;
+        const { category, categorySlug, theme, items, width } = this.props;
         let empty = true;
 
         if (category === null){
@@ -157,7 +158,11 @@ class Category extends React.Component {
                              cardType: 'summary_large_image',
                          }}/>
                 <Flex justifyContent="center" m="88px 0 14px 0">
-                    <Typography.Heading level={1} margin="auto 20px auto 0">{category.title}</Typography.Heading>
+                    {
+                        width > 1023
+                            ? <Typography.Heading level={1} margin="auto 0 auto 0">{category.title}</Typography.Heading>
+                            : <Typography.Heading level={2}  textAlign="center" margin="auto 20px auto 0">{category.title}</Typography.Heading>
+                    }
                 </Flex>
                 <TagBar tags={tags}/>
                 <Containers.Default mt={0}>
@@ -185,4 +190,11 @@ class Category extends React.Component {
 }
 
 
-export default withTheme(Category);
+function mapStateToProps(state){
+    return {
+        width: state.common.pageSize.width
+    }
+}
+
+
+export default connect(mapStateToProps)(withTheme(Category));

@@ -7,7 +7,9 @@ export async function getPost(id){
         rubric{
           id,
           slug,
-          title
+          title,
+          infinityScroll,
+          cover
         },
         title,
         description,
@@ -129,15 +131,31 @@ export async function fetchPosts(fields = ['id', 'slug', 'updated_at']){
     `);
 }
 
-export async function loadPosts(rubric, category, start, limit){
+export async function loadPosts(rubric, category, start, limit, skipPostIds ){
     return api.ql(`
         query{
-            posts(sort: "publish_at:DESC", where: { rubric: { ${rubric != null ? `id: ${rubric},` : ''}, ${category != null ? `category:{ id: ${category}},` : ''} } }, limit: ${limit}, start: ${start}){
-                title,
+            posts(sort: "publish_at:DESC", where: { 
+                id_nin: [${skipPostIds && skipPostIds.join(",")}], 
+                rubric: { ${rubric != null ? `id: ${rubric},` : ''}
+                        ${category != null ? `category:{ id: ${category}},` : ''} } 
+                    }, 
+                    limit: ${limit}, start: ${start}
+                ){
                 id,
-                publish_at,
                 rubric{
-                    title,
+                  id,
+                  slug,
+                  title,
+                  infinityScroll,
+                  cover
+                },
+                title,
+                description,
+                publish_at,
+                authors(limit: 4){
+                  id,
+                  name,
+                  secondName
                 },
                 cover{
                   caption, 
@@ -148,6 +166,17 @@ export async function loadPosts(rubric, category, start, limit){
                   height,
                   formats
                 },
+                blocks,
+                comment_thread{
+                    id
+                },
+                rating{
+                  id,
+                  likes,
+                  dislikes,
+                  views
+                },
+                updated_at
             }
         }
     `);

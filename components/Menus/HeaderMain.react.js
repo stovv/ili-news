@@ -52,7 +52,7 @@ class HeaderNavBar extends React.Component {
     }
     render(){
         const { menus, route, width } = this.props;
-        console.log("ROUTE", route);
+        //console.log("ROUTE", route);
 
 
         if ( width > 1023 ){

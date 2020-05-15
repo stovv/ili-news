@@ -31,6 +31,11 @@ const XXLarge = styled.p`
           color: ${theme.text.hover};
       }
   `}
+  ${({wrap}) => wrap &&`
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        white-space: normal;
+  `}
 `;
 
 const XLarge = styled.p`
@@ -60,6 +65,11 @@ const XLarge = styled.p`
           transition: all 0.4s ease-in-out;
           color: ${theme.text.hover};
       }
+  `}
+  ${({wrap}) => wrap &&`
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        white-space: normal;
   `}
 `;
 
@@ -93,6 +103,11 @@ const Large = styled.p`
           color: ${theme.text.hover};
       }
   `}
+  ${({wrap}) => wrap &&`
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        white-space: normal;
+  `}
 `;
 
 const Normal = styled.p`
@@ -122,6 +137,11 @@ const Normal = styled.p`
           transition: all 0.4s ease-in-out;
           color: ${theme.text.hover};
       }
+  `}
+  ${({wrap}) => wrap &&`
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        white-space: normal;
   `}
 `;
 
@@ -161,6 +181,11 @@ const Small = styled.p`
           color: ${theme.text.hover};
       }
   `}
+    ${({wrap}) => wrap &&`
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        white-space: normal;
+  `}
 `;
 
 const XSmall = styled.p`
@@ -198,6 +223,11 @@ const XSmall = styled.p`
           transition: all 0.4s ease-in-out;
           color: ${theme.text.hover};
       }
+  `}
+  ${({wrap}) => wrap &&`
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    white-space: normal;
   `}
 `;
 
@@ -239,6 +269,7 @@ CardText.propTypes = {
     textTransform: PropTypes.string,
     textAlign: PropTypes.string,
     hideOwerflow: PropTypes.bool,
+    wrap: PropTypes.bool,
     width: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number
