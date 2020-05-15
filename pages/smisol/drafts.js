@@ -33,7 +33,7 @@ class Drafts extends React.Component {
         }
         
         if (!this.props.isLoggedIn){
-            Router.push('/smisol/create');
+            Router.push('/login');
             return null;
         }
         return (

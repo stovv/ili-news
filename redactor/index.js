@@ -24,8 +24,8 @@ class Redactor extends React.Component {
         this.state = {
             in_save: false,
             in_editor_save: false,
-            label: props.draft.title ? props.draft.title : undefined,
-            initial_content: props.draft.blocks ? props.draft.blocks : initial_data
+            label: props.draft ? props.draft.title : undefined,
+            initial_content: props.draft ? props.draft.blocks : initial_data
         }
         this.autosave = this.autosave.bind(this);
         this.handleSave = this.handleSave.bind(this);
