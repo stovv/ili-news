@@ -3,7 +3,7 @@ import Router from 'next/router';
 import {connect} from 'react-redux';
 import { Flex, Box } from 'rebass';
 import {getDrafts, createNewDraft} from '../../store/smisolActions.react';
-import { Form, Menus } from '../../components';
+import { Form, Menus, Cards } from '../../components';
 
 class Drafts extends React.Component {
     constructor(props){
@@ -28,11 +28,12 @@ class Drafts extends React.Component {
     }
 
     render(){
+        const { drafts, isLoggedIn } = this.props;
         if (typeof window === "undefined"){
             return null
         }
         
-        if (!this.props.isLoggedIn){
+        if (!isLoggedIn){
             Router.push('/login');
             return null;
         }
@@ -45,6 +46,13 @@ class Drafts extends React.Component {
                     </Box>
                     <Box width={10/12}>
                         <p><Form.Buttons.SimpleButton onClick={()=>this.handleNewDraft()}>+ Create New</Form.Buttons.SimpleButton></p>
+                        {
+                            drafts.map((draft, index)=>
+                                <React.Fragment key={index}>
+                                    <Cards.Draft draft={draft}/>
+                                </React.Fragment>
+                            )
+                        }
                     </Box>
                 </Flex>
             </>

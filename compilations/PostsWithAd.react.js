@@ -124,7 +124,7 @@ class PostsWithAd extends React.Component {
                         )
                     }
                     <Box width="100%" height="350px" mx="auto" my={"40px"}>
-                        <Form.AdBlock id={mobileAdId} uid={uid}/>
+                        <Form.AdBlock id={mobileAdId} uid={uid} infinity width="100%" height="100%"/>
                     </Box>
                 </>
             ) ;
