@@ -13,13 +13,15 @@ import { Public } from '../api';
 import * as CommonActions from '../store/commonActions.react';
 
 import 'nprogress/nprogress.css'; //styles of nprogress
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 import 'toasted-notes/src/styles.css';
 import 'emoji-mart/css/emoji-mart.css';
 import '../assets/fonts/lato/lato.css';
 import './style.css';
 
 
-const header_ignore = ["/smisl/create", "/smisl/drafts", "/login"];
+const header_ignore = ["/smisl/create", "/smisl/drafts", "/smisl/preview",  "/login"];
 const yParams = { accounts: [62554705], options: { webvisor: true }};
 
 class IliApp extends App {

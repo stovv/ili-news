@@ -3,13 +3,19 @@ body {
     user-select: none;
 }
 
-emoji-mart-emoji{
+.emoji-mart-emoji{
     position:relative;
     display:inline-block;
     font-size:0;
+    outline: none;
+    border: none;
     margin:0;
     padding:0;
     border:none;
     background:none;
     box-shadow:none
+}
+
+.emoji-mart-emoji span{
+    user-select: none;
 }

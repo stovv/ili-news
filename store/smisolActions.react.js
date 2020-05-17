@@ -1,4 +1,5 @@
 import {GET_DRAFTS, OPEN_DRAFT, UPDATE_DRAFT, CLOSE_DRAFT} from '../tools/constants';
+import { SMISOL } from './types.react';
 import {Redactor, Auth} from '../api';
 
 
@@ -77,6 +78,13 @@ export function updateDraft(draft_id, data){
             });
     };
 }
+
+export function setTempCover(fileItems){
+    return {
+        type: SMISOL.COVER.SET_TEMP,
+        payload: fileItems
+    }
+};
 
 export function closeDraft(){
     return async dispatch =>{

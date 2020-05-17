@@ -52,6 +52,21 @@ class HeaderRedactor extends React.Component {
                         </a>
                     </Box>
                 }
+                {
+                    type === "preview" &&
+                    <Box bg={theme.colors.backgroundSecondary} width="64px" sx={{position: 'relative', cursor: 'pointer'}}>
+                        <a href="/smisl/create">
+                            <Box sx={{
+                                position: 'absolute',
+                                top: "50%",
+                                left: "50%",
+                                transform: 'translate(-50%, -50%)'
+                            }}>
+                                <Icons.ArrowIcon />
+                            </Box>
+                        </a>
+                    </Box>
+                }
                 <Flex ml={["20px", "30px","80px"]} mr="auto" my="auto">
                     <Heading level={3} margin="0 0 0 5px" color={theme.text.hover}><u>смысл</u></Heading>
                     <Box mt="auto">
@@ -62,7 +77,7 @@ class HeaderRedactor extends React.Component {
                 <Flex ml="auto">
 
                     {
-                        type === "create"
+                        (type === "create" || type === "preview")
                             ? <></>
                             : <Box width="64px" sx={{
                                 position: 'relative',
@@ -89,13 +104,22 @@ class HeaderRedactor extends React.Component {
                                     </Box>
                                 </a>
                             </Box>
-                            : <Box bg={theme.colors.primary} width="64px" sx={{position: 'relative'}} >
-                                <a href="/">
-                                    <Box sx={{position: 'absolute', top: "50%", left: "50%", transform: 'translate(-50%, -50%)'}}>
-                                        <Icons.CloseIcon />
+                            : (
+                                type === "preview"
+                                 ? <></>
+                                 : <Box bg={theme.colors.primary} width="64px" sx={{position: 'relative'}} >
+                                        <a href="/">
+                                            <Box sx={{
+                                                position: 'absolute',
+                                                top: "50%",
+                                                left: "50%",
+                                                transform: 'translate(-50%, -50%)'
+                                            }}>
+                                                <Icons.CloseIcon/>
+                                            </Box>
+                                        </a>
                                     </Box>
-                                </a>
-                            </Box>
+                            )
                     }
                 </Flex>
             </Flex>

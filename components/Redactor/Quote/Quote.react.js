@@ -41,20 +41,18 @@ class Quote extends React.Component {
             if (data.type === "1"){
                 return (
                     <QuoteBox>
-                        <TagLabel type="large" weight="500" margin={0}>
-                            <TitleArea onChange={event => this.setState({text: event.target.value})}
-                                       defaultValue={this.state.text}
-                                       withoutLabel fontSizeIndex={3}
-                            />
-                        </TagLabel>
+                        <TitleArea onChange={event => this.setState({text: event.target.value})}
+                                   defaultValue={this.state.text}
+                                   withoutLabel fontSizeIndex={3}
+                        />
                     </QuoteBox>
                 );
             }else if (data.type === "2"){
                 return (
                     <Box mt="35px" mb="40px">
                         <CardText type="xxlarge" textAlign="center" margin="0 0 23px 0">« »</CardText>
-                        <Box height="50px">
-                            <TitleArea onChange={event => this.setState({text: event.target.value})}
+                        <Box>
+                            <TitleArea outline="#4a4a4a" onChange={event => this.setState({text: event.target.value})}
                                        defaultValue={this.state.text}
                                        withoutLabel fontSizeIndex={3}
                             />
@@ -64,7 +62,7 @@ class Quote extends React.Component {
             }
         }
 
-        if (data.type === "2"){
+        if (data.type === "1"){
             return (
                 <QuoteBox screenWidth={width}>
                     {
@@ -80,7 +78,7 @@ class Quote extends React.Component {
                     }
                 </QuoteBox>
             );
-        }else if (data.type === "1"){
+        }else if (data.type === "2"){
             return (
                     width > 1023
                     ?

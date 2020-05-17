@@ -2,20 +2,28 @@ import React from 'react';
 import EditorJs from 'react-editor-js';
 import {connect} from 'react-redux';
 import Head from 'next/head';
-
-import tools from './tools';
-import initial_data from './initial_data';
+import { FilePond, registerPlugin } from 'react-filepond';
+import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import toaster from 'toasted-notes';
 import {Flex, Box} from 'rebass';
 
+import tools from './tools';
+import initial_data from './initial_data';
+
+
 import {
     Toasts,
-    Form
+    Form,
+    Images
 } from '../components';
+import { File } from '../api';
 
 import {RedactorTypogrphy, RedactorEmojiPicker} from './style';
 
-import {updateDraft} from '../store/smisolActions.react';
+import { updateDraft } from '../store/smisolActions.react';
+import {BACKEND_URL} from "../constants";
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 
 class Redactor extends React.Component {
@@ -24,17 +32,21 @@ class Redactor extends React.Component {
         this.state = {
             in_save: false,
             in_editor_save: false,
+            files: [],
             label: props.draft ? props.draft.title : undefined,
             initial_content: props.draft ? props.draft.blocks : initial_data
         }
         this.autosave = this.autosave.bind(this);
         this.handleSave = this.handleSave.bind(this);
+        //this.handleSubmit = this.handleSubmit.bind(this);
+        this.onImageChange = this.onImageChange.bind(this);
+        //this.onSubmit = this.onSubmit.bind(this);
         this.editorInstance;
     }
 
     autosave(){
         setTimeout(function () {
-            if (this.state.in_editor_save){
+            if (this.state.in_editor_save && this.editorInstance){
                 this.editorInstance.save()
                     .then(outputData => {
                         this.props.dispatch(updateDraft(this.props.draft.id, {
@@ -49,8 +61,6 @@ class Redactor extends React.Component {
                     }).catch(reason=>{
                         console.log('Error saving:', reason);
                     });
-            }
-            if (this.state.in_save){
                 this.props.dispatch(updateDraft(this.props.draft.id, {
                     title: this.state.label
                 }
@@ -72,7 +82,7 @@ class Redactor extends React.Component {
       
     componentDidMount() {
         this.autosave();
-        document.addEventListener("keydown", this.handleKeyDown.bind(this));
+        //document.addEventListener("keydown", this.handleKeyDown.bind(this));
     }
 
     handleKeyDown(event) {
@@ -87,11 +97,51 @@ class Redactor extends React.Component {
         }
     }
 
+    onImageChange = event => {
+        console.log(event.target.files);
+        const formData = new FormData();
+
+        Array.from(event.target.files).forEach(image => {
+            formData.append('files', image);
+        });
+        File.uploadByFormData(formData)
+            .then(response => {
+                this.props.dispatch(updateDraft(this.props.draft.id, {
+                    cover: response.data[0].id
+                }));
+            })
+            .catch(reason => console.log(reason));
+    };
+
     componentWillUnmount(){
-        document.removeEventListener("keydown", this.handleKeyDown.bind(this));
+        //document.removeEventListener("keydown", this.handleKeyDown.bind(this));
     }
 
+    /*
+        handleSubmit(fileItems){
+            let files = fileItems.map(fileItem => fileItem.file);
+
+            const data = new FormData();
+            data.append('name', this.state.name)
+            data.append('files', files)
+
+            File.uploadByFormData(data)
+                .then(response => console.log(response))
+                .catch(reason => console.log(reason));
+        }
+
+
+        * <FilePond
+            files={temp_cover ? temp_cover : []}
+            allowMultiple={false}
+            onupdatefiles={this.handleSubmit}
+            labelIdle='Drag & Drop your cover or <span class="filepond--label-action">Browse</span>'
+        />
+        * */
+
     render() {
+        const { cover } = this.props.draft;
+        console.log(cover);
         return (
             <>
             <RedactorTypogrphy/>
@@ -103,18 +153,26 @@ class Redactor extends React.Component {
                                        defaultValue={this.state.label}
                 />
             </Box>
-            <Box sx={{
-                    maxWidth: 860,
-                    mx: 'auto',
-                    px: 3,
-                }}>
+            <Box mx={'auto'} mt={'50px'} maxWidth={'750px'} px={3}>
+                <Box mb="20px">
+                    {
+                        cover && <Box width="100%" height="200px">
+                                <Images.Lazy cover={cover}/>
+                            </Box>
+                    }
+                    <input
+                        type="file"
+                        name="files"
+                        onChange={this.onImageChange}
+                        alt="image"/>
+                </Box>
                 <EditorJs
                     placeholder="Так уж и быть. «Егоркорка вас приветствует!»"
                     data={this.state.initial_content}
                     tools={tools}
                     instanceRef={instance => this.editorInstance = instance}
                     hideToolbar={false}
-                    onChange={()=>this.setState({in_editor_save : true})}
+                    onChange={()=>this.setState({in_editor_save: true})}
                 />
             </Box>
             </>
@@ -125,6 +183,7 @@ class Redactor extends React.Component {
 function mapStateToProps(state){
     return {
         draft: state.smisol.draft,
+        temp_cover: state.smisol.temp_cover,
         isLoggedIn: state.auth.isLoggedIn
     };
 }

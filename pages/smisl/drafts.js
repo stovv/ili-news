@@ -1,6 +1,7 @@
 import React from 'react';
 import Router from 'next/router';
 import { connect } from 'react-redux';
+import Head from "next/head";
 import { Flex, Box } from 'rebass';
 import { withTheme } from "styled-components";
 
@@ -52,6 +53,9 @@ class Drafts extends React.Component {
         const { drafts, isLoggedIn, theme } = this.props;
         return (
             <>
+                <Head>
+                    <title>Смысл | Черновики</title>
+                </Head>
                 <Menus.HeaderRedactor/>
                 <Flex height="100vh">
                     <Box width={2/12} >

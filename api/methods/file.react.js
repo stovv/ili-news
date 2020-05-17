@@ -14,6 +14,16 @@ export async function uploadFile(file){
     })
 }
 
+export async function uploadByFormData(formData){
+    const jwt = getJwt();
+    return api.post('/upload', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${jwt}`
+        },
+    })
+}
+
 export async function getExternalImage(imageUrl, imageName) {
     const response = await api.simple_get(imageUrl, {
         responseType: 'blob',

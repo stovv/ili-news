@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import Router from 'next/router';
+import Head from "next/head";
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -29,6 +30,9 @@ class Create extends React.Component {
 
         return (
             <>
+                <Head>
+                    <title>Смысл | Редактирование</title>
+                </Head>
                 <Menus.HeaderRedactor type="create"/>
                 <RedactorSSRSafe/>
             </>

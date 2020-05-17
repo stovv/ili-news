@@ -14,6 +14,24 @@ class CalloutEditor {
         };
     }
 
+    /**
+     * Empty Callout is not empty Block
+     * @public
+     * @returns {boolean}
+     */
+    static get contentless() {
+        return true;
+    }
+
+    /**
+     * Allow to press Enter inside the Callout
+     * @public
+     * @returns {boolean}
+     */
+    static get enableLineBreaks() {
+        return true;
+    }
+
     constructor({data}){
         this.data = {
             emoji: data.emoji ? { id: data.emoji, skin: 3 } : undefined,
@@ -34,7 +52,7 @@ class CalloutEditor {
 
     save(blockContent){
         return{
-            emoji: blockContent.querySelector('button').getAttribute('aria-label').split(', ')[1],
+            emoji: blockContent.querySelector('span').getAttribute('aria-label').split(', ')[1],
             text: blockContent.querySelector('textarea').value
         }
     }

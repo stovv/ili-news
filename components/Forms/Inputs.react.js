@@ -9,7 +9,7 @@ import nextId from "react-id-generator";
 const BlankInput = styled.textarea`
     font-family: ${props => props.theme.fontFamily};
     margin: 0;
-    outline: none;
+    min-height: 50px;
     resize: none;
     height: ${props=> props.idealHeight};
     font-size: ${props=> props.fontSizeIndex ? (props.theme.fontSizes[props.fontSizeIndex] ? props.theme.fontSizes[props.fontSizeIndex] : props.theme.fontSizes[9]) : props.theme.fontSizes[9]};
@@ -18,7 +18,17 @@ const BlankInput = styled.textarea`
     font-weight: 500;
     width: 100%;
     word-break: break-word;
-    border: none;
+    ${({outline}) => outline 
+        ? `
+          border: 1px solid ${outline};
+          border-radius: 5px;
+          outline: ${outline};
+        `
+        : `
+          border: none;
+          outline: none;
+        `
+    };
     padding-left: 15px;
     ::placeholder{
         -webkit-text-fill-color: rgba(55, 53, 47, 0.2);
@@ -69,7 +79,7 @@ export class TitleArea extends React.Component {
 
     render(){
 
-        const { withoutLabel,inverted, fontSizeIndex} = this.props;
+        const { withoutLabel,inverted, fontSizeIndex, outline} = this.props;
         if (this.TextAreaRef != null) {
             this.TextAreaRef.style.height = '0px'; // This creates an inline style
             let scrollHeight = this.TextAreaRef.scrollHeight;
@@ -99,6 +109,7 @@ export class TitleArea extends React.Component {
                     label={!withoutLabel}
                     inverted={inverted}
                     fontSizeIndex={fontSizeIndex}
+                    outline={outline}
                     ref={this.changeHeight}
                 />
             </Flex>

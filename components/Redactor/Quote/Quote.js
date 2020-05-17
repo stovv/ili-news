@@ -58,7 +58,6 @@ class QuoteEditor {
     }
 
     _toggleTune(tune) {
-        console.log('Image tune clicked', tune);
         this.data.type = tune;
         this.tunes.forEach(button => {
             button.classList.toggle('cdx-settings-button--active', button.dataset.name === tune);
@@ -66,6 +65,24 @@ class QuoteEditor {
         const pos = this.api.blocks.getCurrentBlockIndex();
         this.api.blocks.delete(pos);
         this.api.blocks.insert("quote", this.data, {}, pos, true);
+    }
+
+    /**
+     * Empty Quote is not empty Block
+     * @public
+     * @returns {boolean}
+     */
+    static get contentless() {
+        return true;
+    }
+
+    /**
+     * Allow to press Enter inside the Quote
+     * @public
+     * @returns {boolean}
+     */
+    static get enableLineBreaks() {
+        return true;
     }
 
     render(){
@@ -81,7 +98,7 @@ class QuoteEditor {
 
     save(blockContent){
         return{
-            text: blockContent.querySelector('textarea').value,
+            text: blockContent.querySelector('textarea').value || "",
             type: this.data.type,
         }
     }

@@ -1,8 +1,9 @@
 import {GET_DRAFTS, OPEN_DRAFT, UPDATE_DRAFT, CLOSE_DRAFT} from "../tools/constants";
-
+import { SMISOL } from "./types.react";
 
 let initialState = {
     draft: null,
+    temp_cover: null,
     drafts: []
 }
 
@@ -43,6 +44,14 @@ function smisolReducer(state, action){
             sessionStorage.setItem("smisol", JSON.stringify(updateObj));
             return updateObj;
         }
+       case SMISOL.COVER.SET_TEMP:{
+           let updateObj = {
+               ...state,
+               temp_cover: action.payload
+           };
+           sessionStorage.setItem("smisol", JSON.stringify(updateObj));
+           return updateObj;
+       }
         case CLOSE_DRAFT:{
             let closeObj = {
                 ...state,
@@ -55,5 +64,15 @@ function smisolReducer(state, action){
             return initialState;
    }
 };
+
+/*
+* export function setTempCover(fileItems){
+    return {
+        type: SMISOL.COVER.SET_TEMP,
+        payload: fileItems
+    }
+};
+*
+* */
 
 export default smisolReducer;

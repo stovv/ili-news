@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Picker, Emoji} from 'emoji-mart'
-import {Flex, Box} from "rebass";
+import { Flex, Box } from "rebass";
 
 
 import { lightTheme } from "../../../theme/theme.react";
 import EmojiList from './Emojis.react';
-import {TitleArea} from "../../Forms/Inputs.react";
-import {Form} from "../../index";
+import { TitleArea } from "../../Forms/Inputs.react";
+import { Form } from "../../index";
 import Heading from "../../Typography/Heading.react";
 
 
@@ -47,17 +47,18 @@ class Callout extends React.Component {
             this.setState({
                 reactionShown: true
             })
-        } else if ( this.PickerRef && this.PickerRef.contains(event.target) ){
-            console.log(event.target, event.src);
-            this.setState({
-
-                //emoji: event.target.querySelector('button').getAttribute('aria-label').split(', ')[1],
-                //reactionShown: false
-            })
-        }else{
-            this.setState({
-                reactionShown: false
-            })
+        } else{
+            if (event.target.parentElement.className === 'emoji-mart-emoji'){
+                let emoji = event.target.parentElement.getAttribute('aria-label').split(', ')[1]
+                this.setState({
+                    emoji: emoji,
+                    reactionShown: false
+                })
+            }else{
+                this.setState({
+                    reactionShown: false
+                })
+            }
         }
     }
 
@@ -83,8 +84,7 @@ class Callout extends React.Component {
                                 />
                             </Box>
                         </Flex>
-                        <div  className="reactions" ref={el=>this.PickerRef=el}
-                             style={{display: this.state.reactionShown ? 'block' : 'none'}}>
+                        <div  className="reactions" style={{display: this.state.reactionShown ? 'block' : 'none'}}>
                             <Picker
                                 style={{
                                     width: "fit-content"
@@ -92,7 +92,6 @@ class Callout extends React.Component {
                                 showPreview={false}
                                 custom={EmojiList}
                                 include={['custom']}
-                                onClick={(emoji)=>{console.log(emoji)}}
                                 color={lightTheme.colors.primary}
                                 showSkinTones={false}
                             />
