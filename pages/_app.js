@@ -79,12 +79,9 @@ class IliApp extends App {
                 </Containers.AppContainer>
             </IliThemeProvider>
           </StoreProvider>
-          {
-              typeof window !== "undefined" &&
-              <div>
-                  <YMInitializer accounts={yParams.accounts} options={yParams.options} version="2" />
-              </div>
-          }
+          <div>
+              <YMInitializer accounts={yParams.accounts} options={yParams.options} version="2" />
+          </div>
       </>
     );
   }

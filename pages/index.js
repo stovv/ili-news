@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import { Box } from 'rebass';
 import { NextSeo } from "next-seo";
 import { connect } from 'react-redux';
@@ -209,6 +210,12 @@ class FrontPage extends React.Component {
                 <NextSeo title={SITE_INFO.TITLE}
                          description={SITE_INFO.DESCRIPTION}
                          canonical={SITE_URL}
+                         additionalMetaTags={[
+                             {
+                                 property: 'yandex-verification',
+                                 content: YANDEX_VERIFICATION
+                             }
+                         ]}
                          openGraph={{
                              url: SITE_URL,
                              locale: 'ru_RU',
@@ -223,7 +230,6 @@ class FrontPage extends React.Component {
                              site: '@site',
                              cardType: 'summary_large_image',
                          }}/>
-                <meta name="yandex-verification" content={YANDEX_VERIFICATION}/>
                 <TopPosts posts={topPosts}/>
                 {
                     width > 1023

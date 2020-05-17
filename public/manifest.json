@@ -7,7 +7,7 @@
   "background_color": "#eb5757",
   "theme_color": "#eb5757",
   "dir": "ltr",
-  "display": "browser",
+  "display": "standalone",
   "orientation": "any",
   "icons": [
     {
@@ -76,5 +76,5 @@
       "sizes": "16x16"
     }
   ],
-  "prefer_related_applications": "false"
+  "prefer_related_applications": false
 }
