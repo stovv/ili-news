@@ -212,7 +212,7 @@ class FrontPage extends React.Component {
                          canonical={SITE_URL}
                          additionalMetaTags={[
                              {
-                                 property: 'yandex-verification',
+                                 name: 'yandex-verification',
                                  content: YANDEX_VERIFICATION
                              }
                          ]}
