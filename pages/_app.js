@@ -66,6 +66,10 @@ class IliApp extends App {
     const { Component, pageProps, store, header} = this.props;
     return (
       <>
+          <Head>
+              <title>ИЛИ Молодежный журнал</title>
+              <link rel="manifest" href="manifest.json"/>
+          </Head>
           <StoreProvider store={store}>
             <IliThemeProvider>
                 {header_ignore.includes(this.props.router.route) || <Menus.HeaderMain menus={header} route={this.props.router.asPath}/>}
