@@ -96,20 +96,6 @@ class Redactor extends React.Component {
             <>
             <RedactorTypogrphy/>
             <RedactorEmojiPicker/>
-            <Box mx='auto' sx={{
-                maxWidth: 1440,
-                mx: 'auto',
-                px: 3,
-            }}>
-                <Flex>
-                    <Box width={[5/6, 5/9, 8/10]}>
-                        
-                    </Box>
-                    <Box width={[1/6, 4/9, 2/10]} py="1%" ml={20}>
-                        <Form.Buttons.SimpleButton outline>Предосмотр</Form.Buttons.SimpleButton>
-                    </Box>
-                </Flex>
-            </Box>
             <Box maxWidth={900} mx="auto">
                 <Form.Inputs.TitleArea fixed
                                        placeholder="Заголовок"
@@ -122,7 +108,8 @@ class Redactor extends React.Component {
                     mx: 'auto',
                     px: 3,
                 }}>
-                <EditorJs 
+                <EditorJs
+                    placeholder="Так уж и быть. «Егоркорка вас приветствует!»"
                     data={this.state.initial_content}
                     tools={tools}
                     instanceRef={instance => this.editorInstance = instance}

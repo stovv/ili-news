@@ -7,11 +7,12 @@ import { Input } from '@rebass/forms';
 
 import { Public } from '../api';
 import {Form, Images, Typography} from '../components';
-import {BallPulseSync, BallRotate} from 'react-pure-loaders';
+import { BallClipRotate } from 'react-pure-loaders';
 import { Icons, Logo } from '../assets'
 import {loginAction} from "../store/authActions.react";
 import {withTheme} from "styled-components";
 import Link from "next/link";
+import {Heading} from "../components/Typography";
 
 
 class LoginPage extends React.Component {
@@ -28,9 +29,6 @@ class LoginPage extends React.Component {
     }
 
     componentDidMount(){
-        if(this.props.isLoggedIn === true){
-            Router.back();
-        }
         Public.randomUnsplashImage()
             .then(response => {
                 this.setState({cover: response.request.responseURL})
@@ -38,29 +36,15 @@ class LoginPage extends React.Component {
             .catch(reason => console.log(reason));
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.isLoggedIn === true){
-            // TODO: change after public login update
-            //Router.back();
-            Router.push('/smisol/drafts');
-        }
-    }
-
     handleSubmit () {
         this.setState({loading: true})
         const {dispatch} = this.props;
         dispatch(loginAction(this.state))
-            .then(response => console.log(response))
-            .catch(response => this.setState({loading: false}));
+            .then(() => this.setState({loading: false}));
     };
 
     render() {
-        const { theme } = this.props;
-        var card_style = {
-            width: '30vw',
-            height: '30vh',
-            margin: '35vh 35vw'
-        }
+        const { theme, isLoggedIn } = this.props;
         return (
             <>
                 <Head>
@@ -93,33 +77,67 @@ class LoginPage extends React.Component {
                                         к обновлённому журналу
                                     </Typography.TagLabel>
                                 </Box>
-                                <Box mx="104px" mt="160px">
-                                    <Input
-                                        sx={{outlineColor: theme.colors.primary, color: theme.text.onPrimary}}
-                                        onChange={(e)=>this.setState({login: e.target.value})}
-                                        type='email'
-                                        placeholder='email'
-                                    />
-                                </Box>
-                                <Box mx="104px" mt={theme.spacing.block}>
-                                    <Input
-                                        sx={{outlineColor: theme.colors.primary, color: theme.text.onPrimary}}
-                                        onChange={(e)=>this.setState({password: e.target.value})}
-                                        type='password'
-                                        placeholder='пароль'
-                                    />
-                                </Box>
-                                <Box width="364px" height="56px" mx="auto" mt="136px">
-                                    <Form.Buttons.SimpleButton onClick={()=>this.handleSubmit()}>
-                                        {
-                                            this.state.loading
-                                                ? <Flex justifyContent="center" margin="10px 0">
-                                                    <BallRotate color={theme.colors.backgroundPrimary}  loading/>
-                                                </Flex>
-                                                : "Войти"
-                                        }
-                                    </Form.Buttons.SimpleButton>
-                                </Box>
+                                {
+                                    !isLoggedIn ? <>
+                                            <Box mx="104px" mt="160px">
+                                                <Input
+                                                    sx={{outlineColor: theme.colors.primary, color: theme.text.onPrimary}}
+                                                    onChange={(e) => this.setState({login: e.target.value})}
+                                                    type='email'
+                                                    placeholder='email'
+                                                />
+                                            </Box>
+                                            <Box mx="104px" mt={theme.spacing.block}>
+                                                <Input
+                                                    sx={{outlineColor: theme.colors.primary, color: theme.text.onPrimary}}
+                                                    onChange={(e) => this.setState({password: e.target.value})}
+                                                    type='password'
+                                                    placeholder='пароль'
+                                                />
+                                            </Box>
+                                            <Box width="364px" height="56px" mx="auto" mt="136px">
+                                                {
+                                                    this.state.loading
+                                                        ? <Flex justifyContent="center" margin="10px 0">
+                                                            <BallClipRotate color={theme.colors.backgroundPrimary} loading/>
+                                                        </Flex>
+                                                        : <Form.Buttons.SimpleButton onClick={() => this.handleSubmit()}>
+                                                            Войти
+                                                    </Form.Buttons.SimpleButton>
+                                                }
+                                            </Box>
+                                        </>
+                                    : <>
+                                            <Box mx="auto">
+                                                <Link href="/smisl/drafts">
+                                                    <a>
+                                                        <Typography.Heading level={3} color={theme.text.onPrimary}>
+                                                            Го создавать статьи
+                                                        </Typography.Heading>
+                                                    </a>
+                                                </Link>
+                                                <Link href="/">
+                                                    <a>
+                                                        <Typography.Heading level={3} color={theme.text.onPrimary}>
+                                                            Го на сайт
+                                                        </Typography.Heading>
+                                                    </a>
+                                                </Link>
+                                            </Box>
+                                            <Box width="364px" height="56px" mx="auto" mt="136px">
+                                                {
+                                                    this.state.loading
+                                                        ? <Flex justifyContent="center" margin="10px 0">
+                                                            <BallClipRotate color={theme.colors.backgroundPrimary} loading/>
+                                                        </Flex>
+                                                        : <Form.Buttons.SimpleButton >
+                                                            Выйти
+                                                        </Form.Buttons.SimpleButton>
+                                                }
+                                            </Box>
+                                        </>
+                                }
+
                             </Flex>
                         </Box>
                     </Flex>

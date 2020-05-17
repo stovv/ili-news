@@ -1,5 +1,6 @@
 // EditorJS components
 import { CalloutEditor } from "./Callout";
+import { QuoteEditor } from "./Quote";
 
 // Main components
 import { Callout } from "./Callout";
@@ -9,7 +10,8 @@ import { Quote } from './Quote';
 import { Embed } from './Embed';
 
 const EditorComponents = {
-    CalloutEditor
+    CalloutEditor,
+    QuoteEditor
 };
 
 const PostComponents = {

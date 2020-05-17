@@ -43,7 +43,18 @@ class Callout extends React.Component {
     }
 
     handleClick(event){
-        if (this.PickerRef && !this.PickerRef.contains(event.target)){
+        if ( this.EmojiRef && this.EmojiRef.contains(event.target) ){
+            this.setState({
+                reactionShown: true
+            })
+        } else if ( this.PickerRef && this.PickerRef.contains(event.target) ){
+            console.log(event.target, event.src);
+            this.setState({
+
+                //emoji: event.target.querySelector('button').getAttribute('aria-label').split(', ')[1],
+                //reactionShown: false
+            })
+        }else{
             this.setState({
                 reactionShown: false
             })
@@ -56,14 +67,13 @@ class Callout extends React.Component {
         if (input){
             return(
                 <Wrapper>
-                    <CalloutBox ref={el=>this.PickerRef=el}>
+                    <CalloutBox>
                         <Flex height="fit-content" py="10px" px="24px">
                             <Box my="auto" width={1/10} height="100%" style={{
                                 cursor: 'pointer'
                             }}>
-                                <Box id="emoji"  m="0 5px">
-                                    <Emoji emoji={this.state.emoji} size={45}
-                                           onClick={() => this.setState({reactionShown: true})} />
+                                <Box id="emoji"  m="0 5px" ref={el=>this.EmojiRef=el}>
+                                    <Emoji emoji={this.state.emoji} size={45}/>
                                 </Box>
                             </Box>
                             <Box my="auto" width={9/10}>
@@ -73,7 +83,7 @@ class Callout extends React.Component {
                                 />
                             </Box>
                         </Flex>
-                        <div  className="reactions"
+                        <div  className="reactions" ref={el=>this.PickerRef=el}
                              style={{display: this.state.reactionShown ? 'block' : 'none'}}>
                             <Picker
                                 style={{
@@ -82,7 +92,7 @@ class Callout extends React.Component {
                                 showPreview={false}
                                 custom={EmojiList}
                                 include={['custom']}
-                                onSelect={(emoji)=>this.setState({reactionShown: false, emoji})}
+                                onClick={(emoji)=>{console.log(emoji)}}
                                 color={lightTheme.colors.primary}
                                 showSkinTones={false}
                             />
@@ -94,7 +104,7 @@ class Callout extends React.Component {
 
         return(
             <Wrapper>
-                <CalloutBox ref={el=>this.PickerRef=el}>
+                <CalloutBox>
                     <Flex height="fit-content" py="18px" px="24px">
                         <Box my="auto" width={1/10} height="100%">
                             <Box id="emoji"  sx={{margin: "0 5px"}}>

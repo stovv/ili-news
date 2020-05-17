@@ -64,5 +64,5 @@ RubricLink.propTypes = {
 }
 
 PostLink.propTypes = {
-    postId: PropTypes.number.isRequired,
+    postId: PropTypes.string.isRequired,
 }

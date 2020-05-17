@@ -3,10 +3,23 @@ import Router from 'next/router';
 import React from 'react';
 import {connect} from 'react-redux';
 
+import { Menus } from '../../components';
+
 class Create extends React.Component {
 
     shouldComponentUpdate(){
         return this.props.draft == null;
+    }
+
+    componentDidMount() {
+        if (typeof window !== "undefined"){
+            if (!this.props.isLoggedIn){
+                Router.push('/login');
+            }
+            if (this.props.draft == null ){
+                Router.push('/smisl/drafts');
+            }
+        }
     }
 
     render(){
@@ -14,16 +27,12 @@ class Create extends React.Component {
             ssr: false
         });
 
-        if (!this.props.isLoggedIn){
-            if (typeof window !== "undefined"){
-                Router.push('/login')
-            }
-            return null;
-        }
-        if (this.props.draft == null){
-            Router.push('/smisol/drafts');
-        }
-        return (<RedactorSSRSafe/>);
+        return (
+            <>
+                <Menus.HeaderRedactor type="create"/>
+                <RedactorSSRSafe/>
+            </>
+        );
     }
 }
 

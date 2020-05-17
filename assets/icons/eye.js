@@ -1,11 +1,11 @@
 import * as React from "react"
 
-function EyeIcon(props) {
+function EyeIcon({stroke, ...props}) {
     return (
         <svg width={24} height={24} viewBox="0 0 24 24" fill="none" {...props}>
             <g
                 opacity={0.8}
-                stroke={props.fill ? props.fill : "#4A4A4A"}
+                stroke={stroke ? stroke : "#4A4A4A"}
                 strokeWidth={2}
                 strokeLinecap="round"
                 strokeLinejoin="round"

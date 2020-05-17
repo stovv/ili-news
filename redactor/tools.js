@@ -26,6 +26,10 @@ export default {
         class: EditorComponents.CalloutEditor,
         shortcut: 'CMD+ALT+C'
     },
+    quote: {
+        class: EditorComponents.QuoteEditor,
+        shortcut: 'CMD+ALT+Q'
+    },
     header: {
         class: Header,
         config: {

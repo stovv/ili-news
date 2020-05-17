@@ -12,7 +12,8 @@ const light = {
       hover: '#eb5757',
       secondary: '#4a4a4a',
       secondarySecondary: '#0e0e0e',
-      onPrimary: '#ffffff'
+      onPrimary: '#ffffff',
+      editorSecondary: "#707684"
     },
   }
   

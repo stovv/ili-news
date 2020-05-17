@@ -97,6 +97,14 @@ const Large = styled.p`
   font-style: normal;
   line-height: 1.04;
   letter-spacing: normal;
+  ${({hideOwerflow, maxLines}) => hideOwerflow && `
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: ${maxLines};
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+  `}
+    
   ${({hover, theme}) => hover && `
       :hover{
           transition: all 0.4s ease-in-out;
@@ -132,6 +140,14 @@ const Normal = styled.p`
   font-style: normal;
   line-height: 1.33;
   letter-spacing: normal;
+  ${({hideOwerflow, maxLines}) => hideOwerflow && `
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: ${maxLines};
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+  `}
+    
   ${({hover, theme}) => hover && `
       :hover{
           transition: all 0.4s ease-in-out;
@@ -269,6 +285,7 @@ CardText.propTypes = {
     textTransform: PropTypes.string,
     textAlign: PropTypes.string,
     hideOwerflow: PropTypes.bool,
+    maxLines: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     wrap: PropTypes.bool,
     width: PropTypes.oneOfType([
         PropTypes.string,

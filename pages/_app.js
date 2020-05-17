@@ -19,7 +19,7 @@ import '../assets/fonts/lato/lato.css';
 import './style.css';
 
 
-const header_ignore = ["/smisol/create", "/smisol/drafts", "/login"];
+const header_ignore = ["/smisl/create", "/smisl/drafts", "/login"];
 const yParams = { accounts: [62554705], options: { webvisor: true }};
 
 class IliApp extends App {

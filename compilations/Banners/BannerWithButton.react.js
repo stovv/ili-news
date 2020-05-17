@@ -9,7 +9,6 @@ import {CardText, TagLabel} from "../../components/Typography";
 const Blackout = styled.div`
     width: 100%;
     height: 100%;
-    ;
 `
 
 class BannerWithButton extends React.Component {

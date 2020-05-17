@@ -11,6 +11,7 @@ export const SimpleButton = styled.button`
     display: inline-block;
     transition: all 0.4s ease 0s;
     width: 100%;
+    outline: none;
     :hover {
         color: ${props => props.outline ? "#ffffff" : props.theme.colors.primary};
         background: ${props => props.outline ? props.theme.colors.primary : "#ffffff"};

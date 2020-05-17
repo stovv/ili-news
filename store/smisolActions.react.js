@@ -54,7 +54,7 @@ export function createNewDraft(){
 }
 
 export function openDraft(draft_id){
-    async dispatch => {
+    return async dispatch => {
         await Redactor.get_draft(draft_id)
             .then(response=>{
                 dispatch(openDraftAction(response.data));

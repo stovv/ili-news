@@ -2,40 +2,31 @@ import {SING_IN, SING_OUT, SAVE_CLIENT_IP} from "../tools/constants";
 import {getCookie, setCookie, removeCookie} from '../tools/cookie.react';
 
 
-let initialState;
-if (typeof localStorage !== "undefined") {
-    const authCookie = getCookie('auth');
+let initialState = {
+    isLoggedIn: false,
+    user_id: null,
+    jwt: "",
+    ip: ""
+};
 
+if (typeof window !== "undefined") {
+    const authCookie = getCookie('auth');
     if (authCookie) {
         initialState = JSON.parse(decodeURIComponent(authCookie));
-    } else {
-        initialState = {
-            isLoggedIn: false,
-            user_id: null,
-            jwt: "",
-            ip: ""
-        }
     }
-} else {
-    initialState = {
-        isLoggedIn: false,
-        user_id: null,
-        jwt: "",
-        ip: ""
-    };
 }
 
 
 function authReducer(state, action){
    switch (action.type) {
-       case SING_OUT:
+       case SING_OUT:{
            removeCookie("auth");
            return {
                ...state,
                isLoggedIn: false
            };
-
-       case SING_IN:
+       }
+       case SING_IN:{
            const authObj = {
                ...state,
                isLoggedIn: true,
@@ -44,6 +35,7 @@ function authReducer(state, action){
            };
            setCookie("auth", authObj);
            return authObj;
+       }
        case SAVE_CLIENT_IP:{
            const authObj = {
                ...state,

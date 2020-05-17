@@ -12,8 +12,8 @@ Allow: /post/*
 Allow: /category/*
 
 Disallow: /api/*
-Disallow: /smisol
-Disallow: /smisol/*`);
+Disallow: /smisl
+Disallow: /smisl/*`);
         res.end();
     }
 }

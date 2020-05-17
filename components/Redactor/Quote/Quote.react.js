@@ -6,11 +6,12 @@ import { connect } from 'react-redux';
 
 import { lightTheme } from "../../../theme/theme.react";
 import {CardText, TagLabel} from "../../Typography";
+import {TitleArea} from "../../Forms/Inputs.react";
 
 
 const QuoteBox = styled.div`
-  margin: ${props => props.screenWidth > 1023 ? '40px 0' : '20px 0'};
-  padding-left: ${props => props.screenWidth > 1023 ? '37px' : '15px'};
+  margin: ${props => (props.screenWidth && props.screenWidth > 1023) ? '40px 0' : '20px 0'};
+  padding-left: ${props => (props.screenWidth && props.screenWidth > 1023) ? '37px' : '15px'};
   padding-top: 10px;
   padding-bottom: 10px;
   border-left: solid 5px ${props => props.theme.colors.primary};
@@ -21,8 +22,6 @@ class Quote extends React.Component {
     constructor(props) {
         super(props);
         this.state={
-            reactionShown: false,
-            emoji: props.data.emoji || { id: 'ok_hand', skin: 3 },
             text: props.data ? props.data.text: null
         }
     }
@@ -39,9 +38,30 @@ class Quote extends React.Component {
         const { input, data, width } = this.props;
 
         if (input){
-            return(
-                <></>
-            );
+            if (data.type === "1"){
+                return (
+                    <QuoteBox>
+                        <TagLabel type="large" weight="500" margin={0}>
+                            <TitleArea onChange={event => this.setState({text: event.target.value})}
+                                       defaultValue={this.state.text}
+                                       withoutLabel fontSizeIndex={3}
+                            />
+                        </TagLabel>
+                    </QuoteBox>
+                );
+            }else if (data.type === "2"){
+                return (
+                    <Box mt="35px" mb="40px">
+                        <CardText type="xxlarge" textAlign="center" margin="0 0 23px 0">« »</CardText>
+                        <Box height="50px">
+                            <TitleArea onChange={event => this.setState({text: event.target.value})}
+                                       defaultValue={this.state.text}
+                                       withoutLabel fontSizeIndex={3}
+                            />
+                        </Box>
+                    </Box>
+                );
+            }
         }
 
         if (data.type === "2"){
@@ -100,5 +120,8 @@ function mapStateToProps(state){
     }
 }
 
+export {
+    Quote as QuoteInput
+}
 
 export default connect(mapStateToProps)(Quote);

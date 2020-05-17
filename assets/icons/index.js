@@ -7,6 +7,9 @@ import SearchIcon from './search';
 import HamburgerMenuIcon from './hamburger';
 import HelpIcon from "./help-icon";
 import CloseIcon from './close';
+import Plus from './plus';
+import DraftIcon from './draft';
+import ArrowIcon from './arrow';
 
 export {
     BookmarkIcon,
@@ -17,5 +20,8 @@ export {
     LikeIcon,
     SearchIcon,
     HelpIcon,
-    CloseIcon
+    CloseIcon,
+    DraftIcon,
+    ArrowIcon,
+    Plus
 }
