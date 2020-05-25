@@ -14,6 +14,20 @@ export async function update_draft(id, data){
     });
 }
 
+export async function remove_draft(id){
+    const jwt = getJwt();
+    return api.delete(`/drafts/${id}`,{
+        headers: { 'Authorization': `Bearer ${jwt}`}
+    });
+}
+
+export async function update_post(id, data){
+    const jwt = getJwt();
+    return api.put(`/posts/${id}`,data,{
+        headers: { 'Authorization': `Bearer ${jwt}`}
+    });
+}
+
 export async function create_draft(data){
     const jwt = getJwt();
     return api.post("/drafts",data,{

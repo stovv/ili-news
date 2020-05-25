@@ -39,7 +39,7 @@ class Category extends React.Component {
                     category = response.data;
                 })
                 .catch(reason=>{
-                    console.log(reason);
+                    //console.log(reason);
                     // TODO Add Reason processing
                 });
         }

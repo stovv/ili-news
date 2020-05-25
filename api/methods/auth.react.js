@@ -20,3 +20,10 @@ export async function update_user(user_id, data){
         headers: { 'Authorization': `Bearer ${jwt}`}
     });
 }
+
+export async function get_users(){
+    const jwt = getJwt();
+    return api.get(`/users`, {
+        headers: { 'Authorization': `Bearer ${jwt}`}
+    });
+}

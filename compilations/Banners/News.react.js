@@ -129,7 +129,7 @@ class NewsBlock extends React.Component
 
 
 NewsBlock.propTypes = {
-    news: PropTypes.object.isRequired,
+    news: PropTypes.array.isRequired,
 }
 
 function mapStateToProps(state){

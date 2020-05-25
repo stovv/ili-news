@@ -7,7 +7,7 @@ import { Provider as StoreProvider } from "react-redux";
 import { YMInitializer } from 'react-yandex-metrika';
 
 import IliThemeProvider from '../theme';
-import { makeStore } from "../store";
+import { store } from "../store";
 import { Containers, Menus, Form } from '../components';
 import { Public } from '../api';
 import * as CommonActions from '../store/commonActions.react';
@@ -15,6 +15,7 @@ import * as CommonActions from '../store/commonActions.react';
 import 'nprogress/nprogress.css'; //styles of nprogress
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
+import "react-datepicker/dist/react-datepicker.css";
 import 'toasted-notes/src/styles.css';
 import 'emoji-mart/css/emoji-mart.css';
 import '../assets/fonts/lato/lato.css';
@@ -87,4 +88,4 @@ class IliApp extends App {
   }
 }
 
-export default withRedux(makeStore)(IliApp);
+export default withRedux(()=>store)(IliApp);

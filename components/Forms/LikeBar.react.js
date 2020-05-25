@@ -31,7 +31,7 @@ class LikeBar extends React.Component {
                 });
             })
             .catch(reason=>{
-                console.log(reason);
+                //console.log(reason);
             })
     }
 
@@ -44,7 +44,7 @@ class LikeBar extends React.Component {
                 });
             })
             .catch(reason=>{
-                console.log(reason);
+                //console.log(reason);
             })
     }
 

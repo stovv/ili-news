@@ -9,44 +9,39 @@ let initialState = {
     ip: ""
 };
 
-if (typeof window !== "undefined") {
-    const authCookie = getCookie('auth');
-    if (authCookie) {
-        initialState = JSON.parse(decodeURIComponent(authCookie));
-    }
-}
+// if (typeof window !== "undefined") {
+//     const authCookie = getCookie('auth');
+//     if (authCookie) {
+//         initialState = JSON.parse(decodeURIComponent(authCookie));
+//     }
+// }
 
 
-function authReducer(state, action){
+function authReducer(state = initialState, action){
    switch (action.type) {
        case SING_OUT:{
-           removeCookie("auth");
            return {
                ...state,
                isLoggedIn: false
            };
        }
        case SING_IN:{
-           const authObj = {
+           return {
                ...state,
                isLoggedIn: true,
                jwt: action.payload.jwt,
                user_id: action.payload.user.id
            };
-           setCookie("auth", authObj);
-           return authObj;
        }
        case SAVE_CLIENT_IP:{
-           const authObj = {
+           return {
                ...state,
                ip: action.payload.ip
            };
-           setCookie("auth", authObj);
-           return authObj;
        }
        default:
-           return initialState;
+           return state;
    }
-};
+}
 
 export default authReducer;

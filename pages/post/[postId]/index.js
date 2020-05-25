@@ -1,4 +1,5 @@
 import React from 'react';
+import Router from 'next/router';
 import { connect } from "react-redux";
 import { withTheme } from 'styled-components';
 import { NextSeo } from 'next-seo';
@@ -12,6 +13,7 @@ import { Icons } from '../../../assets';
 import { Public } from '../../../api';
 import { getFormatedDate } from '../../../tools';
 import { saveIpAction } from '../../../store/authActions.react';
+import { postToDraft } from '../../../store/smisolActions.react';
 import { SITE_URL } from '../../../constants';
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -98,11 +100,28 @@ const InfinityPost = ({data}) => {
 
 
 const RegularPost = ({data}) => {
-    const { width, rubric, title, publishedDate, popularPosts, clientIp, authors, theme,
+    const { postId, width, rubric, title, publishedDate, popularPosts, clientIp, authors, theme, dispatch,
         blocks:{ blocks }, cover, rating, comment_thread, readMoreLinks} = data;
+
+    // TODO Remove it after beta release
+    const { isLoggedIn } = data;
 
     return (
         <Containers.Default>
+            {
+                // TODO Remove it after beta release
+                isLoggedIn &&
+                <Box sx={{cursor: 'pointer'}}>
+                    <Typography.Heading level={5} color={theme.text.hover} textTransform="lowercase" textAlign="right"
+                                        onClick={()=>{
+                                            dispatch(postToDraft(postId))
+                                                .then(result =>{
+                                                    Router.push('/smisl/create');
+                                                });
+                                        }}
+                                        margin={`32px 0 10px 0`}><u>редактировать</u></Typography.Heading>
+                </Box>
+            }
             {
                 width > 1023
                     ?
@@ -172,8 +191,7 @@ const RegularPost = ({data}) => {
                                     popularPosts.slice(0, 4).map((item, index)=>
                                         <React.Fragment key={index}>
                                             <Box mb="48px">
-                                                <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover}
-                                                            link={Links.PostLink} id={item.post.id}>
+                                                <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover} id={item.post.id}>
                                                     {item.post.title}
                                                 </Cards.Mini>
                                             </Box>
@@ -211,7 +229,7 @@ class Post extends React.Component{
             .then(response=>current_post = response.data.post)
             .catch(reason=>{
                 //TODO Add Toast
-                console.log(reason);
+               // console.log(reason);
             });
 
         await Public.viewPost(current_post.rating.id, store.getState().auth.ip);
@@ -219,12 +237,14 @@ class Post extends React.Component{
         await Public.getReadMore(current_post.rubric.id, postId)
             .then(response=>readMoreLinks = response.data.ratings)
             .catch(reason => {
-                console.log(reason);
+                //console.log(reason);
             })
 
         await Public.getPopularDuringWeek()
             .then(response=> popularPosts = response.data.ratings)
-            .catch(reason=> console.log(reason));
+            .catch(reason=> {
+                //console.log(reason)
+            });
 
         return {
             error: current_post != null ? null : 404,
@@ -381,8 +401,7 @@ class Post extends React.Component{
                                                                 popularPosts.slice(0, 4).map((item, index)=>
                                                                     <React.Fragment key={index}>
                                                                         <Box mb="48px">
-                                                                            <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover}
-                                                                                        link={Links.PostLink} id={item.post.id}>
+                                                                            <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover} id={item.post.id}>
                                                                                 {item.post.title}
                                                                             </Cards.Mini>
                                                                         </Box>
@@ -412,7 +431,8 @@ class Post extends React.Component{
 function mapStateToProps(state){
     return {
         user: state.auth.user,
-        width: state.common.pageSize.width
+        width: state.common.pageSize.width,
+        isLoggedIn: state.auth.isLoggedIn
     }
 }
 

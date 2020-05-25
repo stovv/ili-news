@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BACKEND_URL } from '../constants';
-import {getCookie} from "../tools/cookie.react";
+import { store } from "../store";
 
 const base_api = axios.create({
     baseURL: BACKEND_URL,
@@ -21,6 +21,7 @@ const api = {
         )
     },
     post: base_api.post,
+    delete: base_api.delete,
     get: base_api.get,
     put: base_api.put, 
     simple_get: axios.get,
@@ -28,11 +29,11 @@ const api = {
 }
 
 function getJwt(){
-    let auth = getCookie('auth');
-    if (auth) {
-        auth = JSON.parse(decodeURIComponent(auth));
-        return auth.jwt ? auth.jwt : null;
-    }else return null;
+    try {
+        return store.getState().auth.jwt;
+    }catch (e) {
+        return null;
+    }
 }
 
 export {

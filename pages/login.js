@@ -67,7 +67,7 @@ class LoginPage extends React.Component {
                                     <Icons.HelpIcon/>
                                 </Box>
                                 <Box width={["150px"]} height={["150px"]} mx="auto">
-                                    <Link href="/">
+                                    <Link href="/" passHref>
                                         <a><Logo width="100%" primary={this.props.theme.colors.primary} background={this.props.theme.colors.secondary}/></a>
                                     </Link>
                                 </Box>
@@ -109,14 +109,14 @@ class LoginPage extends React.Component {
                                         </>
                                     : <>
                                             <Box mx="auto">
-                                                <Link href="/smisl/drafts">
+                                                <Link href="/smisl/drafts" passHref>
                                                     <a>
                                                         <Typography.Heading level={3} color={theme.text.onPrimary}>
                                                             Го создавать статьи
                                                         </Typography.Heading>
                                                     </a>
                                                 </Link>
-                                                <Link href="/">
+                                                <Link href="/" passHref>
                                                     <a>
                                                         <Typography.Heading level={3} color={theme.text.onPrimary}>
                                                             Го на сайт

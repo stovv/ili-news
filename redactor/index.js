@@ -1,7 +1,6 @@
 import React from 'react';
 import EditorJs from 'react-editor-js';
 import {connect} from 'react-redux';
-import Head from 'next/head';
 import { FilePond, registerPlugin } from 'react-filepond';
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
@@ -15,14 +14,16 @@ import initial_data from './initial_data';
 import {
     Toasts,
     Form,
-    Images
+    Images,
+    Menus
 } from '../components';
-import { File } from '../api';
+import {Auth, File, Public} from '../api';
 
 import {RedactorTypogrphy, RedactorEmojiPicker} from './style';
 
 import { updateDraft } from '../store/smisolActions.react';
 import {BACKEND_URL} from "../constants";
+import LeftMenu from "../components/Menus/LeftMenu.react";
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 
@@ -33,6 +34,8 @@ class Redactor extends React.Component {
             in_save: false,
             in_editor_save: false,
             files: [],
+            rubrics: [],
+            users: [],
             label: props.draft ? props.draft.title : undefined,
             initial_content: props.draft ? props.draft.blocks : initial_data
         }
@@ -82,6 +85,15 @@ class Redactor extends React.Component {
       
     componentDidMount() {
         this.autosave();
+        Public.getRubrics()
+            .then(response => {
+                this.setState({ rubrics: response.data.rubrics });
+            })
+            .catch(reason => console.log("ERROR GETTING RUBRICS"));
+        Auth.get_users()
+            .then(response => {
+                this.setState({ users: response.data });
+            });
         //document.addEventListener("keydown", this.handleKeyDown.bind(this));
     }
 
@@ -140,41 +152,50 @@ class Redactor extends React.Component {
         * */
 
     render() {
-        const { cover } = this.props.draft;
-        console.log(cover);
+        const { draft } = this.props;
+        const { cover } = draft;
+
         return (
             <>
             <RedactorTypogrphy/>
             <RedactorEmojiPicker/>
-            <Box maxWidth={900} mx="auto">
-                <Form.Inputs.TitleArea fixed
-                                       placeholder="Заголовок"
-                                       onChange={event => this.setState({in_save: true, label: event.target.value})}
-                                       defaultValue={this.state.label}
-                />
-            </Box>
-            <Box mx={'auto'} mt={'50px'} maxWidth={'750px'} px={3}>
-                <Box mb="20px">
-                    {
-                        cover && <Box width="100%" height="200px">
-                                <Images.Lazy cover={cover}/>
-                            </Box>
-                    }
-                    <input
-                        type="file"
-                        name="files"
-                        onChange={this.onImageChange}
-                        alt="image"/>
+            <Flex>
+                <Box width={1/6}>
+                    <Menus.LeftMenu type="create" data={{
+                        rubrics: this.state.rubrics,
+                        users: this.state.users
+                    }}/>
                 </Box>
-                <EditorJs
-                    placeholder="Так уж и быть. «Егоркорка вас приветствует!»"
-                    data={this.state.initial_content}
-                    tools={tools}
-                    instanceRef={instance => this.editorInstance = instance}
-                    hideToolbar={false}
-                    onChange={()=>this.setState({in_editor_save: true})}
-                />
-            </Box>
+                <Box mx={'auto'} >
+                    <Box width="100%" mx="auto">
+                        <Form.Inputs.TitleArea fixed
+                                               placeholder="Заголовок"
+                                               onChange={event => this.setState({in_save: true, label: event.target.value})}
+                                               defaultValue={this.state.label}
+                        />
+                    </Box>
+                    <Box mb="20px" mt={'50px'} px={3} maxWidth={'750px'}>
+                        {
+                            cover && <Box width="100%" height="400px">
+                                    <Images.Lazy cover={cover}/>
+                                </Box>
+                        }
+                        <input
+                            type="file"
+                            name="files"
+                            onChange={this.onImageChange}
+                            alt="image"/>
+                    </Box>
+                    <EditorJs
+                        placeholder="Так уж и быть. «Егоркорка вас приветствует!»"
+                        data={this.state.initial_content}
+                        tools={tools}
+                        instanceRef={instance => this.editorInstance = instance}
+                        hideToolbar={false}
+                        onChange={()=>this.setState({in_editor_save: true})}
+                    />
+                </Box>
+            </Flex>
             </>
         );
     }

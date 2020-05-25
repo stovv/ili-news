@@ -31,7 +31,7 @@ class Post extends React.Component{
             if (event_date){
                 const date = new Date(event_date);
                 let options = { month: 'long' };
-                console.log();
+                //console.log();
                 return (
                     <>
                         <Box height="100%" width="100%" bg="#000000" sx={{opacity: '0.4', position: 'absolute'}}/>

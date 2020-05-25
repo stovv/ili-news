@@ -382,8 +382,7 @@ class Rubric extends React.Component {
                                                             popularPosts.slice(0, 4).map((item, index)=>
                                                                 <React.Fragment key={index}>
                                                                     <Box mb="48px">
-                                                                        <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover}
-                                                                                    link={Links.PostLink} id={item.post.id}>
+                                                                        <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover} id={item.post.id}>
                                                                             {item.post.title}
                                                                         </Cards.Mini>
                                                                     </Box>

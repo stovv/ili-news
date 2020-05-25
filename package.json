@@ -1,5 +1,5 @@
 {
-  "name": "ili-news",
+  "name": "stebel",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -24,6 +24,7 @@
     "@rebass/forms": "^4.0.6",
     "@rebass/hide": "^1.0.0-2",
     "@zeit/next-css": "^1.0.1",
+    "@zeit/next-sass": "^1.0.1",
     "acorn": "^7.1.1",
     "axios": "^0.19.2",
     "babel-plugin-styled-components": "^1.10.7",
@@ -35,6 +36,7 @@
     "filepond-plugin-image-exif-orientation": "^1.0.9",
     "filepond-plugin-image-preview": "^4.6.4",
     "js-cookie": "^2.2.1",
+    "lodash.throttle": "^4.1.1",
     "lqip-loader": "^2.2.0",
     "moment": "^2.25.3",
     "next": "9.3.2",
@@ -46,9 +48,11 @@
     "next-redux-wrapper": "^4.0.1",
     "next-seo": "^4.4.0",
     "next-with-apollo": "^5.0.1",
+    "node-sass": "^4.14.1",
     "nprogress": "^0.2.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0-beta.17",
+    "react-datepicker": "^2.16.0",
     "react-dom": "^16.13.1",
     "react-editor-js": "^1.4.2",
     "react-embed": "^3.3.2",
@@ -72,6 +76,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "sass": "^1.26.5",
     "sitemap": "^5.1.0",
     "styled-components": "^5.1.0",
     "svg-sprite-loader": "^4.2.5",
@@ -80,5 +85,9 @@
   },
   "devDependencies": {
     "prop-types": "^15.7.2"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/stovv/ili-news.git",
+  "author": "Danila Stavrov <dan.stavrov@gmail.com>",
+  "license": "MIT"
 }

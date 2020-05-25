@@ -1,6 +1,6 @@
 import {GET_DRAFTS, OPEN_DRAFT, UPDATE_DRAFT, CLOSE_DRAFT} from '../tools/constants';
 import { SMISOL } from './types.react';
-import {Redactor, Auth} from '../api';
+import {Redactor, Auth, Public} from '../api';
 
 
 const getDraftAction = (data) => {
@@ -79,12 +79,59 @@ export function updateDraft(draft_id, data){
     };
 }
 
-export function setTempCover(fileItems){
-    return {
-        type: SMISOL.COVER.SET_TEMP,
-        payload: fileItems
-    }
-};
+export function draftToPost(post_id, draft_id, data){
+    return async dispatch => {
+        await Redactor.update_post(post_id, data)
+            .then(response=>{
+                Redactor.remove_draft(draft_id)
+                    .then(response=>{
+                        window.location.href=`/post/${post_id}`;
+                        dispatch(closeDraftAction);
+                    })
+            })
+            .catch(reason=>{
+                console.log("REASON", reason);
+            });
+    };
+}
+
+
+export function postToDraft(post_id){
+    return async dispatch => {
+        await Public.getPost(post_id)
+            .then(async post_response=>{
+                console.log("POST RESP", post_response);
+                await Redactor.create_draft()
+                    .then(async draft_response=>{
+                        console.log("DRAFT RESP", draft_response);
+                        let draft_data = {
+                            title: post_response.data.post.title,
+                            blocks: post_response.data.post.blocks,
+                            description: post_response.data.post.description,
+                            event_date: post_response.data.post.event_date,
+                            old_authors: post_response.data.post.old_authors,
+                            authors: post_response.data.post.authors,
+                            rubric: post_response.data.post.rubric.id,
+                            cover: post_response.data.post.cover.id,
+                            exists_post_id: post_id
+                        };
+                        console.log("NEW DRAFT DATA", draft_data);
+                        await Redactor.update_draft(draft_response.data.id, draft_data)
+                            .then(response=>{
+                                dispatch(openDraftAction(response.data));
+                            })
+                            .catch(reason=>{
+                                console.log("REASON", reason);
+                            });
+                    })
+                    .catch(reason=>{
+                        console.log("REASON", reason);
+                    })
+            })
+            .catch(reason => {console.log("REASON", reason);})
+    };
+}
+
 
 export function closeDraft(){
     return async dispatch =>{

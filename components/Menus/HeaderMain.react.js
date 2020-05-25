@@ -70,7 +70,7 @@ class HeaderNavBar extends React.Component {
                                 position: "absolute",
                                 transform: "translate(-50%, -50%)"
                             }}>
-                                <Link href="/">
+                                <Link href="/" passHref>
                                     <a><Logo width="100%" primary={this.props.theme.colors.primary} background={this.props.theme.colors.secondary}/></a>
                                 </Link>
                             </Box>
@@ -111,7 +111,7 @@ class HeaderNavBar extends React.Component {
                                 position: "absolute",
                                 transform: "translate(-50%, -50%)"
                             }}>
-                                <Link href="/">
+                                <Link href="/" passHref>
                                     <a><Logo width="100%" primary={this.props.theme.colors.primary} background={this.props.theme.colors.secondary}/></a>
                                 </Link>
                             </Box>
@@ -130,7 +130,7 @@ class HeaderNavBar extends React.Component {
 
 
 HeaderNavBar.propTypes = {
-    menus: PropTypes.object.isRequired,
+    menus: PropTypes.array.isRequired,
     route: PropTypes.string.isRequired
 }
 

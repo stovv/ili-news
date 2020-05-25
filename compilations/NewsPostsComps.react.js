@@ -97,7 +97,7 @@ class NewsPostsComps extends React.Component {
 
 NewsPostsComps.propTypes = {
     compilation: PropTypes.object.isRequired,
-    news: PropTypes.object.isRequired,
+    news: PropTypes.array.isRequired,
     posts: PropTypes.object.isRequired
 }
 

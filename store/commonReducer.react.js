@@ -8,10 +8,10 @@ let initialState = {
     }
 }
 
-const commonSession = getStorage('common');
-if (commonSession !== null) {
-    initialState = JSON.parse(commonSession);
-}
+// const commonSession = getStorage('common');
+// if (commonSession !== null) {
+//     initialState = JSON.parse(commonSession);
+// }
 
 const CommonReducer = (state = initialState, action) => {
     switch (action.type) {

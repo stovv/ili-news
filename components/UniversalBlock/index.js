@@ -9,7 +9,7 @@ class UniversalBlock extends React.Component {
         const {block} = this.props;
         let Block =  Components[block.type];
         if (typeof  Components[block.type] === "undefined"){
-            console.log("UNDEF", block);
+            //console.log("UNDEF", block);
             return null;
         }
 

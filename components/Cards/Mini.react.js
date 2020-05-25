@@ -49,7 +49,10 @@ class Mini extends React.Component
 Mini.propTypes = {
     heading: PropTypes.string.isRequired,
     cover: PropTypes.object.isRequired,
-    link: PropTypes.node.isRequired,
+    id: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string,
+    ]).isRequired,
 }
 
 export default withTheme(Mini);

@@ -53,7 +53,7 @@ class DropImage extends React.Component {
                 }
             }
             if (formData.get('files')){
-                console.log("formData", formData);
+                //console.log("formData", formData);
             }
 
             e.dataTransfer.clearData()

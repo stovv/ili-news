@@ -35,7 +35,7 @@ class FrontPage extends React.Component {
                 topPosts = response.data.tops ? response.data.tops : [];
             })
             .catch(reason => {
-                console.log("REASON", reason.response);
+               // console.log("REASON", reason.response);
             });
 
         let lastTheme = null;

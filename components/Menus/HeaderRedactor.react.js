@@ -27,7 +27,7 @@ class HeaderRedactor extends React.Component {
                     Router.push("/smisl/create");
                 })
                 .catch(reason=>{
-                    console.log("REASON", reason);
+                    //console.log("REASON", reason);
                 });
         }
     }

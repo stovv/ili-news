@@ -22,6 +22,7 @@ export async function getPost(id){
           secondName
         },
         cover{
+          id,
           caption, 
           alternativeText,
           url,
@@ -97,17 +98,23 @@ export async function getPopularDuringWeek(){
     let start = new Date(today.setDate(diff))
     let end = new Date(today.setDate(start.getDate() + 7))
 
-    //console.log("DATE", start, end);
 
     return api.ql(`
        query{
-          ratings(sort: "views:DESC,likes:DESC,dislikes:DESC", where:{post: {publish_at_gte: "${start.getUTCDate()}", publish_at_lt: "${end.getUTCDate()}"}}){
+          ratings(sort: "views:DESC,likes:DESC,dislikes:DESC", where:{post: {publish_at_gte: "${start.toISOString()}", publish_at_lt: "${end.toISOString()}"}}){
             post{
               id,
               title,
               rubric{
                 slug
-              }
+              },
+              cover{
+              url,
+              width,
+              mime,
+              height,
+              formats
+            },
             }
           }
         }
@@ -121,6 +128,17 @@ export async function getCategory(id){
 
 export async function getRubric(id){
     return api.get(`/rubrics/${id}`)
+}
+
+export async function getRubrics(){
+    return api.ql(`
+        query{
+          rubrics{
+            id,
+            title
+          }
+        }
+    `);
 }
 
 export async function fetchPosts(fields = ['id', 'slug', 'updated_at']){

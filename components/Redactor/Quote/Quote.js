@@ -15,7 +15,7 @@ class QuoteEditor {
     }
 
     constructor({data, api}){
-        console.log("DATA", data);
+        //console.log("DATA", data);
         this.data = {
             text: data.text || '',
             type: data.type || "1"
