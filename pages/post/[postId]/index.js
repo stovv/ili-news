@@ -39,9 +39,25 @@ const InfinityPost = ({data}) => {
     const { width, rubric, title, publishedDate, clientIp, authors, theme,
             blocks:{ blocks }, cover, rating, comment_thread} = data;
 
+    // TODO Remove it after beta release
+    const { postId, isLoggedIn, dispatch } = data;
 
     return (
                 <>
+                    {
+                        // TODO Remove it after beta release
+                        isLoggedIn &&
+                        <Box sx={{cursor: 'pointer'}}>
+                            <Typography.Heading level={5} color={theme.text.hover} textTransform="lowercase" textAlign="right"
+                                                onClick={()=>{
+                                                    dispatch(postToDraft(postId))
+                                                        .then(result =>{
+                                                            Router.push('/smisl/create');
+                                                        });
+                                                }}
+                                                margin={`32px 0 10px 0`}><u>редактировать</u></Typography.Heading>
+                        </Box>
+                    }
                     {
                         width > 1023
                             ?

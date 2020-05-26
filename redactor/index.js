@@ -24,6 +24,7 @@ import {RedactorTypogrphy, RedactorEmojiPicker} from './style';
 import { updateDraft } from '../store/smisolActions.react';
 import {BACKEND_URL} from "../constants";
 import LeftMenu from "../components/Menus/LeftMenu.react";
+import {Icons} from "../assets";
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 
@@ -152,7 +153,7 @@ class Redactor extends React.Component {
         * */
 
     render() {
-        const { draft } = this.props;
+        const { draft, dispatch } = this.props;
         const { cover } = draft;
 
         return (
@@ -174,7 +175,22 @@ class Redactor extends React.Component {
                                                defaultValue={this.state.label}
                         />
                     </Box>
-                    <Box mb="20px" mt={'50px'} px={3} maxWidth={'750px'}>
+                    <Box mb="20px" mt={'50px'} px={3} maxWidth={'750px'} sx={{position: 'relative'}}>
+                        {
+                            cover &&
+                            <Box bg="#eb5757" width="30px" height="30px"
+                                 sx={{
+                                     borderRadius: "50%",
+                                     position: "absolute",
+                                     padding: "6px 10px",
+                                     top: "-5px",
+                                     right: "-5px",
+                                     zIndex: "999",
+                                     cursor: 'pointer'
+                                 }} onClick={()=>dispatch(updateDraft(this.props.draft.id, {cover: null}))}>
+                                <Icons.CloseIcon width="10px" height="10px"/>
+                            </Box>
+                        }
                         {
                             cover && <Box width="100%" height="400px">
                                     <Images.Lazy cover={cover}/>
