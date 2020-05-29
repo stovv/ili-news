@@ -12,6 +12,7 @@ import {
 import { Default, Mini } from '../Containers.react';
 import { UniversalLink } from '../Links.react';
 import { Click } from '../Animations';
+import MobileMenu from "./Mobile.react";
 
 
 const MenuLink = styled.a`
@@ -48,6 +49,9 @@ const MenuLink = styled.a`
 class HeaderNavBar extends React.Component {
     constructor(props){
         super(props);
+        this.state = {
+            fullScreenMenu: false
+        }
         this.route = props.route ? props.route : "";
     }
     render(){
@@ -99,30 +103,33 @@ class HeaderNavBar extends React.Component {
 
         }else{
             return (
-                <Mini>
-                    <Flex bg={this.props.theme.colors.secondary} height={["56px"]}>
-                        <Box float="left" my="auto">
-                            <Icons.HamburgerMenuIcon/>
-                        </Box>
-                        <Box mx="auto" height="100%" sx={{position:"relative"}}>
-                            <Box width={["55px"]} height={["55px"]}  sx={{
-                                top: "50%",
-                                left: "50%",
-                                position: "absolute",
-                                transform: "translate(-50%, -50%)"
-                            }}>
-                                <Link href="/" passHref>
-                                    <a><Logo width="100%" primary={this.props.theme.colors.primary} background={this.props.theme.colors.secondary}/></a>
-                                </Link>
+                <>
+                    <MobileMenu display={this.state.fullScreenMenu} menus={menus} close={()=>this.setState({fullScreenMenu: false})}/>
+                    <Mini>
+                        <Flex bg={this.props.theme.colors.secondary} height={["56px"]}>
+                            <Box float="left" my="auto" onClick={()=>this.setState({fullScreenMenu: !this.state.fullScreenMenu})}>
+                                <Icons.HamburgerMenuIcon/>
                             </Box>
-                        </Box>
-                        <Box float="right" my="auto">
-                            <Click.SimpleClick >
-                                <Icons.SearchIcon />
-                            </Click.SimpleClick>
-                        </Box>
-                    </Flex>
-                </Mini>
+                            <Box mx="auto" height="100%" sx={{position:"relative"}}>
+                                <Box width={["55px"]} height={["55px"]}  sx={{
+                                    top: "50%",
+                                    left: "50%",
+                                    position: "absolute",
+                                    transform: "translate(-50%, -50%)"
+                                }}>
+                                    <Link href="/" passHref>
+                                        <a><Logo width="100%" primary={this.props.theme.colors.primary} background={this.props.theme.colors.secondary}/></a>
+                                    </Link>
+                                </Box>
+                            </Box>
+                            <Box float="right" my="auto">
+                                <Click.SimpleClick >
+                                    <Icons.SearchIcon />
+                                </Click.SimpleClick>
+                            </Box>
+                        </Flex>
+                    </Mini>
+                </>
             );
         }
     }

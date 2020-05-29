@@ -120,6 +120,18 @@ class Category extends React.Component {
         })
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.categorySlug !== prevProps.categorySlug){
+            this.setState({
+                prevBlocks: this.props.prevBlocks,
+                items: [],
+                uid: this.props.uid ? this.props.uid : 10,
+                start: this.props.start,
+                hasMore: true
+            });
+        }
+    }
+
 
     render() {
         // TODO Use this.props.user for head component
