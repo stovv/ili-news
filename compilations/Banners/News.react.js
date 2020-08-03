@@ -16,14 +16,14 @@ const Divider = styled.hr`
 `;
 
 
-const Block = ({title, createdDate, divider, theme, id, width})=>{
+const Block = ({title, createdDate, divider, theme, slug, width})=>{
     var date = new Date(createdDate);
     const publishDate = date.toLocaleString("ru-RU", { year: 'numeric', month: 'long', day: 'numeric' }).replace('г.', '');
 
     if ( width > 1023 ){
         return(
             <>
-                <Links.PostLink postId={id}>
+                <Links.PostLink postSlug={slug}>
                     <Typography.CardText type="small"
                                          maxWidth="255px"
                                          maxHeight="38px"
@@ -45,7 +45,7 @@ const Block = ({title, createdDate, divider, theme, id, width})=>{
     }else{
         return(
             <>
-                <Links.PostLink postId={id}>
+                <Links.PostLink postSlug={slug}>
                     <Typography.CardText type="small"
                                          maxHeight="38px"
                                          hideOwerflow
@@ -74,6 +74,8 @@ class NewsBlock extends React.Component
     render(){
         const { news, theme, width } = this.props;
 
+        if ( news.length === 0 ) return null;
+
         if ( width > 1023 ){
             return(
                 <Box bg={theme.colors.backgroundSecondary} px={theme.spacing.m} py={["24px"]} maxWidth={["296px"]}
@@ -91,7 +93,7 @@ class NewsBlock extends React.Component
                                 <Block theme={theme}
                                        title={item.title}
                                        createdDate={item.publish_at}
-                                       id={item.id}
+                                       slug={item.slug}
                                        divider={index < news.slice(0,6).length-1}/>
                             </React.Fragment>
                         )
@@ -115,7 +117,7 @@ class NewsBlock extends React.Component
                                        width={width}
                                        title={item.title}
                                        createdDate={item.publish_at}
-                                       id={item.id}
+                                       slug={item.slug}
                                        divider={index < news.slice(0,6).length-1}/>
                             </React.Fragment>
                         )

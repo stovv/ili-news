@@ -1,12 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
+import { Box } from "rebass";
 import PropTypes from 'prop-types';
-import {Flex, Box} from "rebass";
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
-import { lightTheme } from "../../../theme/theme.react";
-import {CardText, TagLabel} from "../../Typography";
-import {TitleArea} from "../../Forms/Inputs.react";
+import { CardText, TagLabel } from "../../Typography";
 
 
 const QuoteBox = styled.div`
@@ -26,41 +24,8 @@ class Quote extends React.Component {
         }
     }
 
-    /*
-    * data:
-    text: "Раз речь зашла о деньгах, давайте посмотрим, какие фильмы, ожидающие выхода на экраны в будущем году, могут собрать приличную кассу. Журнал ИЛИ составил список наиболее интересных «супергеройских» фильмов, на которые стоит сходить в обязательном порядке."
-    type: "1"
-    __proto__: Object
-    type: "quote"
-    * */
-
     render(){
-        const { input, data, width } = this.props;
-
-        if (input){
-            if (data.type === "1"){
-                return (
-                    <QuoteBox>
-                        <TitleArea onChange={event => this.setState({text: event.target.value})}
-                                   defaultValue={this.state.text}
-                                   withoutLabel fontSizeIndex={3}
-                        />
-                    </QuoteBox>
-                );
-            }else if (data.type === "2"){
-                return (
-                    <Box mt="35px" mb="40px">
-                        <CardText type="xxlarge" textAlign="center" margin="0 0 23px 0">« »</CardText>
-                        <Box>
-                            <TitleArea outline="#4a4a4a" onChange={event => this.setState({text: event.target.value})}
-                                       defaultValue={this.state.text}
-                                       withoutLabel fontSizeIndex={3}
-                            />
-                        </Box>
-                    </Box>
-                );
-            }
-        }
+        const { data, width } = this.props;
 
         if (data.type === "1"){
             return (
@@ -116,10 +81,6 @@ function mapStateToProps(state){
     return {
         width: state.common.pageSize.width
     }
-}
-
-export {
-    Quote as QuoteInput
 }
 
 export default connect(mapStateToProps)(Quote);

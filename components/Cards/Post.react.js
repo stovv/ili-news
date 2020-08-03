@@ -16,10 +16,10 @@ class Post extends React.Component{
 
     render(){
         const { theme, float, full, width } = this.props;
-        const { id, title, cover, publish_at, rubric, event_date } = this.props.post || {};
+        const { slug, title, cover, publish_at, rubric, event_date } = this.props.post || {};
 
-        var date = new Date(publish_at);
-        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        let date = new Date(publish_at);
+        let options = { year: 'numeric', month: 'long', day: 'numeric' };
         const publishDate = date.toLocaleString("ru-RU", options).replace('г.', '');
 
         const additionalProps = {
@@ -48,7 +48,7 @@ class Post extends React.Component{
 
         if (width > 1023){
             return (
-                <PostLink postId={id}>
+                <PostLink postSlug={slug}>
                     <Box height="100%" width="100%" >
                         <Lazy cover={cover} {...additionalProps} overflow="visible" hover float={float}>
                             {
@@ -81,7 +81,7 @@ class Post extends React.Component{
             );
         }else{
             return (
-                <PostLink postId={id} >
+                <PostLink postSlug={slug} >
                     <Box height="100%" width="100%">
                         <Lazy cover={cover}>
                             <Box bg={theme.colors.backgroundPrimary} px={[theme.spacing.s]}

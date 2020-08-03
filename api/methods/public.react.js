@@ -1,59 +1,28 @@
 import api from "../connector.react";
 
-export async function getPost(id){
-    return api.ql(`
-    query{
-      post(id:${id}){
-        rubric{
-          id,
-          slug,
-          title,
-          infinityScroll,
-          cover,
-          withEventDate
-        },
-        event_date,
-        title,
-        description,
-        publish_at,
-        authors(limit: 4){
-          id,
-          name,
-          secondName
-        },
-        cover{
-          id,
-          caption, 
-          alternativeText,
-          url,
-          width,
-          mime,
-          height,
-          formats
-        },
-        blocks,
-        comment_thread{
-            id
-        },
-        rating{
-          id,
-          likes,
-          dislikes,
-          views
-        },
-        updated_at
-      }
-    }
-    
-    `);
+export async function getPost(slug){
+    return api.get(`/posts/?slug=${slug}`);
 }
 
 export async function getReadMore(rubricId, postId){
+
+    console.log(`
+        query{
+          ratings(sort: "views:DESC,likes:DESC,dislikes:DESC", limit: 3, where: { post: { id_ne: ${postId} , rubric: { id: ${rubricId} } } }){
+            post{
+              slug,
+              title
+            }
+          }
+        }
+    `);
+
     return api.ql(`
         query{
-          ratings(limit: 3, sort: "views:DESC,likes:DESC,dislikes:DESC", where: { post: { id_ne: ${postId} , rubric: { id: ${rubricId} } } }){
+          ratings(sort: "views:DESC,likes:DESC,dislikes:DESC", limit: 3, where: { post: { id_ne: ${postId} , rubric: { id: ${rubricId} } } }){
             post{
               id,
+              slug,
               title
             }
           }
@@ -70,6 +39,7 @@ export async function getMenu(type){
          ... on ComponentLinksItem{
           post{
             id,
+            slug,
             title
           },
           category{
@@ -105,6 +75,7 @@ export async function getPopularDuringWeek(){
             post{
               id,
               title,
+              slug,
               rubric{
                 slug
               },
@@ -126,9 +97,6 @@ export async function getCategory(id){
     return api.get(`/categories/${id}`)
 }
 
-export async function getRubric(id){
-    return api.get(`/rubrics/${id}`)
-}
 
 export async function getRubrics(){
     return api.ql(`
@@ -162,7 +130,8 @@ export async function loadPosts(rubric, category, start, limit, skipPostIds ){
                     limit: ${limit}, start: ${start}
                 ){
                 id,
-                event_date,
+                eventDate,
+                slug,
                 rubric{
                   id,
                   slug,
@@ -189,7 +158,7 @@ export async function loadPosts(rubric, category, start, limit, skipPostIds ){
                   formats
                 },
                 blocks,
-                comment_thread{
+                commentThread{
                     id
                 },
                 rating{
@@ -235,6 +204,14 @@ export async function fetchRubrics(fields = ['id', 'slug', 'updated_at']){
         `);
 }
 
+export async function getRubric(slug){
+    return api.get(`/rubrics/?slug=${slug}`)
+}
+
+export async function getPostCountInRubric(rubricId){
+    return api.get(`/rubrics/${rubricId}/postCount`);
+}
+
 export async function fetchTopPosts(){
     return api.ql(`
         query{
@@ -243,6 +220,7 @@ export async function fetchTopPosts(){
                     id,
                     title,
                     description,
+                    slug,
                     cover{
                         caption, 
                         alternativeText,
@@ -288,6 +266,7 @@ export async function fetchTheme(start = 0){
               title,
               posts{
                 id,
+                slug,
                 publish_at,
                 title,
                 rubric{
@@ -313,6 +292,7 @@ export async function fetchNews(limit = 6) {
           query{
             posts(sort: "publish_at:DESC", limit: ${limit}, where: {rubric:{id: 17}}){
             id,
+            slug,
             title,
             publish_at
           }
@@ -335,6 +315,7 @@ export async function fetchSimplePosts(skipPostIds = [], skipRubricIds = [17], s
               }){
             id,
             title,
+            slug,
             publish_at,
             cover{
               caption, 
@@ -369,6 +350,7 @@ export async function fetchCatPosts(limit = 4, category, skipPostIds = [], start
             id,
             title,
             publish_at,
+            slug,
             cover{
               caption, 
               alternativeText,
@@ -387,7 +369,7 @@ export async function fetchCatPosts(limit = 4, category, skipPostIds = [], start
     `);
 }
 
-export async function fetcFrontPageCategories() {
+export async function fetchFrontPageCategories() {
     return api.ql(`
         query{
             categories(where: {rubrics: {id_nin: [13, 17]}}){

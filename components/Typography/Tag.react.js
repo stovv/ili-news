@@ -44,7 +44,7 @@ const Small = styled.p`
   margin: ${props=>props.margin};
   text-transform: ${props=>props.textTransform};
   text-align: ${props=>props.textAlign};
-  font-weight: ${props=>props.weight ? props.weight : "bold"};
+  font-weight: ${props=>props.weight ? props.weight : "normal"};
   user-select: none;
   font-size: 14px;
   font-stretch: normal;

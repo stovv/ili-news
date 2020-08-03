@@ -13,21 +13,18 @@ import * as Toasts from './Toasts';
 
 // EditorJS blocks to Components converter
 import UniversalBlock from "./UniversalBlock";
-
-// EditorJS components, Post components
-import {EditorComponents, PostComponents} from './Redactor';
+import * as Blocks from "./UniversalBlock";
 
 export {
-    Cards,
-    Errors,
-    Toasts,
     Form,
     Menus,
+    Cards,
+    Links,
     Images,
+    Blocks,
+    Errors,
+    Toasts,
     Typography,
     Containers,
-    Links,
-    UniversalBlock,
-    EditorComponents,
-    PostComponents
+    UniversalBlock
 }

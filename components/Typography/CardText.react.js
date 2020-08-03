@@ -135,7 +135,7 @@ const Normal = styled.p`
   bottom: ${props=>props.bottom};
   user-select: none;
   font-size: 20px;
-  font-weight: ${props=> props.weight ? props.weight : "600" };
+  font-weight: ${props=> props.weight ? props.weight : "400" };
   font-stretch: normal;
   font-style: normal;
   line-height: 1.33;
@@ -178,7 +178,7 @@ const Small = styled.p`
   bottom: ${props=>props.bottom};
   user-select: none;
   font-size: 18px;
-  font-weight: ${props=> props.weight ? props.weight : "700" };
+  font-weight: ${props=> props.weight ? props.weight : "400" };
   font-stretch: normal;
   font-style: normal;
   line-height: 1.09;
@@ -221,7 +221,7 @@ const XSmall = styled.p`
   bottom: ${props=>props.bottom};
   user-select: none;
   font-size: 14px;
-  font-weight: ${props=> props.weight ? props.weight : "700" };
+  font-weight: ${props=> props.weight ? props.weight : "400" };
   font-stretch: normal;
   font-style: normal;
   line-height: 1.29;

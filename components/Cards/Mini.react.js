@@ -12,14 +12,13 @@ import {PostLink} from "../Links.react";
 class Mini extends React.Component
 {
     render(){
-        const {heading, cover, children, theme, id, full, ...props} = this.props;
-        if ( typeof cover === "undefined"){
-            return (<></>);
-        }
+        const { heading, cover, children, theme, slug, full } = this.props;
+//        if ( typeof cover === "undefined" ) return null;
 
         return(
-            <PostLink postId={id}>
-                <Flex bg={theme.colors.backgroundPrimary} width="100%" minHeight="128px" maxHeight={full ? undefined : "128px"}
+            <PostLink postSlug={slug}>
+                <Flex bg={theme.colors.backgroundPrimary} width="100%"
+                      minHeight="128px" maxHeight={full ? undefined : "128px"}
                       sx={{
                           cursor: 'pointer',
                           transition: "all .3s ease-out",
@@ -36,7 +35,8 @@ class Mini extends React.Component
                                   margin={`0 0 ${theme.spacing.xs} 0`} textTransform="lowercase">
                             {heading}
                         </TagLabel>
-                        <CardText hideOwerflow maxLines={4} type="small" width={ full ? 1/3 : "156px"} height={ full ? "100%" : "76px"} color={theme.text.secondarySecondary}>
+                        <CardText hideOwerflow maxLines={4} type="small" width={ full ? 1/3 : "156px"}
+                                  height={ full ? "100%" : "76px"} color={theme.text.secondarySecondary}>
                             {children}
                         </CardText>
                     </Box>
@@ -49,10 +49,7 @@ class Mini extends React.Component
 Mini.propTypes = {
     heading: PropTypes.string.isRequired,
     cover: PropTypes.object.isRequired,
-    id: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string,
-    ]).isRequired,
+    slug: PropTypes.string.isRequired,
 }
 
 export default withTheme(Mini);

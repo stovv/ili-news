@@ -1,11 +1,10 @@
 import React from 'react';
-import EmbedTool from 'react-embed';
+import {Box} from "rebass";
 import Iframe from 'react-iframe'
 import PropTypes from 'prop-types';
-import {Flex, Box} from "rebass";
+import EmbedTool from 'react-embed';
 import { connect } from 'react-redux';
 
-import { lightTheme } from "../../../theme/theme.react";
 
 class Embed extends React.Component {
     constructor(props) {

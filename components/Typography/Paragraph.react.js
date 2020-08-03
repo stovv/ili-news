@@ -4,13 +4,17 @@ import styled from 'styled-components';
 
 const ParagraphComponent = styled.p`
   font-family: ${props=>props.theme.fontFamily};
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 20px;
+  font-weight: 500;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.4;
+  line-height: 1.33;
   letter-spacing: normal;
-  color: ${props => props.theme.text.primary};
+  color: ${props => props.theme.text.backgroundInverted};
+  
+  :first-child {
+    margin-top: 0;
+  }
 
 `;
 

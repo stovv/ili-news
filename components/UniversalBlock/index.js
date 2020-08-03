@@ -1,19 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import RawBlock from "./Components/Raw.react";
+import ImageBlock from './Components/Image.react';
+import EmbedBlock from "./Components/Embed.react";
+import QuoteBlock from "./Components/Quote.react";
+import CalloutBlock from "./Components/Callout.react";
+import ReadMoreBlock from "./Components/ReadMore.react";
+
+
 import Components from "./ComponentMapping.react";
 
 class UniversalBlock extends React.Component {
 
     render(){
-        const {block} = this.props;
-        let Block =  Components[block.type];
-        if (typeof  Components[block.type] === "undefined"){
-            //console.log("UNDEF", block);
-            return null;
-        }
+        const { block } = this.props;
+        console.log(block);
+        let Block = Components[block.type];
 
-        return <Block data={block.data} />;
+        return (
+            typeof Components[block.type] === "undefined"
+                ? null
+                : <Block data={block.data} />
+        );
     }
 }
 
@@ -22,3 +31,12 @@ UniversalBlock.propTypes = {
 }
 
 export default UniversalBlock;
+
+export {
+    RawBlock,
+    QuoteBlock,
+    ImageBlock,
+    EmbedBlock,
+    CalloutBlock,
+    ReadMoreBlock
+}

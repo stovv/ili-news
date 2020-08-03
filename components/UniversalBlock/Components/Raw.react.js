@@ -1,21 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
+import { Box } from "rebass";
 import PropTypes from 'prop-types';
-import {Flex, Box} from "rebass";
 import { connect } from 'react-redux';
 
-import { lightTheme } from "../../../theme/theme.react";
+import { CardText, TagLabel } from "../../Typography"
+
 
 class Raw extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state={
-            reactionShown: false,
-            emoji: props.data.emoji || { id: 'ok_hand', skin: 3 },
-            text: props.data ? props.data.text: null
-        }
-    }
-
     render(){
         const { data, width } = this.props;
         return (

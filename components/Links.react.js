@@ -33,8 +33,8 @@ export const UniversalLink = ({ item, component, route, ...props }) => {
 }
 
 
-export const PostLink = ({postId, children, ...props}) => (
-    <Link href={"/post/[postId]"} as={`/post/${postId}`} passHref {...props}>
+export const PostLink = ({postSlug, children, ...props}) => (
+    <Link href={"/[postSlug]"} as={`/${postSlug}`} passHref {...props}>
         <a style={noDecoration} {...props}>
             {children}
         </a>
@@ -66,5 +66,5 @@ RubricLink.propTypes = {
 }
 
 PostLink.propTypes = {
-    postId: PropTypes.string.isRequired,
+    postSlug: PropTypes.string.isRequired,
 }

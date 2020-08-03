@@ -10,54 +10,64 @@ import {PostLink} from "../components/Links.react";
 
 class NewsPostsComps extends React.Component {
 
-    shouldComponentUpdate(nextProps, nextState){
-        return nextProps.width != this.props.width;
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        return nextProps.width !== this.props.width;
     }
 
     render(){
         const {compilation, news, posts, width} = this.props;
-
-        const {id, title, description, cover, tag, } = compilation.posts[0];
-
+        const [ bigPost = null, ...otherPosts ] = compilation.posts;
+        const leftPosts = otherPosts.slice(0, 2);
+        const botPosts = otherPosts.slice(1, 3);
 
         if ( width > 1023 ){
             return (
                 <Containers.Default>
                     <Flex height={["672px"]} marginTop={["55px"]}>
                         <Box width={1/4} >
-                            <Flex flexDirection="column" height="100%">
-                                {
-                                    posts.slice(0,2).map((item,index)=>
-                                        <React.Fragment key={index}>
-                                            <Box height="50%" mr="5px">
-                                                <Cards.Post post={item}/>
-                                            </Box>
-                                        </React.Fragment>
-                                    )
-                                }
-                            </Flex>
+                            {
+                                leftPosts.length > 0 &&
+                                    <Flex flexDirection="column" height="100%">
+                                    {
+                                        leftPosts.map((item,index)=>
+                                            <React.Fragment key={index}>
+                                                <Box height="50%" mr="5px">
+                                                    <Cards.Post post={item}/>
+                                                </Box>
+                                            </React.Fragment>
+                                        )
+                                    }
+                                </Flex>
+                            }
                         </Box>
                         <Box width={2/4} height="100%" mr="5px">
                             <Flex flexDirection="column" height="100%">
                                 <Box height={["75%"]} width="100%" mx="auto">
-                                    <PostLink postId={id}>
-                                        <Cards.Large cover={cover} heading={compilation.title} type="topRight" >{title}</Cards.Large>
-                                    </PostLink>
+                                    {
+                                        bigPost !== null &&
+                                            <PostLink postSlug={bigPost.slug}>
+                                                <Cards.Large cover={bigPost.cover}
+                                                             heading={compilation.title} type="topRight" >
+                                                    {bigPost.title}
+                                                </Cards.Large>
+                                            </PostLink>
+                                    }
                                 </Box>
                                 <Box height={["25%"]} mx="5px">
-                                    <Flex>
-                                        {
-                                            compilation.posts.slice(1, 3).map((item, index)=>
-                                                <React.Fragment key={index}>
-                                                    <Box width={1/2} mt="32px" mr="20px">
+                                    {
+                                        botPosts.length > 0 &&
+                                            <Flex justifyContent="space-between" mt="32px">
+                                            {
+                                                botPosts.map((item, index)=>
+                                                    <React.Fragment key={index}>
                                                         <Cards.Mini heading={compilation.title} cover={item.cover} id={item.id}>
                                                             {item.title}
                                                         </Cards.Mini>
-                                                    </Box>
-                                                </React.Fragment>
-                                            )
-                                        }
-                                    </Flex>
+                                                    </React.Fragment>
+                                                )
+                                            }
+                                            </Flex>
+                                    }
                                 </Box>
                             </Flex>
                         </Box>

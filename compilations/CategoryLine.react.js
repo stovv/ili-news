@@ -15,6 +15,10 @@ class CategoryLine extends React.Component {
     render() {
         const { posts, category, width } = this.props;
 
+        if ( !category ){
+            return null;
+        }
+
         if ( width > 1023 ) {
             return(
                 <Containers.Default mt="62px" mb="120px">

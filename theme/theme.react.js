@@ -1,3 +1,5 @@
+import React from "react";
+
 const light = {
     colors: {
       primary: '#eb5757',
@@ -5,7 +7,7 @@ const light = {
       backgroundPrimary: '#ffffff',
       backgroundInvert: '#4a4a4a',
       backgroundInverted: '#0e0e0e',
-      hover: "#050505"
+      hover: "#050505",
     },
     text: {
       primary: '#050505',
@@ -55,7 +57,7 @@ const light = {
       bold: 700,
       heading: 800,
     },
-    fontFamily: "Lato, sans-serif",
+    fontFamily: "Open Sans, sans-serif",
     lineHeights: {
       body: 1.5,
       heading: 1.3,

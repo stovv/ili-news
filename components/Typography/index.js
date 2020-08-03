@@ -4,6 +4,7 @@ import Paragraph from './Paragraph.react';
 import Quote from './Quote.react';
 import TagLabel from "./Tag.react";
 import CardText from "./CardText.react";
+import Common from './Common.react';
 
 export {
     Heading,
@@ -11,5 +12,6 @@ export {
     Paragraph,
     Quote,
     TagLabel,
-    CardText
+    CardText,
+    Common
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NextSeo } from 'next-seo';
-import Error from '../_error';
+import Error from '../error__';
 import { Public } from '../../api';
 import { Flex, Box } from 'rebass';
 import {SITE_URL} from "../../constants";
@@ -61,38 +61,25 @@ function DateSting( date ){
 
 class Rubric extends React.Component {
     static async getInitialProps({ query: { rubricSlug } }) {
-        let rubric_id = null;
-        await Public.fetchRubrics(['slug', 'id'])
-            .then(response => {
-                response.data.rubrics.map(rubric =>{
-                    if (rubric.slug === rubricSlug){
-                        rubric_id = rubric.id;
-                    }
-                });
-            })
-            .catch(reason => {
-                // TODO Add Reason processing
-            });
-
         let rubric = null;
-        if (rubric_id != null){
-            await Public.getRubric(rubric_id)
-                .then(response => {
-                    rubric = response.data;
-                })
-                .catch(reason=>{
-                    console.log(reason);
-                    // TODO Add Reason processing
-                });
-        } else{
-            return {};
-        }
+        await Public.getRubric(rubricSlug)
+            .then((response)=>{
+                if ( response.data.length > 0 ){
+                    rubric = response.data[0]
+                }
+            })
 
-        let popularPosts = null;
-        if ( !rubric.cover ){
+        let popularPosts = [];
+        if ( rubric !== null && !rubric.cover ){
             await Public.getPopularDuringWeek()
                 .then(response=> popularPosts = response.data.ratings)
-                .catch(reason=> console.log(reason));
+                .catch(reason=> console.log("LOAD POPULAR", reason.response.statusText));
+        }
+
+        let postsCount = 0;
+        if ( rubric !== null ){
+            await Public.getPostCountInRubric(rubric.id)
+                .then(response=> postsCount = response.data);
         }
 
 
@@ -100,6 +87,7 @@ class Rubric extends React.Component {
         let start = 0;
         let uid = 2;
         let items = [];
+        let loadedPostsCount = 0;
         for (let i = 0; i < 4; i++){
             let limit = randomChoice([1, 4, 6, 8]);
             while (prevBlocks.length > 0 && prevBlocks[prevBlocks.length - 1] === limit || (prevBlocks.length > 1 && prevBlocks[prevBlocks.length - 2] === limit)) {
@@ -108,15 +96,20 @@ class Rubric extends React.Component {
 
             prevBlocks.push(limit);
             let posts = null;
-            await Public.loadPosts( rubric_id, null, start, limit)
-                .then(response => posts = response.data.posts)
-                .catch(reason => console.log(reason));
+            if ( rubric !== null ){
+                await Public.loadPosts( rubric.id, null, start, limit)
+                    .then(response => {
+                        loadedPostsCount += response.data.posts.length;
+                        posts = response.data.posts;
+                    })
+                    .catch(reason => console.log("LOAD POSTS", reason.response.statusText));
+            }
             items.push({posts, uid})
             start += limit;
             uid += 1;
         }
 
-        return { rubric, rubricSlug, prevBlocks, uid, start, items, popularPosts};
+        return { rubric, rubricSlug, prevBlocks, uid, start, items, popularPosts, loadedPostsCount, postsCount};
     }
 
     constructor(props){
@@ -127,7 +120,7 @@ class Rubric extends React.Component {
             uid: props.uid,
             latestDate: null,
             start: props.start,
-            hasMore: true
+            hasMore: props.loadedPostsCount < props.postsCount
         }
         this.fetchMoreWithCover = this.fetchMoreWithCover.bind(this);
         this.fetchMoreWithoutCover = this.fetchMoreWithoutCover.bind(this);
@@ -219,7 +212,7 @@ class Rubric extends React.Component {
                                     {dateHeading}
                                     <Flex mb="30px">
                                         <Typography.CardText margin="0 35px auto 0" type="xlarge" color={theme.text.primary}>{TimeString(post.publish_at)}</Typography.CardText>
-                                        <PostLink postId={post.id}>
+                                        <PostLink postSlug={post.slug}>
                                             <Typography.CardText hover margin="auto 0 auto 0" type="large" color={theme.text.secondary}>{post.title}</Typography.CardText>
                                         </PostLink>
                                     </Flex>
@@ -228,7 +221,7 @@ class Rubric extends React.Component {
                                     {dateHeading}
                                     <Flex mb="30px">
                                         <Typography.CardText margin={"0 10px auto 0"} type="normal" color={theme.text.primary}>{TimeString(post.publish_at)}</Typography.CardText>
-                                        <PostLink postId={post.id}>
+                                        <PostLink postSlug={post.slug}>
                                             <Typography.CardText hover wrap margin="auto 0 auto 0" type="normal" color={theme.text.secondary}>{post.title}</Typography.CardText>
                                         </PostLink>
                                     </Flex>
@@ -251,7 +244,7 @@ class Rubric extends React.Component {
     render() {
         // TODO Use this.props.user for head component
         let empty = true;
-        const { rubric, rubricSlug, theme, items, width, popularPosts} = this.props;
+        const { rubric, rubricSlug, theme, items, width, popularPosts } = this.props;
         if (rubric === null){
             return (<Error statusCode={404}/>);
         }
@@ -353,7 +346,7 @@ class Rubric extends React.Component {
                                                                 {dateHeading}
                                                                 <Flex mb="30px">
                                                                     <Typography.CardText margin={"0 35px auto 0"} type="xlarge" color={theme.text.primary}>{TimeString(post.publish_at)}</Typography.CardText>
-                                                                    <PostLink postId={post.id}>
+                                                                    <PostLink postSlug={post.slug}>
                                                                         <Typography.CardText hover margin="auto 0 auto 0" type="large" color={theme.text.secondary}>{post.title}</Typography.CardText>
                                                                     </PostLink>
                                                                 </Flex>

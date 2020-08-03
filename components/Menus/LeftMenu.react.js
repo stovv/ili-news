@@ -32,7 +32,7 @@ class LeftMenu extends React.Component {
                 isEvent: "Нет",
                 //author: props.draft.author ? props.draft.author : "нет",
                 eventDate: props.draft.event_date != null ? new Date(props.draft.event_date) : new Date(),
-                rubric: props.draft.rubric.title,
+                rubric: props.draft.rubric ? props.draft.rubric.title : {} ,
                 oldAuthor: props.draft.old_authors ? props.draft.old_authors : ""
             }
         }
@@ -47,7 +47,6 @@ class LeftMenu extends React.Component {
 
         let newPost = {};
         if ( isEvent === "Да" ){
-            console.log("DATE", eventDate);
             newPost.event_date = eventDate.toISOString();
         }
         if (rubric !== this.props.draft.rubric.title){
@@ -81,7 +80,7 @@ class LeftMenu extends React.Component {
                             id='rubric'
                             name='rubric'
                             onChange={(e)=>this.setState({rubric: e.target.value})}
-                            defaultValue={draft.rubric.title}>
+                            defaultValue={draft.rubric ? draft.rubric.title : "Нет рубрики"}>
                             {data.rubrics.map((rubric, index) => (
                                 <React.Fragment key={index}>
                                     <option key={rubric.id}>

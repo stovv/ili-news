@@ -1,9 +1,7 @@
 import React from 'react';
-import Head from 'next/head';
 import { Box } from 'rebass';
 import { NextSeo } from "next-seo";
 import { connect } from 'react-redux';
-import TrackVisibility from 'react-on-screen';
 import InfiniteScroll from "react-infinite-scroll-component";
 
 
@@ -18,14 +16,6 @@ function randomChoice(arr){
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
-const Offscreen = ({children}) => {
-    return (
-        <TrackVisibility partialVisibility once>
-            {({ isVisible }) => isVisible && <>{children}</>}
-        </TrackVisibility>
-    );
-}
-
 
 class FrontPage extends React.Component {
     static async getInitialProps() {
@@ -38,34 +28,43 @@ class FrontPage extends React.Component {
                // console.log("REASON", reason.response);
             });
 
-        let lastTheme = null;
-        let nextTheme = null;
-        let newsFeed = null;
-        let posts = null;
+        let lastTheme = {
+            title: null,
+            posts: []
+        };
+        let nextTheme = {
+            title: null,
+            posts: []
+        };
+        let newsFeed = [];
+        let posts = [];
         let categories = null;
         let nonUsedCategories = null;
-        let catLine = null;
+        let catLine = { posts: [], category: null };
+
         try {
             await Public.fetchTheme()
-                .then(response => lastTheme = response.data.themes[0])
-                .catch(reason => console.log(reason));
+                .then(response => {
+                    if (response.data.themes !== null && response.data.themes.length > 0){
+                        lastTheme = response.data.themes[0]
+                    }
+                });
             await Public.fetchTheme(1)
-                .then(response => nextTheme = response.data.themes[0])
-                .catch(reason => console.log(reason));
+                .then(response => {
+                    if (response.data.themes !== null && response.data.themes.length > 0){
+                        nextTheme = response.data.themes[0]
+                    }
+                });
             await Public.fetchNews()
-                .then(response => newsFeed = response.data.posts)
-                .catch(reason => console.log(reason));
+                .then(response => newsFeed = response.data.posts);
             await Public.fetchSimplePosts()
-                .then(response => posts = response.data.posts)
-                .catch (reason => console.log(reason));
-            await Public.fetcFrontPageCategories()
+                .then(response => posts = response.data.posts);
+            await Public.fetchFrontPageCategories()
                 .then(response => {
                     categories = response.data.categories;
                     nonUsedCategories = response.data.categories;
-                })
-                .catch(reason => console.log(reason));
+                });
             const category = randomChoice(nonUsedCategories);
-
 
             while (catLine === null && nonUsedCategories.length > 0){
                 const index = nonUsedCategories.indexOf(category);
@@ -81,12 +80,11 @@ class FrontPage extends React.Component {
                                 category
                             }
                         }
-                    })
-                    .catch(reason => console.log(reason));
+                    });
             }
 
         }catch (e) {
-            console.log(e);
+            console.log("ERROR IN GETTING Initial data", e);
         }
         return {topPosts, lastTheme,nextTheme, newsFeed, posts, categories, nonUsedCategories, catLine};
     }
@@ -94,18 +92,18 @@ class FrontPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            existsPostIds: [],
+            existsPostIds: [
+                ...props.posts.map(post => post.id),
+                ...props.catLine.posts.map(post => post.id),
+                ...props.topPosts.map(post => post.post.id)
+            ],
+            existsCategoryIds: props.nonUsedCategories,
             items: [],
             categories: [],
             offsets: {},
             prevBlocks: [],
-            uid: 2,
-            existsCategoryIds: props.nonUsedCategories,
+            uid: 2
         }
-        props.posts.map(post => this.state.existsPostIds.push(post.id));
-        props.catLine.posts.map(post => this.state.existsPostIds.push(post.id));
-        props.topPosts.map(post => this.state.existsPostIds.push(post.post.id));
-
         this.fetchMore = this.fetchMore.bind(this);
     }
 
@@ -116,7 +114,6 @@ class FrontPage extends React.Component {
         if ( prevBlocks.length > 5 ){
             prevBlocks = prevBlocks.slice(-3);
         }
-
 
         for (let i = 0; i < 4; i++){
 
@@ -132,7 +129,7 @@ class FrontPage extends React.Component {
                 case 'cat':{
                     if (this.state.existsCategoryIds.length === 0){
                         if ( this.state.categories == null || this.state.categories.length === 0 ){
-                            await Public.fetcFrontPageCategories()
+                            await Public.fetchFrontPageCategories()
                                 .then(response => {
                                     this.state.categories = response.data.categories;
                                 })
@@ -173,7 +170,8 @@ class FrontPage extends React.Component {
                         items.push(
                             <Containers.Default>
                                 <Box mx="auto" my="48px" height={["280px"]} width={["100%"]}>
-                                    <Form.AdBlock id="R-A-351229-8" width="100%" height="100%" infinity uid={this.state.uid}/>
+                                    <Form.AdBlock id="R-A-351229-8" width="100%"
+                                                  height="100%" infinity uid={this.state.uid}/>
                                 </Box>
                             </Containers.Default>
                         )
@@ -181,7 +179,8 @@ class FrontPage extends React.Component {
                         items.push(
                             <Containers.Default>
                                 <Box mx="auto" my="48px" height={["280px"]} width={["100%"]}>
-                                    <Form.AdBlock id="R-A-351229-7" width="100%" height="100%" infinity uid={this.state.uid}/>
+                                    <Form.AdBlock id="R-A-351229-7" width="100%"
+                                                  height="100%" infinity uid={this.state.uid}/>
                                 </Box>
                             </Containers.Default>
                         )
@@ -203,7 +202,8 @@ class FrontPage extends React.Component {
     }
 
     render() {
-        const {topPosts, lastTheme, nextTheme, newsFeed, posts, catLine, width} = this.props;
+        const { topPosts, lastTheme, nextTheme, newsFeed,
+            posts, catLine = { posts: [], category: null }, width } = this.props;
 
         return (
             <>
@@ -234,27 +234,24 @@ class FrontPage extends React.Component {
                 {
                     width > 1023
                         ? <NewsPostsComps compilation={lastTheme} news={newsFeed} posts={posts}/>
-                        : <Offscreen>
+                        : <Containers.Offscreen>
                             <NewsPostsComps compilation={lastTheme} news={newsFeed} posts={posts}/>
-                          </Offscreen>
+                          </Containers.Offscreen>
                 }
 
-                <Offscreen>
+                <Containers.Offscreen>
                     <CategoryLine posts={catLine.posts} category={catLine.category}/>
                     <CompsBannerAd theme={nextTheme} bannerContent={{
                         text: "Стань членом клуба 'ИЛИ ПРЕМИУМ' и получай подарки за чтение новостей",
                         buttonText: "Присоеденится",
                         buttonLink: "/test"
-                    }} bannerAdId="R-A-351229-6" mobilebannerAdId="R-A-351229-7"/>
+                    }} bannerAdId="R-A-351229-6" mobileBannerAdId="R-A-351229-7"/>
                     <InfiniteScroll
-                        dataLength={this.state.items.length}
-                        next={this.fetchMore}
-                        hasMore={true}
-                        loader={<Form.Loader/>}
-                    >
+                        dataLength={this.state.items.length} next={this.fetchMore}
+                        hasMore={true} loader={<Form.Loader/>}>
                         {this.state.items}
                     </InfiniteScroll>
-                </Offscreen>
+                </Containers.Offscreen>
             </>
         );
     }

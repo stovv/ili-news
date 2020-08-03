@@ -2,12 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Flex, Box } from 'rebass';
 import { Emoji } from "emoji-mart";
+import { withTheme } from "styled-components";
 
-import { lightTheme } from "../../../theme/theme.react";
 import { Heading } from "../../Typography";
 import { PostLink } from '../../Links.react';
-
-
 
 
 class ReadMore extends React.Component {
@@ -17,15 +15,15 @@ class ReadMore extends React.Component {
     }
 
     render(){
-        const { post, data } = this.props;
+        const { theme, post, data } = this.props;
 
         if (data == null){
             return null;
         }
         return (
-            <Box bg={lightTheme.colors.backgroundSecondary} pl={lightTheme.spacing.block} py={["24px"]} mb={["46px"]}>
+            <Box bg={theme.colors.backgroundSecondary} px={theme.spacing.block} py={["24px"]} mb={["46px"]}>
                 <Flex mb={["31px"]}>
-                    <Heading level={3} color={lightTheme.text.primary} margin="0 10px 0 0">
+                    <Heading level={3} color={theme.text.primary} margin="0 10px 0 0">
                         {
                             post
                                 ? "Читать также"
@@ -43,8 +41,8 @@ class ReadMore extends React.Component {
                         return(
                             <React.Fragment key={index}>
                                 <PostLink postId={item.id}>
-                                    <Heading level={4} margin={`0 0 ${lightTheme.spacing.m} 0`} hover
-                                             color={lightTheme.text.secondary}>{item.title}</Heading>
+                                    <Heading level={4} margin={`0 0 ${theme.spacing.m} 0`} hover
+                                             color={theme.text.secondary}>{item.title}</Heading>
                                 </PostLink>
                             </React.Fragment>
                         );
@@ -60,4 +58,4 @@ ReadMore.propTypes = {
     data: PropTypes.array.isRequired,
 }
 
-export default ReadMore;
+export default withTheme(ReadMore);

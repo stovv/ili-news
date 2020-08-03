@@ -30,6 +30,9 @@ class Comments extends React.Component {
 
     render(){
         const { threadId, theme, width } = this.props;
+        // TODO: Remove after block done
+        return(<></>);
+
         return(
             <Flex ml={width > 1023 ? "65px" : "20px"}>
                 <Box display="flex" mr="28px">

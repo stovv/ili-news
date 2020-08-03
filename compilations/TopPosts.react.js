@@ -16,37 +16,49 @@ class TopPosts extends React.Component {
 
     render(){
         const {posts, theme, width} = this.props;
-        const {id, title, description, cover, rubric } = posts[0].post;
+        const [ first = null, ...otherPosts ] = posts;
 
         if (width > 1023){
             return (
                 <>
-                    <Images.Lazy cover={cover}  blur height="384px" blackout>
-                        <Containers.Default>
-                            <Flex mt={[81]}>
-                                <Box>
-                                    <Typography.TagLabel type="large"
-                                                         color={theme.text.onPrimary}
-                                                         margin={`0 0 ${theme.spacing.m} 0`}
-                                                         textTransform="lowercase">{rubric.title}</Typography.TagLabel>
-                                    <Typography.Heading level={1}
-                                                        color={theme.text.onPrimary}
-                                                        maxWidth="816px"
-                                                        margin={` ${theme.spacing.m} 0 0 0`}
-                                    >{title}</Typography.Heading>
-                                </Box>
-                            </Flex>
-                        </Containers.Default>
-                    </Images.Lazy>
+                    {
+                        first !== null &&
+                            <Images.Lazy cover={first.post.cover}  blur height="384px" blackout>
+                                <Containers.Default>
+                                    <Flex mt={[81]}>
+                                        <Box>
+                                            <Typography.TagLabel type="large"
+                                                                 color={theme.text.onPrimary}
+                                                                 margin={`0 0 ${theme.spacing.m} 0`}
+                                                                 textTransform="lowercase">
+                                                {first.post.rubric.title}
+                                            </Typography.TagLabel>
+                                            <Typography.Heading level={1}
+                                                                color={theme.text.onPrimary}
+                                                                maxWidth="816px"
+                                                                margin={` ${theme.spacing.m} 0 0 0`}>
+                                                {first.post.title}
+                                            </Typography.Heading>
+                                        </Box>
+                                    </Flex>
+                                </Containers.Default>
+                            </Images.Lazy>
+                    }
                     <Containers.Default>
                         <Flex height="400px" >
-                            <Box width={[2/4]} pb={["20px"]} mr="5px" height="490px" sx={{transform: "translate(0, -20%)"}}>
-                                <PostLink postId={id}>
-                                    <Cards.Large cover={cover} type="bottomLeft">{description}</Cards.Large>
-                                </PostLink>
-                            </Box>
                             {
-                                posts.slice(1).map((item, index) => (
+                                first !== null &&
+                                    <Box width={[2/4]} pb={["20px"]} mr="5px" height="490px"
+                                         sx={{transform: "translate(0, -20%)"}}>
+                                        <PostLink postSlug={first.post.slug}>
+                                            <Cards.Large cover={first.post.cover} type="bottomLeft">
+                                                {first.post.description}
+                                            </Cards.Large>
+                                        </PostLink>
+                                    </Box>
+                            }
+                            {
+                                otherPosts.map((item, index) => (
                                     <React.Fragment key={index}>
                                         <Box width={[1/4]} mx="5px"  mt={["56px"]}>
                                             <Cards.Post post={item.post} float="right"/>

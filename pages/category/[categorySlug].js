@@ -1,6 +1,6 @@
 import React from 'react';
 import { NextSeo } from 'next-seo';
-import Error from '../_error';
+import Error from '../error__';
 import { Public } from '../../api';
 import { Flex, Box } from 'rebass';
 import {SITE_URL} from "../../constants";

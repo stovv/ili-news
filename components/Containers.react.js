@@ -1,7 +1,8 @@
-import styled from 'styled-components';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Containers} from "./index";
+import styled from 'styled-components';
+import TrackVisibility from "react-on-screen";
+
 
 const Common = styled.div`
     max-width: 1440px;
@@ -34,6 +35,13 @@ export const Mini = ({children, mt, mb})=>
         </Min>
     </Common>
 
+export const Offscreen = ({children}) => {
+    return (
+        <TrackVisibility partialVisibility once>
+            {({ isVisible }) => isVisible && children}
+        </TrackVisibility>
+    );
+}
 
 Default.propTypes = {
     mt: PropTypes.string,
