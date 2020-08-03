@@ -1,5 +1,4 @@
 import { PAGE } from './types.react';
-import {setStorage, getStorage} from './tools';
 
 let initialState = {
     pageSize:{

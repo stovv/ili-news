@@ -1,5 +1,4 @@
 import {SING_IN, SING_OUT, SAVE_CLIENT_IP} from "../tools/constants";
-import {getCookie, setCookie, removeCookie} from '../tools/cookie.react';
 
 
 let initialState = {

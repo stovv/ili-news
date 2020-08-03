@@ -1,4 +1,4 @@
-import {RESTORE_AUTH_STATE, SING_IN, SING_OUT, SAVE_CLIENT_IP} from "../tools/constants";
+import { SING_IN, SING_OUT, SAVE_CLIENT_IP } from "../tools/constants";
 import { Auth } from '../api';
 
 function signInAction(data){
@@ -55,6 +55,6 @@ export function signUp(signUpDetails){
 
 export function logout(){
    return async dispatch => {
-       dispatch(signOutAction())
+       dispatch(signOutAction)
    }
 };
