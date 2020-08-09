@@ -113,7 +113,8 @@ class PostsWithAd extends React.Component {
                 }
                 return items;
             }
-        }else if (width > 1023){
+        }
+        else if (width > 1023){
             if ( posts.length === 1 ){
                 let type = randomChoice(['left', 'right']);
 
@@ -249,7 +250,8 @@ class PostsWithAd extends React.Component {
 
                 return lines;
             }
-        }else{
+        }
+        else{
             return(
                 <>
                     {
@@ -272,7 +274,7 @@ class PostsWithAd extends React.Component {
         if (posts.length > 0){
             let items = [];
             let sliceCount = 4;
-            if (width > 1023){
+            if (width <= 1023){
                 sliceCount = 3
             }
             for (let i = 0, j = posts.length; i < j; i += sliceCount) {

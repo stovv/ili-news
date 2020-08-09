@@ -16,7 +16,7 @@ import { SITE_URL } from '../constants';
 import { saveIpAction } from '../store/authActions.react';
 import { changeInfinityState } from '../store/commonActions.react';
 import { getFormatedDate } from '../tools';
-import { UniversalBlock, Containers, Typography, Images, Cards, Form, Blocks } from '../components';
+import { UniversalBlock ,Containers, Typography, Images, Cards, Form, Blocks } from '../components';
 
 
 export const config = { amp: 'hybrid' };
@@ -37,9 +37,9 @@ const Divider = styled.div`
 `;
 
 const EventDateWrapper = styled.div`
-     border-right: ${ props=> props.mini ? '2px' : '4px' } solid ${props=> props.theme.colors.primary};
+     border-right: ${ props=> props.mini ? '1px' : '2px' } solid ${props=> props.theme.colors.primary};
      padding: 10px 0;
-     margin-right: ${ props=> props.mini ? '18px' : '46px' };
+     margin-right: ${ props=> props.mini ? '18px' : '23px' };
      margin-top: auto;
      margin-bottom: auto;
 `;
@@ -110,7 +110,8 @@ const InfinityPost = ({data, theme}) => {
 
 const RegularPost = ({data, theme}) => {
     const { postId, width, rubric, title, publishedDate, popularPosts, clientIp, authors, dispatch,
-        blocks:{ blocks }, slug, cover, rating, commentThread, readMoreLinks, event_date} = data;
+        blocks:{ blocks }, slug, cover, rating, commentThread, readMoreLinks,
+        eventDate, eventLink, eventLocation, eventPrice } = data;
     // TODO Remove it after beta release
     return (
         <Containers.Default>
@@ -122,13 +123,13 @@ const RegularPost = ({data, theme}) => {
                                             margin={`32px 0 ${theme.spacing.m} 0`}>{rubric.title}</Typography.Heading>
                         <Flex>
                             {
-                                ( rubric.withEventDate && event_date ) && <>
+                                ( rubric.withEventDate && eventDate ) && <>
                                     <EventDateWrapper>
-                                        <Typography.Common type={'mega'} margin={'0 10px 0 0'} textAlign="center">
-                                            <Moment locale="ru" format="DD">{event_date}</Moment>
+                                        <Typography.Common type={'mega'} margin={'0 24px 0 0'} textAlign="center">
+                                            <Moment locale="ru" format="DD">{eventDate}</Moment>
                                         </Typography.Common>
-                                        <Typography.Common type={'regular'} margin={'0 10px 0 0'} textAlign="center">
-                                            <Moment locale="ru" format="MMM">{event_date}</Moment>
+                                        <Typography.Common type={'regular'} margin={'0 24px 0 0'} textAlign="center">
+                                            <Moment locale="ru" format="MMM">{eventDate}</Moment>
                                         </Typography.Common>
                                     </EventDateWrapper>
                                 </>
@@ -143,13 +144,13 @@ const RegularPost = ({data, theme}) => {
                                             margin={`32px 0 ${theme.spacing.m} 0`}>{rubric.title}</Typography.Heading>
                         <Flex>
                             {
-                                ( rubric.withEventDate && event_date ) && <>
+                                ( rubric.withEventDate && eventDate ) && <>
                                     <EventDateWrapper mini>
                                         <Typography.Heading level={1} margin={'0 10px 0 0'} textAlign="center">
-                                            <Moment locale="ru" format="DD">{event_date}</Moment>
+                                            <Moment locale="ru" format="DD">{eventDate}</Moment>
                                         </Typography.Heading>
                                         <Typography.Heading level={3} margin={'0 10px 0 0'} textAlign="center">
-                                            <Moment locale="ru" format="MMM">{event_date}</Moment>
+                                            <Moment locale="ru" format="MMM">{eventDate}</Moment>
                                         </Typography.Heading>
                                     </EventDateWrapper>
                                 </>
@@ -158,23 +159,40 @@ const RegularPost = ({data, theme}) => {
                         </Flex>
                     </>
             }
-            <Flex mb={theme.spacing.m}>
-                <Typography.Heading margin={`auto 0 auto 0`} level={4} color={theme.text.secondary}>{publishedDate}</Typography.Heading>
-                <Form.AuthorList authors={authors}/>
-                <Box  my="auto" ml="auto">
-                    <YandexShare
-                        content={{ title }}
-                        theme={{ lang: 'ru', limit: 3, size: "m", popupPosition: "outer",
-                            services: 'vkontakte,facebook,odnoklassniki,twitter,viber,whatsapp,telegram' }}
-                    />
-                </Box>
-
-            </Flex>
+            {
+                width > 462
+                    ? <Flex mb={theme.spacing.m}>
+                        <Typography.Heading margin={`auto 0 auto 0`} level={4} color={theme.text.secondary}>{publishedDate}</Typography.Heading>
+                        <Form.AuthorList authors={authors}/>
+                        <Box  my="auto" ml="auto">
+                            <YandexShare
+                                content={{ title }}
+                                theme={{ lang: 'ru', limit: width > 556 ? 3 : 0, size: "m", popupPosition: "outer",
+                                    services: 'vkontakte,facebook,odnoklassniki,twitter,viber,whatsapp,telegram' }}
+                            />
+                        </Box>
+                    </Flex>
+                    : <>
+                        <Flex mb={theme.spacing.m} justifyContent={"space-between"}>
+                            <Typography.Heading margin={`auto 0 auto 0`} level={4} color={theme.text.secondary}>{publishedDate}</Typography.Heading>
+                            <YandexShare
+                                content={{ title }}
+                                theme={{ lang: 'ru', limit: width > 556 ? 3 : 0, size: "m", popupPosition: "outer",
+                                    services: 'vkontakte,facebook,odnoklassniki,twitter,viber,whatsapp,telegram' }}
+                            />
+                        </Flex>
+                        <Form.AuthorList authors={authors}/>
+                    </>
+            }
             {
                 rubric.cover && <Images.Lazy cover={cover} width="100%" height={width > 1023 ? "560px" : "229px"}/>
             }
             <Flex mt={["54px"]}>
                 <Box width={width > 1023 ? [9/12] : '100%' } pr={width > 1023 ? ["10%"] : '0'}>
+                    {
+                        (eventLink != null && eventLocation != null && eventPrice != null)
+                        && <Blocks.EventBanner data={{ eventLink, eventLocation, eventPrice, eventDate  }}/>
+                    }
                     {
                         blocks.map((item, index)=>
                             <React.Fragment key={index}>
@@ -197,7 +215,7 @@ const RegularPost = ({data, theme}) => {
                             </Flex>
                         </Box>
                     </Flex>
-                    {/*<Blocks.ReadMore post data={readMoreLinks}/>*/}
+                    <Blocks.ReadMoreBlock post data={readMoreLinks}/>
                 </Box>
                 {
                     width > 1023

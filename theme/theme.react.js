@@ -57,7 +57,7 @@ const light = {
       bold: 700,
       heading: 800,
     },
-    fontFamily: "Open Sans, sans-serif",
+    fontFamily: "Lato, sans-serif",
     lineHeights: {
       body: 1.5,
       heading: 1.3,

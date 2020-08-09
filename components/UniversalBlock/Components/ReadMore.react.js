@@ -17,6 +17,8 @@ class ReadMore extends React.Component {
     render(){
         const { theme, post, data } = this.props;
 
+        console.log("READ", data);
+
         if (data == null){
             return null;
         }
@@ -35,7 +37,7 @@ class ReadMore extends React.Component {
                 {
                     // TODO Add Link
                     data.map((item, index) =>{
-                        if ( item.post !== null ){
+                        if ( item.post != null ){
                             item = item.post;
                         }
                         return(

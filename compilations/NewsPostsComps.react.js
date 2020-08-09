@@ -75,7 +75,8 @@ class NewsPostsComps extends React.Component {
                     </Flex>
                 </Containers.Default>
             );
-        }else if ( width > 1023 ){
+        }
+        else if ( width > 1023 ){
             return (
                 <Containers.Default>
                     <Flex height={["672px"]} marginTop={["55px"]}>
@@ -127,7 +128,8 @@ class NewsPostsComps extends React.Component {
                     </Flex>
                 </Containers.Default>
             );
-        }else{
+        }
+        else{
             return (
                 <Containers.Mini>
                     {

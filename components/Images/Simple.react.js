@@ -56,7 +56,7 @@ const ChildrenContainer = styled.div`
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: ${props=>props.blackout && "rgba(0, 0, 0, 0.16)"};
+    background-color: ${props=>props.blackout && "rgba(0, 0, 0, 0.30)"};
     :first-child {
       box-shadow: 0px 5px 32px -5px rgba(0, 0, 0, 0.2);
     }

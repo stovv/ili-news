@@ -7,6 +7,7 @@ import EmbedBlock from "./Components/Embed.react";
 import QuoteBlock from "./Components/Quote.react";
 import CalloutBlock from "./Components/Callout.react";
 import ReadMoreBlock from "./Components/ReadMore.react";
+import EventBanner from "./Components/EventBanner.react";
 
 
 import Components from "./ComponentMapping.react";
@@ -36,6 +37,7 @@ export {
     QuoteBlock,
     ImageBlock,
     EmbedBlock,
+    EventBanner,
     CalloutBlock,
     ReadMoreBlock
 }

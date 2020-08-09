@@ -25,7 +25,7 @@ class TopPosts extends React.Component {
                         first !== null &&
                             <Images.Lazy cover={first.post.cover}  blur height="384px" blackout>
                                 <Containers.Default>
-                                    <Flex mt={[81]}>
+                                    <Flex mt={"65px"}>
                                         <Box>
                                             <Typography.TagLabel type="large"
                                                                  color={theme.text.onPrimary}
