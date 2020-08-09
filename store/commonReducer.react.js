@@ -4,7 +4,8 @@ let initialState = {
     pageSize:{
         width: 1440,
         height: 919
-    }
+    },
+    infinityActive: false
 }
 
 // const commonSession = getStorage('common');
@@ -18,6 +19,12 @@ const CommonReducer = (state = initialState, action) => {
             return {
                 ...state,
                 pageSize: action.payload
+            }
+        }
+        case PAGE.INFINITY_PAGE:{
+            return{
+                ...state,
+                infinityActive: action.payload
             }
         }
         default:

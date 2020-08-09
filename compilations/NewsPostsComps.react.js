@@ -18,14 +18,14 @@ class NewsPostsComps extends React.Component {
         const { compilation, news, posts: leftPosts, width } = this.props;
         const [ bigPost = null, ...botPosts ] = compilation.posts;
 
-        if ( width > 1023 ){
+        if ( width >= 1280 ) {
             return (
                 <Containers.Default>
                     <Flex height={["672px"]} marginTop={["55px"]}>
                         <Box width={1/4} >
                             {
                                 leftPosts.length > 0 &&
-                                    <Flex flexDirection="column" height="100%">
+                                <Flex flexDirection="column" height="100%">
                                     {
                                         leftPosts.map((item,index)=>
                                             <React.Fragment key={index}>
@@ -39,6 +39,47 @@ class NewsPostsComps extends React.Component {
                             }
                         </Box>
                         <Box width={2/4} height="100%" mr="5px">
+                            <Flex flexDirection="column" height="100%">
+                                <Box height={["75%"]} width="100%" mx="auto">
+                                    {
+                                        bigPost !== null &&
+                                        <PostLink postSlug={bigPost.slug}>
+                                            <Cards.Large cover={bigPost.cover}
+                                                         heading={compilation.title} type="topRight" >
+                                                {bigPost.title}
+                                            </Cards.Large>
+                                        </PostLink>
+                                    }
+                                </Box>
+                                <Box height={["25%"]} mx="5px">
+                                    {
+                                        botPosts.length > 0 &&
+                                        <Flex justifyContent="space-between" mt="32px">
+                                            {
+                                                botPosts.slice(0,2).map((item, index)=>
+                                                    <React.Fragment key={index}>
+                                                        <Cards.Mini heading={compilation.title} cover={item.cover} slug={item.slug}>
+                                                            {item.title}
+                                                        </Cards.Mini>
+                                                    </React.Fragment>
+                                                )
+                                            }
+                                        </Flex>
+                                    }
+                                </Box>
+                            </Flex>
+                        </Box>
+                        <Box width={1/4} >
+                            <NewsBlock news={news}/>
+                        </Box>
+                    </Flex>
+                </Containers.Default>
+            );
+        }else if ( width > 1023 ){
+            return (
+                <Containers.Default>
+                    <Flex height={["672px"]} marginTop={["55px"]}>
+                        <Box width={2/3} height="100%" mr="5px">
                             <Flex flexDirection="column" height="100%">
                                 <Box height={["75%"]} width="100%" mx="auto">
                                     {
@@ -69,9 +110,20 @@ class NewsPostsComps extends React.Component {
                                 </Box>
                             </Flex>
                         </Box>
-                        <Box width={1/4} >
+                        <Box width={1/3} >
                             <NewsBlock news={news}/>
                         </Box>
+                    </Flex>
+                    <Flex height="248px" mb={"95px"} mt={"45px"}>
+                        {
+                            leftPosts.map((item, index)=>
+                                <React.Fragment key={index}>
+                                    <Box width={[1/3]} mr={index !== leftPosts.length - 1 && "5px"} >
+                                        <Cards.Post post={item}/>
+                                    </Box>
+                                </React.Fragment>
+                            )
+                        }
                     </Flex>
                 </Containers.Default>
             );
@@ -89,7 +141,7 @@ class NewsPostsComps extends React.Component {
                     }
                     <NewsBlock news={news}/>
                     {
-                        posts.map((item,index)=>
+                        leftPosts.map((item,index)=>
                             <React.Fragment key={index}>
                                 <Box width="100%" height="350px" mx="auto" my={"40px"}>
                                     <Cards.Post post={item}/>

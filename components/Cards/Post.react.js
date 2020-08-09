@@ -23,6 +23,7 @@ class Post extends React.Component{
         const publishDate = date.toLocaleString("ru-RU", options).replace('г.', '');
 
         const additionalProps = {
+            margin: "0 auto",
             maxWidth: full ? undefined : "296px",
             maxHeight: full ? undefined : "248px",
         };
@@ -48,68 +49,65 @@ class Post extends React.Component{
 
         if (width > 1023){
             return (
-                <PostLink postSlug={slug}>
-                    <Box height="100%" width="100%" >
-                        <Lazy cover={cover} {...additionalProps} overflow="visible" hover float={float}>
-                            {
-                                ( rubric.withEventDate && event_date ) && <>
-                                    <EventDate/>
-                                </>
-                            }
-                            <Box bg={theme.colors.backgroundPrimary}
-                                 maxWidth={full ? undefined : ["264px"]} px={[theme.spacing.s]}
-                                 sx={{
-                                     position: "absolute",
-                                     bottom: "-75px",
-                                     right: 0
-                                 }}>
+                <Box height="100%" width="100%" >
+                    <Lazy cover={cover} {...additionalProps} overflow="visible" hover float={float}
+                          wrapper={PostLink} wrapperParams={{postSlug: slug}}>
+                        {
+                            ( rubric.withEventDate && event_date ) && <>
+                                <EventDate/>
+                            </>
+                        }
+                        <Box bg={theme.colors.backgroundPrimary}
+                             maxWidth={full ? undefined : ["264px"]} px={[theme.spacing.s]}
+                             sx={{
+                                 position: "absolute",
+                                 bottom: "-75px",
+                                 right: 0
+                             }}>
 
-                                {
-                                    rubric &&
-                                    <TagLabel type="normal" color={theme.text.hover}
-                                              textTransform="lowercase" margin={`${theme.spacing.xs} 0`}>
-                                        {rubric.title}
-                                    </TagLabel>
-                                }
-                                <CardText type="normal" maxWidth={"240px"} margin="0" color={theme.text.secondarySecondary}>
-                                    {title}
-                                </CardText>
-                                <TagLabel type="small" color={theme.text.secondary} margin={`${theme.spacing.xs} 0`}>
-                                    {publishDate}
+                            {
+                                rubric &&
+                                <TagLabel type="normal" color={theme.text.hover}
+                                          textTransform="lowercase" margin={`${theme.spacing.xs} 0`}>
+                                    {rubric.title}
                                 </TagLabel>
-                            </Box>
-                        </Lazy>
-                    </Box>
-                </PostLink>
+                            }
+                            <CardText type="normal" maxWidth={"240px"} margin="0" color={theme.text.secondarySecondary}>
+                                {title}
+                            </CardText>
+                            <TagLabel type="small" color={theme.text.secondary} margin={`${theme.spacing.xs} 0`}>
+                                {publishDate}
+                            </TagLabel>
+                        </Box>
+                    </Lazy>
+                </Box>
             );
         }else{
             return (
-                <PostLink postSlug={slug} >
-                    <Box height="100%" width="100%">
-                        <Lazy cover={cover}>
-                            <Box bg={theme.colors.backgroundPrimary} px={[theme.spacing.s]}
-                                 width="100%" sx={{
-                                     position: "absolute",
-                                     bottom: 0,
-                                     right: 0
-                                 }}>
-                                {
-                                    rubric &&
-                                    <TagLabel type="normal" color={theme.text.hover}
-                                              textTransform="lowercase" margin={`${theme.spacing.xs} 0`}>
-                                        {rubric.title}
-                                    </TagLabel>
-                                }
-                                <CardText type="normal" margin="0" color={theme.text.secondarySecondary}>
-                                    {title}
-                                </CardText>
-                                <TagLabel type="small" color={theme.text.secondary} margin={`${theme.spacing.xs} 0`}>
-                                    {publishDate}
+                <Box height="100%" width="100%">
+                    <Lazy cover={cover} wrapper={PostLink} wrapperParams={{postSlug: slug}}>
+                        <Box bg={theme.colors.backgroundPrimary} px={[theme.spacing.s]}
+                             width="100%" sx={{
+                                 position: "absolute",
+                                 bottom: 0,
+                                 right: 0
+                             }}>
+                            {
+                                rubric &&
+                                <TagLabel type="normal" color={theme.text.hover}
+                                          textTransform="lowercase" margin={`${theme.spacing.xs} 0`}>
+                                    {rubric.title}
                                 </TagLabel>
-                            </Box>
-                        </Lazy>
-                    </Box>
-                </PostLink>
+                            }
+                            <CardText type="normal" margin="0" color={theme.text.secondarySecondary}>
+                                {title}
+                            </CardText>
+                            <TagLabel type="small" color={theme.text.secondary} margin={`${theme.spacing.xs} 0`}>
+                                {publishDate}
+                            </TagLabel>
+                        </Box>
+                    </Lazy>
+                </Box>
             );
         }
 

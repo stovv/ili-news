@@ -145,7 +145,7 @@ class Rubric extends React.Component {
             let posts = null;
             await Public.loadPosts( this.props.rubric.id,null, start, limit, null)
                 .then(response => posts = response.data.posts)
-                .catch(reason => console.log(reason));
+                .catch(reason => console.log(reason.response.statusText));
 
 
             if ( posts == null || posts.length === 0){
@@ -184,7 +184,7 @@ class Rubric extends React.Component {
         let posts = null;
         await Public.loadPosts( this.props.rubric.id,null, start, limit, null)
             .then(response => posts = response.data.posts)
-            .catch(reason => console.log(reason));
+            .catch(reason => console.log(reason.response.statusText));
 
 
         if ( posts == null || posts.length === 0){

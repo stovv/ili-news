@@ -31,6 +31,7 @@ const Simple = styled.div`
 
 const OverlayContainer = styled.div`
   position: relative;
+  margin: ${props=> props.margin ? props.margin : "unset"};
   overflow: ${props=> props.overflow ? props.overflow : 'hidden'};
   width: ${props=> props.width ? props.width : '100%'};
   height: ${props=> props.height ? props.height : '100%'};
@@ -64,15 +65,35 @@ const ChildrenContainer = styled.div`
 class SimpleImage extends React.Component {
 
     render() {
-        const {children, ...props} = this.props;
+        const {children, wrapper, wrapperParams, ...props} = this.props;
 
         if (children === undefined){
+            if (wrapper !== undefined){
+                let Wrapper = wrapper;
+                return (
+                    <Wrapper {...wrapperParams}>
+                        <Simple {...props} />
+                    </Wrapper>
+                )
+            }
             return(
                 <Simple {...props} />
             );
         }
         else{
-
+            if (wrapper !== undefined){
+                let Wrapper = wrapper;
+                return (
+                    <OverlayContainer {...props}>
+                        <Wrapper {...wrapperParams}>
+                            <Simple {...props} withParent />
+                            <ChildrenContainer {...props}>
+                                {children}
+                            </ChildrenContainer>
+                        </Wrapper>
+                    </OverlayContainer>
+                )
+            }
             return(
                 <OverlayContainer {...props}>
                     <Simple {...props} withParent />
@@ -96,6 +117,8 @@ SimpleImage.propTypes = {
     blackout: PropTypes.bool,
     zIndex: PropTypes.number,
     float: PropTypes.string,
+    margin: PropTypes.string,
+    wrapper: PropTypes.node,
     width: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number

@@ -33,7 +33,7 @@ class LoginPage extends React.Component {
             .then(response => {
                 this.setState({cover: response.request.responseURL})
             })
-            .catch(reason => console.log(reason));
+            .catch(reason => console.log(reason.response.statusText));
     }
 
     handleSubmit () {

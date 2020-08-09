@@ -7,8 +7,9 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import { Public } from '../api';
 import { Containers, Form } from '../components';
-import { TopPosts, NewsPostsComps, CategoryLine, CompsBannerAd } from '../compilations';
+import { changeInfinityState } from "../store/commonActions.react";
 import { SITE_INFO, SITE_URL, YANDEX_VERIFICATION } from '../constants';
+import { TopPosts, NewsPostsComps, CategoryLine, CompsBannerAd } from '../compilations';
 
 
 
@@ -105,6 +106,7 @@ class FrontPage extends React.Component {
             hasMore: true
         }
         this.fetchMore = this.fetchMore.bind(this);
+        props.dispatch(changeInfinityState(true))
     }
 
     async fetchMore(){
@@ -112,10 +114,9 @@ class FrontPage extends React.Component {
         let offsets = this.state.offsets;
         Object.values(offsets).forEach(count => alreadyCount += count);
 
-        console.log(this.props.postsCount, alreadyCount);
-
         if (this.props.postsCount <= alreadyCount){
             this.setState({hasMore: false})
+            this.props.dispatch(changeInfinityState(false))
             return;
         }
 
@@ -143,7 +144,7 @@ class FrontPage extends React.Component {
                                 .then(response => {
                                     this.state.categories = response.data.categories;
                                 })
-                                .catch(reason => console.log(reason));
+                                .catch(reason => console.log(reason.response.statusText));
                         }
                         this.state.existsCategoryIds = this.state.categories;
                     }
@@ -170,7 +171,7 @@ class FrontPage extends React.Component {
                                     );
                                 }
                             })
-                            .catch(reason => console.log(reason));
+                            .catch(reason => console.log(reason.response.statusText));
                     }
                     break;
                 }

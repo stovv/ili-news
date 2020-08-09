@@ -31,7 +31,7 @@ export function loginAction(loginData){
                 dispatch(signInAction(response.data));
             })
             .catch(reason=>{
-                console.log('ERROR', reason);
+                console.log('ERROR', reason.response.statusText);
                 dispatch(signOutAction);
             })
    };

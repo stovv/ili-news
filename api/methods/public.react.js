@@ -22,23 +22,30 @@ export async function getMenu(type){
       menus(where: {type: "${type}"}){
         id,
         item{
-         ... on ComponentLinksItem{
-          post{
-            id,
-            slug,
-            title
+          ... on ComponentLinksSocial{
+            socialUrl:url,
+            icon{
+              url
+            }
           },
-          category{
-            id,
-            slug,
-            title
+           ... on ComponentLinksItem {
+            post{
+              id,
+              slug,
+              title
+            },
+            category{
+              id,
+              slug,
+              title
+            },
+            rubric{
+              id,
+              slug,
+              title
+            },
+            url
           },
-          rubric{
-            id,
-            slug,
-            title
-          }
-         }
         }
       }
     }

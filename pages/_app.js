@@ -21,20 +21,23 @@ import 'emoji-mart/css/emoji-mart.css';
 import '../assets/fonts/lato/lato.css';
 import './style.css';
 
-
-const header_ignore = ["/smisl/create", "/smisl/drafts", "/smisl/preview",  "/login"];
 const yParams = { accounts: [62554705], options: { webvisor: true }};
 
 class IliApp extends App {
   static async getInitialProps({Component, ctx}) {
       const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
       let header = null;
+      let footer = null;
 
       await Public.getMenu('header')
           .then(response => header = response.data.menus[0].item)
-          .catch(reason => console.log("HEADER MENU NOT LOADED", reason.response.statusText));
+          .catch(reason => console.log("HEADER MENU NOT LOADED", reason));
 
-      return {pageProps, header};
+      await Public.getMenu('footer')
+          .then(response => footer = response.data.menus[0].item)
+          .catch(reason => console.log("FOOTER MENU NOT LOADED", reason));
+
+      return {pageProps, header, footer};
   }
 
     constructor(props){
@@ -64,7 +67,8 @@ class IliApp extends App {
     }
 
   render() {
-    const { Component, pageProps, store, header} = this.props;
+    const { Component, pageProps, store, header, footer, router} = this.props;
+
     return (
       <>
           <Head>
@@ -73,11 +77,12 @@ class IliApp extends App {
           </Head>
           <StoreProvider store={store}>
             <IliThemeProvider>
-                {header_ignore.includes(this.props.router.route) || <Menus.HeaderMain menus={header} route={this.props.router.asPath}/>}
+                { router.route !== "/login" && <Menus.HeaderMain menus={header} route={this.props.router.asPath}/>}
                 <Form.HeaderPreloader/>
                 <Containers.AppContainer>
                     <Component {...pageProps} />
                 </Containers.AppContainer>
+                { router.route !== "/login" && <Menus.FooterMain menus={footer} route={this.props.router.asPath}/>}
             </IliThemeProvider>
           </StoreProvider>
           <div>

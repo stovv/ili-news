@@ -7,3 +7,10 @@ export function setPageSize(width, height){
         payload: {width, height}
     }
 }
+
+export function changeInfinityState(state){
+    return {
+        type: PAGE.INFINITY_PAGE,
+        payload: state
+    }
+}

@@ -62,7 +62,7 @@ class Category extends React.Component {
             let posts = null;
             await Public.loadPosts( null, category_id, start, limit, null)
                 .then(response => posts = response.data.posts)
-                .catch(reason => console.log(reason.response.statusText));
+                .catch(reason => console.log(reason));
             items.push({posts, uid})
             start += limit;
             uid += 1;

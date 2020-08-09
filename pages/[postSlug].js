@@ -14,6 +14,7 @@ import { Public } from '../api';
 import { Icons } from '../assets';
 import { SITE_URL } from '../constants';
 import { saveIpAction } from '../store/authActions.react';
+import { changeInfinityState } from '../store/commonActions.react';
 import { getFormatedDate } from '../tools';
 import { UniversalBlock, Containers, Typography, Images, Cards, Form, Blocks } from '../components';
 
@@ -254,7 +255,7 @@ class Post extends React.Component{
                     current_post = response.data[0];
                 }
             }).catch(reason => {
-                console.log(reason.response)
+                console.log(reason.response.statusText)
             });
 
         if ( current_post === null ){
@@ -299,16 +300,17 @@ class Post extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            hasMore: true,
+            hasMore: props.current_post && props.current_post.rubric && props.current_post.rubric.infinityScroll,
             start: 0,
             skipPostIds: [ props.postId ],
             items: []
         }
         this.fetchMore = this.fetchMore.bind(this);
+        props.dispatch(changeInfinityState(props.current_post && props.current_post.rubric && props.current_post.rubric.infinityScroll))
     }
 
     async fetchMore(){
-        const { theme, width } = this.props;
+        const { theme, width, dispatch } = this.props;
         const { rubric, publish_at } = this.props.current_post;
 
         let items = [];
@@ -323,6 +325,7 @@ class Post extends React.Component{
             this.setState({
                 hasMore: false
             })
+            dispatch(changeInfinityState(false))
             return;
         }
 
