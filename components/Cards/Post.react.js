@@ -23,8 +23,8 @@ class Post extends React.Component{
         const publishDate = date.toLocaleString("ru-RU", options).replace('г.', '');
 
         const additionalProps = {
-            maxWidth: full ? undefined : ["296px"],
-            maxHeight: full ? undefined : ["248px"],
+            maxWidth: full ? undefined : "296px",
+            maxHeight: full ? undefined : "248px",
         };
 
         const EventDate = () => {
@@ -64,11 +64,14 @@ class Post extends React.Component{
                                      right: 0
                                  }}>
 
-                                <TagLabel type="normal" color={theme.text.hover}
-                                          textTransform="lowercase" margin={`${theme.spacing.xs} 0`}>
-                                    {rubric.title}
-                                </TagLabel>
-                                <CardText type="normal" maxWidth={["240px"]} margin="0" color={theme.text.secondarySecondary}>
+                                {
+                                    rubric &&
+                                    <TagLabel type="normal" color={theme.text.hover}
+                                              textTransform="lowercase" margin={`${theme.spacing.xs} 0`}>
+                                        {rubric.title}
+                                    </TagLabel>
+                                }
+                                <CardText type="normal" maxWidth={"240px"} margin="0" color={theme.text.secondarySecondary}>
                                     {title}
                                 </CardText>
                                 <TagLabel type="small" color={theme.text.secondary} margin={`${theme.spacing.xs} 0`}>
@@ -90,11 +93,13 @@ class Post extends React.Component{
                                      bottom: 0,
                                      right: 0
                                  }}>
-
-                                <TagLabel type="normal" color={theme.text.hover}
-                                          textTransform="lowercase" margin={`${theme.spacing.xs} 0`}>
-                                    {rubric.title}
-                                </TagLabel>
+                                {
+                                    rubric &&
+                                    <TagLabel type="normal" color={theme.text.hover}
+                                              textTransform="lowercase" margin={`${theme.spacing.xs} 0`}>
+                                        {rubric.title}
+                                    </TagLabel>
+                                }
                                 <CardText type="normal" margin="0" color={theme.text.secondarySecondary}>
                                     {title}
                                 </CardText>

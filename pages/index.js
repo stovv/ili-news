@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Box } from 'rebass';
 import { NextSeo } from "next-seo";
 import { connect } from 'react-redux';
@@ -28,51 +28,41 @@ class FrontPage extends React.Component {
                // console.log("REASON", reason.response);
             });
 
-        let lastTheme = {
-            title: null,
-            posts: []
-        };
-        let nextTheme = {
-            title: null,
-            posts: []
-        };
-        let newsFeed = [];
         let posts = [];
+        let newsFeed = [];
+        let postsCount = 0;
         let categories = null;
         let nonUsedCategories = null;
         let catLine = { posts: [], category: null };
+        let [ lastTheme= { title: null, posts: [] }, nextTheme = { title: null, posts: [] }  ]  = await Public.fetchThemes()
+            .then(response => response.data.themes)
+            .catch(reason => console.log(reason.response.statusText));
 
         try {
-            await Public.fetchTheme()
+            await Public.fetchPostsCount([2])
                 .then(response => {
-                    if (response.data.themes !== null && response.data.themes.length > 0){
-                        lastTheme = response.data.themes[0]
-                    }
-                });
-            await Public.fetchTheme(1)
-                .then(response => {
-                    if (response.data.themes !== null && response.data.themes.length > 0){
-                        nextTheme = response.data.themes[0]
-                    }
-                });
+                    postsCount = response.data;
+                })
+
             await Public.fetchNews()
                 .then(response => newsFeed = response.data.posts);
-            await Public.fetchSimplePosts()
-                .then(response => posts = response.data.posts);
+
             await Public.fetchFrontPageCategories()
                 .then(response => {
                     categories = response.data.categories;
                     nonUsedCategories = response.data.categories;
                 });
             const category = randomChoice(nonUsedCategories);
-
-            while (catLine === null && nonUsedCategories.length > 0){
+            while (catLine.posts.length === 0 && nonUsedCategories.length > 0){
                 const index = nonUsedCategories.indexOf(category);
                 if (index > -1) {
                     nonUsedCategories.splice(index, 1);
                 }
 
-                await Public.fetchCatPosts(4, category.id)
+                await Public.fetchCatPosts(4, category.id, [
+                    ...topPosts.map(post => post.post.id),
+                    ...lastTheme.posts.map(post => post.id),
+                    ...nextTheme.posts.map(post => post.id)])
                     .then(response => {
                         if (response.data.posts.length > 0){
                             catLine = {
@@ -83,10 +73,17 @@ class FrontPage extends React.Component {
                     });
             }
 
+            await Public.fetchSimplePosts([
+                ...catLine.posts.map(post => post.id),
+                ...topPosts.map(post => post.post.id),
+                ...lastTheme.posts.map(post => post.id),
+                ...nextTheme.posts.map(post => post.id)
+            ]).then(response => posts = response.data.posts);
+
         }catch (e) {
             console.log("ERROR IN GETTING Initial data", e);
         }
-        return {topPosts, lastTheme,nextTheme, newsFeed, posts, categories, nonUsedCategories, catLine};
+        return {topPosts, lastTheme, nextTheme, newsFeed, posts, postsCount, categories, nonUsedCategories, catLine};
     }
 
     constructor(props) {
@@ -95,21 +92,34 @@ class FrontPage extends React.Component {
             existsPostIds: [
                 ...props.posts.map(post => post.id),
                 ...props.catLine.posts.map(post => post.id),
-                ...props.topPosts.map(post => post.post.id)
+                ...props.topPosts.map(post => post.post.id),
+                ...props.lastTheme.posts.map(post => post.id),
+                ...props.nextTheme.posts.map(post => post.id)
             ],
             existsCategoryIds: props.nonUsedCategories,
             items: [],
             categories: [],
             offsets: {},
             prevBlocks: [],
-            uid: 2
+            uid: 2,
+            hasMore: true
         }
         this.fetchMore = this.fetchMore.bind(this);
     }
 
     async fetchMore(){
-        let items = [];
+        let alreadyCount = this.state.existsPostIds.length;
         let offsets = this.state.offsets;
+        Object.values(offsets).forEach(count => alreadyCount += count);
+
+        console.log(this.props.postsCount, alreadyCount);
+
+        if (this.props.postsCount <= alreadyCount){
+            this.setState({hasMore: false})
+            return;
+        }
+
+        let items = [];
         let prevBlocks = this.state.prevBlocks;
         if ( prevBlocks.length > 5 ){
             prevBlocks = prevBlocks.slice(-3);
@@ -204,6 +214,7 @@ class FrontPage extends React.Component {
     render() {
         const { topPosts, lastTheme, nextTheme, newsFeed,
             posts, catLine = { posts: [], category: null }, width } = this.props;
+        const { hasMore, items } = this.state;
 
         return (
             <>
@@ -247,9 +258,31 @@ class FrontPage extends React.Component {
                         buttonLink: "/test"
                     }} bannerAdId="R-A-351229-6" mobileBannerAdId="R-A-351229-7"/>
                     <InfiniteScroll
-                        dataLength={this.state.items.length} next={this.fetchMore}
-                        hasMore={true} loader={<Form.Loader/>}>
-                        {this.state.items}
+                        dataLength={items.length} next={this.fetchMore}
+                        hasMore={hasMore} loader={<Form.Loader/>}>
+                        {
+                            this.state.items.map((item, index)=>
+                                <React.Fragment key={index}>{item}</React.Fragment>
+                            )
+                        }
+                        {/*{*/}
+                        {/*    typeof window !== "undefined"*/}
+                        {/*        ?*/}
+                        {/*        () => {*/}
+                        {/*            const { AnimateGroup } = require('react-animation');*/}
+
+                        {/*            return (*/}
+                        {/*                <AnimateGroup durationOut={1000} animationIn={"bounceIn"} animationOut="fadeOut">*/}
+                        {/*                    {this.state.items.map((item, index)=>*/}
+                        {/*                        <React.Fragment key={index}>{item}</React.Fragment>*/}
+                        {/*                    )}*/}
+                        {/*                </AnimateGroup>*/}
+                        {/*            );*/}
+                        {/*        }*/}
+                        {/*        : this.state.items.map((item, index)=>*/}
+                        {/*            <React.Fragment key={index}>{item}</React.Fragment>*/}
+                        {/*        )*/}
+                        {/*}*/}
                     </InfiniteScroll>
                 </Containers.Offscreen>
             </>

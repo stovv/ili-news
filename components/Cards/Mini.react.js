@@ -47,7 +47,7 @@ class Mini extends React.Component
 }
 
 Mini.propTypes = {
-    heading: PropTypes.string.isRequired,
+    heading: PropTypes.string,
     cover: PropTypes.object.isRequired,
     slug: PropTypes.string.isRequired,
 }

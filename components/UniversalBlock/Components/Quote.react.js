@@ -34,11 +34,11 @@ class Quote extends React.Component {
                         width > 1023
                             ?
                             <TagLabel type="large" weight="500" margin={0}>
-                                <em><div dangerouslySetInnerHTML={{__html: data.text}}/></em>
+                                <em><div dangerouslySetInnerHTML={{__html: data.text.replace(/\n/g, '<br/>')}}/></em>
                             </TagLabel>
                             :
                             <CardText type="normal" weight="500"  margin={0}>
-                                <em><div dangerouslySetInnerHTML={{__html: data.text}}/></em>
+                                <em><div dangerouslySetInnerHTML={{__html: data.text.replace(/\n/g, '<br/>')}}/></em>
                             </CardText>
                     }
                 </QuoteBox>
@@ -50,17 +50,19 @@ class Quote extends React.Component {
                     <Box mt="35px" mb="40px">
                         <CardText type="xxlarge" textAlign="center" margin="0 0 23px 0">« »</CardText>
                         <TagLabel type="large" weight="500" textAlign="center" margin="0">
-                            <em><div dangerouslySetInnerHTML={{__html: data.text}}/></em>
+                            <em><div dangerouslySetInnerHTML={{__html: data.text.replace(/\n/g, '<br/>')}}/></em>
                         </TagLabel>
                     </Box>
                     :
                     <Box mt="50px" mb="50px">
                         <CardText type="large" textAlign="center" margin="0 0 5px 0">« »</CardText>
                         <CardText type="normal" weight="500" textAlign="center" margin="0">
-                            <em><div dangerouslySetInnerHTML={{__html: data.text}}/></em>
+                            <em><div dangerouslySetInnerHTML={{__html: data.text.replace(/\n/g, '<br/>')}}/></em>
                         </CardText>
                     </Box>
             );
+        }else if (data.type === "3"){
+            return null
         }
 
         return(

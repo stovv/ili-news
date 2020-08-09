@@ -5,26 +5,12 @@ export async function getPost(slug){
 }
 
 export async function getReadMore(rubricId, postId){
-
-    console.log(`
-        query{
-          ratings(sort: "views:DESC,likes:DESC,dislikes:DESC", limit: 3, where: { post: { id_ne: ${postId} , rubric: { id: ${rubricId} } } }){
-            post{
-              slug,
-              title
-            }
-          }
-        }
-    `);
-
     return api.ql(`
         query{
-          ratings(sort: "views:DESC,likes:DESC,dislikes:DESC", limit: 3, where: { post: { id_ne: ${postId} , rubric: { id: ${rubricId} } } }){
-            post{
+          posts(sort: "publish_at:DESC", limit: 3, where: { rubric : ${rubricId}, id_ne: ${postId} }){
               id,
               slug,
               title
-            }
           }
         }
     `)
@@ -60,43 +46,12 @@ export async function getMenu(type){
 }
 
 export async function getPopularDuringWeek(){
-
-    let today = new Date();
-    today.setHours(0,0,0,0);
-    let day = today.getDay();
-    let diff = today.getDate() - day + (day === 0 ? -6:1);
-    let start = new Date(today.setDate(diff))
-    let end = new Date(today.setDate(start.getDate() + 7))
-
-
-    return api.ql(`
-       query{
-          ratings(sort: "views:DESC,likes:DESC,dislikes:DESC", where:{post: {publish_at_gte: "${start.toISOString()}", publish_at_lt: "${end.toISOString()}"}}){
-            post{
-              id,
-              title,
-              slug,
-              rubric{
-                slug
-              },
-              cover{
-              url,
-              width,
-              mime,
-              height,
-              formats
-            },
-            }
-          }
-        }
-    `);
-
+    return api.get(`/popular-posts`);
 }
 
 export async function getCategory(id){
     return api.get(`/categories/${id}`)
 }
-
 
 export async function getRubrics(){
     return api.ql(`
@@ -121,55 +76,49 @@ export async function fetchPosts(fields = ['id', 'slug', 'updated_at']){
 
 export async function loadPosts(rubric, category, start, limit, skipPostIds ){
     return api.ql(`
-        query{
-            posts(sort: "publish_at:DESC", where: { 
-                id_nin: [${skipPostIds && skipPostIds.join(",")}], 
-                rubric: { ${rubric != null ? `id: ${rubric},` : ''}
-                        ${category != null ? `category:{ id: ${category}},` : ''} } 
-                    }, 
-                    limit: ${limit}, start: ${start}
-                ){
-                id,
-                eventDate,
-                slug,
-                rubric{
-                  id,
-                  slug,
-                  title,
-                  infinityScroll,
-                  withEventDate,
-                  cover
-                },
-                title,
-                description,
-                publish_at,
-                authors(limit: 4){
-                  id,
-                  name,
-                  secondName
-                },
-                cover{
-                  caption, 
-                  alternativeText,
-                  url,
-                  width,
-                  mime,
-                  height,
-                  formats
-                },
-                blocks,
-                commentThread{
-                    id
-                },
-                rating{
-                  id,
-                  likes,
-                  dislikes,
-                  views
-                },
-                updated_at
-            }
+    query{
+        posts(sort: "publish_at:DESC", where: { ${ skipPostIds !== undefined && typeof skipPostIds === "string" ? `id_nin: [${skipPostIds.join(",")}],`: "" } ${ rubric !== null ? `rubric: ${rubric}` : (category != null ? `rubric:{ category: ${category} }` : "")}}, limit: ${limit}, start: ${start}) {
+            id,
+            eventDate,
+            slug,
+            rubric{
+              id,
+              slug,
+              title,
+              infinityScroll,
+              withEventDate,
+              cover
+            },
+            title,
+            description,
+            publish_at,
+            authors(limit: 4){
+              id,
+              name,
+              secondName
+            },
+            cover{
+              caption, 
+              alternativeText,
+              url,
+              width,
+              mime,
+              height,
+              formats
+            },
+            blocks,
+            commentThread{
+                id
+            },
+            rating{
+              id,
+              likes,
+              dislikes,
+              views
+            },
+            updated_at
         }
+    }
     `);
 }
 
@@ -258,60 +207,75 @@ export async function dislikeUp(raitingId, clientId){
     })
 }
 
-export async function fetchTheme(start = 0){
+export async function fetchThemes(){
     return api.ql(`
-        query{
-            themes(sort: "created_at:DESC", limit: 1, where: {published: true}, start: ${start}){
-              id,
-              title,
-              posts{
-                id,
-                slug,
-                publish_at,
-                title,
-                rubric{
-                    title,
-                },
-                cover{
-                  caption, 
-                  alternativeText,
-                  url,
-                  width,
-                  mime,
-                  height,
-                  formats
-                },
-            }
+    query{
+      themes(where: {published: true}, sort:"updated_at:DESC", limit: 2 ){
+        id,
+        title,
+        posts{
+          id,
+          slug,
+          publish_at,
+          title,
+          rubric{
+            title
+          },
+          cover{
+            caption,
+            alternativeText,
+            url,
+            width,
+            mime,
+            height,
+            formats
           }
         }
+      }
+    }
     `);
 }
 
 export async function fetchNews(limit = 6) {
     return api.ql(`
           query{
-            posts(sort: "publish_at:DESC", limit: ${limit}, where: {rubric:{id: 17}}){
-            id,
-            slug,
-            title,
-            publish_at
+            posts(sort: "publish_at:DESC", limit: ${limit}, where: {rubric: 2}){
+                id,
+                slug,
+                title,
+                publish_at
           }
         }
     `);
 }
 
-export async function fetchSimplePosts(skipPostIds = [], skipRubricIds = [17], skipCategorieIds = [], limit = 2) {
+export async function fetchPostsCount(skipRubricIds){
+    if ( skipRubricIds !== undefined ){
+        if ( Array.isArray(skipRubricIds) ){
+            skipRubricIds = skipRubricIds.join(",");
+        }
+        return api.get(`/posts/countWithParams/?rubricIds=${skipRubricIds}&type=nin`);
+    }
+    return api.get(`/posts/count`)
+}
+
+export async function fetchPostsCountInCategory(categoryId){
+    return api.get(`/posts/countWithParams/?categoryIds=${categoryId}&type=in`);
+}
+
+export async function fetchPostsCountInRubric(rubricId){
+    return api.get(`/posts/countWithParams/?rubricIds=${rubricId}&type=in`);
+}
+
+
+export async function fetchSimplePosts(skipPostIds = [], skipRubricIds = [2], skipCategorieIds = [], limit = 2) {
     return api.ql(`
         query{
             posts(sort: "publish_at:DESC", limit: ${limit}, 
               where: {
                 id_nin: [${skipPostIds.join(",")}],
-                rubric:{
-                  id_nin: [${skipRubricIds.join(",")}], 
-                  category:{
-                    id_nin: [${skipCategorieIds.join(",")}]
-                  }
-                }
+                rubric_nin: [${skipRubricIds.join(",")}],
+                rubric: { category_nin: [${skipCategorieIds.join(",")}] }
               }){
             id,
             title,
@@ -341,11 +305,7 @@ export async function fetchCatPosts(limit = 4, category, skipPostIds = [], start
             posts(sort: "publish_at:DESC", limit: ${limit}, start: ${start},
               where: {
                 id_nin: [${skipPostIds.join(",")}],
-                rubric:{ 
-                  category:{
-                    id: ${category}
-                  }
-                }
+                rubric:{ category: ${category} }
               }){
             id,
             title,
@@ -372,7 +332,7 @@ export async function fetchCatPosts(limit = 4, category, skipPostIds = [], start
 export async function fetchFrontPageCategories() {
     return api.ql(`
         query{
-            categories(where: {rubrics: {id_nin: [13, 17]}}){
+            categories(where: {rubrics: {id_nin: [2, 3]}}){
               id,
               slug,
               title

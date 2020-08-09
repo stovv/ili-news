@@ -15,7 +15,6 @@ class UniversalBlock extends React.Component {
 
     render(){
         const { block } = this.props;
-        console.log(block);
         let Block = Components[block.type];
 
         return (

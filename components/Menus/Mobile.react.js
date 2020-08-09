@@ -26,27 +26,17 @@ const MobileMenuLink = styled.p`
 
 
 class MobileMenu extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.scrollDisabler = this.scrollDisabler.bind(this);
-    }
-
-    scrollDisabler(e){
-        if (this.props.display){
-            window.scrollTo(0, 0);
-        }
-    }
-
-    componentDidMount() {
-        if (typeof window !== "undefined"){
-            window.addEventListener('scroll', this.scrollDisabler);
-        }
-    }
-
     componentWillUnmount() {
         if (typeof window !== "undefined"){
-            window.removeEventListener('scroll', this.scrollDisabler);
+            document.documentElement.removeAttribute("style");
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (!this.props.display){
+            document.documentElement.removeAttribute("style");
+        }else{
+            document.documentElement.style = "width: calc(100% - 17px); position: fixed; top: 0px; overflow: hidden;";
         }
     }
 

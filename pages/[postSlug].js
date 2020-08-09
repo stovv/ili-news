@@ -109,11 +109,8 @@ const InfinityPost = ({data, theme}) => {
 
 const RegularPost = ({data, theme}) => {
     const { postId, width, rubric, title, publishedDate, popularPosts, clientIp, authors, dispatch,
-        blocks:{ blocks }, cover, rating, commentThread, readMoreLinks, event_date} = data;
-
+        blocks:{ blocks }, slug, cover, rating, commentThread, readMoreLinks, event_date} = data;
     // TODO Remove it after beta release
-    const { isLoggedIn } = data;
-
     return (
         <Containers.Default>
             {
@@ -210,15 +207,19 @@ const RegularPost = ({data, theme}) => {
                             <>
                                 <Typography.CardText type="large" weight="bold" margin="59px 0 30px 0">Лучшее за неделю</Typography.CardText>
                                 {
-                                    popularPosts.slice(0, 4).map((item, index)=>
-                                        <React.Fragment key={index}>
-                                            <Box mb="48px">
-                                                <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover} id={item.post.id}>
-                                                    {item.post.title}
-                                                </Cards.Mini>
-                                            </Box>
-                                        </React.Fragment>
-                                    )
+                                    popularPosts.map((item, index)=> {
+                                        if ( item.post.slug ===  slug ) return null;
+                                        return (
+                                            <React.Fragment key={index}>
+                                                <Box mb="48px">
+                                                    <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover} slug={item.post.slug}>
+                                                        {item.post.title}
+                                                    </Cards.Mini>
+                                                </Box>
+                                            </React.Fragment>
+                                        );
+
+                                    })
 
                                 }
                             </>
@@ -239,9 +240,10 @@ class Post extends React.Component{
         let current_post = null;
         let readMoreLinks = [];
         let popularPosts = [];
-        if (store.getState().auth.ip.length === 0 && req != null){
+        if (typeof window !== "undefined" && store.getState().auth.ip !== undefined && store.getState().auth.ip.length === 0 && req != null){
             const clientIp = (req.headers['x-forwarded-for'] || '').split(',').pop() ||
                 req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
+            console.log(store.getState().auth.ip, clientIp);
             await store.dispatch(saveIpAction(clientIp));
         }
 
@@ -251,6 +253,8 @@ class Post extends React.Component{
                 if (response.data.length > 0){
                     current_post = response.data[0];
                 }
+            }).catch(reason => {
+                console.log(reason.response)
             });
 
         if ( current_post === null ){
@@ -259,25 +263,25 @@ class Post extends React.Component{
             }
         }
 
-        await Public.viewPost(current_post.rating.id, store.getState().auth.ip);
+        //await Public.viewPost(current_post.rating.id, store.getState().auth.ip);
         await Public.getReadMore(current_post.rubric.id, current_post.id)
             .then(response=>{
-                if ( response.data.ratings !== null && response.data.ratings.length > 0 ){
-                    readMoreLinks = response.data.ratings;
+                if ( response.data.posts !== null && response.data.posts.length > 0 ){
+                    readMoreLinks = response.data.posts;
                 }
             })
             .catch(reason => {
-                console.log(reason);
+                console.log(reason.response.statusText);
             })
 
         await Public.getPopularDuringWeek()
             .then(response=> {
-                if ( response.data.ratings !== null && response.data.ratings.length > 0 ){
-                    popularPosts = response.data.ratings;
+                if ( response.data !== null && response.data.length > 0 ){
+                    popularPosts = response.data;
                 }
             })
             .catch(reason=> {
-                console.log(reason)
+                console.log(reason.response.statusText)
             });
 
         return {
@@ -312,7 +316,7 @@ class Post extends React.Component{
         let posts = [];
         await Public.loadPosts( rubric.id, null, this.state.start, 1, this.state.skipPostIds)
             .then(response => posts = response.data.posts)
-            .catch(reason => console.log(reason));
+            .catch(reason => console.log(reason.response.statusText));
 
 
         if ( posts == null || posts.length === 0){
@@ -435,7 +439,7 @@ class Post extends React.Component{
                                                             popularPosts.slice(0, 4).map((item, index)=>
                                                                 <React.Fragment key={index}>
                                                                     <Box mb="48px">
-                                                                        <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover} id={item.post.id}>
+                                                                        <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover} slug={item.post.slug}>
                                                                             {item.post.title}
                                                                         </Cards.Mini>
                                                                     </Box>

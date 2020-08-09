@@ -17,7 +17,7 @@ const persistedState = loadState();
 export const store = createStore(
     reducers,
     persistedState,
-    composeWithDevTools(applyMiddleware(thunkMiddleware, /*axiosMiddleware(client),*/ logger))
+    composeWithDevTools(applyMiddleware(thunkMiddleware, /*axiosMiddleware(client),*/ /*logger*/))
 );
 
 

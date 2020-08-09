@@ -72,7 +72,7 @@ class Rubric extends React.Component {
         let popularPosts = [];
         if ( rubric !== null && !rubric.cover ){
             await Public.getPopularDuringWeek()
-                .then(response=> popularPosts = response.data.ratings)
+                .then(response=> popularPosts = response.data)
                 .catch(reason=> console.log("LOAD POPULAR", reason.response.statusText));
         }
 
@@ -97,7 +97,7 @@ class Rubric extends React.Component {
             prevBlocks.push(limit);
             let posts = null;
             if ( rubric !== null ){
-                await Public.loadPosts( rubric.id, null, start, limit)
+                await Public.loadPosts( rubric.id, null, start, limit, null)
                     .then(response => {
                         loadedPostsCount += response.data.posts.length;
                         posts = response.data.posts;
@@ -143,7 +143,7 @@ class Rubric extends React.Component {
             }
             prevBlocks.push(limit);
             let posts = null;
-            await Public.loadPosts( this.props.rubric.id,null, start, limit)
+            await Public.loadPosts( this.props.rubric.id,null, start, limit, null)
                 .then(response => posts = response.data.posts)
                 .catch(reason => console.log(reason));
 
@@ -182,7 +182,7 @@ class Rubric extends React.Component {
 
         let limit = 16;
         let posts = null;
-        await Public.loadPosts( this.props.rubric.id,null, start, limit)
+        await Public.loadPosts( this.props.rubric.id,null, start, limit, null)
             .then(response => posts = response.data.posts)
             .catch(reason => console.log(reason));
 
@@ -375,7 +375,7 @@ class Rubric extends React.Component {
                                                             popularPosts.slice(0, 4).map((item, index)=>
                                                                 <React.Fragment key={index}>
                                                                     <Box mb="48px">
-                                                                        <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover} id={item.post.id}>
+                                                                        <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover} slug={item.post.slug}>
                                                                             {item.post.title}
                                                                         </Cards.Mini>
                                                                     </Box>
@@ -406,7 +406,7 @@ class Rubric extends React.Component {
                                                         {dateHeading}
                                                         <Flex mb="30px">
                                                             <Typography.CardText margin={"0 10px auto 0"} type="normal" color={theme.text.primary}>{TimeString(post.publish_at)}</Typography.CardText>
-                                                            <PostLink postId={post.id}>
+                                                            <PostLink postSlug={post.slug}>
                                                                 <Typography.CardText hover wrap margin="auto 0 auto 0" type="normal" color={theme.text.secondary}>{post.title}</Typography.CardText>
                                                             </PostLink>
                                                         </Flex>

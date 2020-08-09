@@ -11,7 +11,7 @@ const TagWrap = styled.div`
     box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.25);
     background-color: ${props => props.theme.colors.primary};
     margin: 10px ${props=> props.theme.spacing.m} 10px 0;
-    padding:  ${props => props.theme.spacing.xs} 32px;
+    padding:  ${props => props.theme.spacing.xxs} 32px;
     transition: all 0.1s ease-out;
     &:hover{
         background-color: ${props => props.theme.colors.hover};
@@ -42,11 +42,21 @@ class TagBar extends React.Component {
     state = {
         tagIndex: -1,
         hover: false,
-        speed: 10
+        speed: 10,
+        reload: false
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return nextProps.hover !== this.state.hover || nextProps.speed !== this.state.speed || nextProps.tagIndex !== this.state.tagIndex;
+        return nextProps.hover !== this.state.hover
+            || nextProps.speed !== this.state.speed
+            || nextProps.tagIndex !== this.state.tagIndex
+            || JSON.stringify(nextProps.tags) !== JSON.stringify(this.props.tags);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (JSON.stringify(prevProps.tags) !== JSON.stringify(this.props.tags)){
+            this.setState({reload: true})
+        }
     }
 
     stop(){
@@ -83,6 +93,10 @@ class TagBar extends React.Component {
 
     render(){
         const { theme, tags, width } = this.props;
+        if (this.state.reload){
+            this.setState({reload: false})
+            return null
+        }
         return(
             <div style={{margin: "64px 0 52px 0"}}
                 onMouseOver={()=>{

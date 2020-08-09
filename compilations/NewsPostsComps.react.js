@@ -15,10 +15,8 @@ class NewsPostsComps extends React.Component {
     }
 
     render(){
-        const {compilation, news, posts, width} = this.props;
-        const [ bigPost = null, ...otherPosts ] = compilation.posts;
-        const leftPosts = otherPosts.slice(0, 2);
-        const botPosts = otherPosts.slice(1, 3);
+        const { compilation, news, posts: leftPosts, width } = this.props;
+        const [ bigPost = null, ...botPosts ] = compilation.posts;
 
         if ( width > 1023 ){
             return (
@@ -58,9 +56,9 @@ class NewsPostsComps extends React.Component {
                                         botPosts.length > 0 &&
                                             <Flex justifyContent="space-between" mt="32px">
                                             {
-                                                botPosts.map((item, index)=>
+                                                botPosts.slice(0,2).map((item, index)=>
                                                     <React.Fragment key={index}>
-                                                        <Cards.Mini heading={compilation.title} cover={item.cover} id={item.id}>
+                                                        <Cards.Mini heading={compilation.title} cover={item.cover} slug={item.slug}>
                                                             {item.title}
                                                         </Cards.Mini>
                                                     </React.Fragment>

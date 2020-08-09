@@ -32,7 +32,7 @@ const Normal = styled.p`
   font-size: 16px;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.33;
+  line-height: 1.17;
   letter-spacing: normal;
 `;
 
@@ -76,7 +76,10 @@ class TagLabel extends React.Component {
 TagLabel.propTypes = {
     type: PropTypes.string.isRequired,
     color: PropTypes.string,
-    margin: PropTypes.string,
+    margin: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+    ]),
     textTransform: PropTypes.string,
     textAlign: PropTypes.string,
     weight: PropTypes.string,

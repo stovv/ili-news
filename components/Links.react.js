@@ -33,7 +33,7 @@ export const UniversalLink = ({ item, component, route, ...props }) => {
 
 
 export const PostLink = ({postSlug, children, ...props}) => (
-    <Link href={"/[postSlug]"} as={`/${postSlug}`} passHref {...props}>
+    <Link href={"/[postSlug]"} as={`/${postSlug}`} passHref prefetch={false} {...props}>
         <a style={noDecoration} {...props}>
             {children}
         </a>

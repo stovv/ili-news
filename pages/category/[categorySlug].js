@@ -33,6 +33,7 @@ class Category extends React.Component {
             });
 
         let category = null;
+        let postsCount = 0;
         if (category_id != null){
             await Public.getCategory(category_id)
                 .then(response => {
@@ -42,7 +43,10 @@ class Category extends React.Component {
                     //console.log(reason);
                     // TODO Add Reason processing
                 });
+            postsCount = await Public.fetchPostsCountInCategory(category_id)
+                .then(response=> response.data);
         }
+
 
         let prevBlocks = [];
         let start = 0;
@@ -56,15 +60,15 @@ class Category extends React.Component {
 
             prevBlocks.push(limit);
             let posts = null;
-            await Public.loadPosts( null, category_id, start, limit)
+            await Public.loadPosts( null, category_id, start, limit, null)
                 .then(response => posts = response.data.posts)
-                .catch(reason => console.log(reason));
+                .catch(reason => console.log(reason.response.statusText));
             items.push({posts, uid})
             start += limit;
             uid += 1;
         }
 
-        return { category, categorySlug, prevBlocks, uid, start, items};
+        return { category, categorySlug, prevBlocks, uid, start, items, postsCount };
     }
 
     constructor(props){
@@ -74,7 +78,7 @@ class Category extends React.Component {
             items: [],
             uid: props.uid ? props.uid : 10,
             start: props.start,
-            hasMore: true
+            hasMore: (props.start >= props.postsCount)
         }
         this.fetchMore = this.fetchMore.bind(this);
     }
@@ -82,8 +86,13 @@ class Category extends React.Component {
 
     async fetchMore(){
         let items = [];
-        let start = this.state.start;
-        let prevBlocks = this.state.prevBlocks;
+        let { postsCount } = this.props;
+        let { start, prevBlocks } = this.state;
+
+        if (start >= postsCount){
+            this.setState({ hasMore: false })
+        }
+
         if ( prevBlocks.length > 5 ){
             prevBlocks = prevBlocks.slice(-4);
         }
@@ -96,9 +105,9 @@ class Category extends React.Component {
             }
             prevBlocks.push(limit);
             let posts = null;
-            await Public.loadPosts( null, this.props.category.id, start, limit)
+            await Public.loadPosts( null, this.props.category.id, start, limit, null)
                 .then(response => posts = response.data.posts)
-                .catch(reason => console.log(reason));
+                .catch(reason => console.log(reason.response.statusText));
 
             if ( posts == null || posts.length === 0){
                 this.setState({
@@ -127,7 +136,7 @@ class Category extends React.Component {
                 items: [],
                 uid: this.props.uid ? this.props.uid : 10,
                 start: this.props.start,
-                hasMore: true
+                hasMore: (this.props.start >= this.props.postsCount)
             });
         }
     }
@@ -188,13 +197,16 @@ class Category extends React.Component {
                             </React.Fragment>
                         })
                     }
-                    <InfiniteScroll
-                        dataLength={this.state.items.length}
-                        next={this.fetchMore}
-                        hasMore={!empty && this.state.hasMore}
-                        loader={<Form.Loader/>}>
-                        {this.state.items}
-                    </InfiniteScroll>
+                    {
+                        this.props.start < this.props.postsCount &&
+                        <InfiniteScroll
+                            dataLength={this.state.items.length}
+                            next={this.fetchMore}
+                            hasMore={!empty && this.state.hasMore}
+                            loader={<Form.Loader/>}>
+                            {this.state.items}
+                        </InfiniteScroll>
+                    }
                 </Containers.Default>
             </>
         );

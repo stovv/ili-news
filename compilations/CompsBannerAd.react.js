@@ -29,7 +29,7 @@ class CompsBannerAd extends React.Component {
                                     {
                                         large !== null &&
                                             <Cards.Large type="bottomRight" cover={large.cover}
-                                                         heading={large.rubric.title}>
+                                                         heading={theme.title ? theme.title : (theme.rubric ? large.rubric.title : undefined)}>
                                                 {large.title}
                                             </Cards.Large>
                                     }
@@ -38,7 +38,7 @@ class CompsBannerAd extends React.Component {
                                     <Box mb="48px" height="128px" width="100%">
                                         {
                                             firstMini !== null &&
-                                                <Cards.Mini cover={firstMini.cover} heading={firstMini.rubric.title}
+                                                <Cards.Mini cover={firstMini.cover} heading={theme.title ? theme.title : (theme.rubric ? large.rubric.title : undefined)}
                                                             slug={firstMini.slug}>
                                                     {firstMini.title}
                                                 </Cards.Mini>
@@ -47,7 +47,7 @@ class CompsBannerAd extends React.Component {
                                     <Box height="128px" width="100%">
                                         {
                                             secondMini !== null &&
-                                                <Cards.Mini cover={secondMini.cover} heading={secondMini.rubric.title}
+                                                <Cards.Mini cover={secondMini.cover} heading={theme.title ? theme.title : (theme.rubric ? large.rubric.title : undefined)}
                                                             slug={secondMini.slug}>
                                                     {secondMini.title}
                                                 </Cards.Mini>

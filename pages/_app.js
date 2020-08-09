@@ -32,7 +32,7 @@ class IliApp extends App {
 
       await Public.getMenu('header')
           .then(response => header = response.data.menus[0].item)
-          .catch(reason => console.log("HEADER MENU NOT LOADED", reason));
+          .catch(reason => console.log("HEADER MENU NOT LOADED", reason.response.statusText));
 
       return {pageProps, header};
   }

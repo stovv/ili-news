@@ -40,7 +40,7 @@ class ReadMore extends React.Component {
                         }
                         return(
                             <React.Fragment key={index}>
-                                <PostLink postId={item.id}>
+                                <PostLink postSlug={item.slug}>
                                     <Heading level={4} margin={`0 0 ${theme.spacing.m} 0`} hover
                                              color={theme.text.secondary}>{item.title}</Heading>
                                 </PostLink>
