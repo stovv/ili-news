@@ -426,7 +426,12 @@ class Post extends React.Component{
                                  handle: '@handle',
                                  site: '@site',
                                  cardType: 'summary_large_image',
-                             }}/>
+                             }}
+                             additionalMetaTags={[{
+                                 property: 'vk:image',
+                                 content: `${BACKEND_URL}${cover.url}`
+                             }]}
+                    />
 
                     {
                         data.rubric.infinityScroll ?
