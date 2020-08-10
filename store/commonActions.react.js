@@ -14,3 +14,10 @@ export function changeInfinityState(state){
         payload: state
     }
 }
+
+export function clickOnSearch(){
+    return {
+        type: PAGE.SEARCH,
+        payload: null
+    }
+}

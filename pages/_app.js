@@ -77,6 +77,7 @@ class IliApp extends App {
           </Head>
           <StoreProvider store={store}>
             <IliThemeProvider>
+                <Menus.Search/>
                 { router.route !== "/login" && <Menus.HeaderMain menus={header} route={this.props.router.asPath}/>}
                 <Form.HeaderPreloader/>
                 <Containers.AppContainer>

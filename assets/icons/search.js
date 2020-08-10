@@ -10,7 +10,7 @@ class SearchIcon extends React.Component {
         transition: "all 0.4s ease 0s",
     }
     render(){
-        const {theme, ...props} = this.props;
+        const {theme, inverted, ...props} = this.props;
         return (
             <div onMouseEnter={()=>this.setState({hover:true})}
                  onMouseLeave={()=>this.setState({hover:false})}>
@@ -18,7 +18,8 @@ class SearchIcon extends React.Component {
                     <path
                         d="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.35-4.35"
                         style={this.style}
-                        stroke={this.state.hover ? theme.text.hover : theme.text.secondary}
+                        stroke={inverted ? (this.state.hover ? theme.text.hover : theme.text.onPrimary)
+                            : (this.state.hover ? theme.text.hover : theme.text.secondary)}
                         strokeWidth={2}
                         strokeLinecap="round"
                         strokeLinejoin="round"

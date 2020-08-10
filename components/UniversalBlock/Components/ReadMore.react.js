@@ -19,7 +19,7 @@ class ReadMore extends React.Component {
 
         console.log("READ", data);
 
-        if (data == null){
+        if (data == null || data.length === 0){
             return null;
         }
         return (

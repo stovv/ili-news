@@ -13,6 +13,7 @@ import { Default, Mini } from '../Containers.react';
 import { UniversalLink } from '../Links.react';
 import { Click } from '../Animations';
 import MobileMenu from "./Mobile.react";
+import { clickOnSearch } from "../../store/commonActions.react";
 
 
 const MenuLink = styled.a`
@@ -28,7 +29,7 @@ const MenuLink = styled.a`
   text-decoration: none;
   letter-spacing: 0.4px;
   transition: all 0.4s ease 0s;
-  color: ${props=>props.active ? props.theme.text.hover : props.theme.text.secondarySecondary};
+  color: ${props=> props.inverted ? (props.active ? props.theme.text.hover : props.theme.text.onPrimary) : (props.active ? props.theme.text.hover : props.theme.text.secondarySecondary) };
   :after{
     content: '';
     display: block;
@@ -55,8 +56,7 @@ class HeaderNavBar extends React.Component {
         this.route = props.route ? props.route : "";
     }
     render(){
-        const { menus, route, width } = this.props;
-
+        const { menus, route, width, dispatch, searchActivated, theme } = this.props;
         if ( !menus ){
             return null;
         }
@@ -65,8 +65,10 @@ class HeaderNavBar extends React.Component {
         if ( width > 1023 ){
 
             return (
-                <Default>
-                    <Flex bg={this.props.theme.colors.secondary} height={["72px"]}>
+                <>
+                <Box width={"100vw"} bg={searchActivated ? theme.colors.backgroundInverted : theme.colors.secondary}
+                     sx={{transition: "all 0.4s ease 0s"}}>
+                    <Flex height={["72px"]} maxWidth={"1440px"} mx={"auto"}>
                         <Box width={1/8} height="100%" sx={{position:"relative"}}>
                             <Box width={["55px"]} height={["55px"]}  sx={{
                                 left: width > 1400 ? "-22%" : "50%",
@@ -85,20 +87,21 @@ class HeaderNavBar extends React.Component {
                                     return (
                                         <React.Fragment key={index}>
                                             <Box mr={index < menus.length -1 ? "80px" : 0} sx={{position: "relative"}}>
-                                                <UniversalLink item={item} component={MenuLink} route={route}/>
+                                                <UniversalLink item={item} component={MenuLink} route={route} componentParams={{ inverted: searchActivated }}/>
                                             </Box>
                                         </React.Fragment>
                                     )})
                                 }
                             </Flex>
                         </Box>
-                        <Box width={1/8} my='auto'>
-                            <Click.SimpleClick style={{float: "right"}}>
-                                <Icons.SearchIcon />
+                        <Box width={1/8} my='auto' >
+                            <Click.SimpleClick style={{float: "right"}} onClick={()=>dispatch(clickOnSearch())}>
+                                <Icons.SearchIcon inverted={searchActivated}/>
                             </Click.SimpleClick>
                         </Box>
                     </Flex>
-                </Default>
+                </Box>
+                </>
             );
 
         }else{
@@ -143,7 +146,8 @@ HeaderNavBar.propTypes = {
 
 function mapStateToProps(state){
     return {
-        width: state.common.pageSize.width
+        width: state.common.pageSize.width,
+        searchActivated: state.common.activeSearch
     }
 }
 

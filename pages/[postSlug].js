@@ -12,7 +12,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Error from './error__';
 import { Public } from '../api';
 import { Icons } from '../assets';
-import { SITE_URL } from '../constants';
+import {BACKEND_URL, SITE_URL} from '../constants';
 import { saveIpAction } from '../store/authActions.react';
 import { changeInfinityState } from '../store/commonActions.react';
 import { getFormatedDate } from '../tools';
@@ -393,8 +393,6 @@ class Post extends React.Component{
         });
         // TODO AMP Checking
         // TODO Use this.props.user for head component
-
-
         try {
             return (
                 <>
@@ -409,7 +407,7 @@ class Post extends React.Component{
                                  description: description,
                                  images: [
                                      {
-                                         url: Images.Tools.getImageLink(cover)['url'],
+                                         url: `${BACKEND_URL}${cover.url}`,
                                          width: cover.width,
                                          height: cover.height,
                                      }

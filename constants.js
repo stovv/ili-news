@@ -1,6 +1,7 @@
-export const BACKEND_URL = process.env.SITE_ROOT ||  'https://xpan.ili-nnov.ru';
-export const SITE_URL = process.env.SITE_ROOT || 'http://localhost:3000';
-export const YANDEX_VERIFICATION = '';
+export const BACKEND_URL = 'https://xpan.ili-nnov.ru';
+export const SITE_URL = 'https://dev.ili-nnov.ru';
+export const YANDEX_VERIFICATION = '662da546f68c5d72';
+
 export const SITE_INFO = {
     TITLE: "ИЛИ",
     DESCRIPTION: "Молодежный журнал ИЛИ. Новости, Люди Спецроекты и События Нижнего Новгорода",

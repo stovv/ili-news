@@ -5,13 +5,9 @@ let initialState = {
         width: 1440,
         height: 919
     },
-    infinityActive: false
+    infinityActive: false,
+    activeSearch: false
 }
-
-// const commonSession = getStorage('common');
-// if (commonSession !== null) {
-//     initialState = JSON.parse(commonSession);
-// }
 
 const CommonReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -25,6 +21,12 @@ const CommonReducer = (state = initialState, action) => {
             return{
                 ...state,
                 infinityActive: action.payload
+            }
+        }
+        case PAGE.SEARCH:{
+            return {
+                ...state,
+                activeSearch: !state.activeSearch
             }
         }
         default:

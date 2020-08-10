@@ -18,7 +18,7 @@ const MenuLink = styled.a`
   max-height: 22px;
   font-family: ${props=> props.theme.fontFamily};
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.2;
@@ -36,7 +36,7 @@ const FooterText = styled.p`
   opacity: 0.64;
   font-family: ${props=>props.theme.fontFamily};
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 400;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.2;
@@ -133,9 +133,58 @@ class FooterMenu extends React.Component {
             );
 
         }else{
+
+            let items = [];
+            for (let i = 0; i < menus.length; i+= 2) {
+                items.push(
+                    <React.Fragment key={i}>
+                        <Flex justifyContent={"center"}>
+                            {
+                                menus.slice(i, i+2).map((item, index)=>
+                                    <React.Fragment key={index}>
+                                        <Box mr={index < menus.length -1 ? theme.spacing.block : 0}
+                                             sx={{position: "relative"}}>
+                                            <UniversalLink item={item} component={MenuLink} route={route}/>
+                                        </Box>
+                                    </React.Fragment>
+                                )
+                            }
+                        </Flex>
+                    </React.Fragment>
+                )
+            }
+
             return (
-                <>
-                </>
+                <FooterWrapper>
+                    <Flex sx={{position: 'relative'}} pt={"23px"}>
+                        <Box width={1/2}>
+                            <Box width={["70px"]} height={["70px"]} mx={"auto"}>
+                                <Link href="/" passHref>
+                                    <a><Logo width="100%" primary={this.props.theme.colors.primary} background={this.props.theme.colors.secondary}/></a>
+                                </Link>
+                            </Box>
+                        </Box>
+                        <Box width={1/2}>
+                            {social}
+                        </Box>
+                    </Flex>
+                    <Box mx={"auto"} mt={"24px"}>
+                        {items}
+                    </Box>
+                    {/*<Flex justifyContent="center" height={"100%"} py={"23px"} maxWidth={"1440px"} mx={"auto"}>*/}
+
+                    {/*    <Box width={8/10} pt={"16px"}>*/}
+                    {/*        <Flex justifyContent={"center"}>*/}
+
+                    {/*        </Flex>*/}
+                    {/*        <FooterText>*/}
+                    {/*            Городской интернет-журнал «ИЛИ» 2020<br/><br/>*/}
+                    {/*            Использование материалов Журнала ИЛИ разрешено только с предварительного согласия правообладателей.*/}
+                    {/*            Мнение редакции может не совпадать с мнением автора.*/}
+                    {/*        </FooterText>*/}
+                    {/*    </Box>*/}
+                    {/*</Flex>*/}
+                </FooterWrapper>
             );
         }
     }
