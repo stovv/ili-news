@@ -398,9 +398,9 @@ class Post extends React.Component{
                 <>
                     <NextSeo title={title}
                              description={description}
-                             canonical={`${SITE_URL}/post/${postId}`}
+                             canonical={`${SITE_URL}/${current_post.slug}`}
                              openGraph={{
-                                 url: `${SITE_URL}/post/${postId}`,
+                                 url: `${SITE_URL}/${current_post.slug}`,
                                  locale: 'ru_RU',
                                  type: "article",
                                  title: title,

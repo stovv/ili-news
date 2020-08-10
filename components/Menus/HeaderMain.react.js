@@ -66,8 +66,9 @@ class HeaderNavBar extends React.Component {
 
             return (
                 <>
-                <Box width={"100vw"} bg={searchActivated ? theme.colors.backgroundInverted : theme.colors.secondary}
-                     sx={{transition: "all 0.4s ease 0s"}}>
+                <Box width={searchActivated ? "100vw" : "100%"}
+                     bg={searchActivated ? theme.colors.backgroundInverted : theme.colors.secondary}
+                     sx={{transition: "all 0.4s ease 0s"}} px={"25px"}>
                     <Flex height={["72px"]} maxWidth={"1440px"} mx={"auto"}>
                         <Box width={1/8} height="100%" sx={{position:"relative"}}>
                             <Box width={["55px"]} height={["55px"]}  sx={{
