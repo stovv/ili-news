@@ -159,7 +159,7 @@ class Heading extends React.Component{
         if (typeof data !== 'undefined'){
             const HeadingComp = headings[data.level + 1];
             return(
-                <HeadingComp>{data.text}</HeadingComp>
+                <HeadingComp><div dangerouslySetInnerHTML={{__html: data.text}}/></HeadingComp>
             );
         }
 

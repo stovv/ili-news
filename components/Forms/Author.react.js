@@ -22,7 +22,7 @@ class AuthorList extends React.Component {
             borderLeft: `2px solid ${theme.colors.primary}`
         };
 
-        if (width > 462){
+        if (width > 500){
             return (
                 <Flex height="fit-content" sx={borderStyle} ml={["40px"]}>
                     {

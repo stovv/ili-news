@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Box } from 'rebass';
-import { NextSeo } from "next-seo";
 import { connect } from 'react-redux';
+import { NextSeo, SocialProfileJsonLd } from "next-seo";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 
@@ -226,6 +226,10 @@ class FrontPage extends React.Component {
                              {
                                  name: 'yandex-verification',
                                  content: YANDEX_VERIFICATION
+                             },
+                             {
+                                 name: 'language',
+                                 content: 'Russian'
                              }
                          ]}
                          openGraph={{
@@ -238,10 +242,23 @@ class FrontPage extends React.Component {
                              site_name: SITE_INFO.TITLE,
                          }}
                          twitter={{
+                             title: SITE_INFO.TITLE,
+                             description: SITE_INFO.DESCRIPTION,
+                             image: SITE_INFO.IMAGE.URL,
                              handle: '@handle',
                              site: '@site',
                              cardType: 'summary_large_image',
                          }}/>
+                <SocialProfileJsonLd
+                    type="Organization"
+                    name={SITE_INFO.TITLE}
+                    url={SITE_URL}
+                    sameAs={[
+                        "https://zen.yandex.ru/ilinnov",
+                        "https://vk.com/ili_media",
+                        "https://www.instagram.com/instannov"
+                    ]}
+                />
                 <TopPosts posts={topPosts}/>
                 {
                     width > 1023

@@ -49,6 +49,9 @@ class Search extends React.Component{
     componentWillUnmount() {
         if (typeof window !== "undefined"){
             document.documentElement.removeAttribute("style");
+            if ( this.props.width <= 1023 ){
+                document.body.removeAttribute("style");
+            }
         }
         this.setState({stopWaiting: true})
     }
@@ -57,6 +60,9 @@ class Search extends React.Component{
         if (!this.props.activated){
             document.documentElement.removeAttribute("style");
             this.state.stopWaiting = true;
+            if ( this.props.width <= 1023 ){
+                document.body.removeAttribute("style");
+            }
         }else{
             if (this.state.stopWaiting){
                 this.state.stopWaiting = false;
@@ -101,7 +107,20 @@ class Search extends React.Component{
                             }))];
 
                         })
-                        .catch(reason=>console.log(reason))
+                        .catch(reason=>console.log(reason));
+
+                    await Public.search(forma, "description")
+                        .then(response=>{
+                            matched = [...matched, ...response.data.posts.filter((post=>{
+                                for (const extPost of [...matched, ...this.state.topMath]){
+                                    if (extPost.id === post.id){
+                                        return false;
+                                    }
+                                }
+                                return true
+                            }))];
+                        })
+                        .catch(reason=>console.log(reason));
                 }
                 this.setState({ notFoundSuchMath: matched.length === 0, items: matched });
             }

@@ -48,7 +48,7 @@ const FooterText = styled.p`
 
 
 const FooterWrapper = styled.div`
-  margin: 120px 0 0 0;
+  margin: ${props => props.mini ? "20px": "120px"}  0 0 0;
   width: 100%;
   height: 256px;
   background-color: ${props=>props.theme.colors.backgroundInverted};
@@ -155,7 +155,7 @@ class FooterMenu extends React.Component {
             }
 
             return (
-                <FooterWrapper>
+                <FooterWrapper mini>
                     <Flex sx={{position: 'relative'}} pt={"23px"}>
                         <Box width={1/2}>
                             <Box width={["70px"]} height={["70px"]} mx={"auto"}>

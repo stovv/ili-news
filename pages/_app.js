@@ -45,6 +45,7 @@ class IliApp extends App {
         const { store } = props;
         if (typeof window !== "undefined"){
             store.dispatch(CommonActions.setPageSize(window.innerWidth, window.innerHeight));
+            document.documentElement.lang="ru";
         }
 
         this.handleWindowResize = this.handleWindowResize.bind(this);

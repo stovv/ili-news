@@ -8,7 +8,7 @@ import nextId from "react-id-generator";
 export const SearchInput = styled.input`
   font-size: 30px;
   font-weight: 500;
-  width: ${props => props.screenWidth >= 677 ? "624px" : (props.screenWidth >= 450 ? "400px" : "250px") };
+  width: ${props => props.screenWidth >= 677 ? "624px" : (props.screenWidth >= 500 ? "400px" : "250px") };
   line-height: 1.27;
   font-style: normal;
   font-stretch: normal;

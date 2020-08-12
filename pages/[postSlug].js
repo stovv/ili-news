@@ -12,14 +12,13 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Error from './error__';
 import { Public } from '../api';
 import { Icons } from '../assets';
-import {BACKEND_URL, SITE_URL} from '../constants';
-import { saveIpAction } from '../store/authActions.react';
+import { BACKEND_URL, OLD_SITE_URL, SITE_URL } from '../constants';
 import { changeInfinityState } from '../store/commonActions.react';
 import { getFormatedDate } from '../tools';
 import { UniversalBlock ,Containers, Typography, Images, Cards, Form, Blocks } from '../components';
 
 
-export const config = { amp: 'hybrid' };
+//export const config = { amp: 'hybrid' };
 
 const iconSpacing = {
     margin: "auto 9px"
@@ -46,7 +45,7 @@ const EventDateWrapper = styled.div`
 
 const InfinityPost = ({data, theme}) => {
 
-    const { width, rubric, title, publishedDate, clientIp, authors, theme: postTheme,
+    const { width, rubric, title, publishedDate, clientIp, authors, theme: postTheme, slug,
         blocks:{ blocks }, cover, rating, commentThread} = data;
 
     return (
@@ -56,15 +55,15 @@ const InfinityPost = ({data, theme}) => {
                     ?
                     <>
                         <Typography.Heading level={4} color={theme.text.hover} textTransform="lowercase"
-                                            margin={`32px 0 ${theme.spacing.m} 0`}>{rubric.title}</Typography.Heading>
+                                            margin={`32px 0 ${theme.spacing.s} 0`}>{rubric.title}</Typography.Heading>
                         <Typography.Heading level={1} breakWord
-                                            margin={`${theme.spacing.m} 0`}>{title}</Typography.Heading>
+                                            margin={`0 0 ${theme.spacing.m} 0`}>{title}</Typography.Heading>
                     </>
                     :
                     <>
                         <Typography.Heading level={5} color={theme.text.hover} textTransform="lowercase"
-                                            margin={`32px 0 ${theme.spacing.m} 0`}>{rubric.title}</Typography.Heading>
-                        <Typography.Heading level={3} breakWord margin={`${theme.spacing.m} 0`}>{title}</Typography.Heading>
+                                            margin={`32px 0 ${theme.spacing.s} 0`}>{rubric.title}</Typography.Heading>
+                        <Typography.Heading level={3} breakWord margin={`0 0 ${theme.spacing.m} 0`}>{title}</Typography.Heading>
                     </>
             }
             {
@@ -75,7 +74,7 @@ const InfinityPost = ({data, theme}) => {
                 <Form.AuthorList authors={authors}/>
                 <Box  my="auto" ml="auto">
                     <YandexShare
-                        content={{ title }}
+                        content={{ title, image: `${BACKEND_URL}${cover.url}`, url: `${SITE_URL}/${slug}` }}
                         theme={{ lang: 'ru', limit: 3, size: "m", popupPosition: "outer",
                             services: 'vkontakte,facebook,odnoklassniki,twitter,viber,whatsapp,telegram' }}
                     />
@@ -120,7 +119,7 @@ const RegularPost = ({data, theme}) => {
                     ?
                     <>
                         <Typography.Heading level={4} color={theme.text.hover}
-                                            margin={`32px 0 ${theme.spacing.m} 0`}>{rubric.title}</Typography.Heading>
+                                            margin={`32px 0 ${theme.spacing.s} 0`}>{rubric.title}</Typography.Heading>
                         <Flex>
                             {
                                 ( rubric.withEventDate && eventDate ) && <>
@@ -135,7 +134,7 @@ const RegularPost = ({data, theme}) => {
                                 </>
                             }
                             <Typography.Heading level={1} breakWord maxWidth="80%"
-                                                margin={`${theme.spacing.m} 0`}>{title}</Typography.Heading>
+                                                margin={`0 0 ${theme.spacing.m} 0`}>{title}</Typography.Heading>
                         </Flex>
                     </>
                     :
@@ -160,13 +159,13 @@ const RegularPost = ({data, theme}) => {
                     </>
             }
             {
-                width > 462
+                width > 500
                     ? <Flex mb={theme.spacing.m}>
                         <Typography.Heading margin={`auto 0 auto 0`} level={4} color={theme.text.secondary}>{publishedDate}</Typography.Heading>
                         <Form.AuthorList authors={authors}/>
                         <Box  my="auto" ml="auto">
                             <YandexShare
-                                content={{ title }}
+                                content={{ title, image: `${BACKEND_URL}${cover.url}`, url: `${SITE_URL}/${slug}` }}
                                 theme={{ lang: 'ru', limit: width > 556 ? 3 : 0, size: "m", popupPosition: "outer",
                                     services: 'vkontakte,facebook,odnoklassniki,twitter,viber,whatsapp,telegram' }}
                             />
@@ -176,7 +175,7 @@ const RegularPost = ({data, theme}) => {
                         <Flex mb={theme.spacing.m} justifyContent={"space-between"}>
                             <Typography.Heading margin={`auto 0 auto 0`} level={4} color={theme.text.secondary}>{publishedDate}</Typography.Heading>
                             <YandexShare
-                                content={{ title }}
+                                content={{ title, image: `${BACKEND_URL}${cover.url}`, url: `${SITE_URL}/${slug}` }}
                                 theme={{ lang: 'ru', limit: width > 556 ? 3 : 0, size: "m", popupPosition: "outer",
                                     services: 'vkontakte,facebook,odnoklassniki,twitter,viber,whatsapp,telegram' }}
                             />
@@ -255,7 +254,7 @@ const RegularPost = ({data, theme}) => {
 
 
 class Post extends React.Component{
-    static async getInitialProps({ query: { postSlug, amp }, store, isServer, pathname, req }) {
+    static async getInitialProps({ query: { postSlug, amp }, store, isServer, pathname, req, res }) {
         let current_post = null;
         let readMoreLinks = [];
         let popularPosts = [];
@@ -272,6 +271,10 @@ class Post extends React.Component{
             });
 
         if ( current_post === null ){
+            if (req) {
+                res.writeHead(302, { Location: `${OLD_SITE_URL}/${postSlug}` });
+                res.end();
+            }
             return {
                 error: 404
             }
@@ -321,11 +324,27 @@ class Post extends React.Component{
         this.state = {
             hasMore: props.current_post && props.current_post.rubric && props.current_post.rubric.infinityScroll,
             start: 0,
-            skipPostIds: [ props.postId ],
+            skipPostIds: [ props.current_post.id ],
             items: []
         }
         this.fetchMore = this.fetchMore.bind(this);
         props.dispatch(changeInfinityState(props.current_post && props.current_post.rubric && props.current_post.rubric.infinityScroll))
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if ( prevProps.current_post.slug !== this.props.current_post.slug ){
+            this.state = {
+                hasMore: this.props.current_post &&
+                    this.props.current_post.rubric &&
+                    this.props.current_post.rubric.infinityScroll,
+                start: 0,
+                skipPostIds: [ this.props.current_post.id ],
+                items: []
+            }
+            this.props.dispatch(changeInfinityState(this.props.current_post
+                && this.props.current_post.rubric
+                && this.props.current_post.rubric.infinityScroll))
+        }
     }
 
     async fetchMore(){
