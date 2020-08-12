@@ -1,6 +1,6 @@
-export const BACKEND_URL = '';
-export const SITE_URL = '';
-export const OLD_SITE_URL='';
+export const BACKEND_URL = 'https://xpan.ili-nnov.ru';
+export const SITE_URL = 'http://localhost:3000';
+export const OLD_SITE_URL='http://old.ili-nnov.ru';
 export const YANDEX_VERIFICATION = '';
 export const YANDEX_METRIKA = { accounts: [], options: { webvisor: true }};
 

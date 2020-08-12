@@ -195,14 +195,14 @@ class Search extends React.Component{
 
         return (
             <div style={{
-                position: 'fixed', transition: "all 0.3s ease",
+                position: 'fixed', transition: "all .4s cubic-bezier(.55,.08,.06,.97)",
                 height: activated ? `${width > 1023 ? "calc(100vh - 72px)" : "100vh"}` : "0px",
                 transform: activated ? "scale(1)" : "scale(0.9)",
-                bottom: 0, left: 0, zIndex: 9999, overflow: 'hidden', backdropFilter: "blur(8px)"
+                bottom: 0, left: 0, zIndex: 9999, overflow: 'hidden'
             }}>
                 <Box id="searchContent" bg={theme.colors.backgroundInverted} width="100vw" sx={{
                     overflowY: 'scroll',
-                    opacity: 0.96, height: "100%",
+                    opacity: 0.98, height: "100%",
                     position: "relative", display: "inline-block"
                 }}>
                     <Box sx={{position: "absolute", top: width > 768 ? "52px" : "24px" ,

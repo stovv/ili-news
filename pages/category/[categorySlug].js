@@ -178,11 +178,11 @@ class Category extends React.Component {
                              site: '@site',
                              cardType: 'summary_large_image',
                          }}/>
-                <Flex justifyContent="center" m="88px 0 14px 0">
+                <Flex justifyContent="center" m={width > 1023 ? "88px 0 14px 0" : "24px 0 5px 0"}>
                     {
                         width > 1023
                             ? <Typography.Heading level={1} margin="auto 0 auto 0">{category.title}</Typography.Heading>
-                            : <Typography.Heading level={2}  textAlign="center" margin="auto 20px auto 0">{category.title}</Typography.Heading>
+                            : <Typography.Heading level={2}  textAlign="center" margin="auto 0 auto 0">{category.title}</Typography.Heading>
                     }
                 </Flex>
                 <TagBar tags={tags}/>

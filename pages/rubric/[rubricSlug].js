@@ -12,6 +12,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import {CardText} from "../../components/Typography";
 import {PostLink} from "../../components/Links.react";
 import {connect} from "react-redux";
+import {changeInfinityState} from "../../store/commonActions.react";
 
 function randomChoice(arr){
     return arr[Math.floor(Math.random() * arr.length)];
@@ -124,6 +125,7 @@ class Rubric extends React.Component {
         }
         this.fetchMoreWithCover = this.fetchMoreWithCover.bind(this);
         this.fetchMoreWithoutCover = this.fetchMoreWithoutCover.bind(this);
+        props.dispatch(changeInfinityState(false))
     }
 
 
@@ -152,6 +154,7 @@ class Rubric extends React.Component {
                 this.setState({
                     hasMore: false
                 })
+                this.props.dispatch(changeInfinityState(false))
                 return;
             }
             items.push(<PostsWithAd posts={posts} uid={this.state.uid}/>)
@@ -191,6 +194,7 @@ class Rubric extends React.Component {
             this.setState({
                 hasMore: false
             })
+            this.props.dispatch(changeInfinityState(false))
             return;
         }
 
@@ -268,10 +272,11 @@ class Rubric extends React.Component {
                          cardType: 'summary_large_image',
                      }}/>
 
-                <Flex justifyContent="center" m="88px 0 14px 0">
-                    {
-                        width > 1023
-                            ? <>
+                {
+                    width > 1023
+                        ?
+                        <>
+                            <Flex justifyContent="center" m="88px 0 14px 0">
                                 <Typography.Heading level={1} margin="auto 20px auto 0">{rubric.title}</Typography.Heading>
                                 {
                                     rubric.emoji &&
@@ -279,24 +284,34 @@ class Rubric extends React.Component {
                                         <Emoji emoji={{id: rubric.emoji}} size={48}/>
                                     </Box>
                                 }
-                            </>
-                            : <Box>
+                            </Flex>
+                            {
+                                (rubric.subtitle != null && rubric.subtitle.length > 0) &&
+                                <Flex justifyContent="center">
+                                    <Typography.Heading level={5} margin={`auto 20px auto 0`} textAlign="center"
+                                                        color={theme.text.secondary}>{rubric.subtitle}</Typography.Heading>
+                                </Flex>
+                            }
+                        </>
+                        :
+                        <Flex justifyContent="center" m="20px 0 0 0">
+                            <Box>
                                 {
                                     rubric.emoji &&
                                     <Flex justifyContent="center" mb="10px">
                                         <Emoji emoji={{id: rubric.emoji}} size={48}/>
                                     </Flex>
                                 }
-                                <Typography.Heading level={3} margin="auto 0 auto 0" textAlign="center">{rubric.title}</Typography.Heading>
+                                <Typography.Heading level={4} margin="auto 0 5px 0" textAlign="center">{rubric.title}</Typography.Heading>
+                                {
+                                    (rubric.subtitle != null && rubric.subtitle.length > 0) &&
+                                    <Flex justifyContent="center">
+                                        <Typography.Heading level={6} margin={`0 auto`} textAlign="center"
+                                                            color={theme.text.secondary}>{rubric.subtitle}</Typography.Heading>
+                                    </Flex>
+                                }
                             </Box>
-                    }
-                </Flex>
-                {
-                    (rubric.subtitle != null && rubric.subtitle.length > 0) &&
-                    <Flex justifyContent="center">
-                        <Typography.Heading level={width > 1023 ? 5 : 6} margin={`auto ${width > 1023 ? '20px' : 0} auto 0`} textAlign="center"
-                                            color={theme.text.secondary}>{rubric.subtitle}</Typography.Heading>
-                    </Flex>
+                        </Flex>
                 }
                 {
                     rubric.cover
