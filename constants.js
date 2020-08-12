@@ -1,7 +1,8 @@
-export const BACKEND_URL = 'https://xpan.ili-nnov.ru';
-export const SITE_URL = 'https://dev.ili-nnov.ru';
-export const OLD_SITE_URL='https://old.ili-nnov.ru';
-export const YANDEX_VERIFICATION = '662da546f68c5d72';
+export const BACKEND_URL = '';
+export const SITE_URL = '';
+export const OLD_SITE_URL='';
+export const YANDEX_VERIFICATION = '';
+export const YANDEX_METRIKA = { accounts: [], options: { webvisor: true }};
 
 export const SITE_INFO = {
     TITLE: "ИЛИ Молодежный журнал | Новости, История, События Нижнего",

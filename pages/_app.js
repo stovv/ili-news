@@ -6,10 +6,11 @@ import withRedux from "next-redux-wrapper";
 import { Provider as StoreProvider } from "react-redux";
 import { YMInitializer } from 'react-yandex-metrika';
 
-import IliThemeProvider from '../theme';
-import { store } from "../store";
-import { Containers, Menus, Form } from '../components';
 import { Public } from '../api';
+import { store } from "../store";
+import IliThemeProvider from '../theme';
+import {YANDEX_METRIKA} from "../constants";
+import { Containers, Menus, Form } from '../components';
 import * as CommonActions from '../store/commonActions.react';
 
 import 'nprogress/nprogress.css'; //styles of nprogress
@@ -21,7 +22,6 @@ import 'emoji-mart/css/emoji-mart.css';
 import '../assets/fonts/lato/lato.css';
 import './style.css';
 
-const yParams = { accounts: [62554705], options: { webvisor: true }};
 
 class IliApp extends App {
   static async getInitialProps({Component, ctx}) {
@@ -89,7 +89,7 @@ class IliApp extends App {
             </IliThemeProvider>
           </StoreProvider>
           <div>
-              <YMInitializer accounts={yParams.accounts} options={yParams.options} version="2" />
+              <YMInitializer accounts={YANDEX_METRIKA.accounts} options={YANDEX_METRIKA.options} version="2" />
           </div>
       </>
     );
