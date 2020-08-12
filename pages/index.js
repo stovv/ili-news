@@ -37,7 +37,7 @@ class FrontPage extends React.Component {
         let catLine = { posts: [], category: null };
         let [ lastTheme= { title: null, posts: [] }, nextTheme = { title: null, posts: [] }  ]  = await Public.fetchThemes()
             .then(response => response.data.themes)
-            .catch(reason => console.log(reason.response.statusText));
+            .catch(reason => console.log(reason));
 
         try {
             await Public.fetchPostsCount([2])
@@ -82,7 +82,7 @@ class FrontPage extends React.Component {
             ]).then(response => posts = response.data.posts);
 
         }catch (e) {
-            console.log("ERROR IN GETTING Initial data", e);
+            //console.log("ERROR IN GETTING Initial data", e);
         }
         return {topPosts, lastTheme, nextTheme, newsFeed, posts, postsCount, categories, nonUsedCategories, catLine};
     }
@@ -144,7 +144,7 @@ class FrontPage extends React.Component {
                                 .then(response => {
                                     this.state.categories = response.data.categories;
                                 })
-                                .catch(reason => console.log(reason.response.statusText));
+                                .catch(reason => console.log(reason));
                         }
                         this.state.existsCategoryIds = this.state.categories;
                     }
@@ -171,7 +171,7 @@ class FrontPage extends React.Component {
                                     );
                                 }
                             })
-                            .catch(reason => console.log(reason.response.statusText));
+                            .catch(reason => console.log(reason));
                     }
                     break;
                 }

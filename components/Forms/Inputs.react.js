@@ -5,6 +5,28 @@ import styled from 'styled-components';
 import nextId from "react-id-generator";
 
 
+export const SearchInput = styled.input`
+  font-size: 30px;
+  font-weight: 500;
+  width: ${props => props.screenWidth >= 677 ? "624px" : (props.screenWidth >= 450 ? "400px" : "250px") };
+  line-height: 1.27;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
+  text-align: center;
+  padding: ${props => props.theme.spacing.s };
+  font-family: ${props => props.theme.fontFamily};
+  color: ${props => props.theme.text.onPrimary};
+  outline: 0;
+  border: 0;
+  background-color: transparent;
+  border-bottom: 4px solid ${props => props.theme.text.disabled};
+
+  ::placeholder {
+    color: ${props => props.theme.text.disabled};
+  }
+`;
+
 
 const BlankInput = styled.textarea`
     font-family: ${props => props.theme.fontFamily};
@@ -50,7 +72,6 @@ const Label = styled.span`
     line-height: 1.32;
     letter-spacing: normal;
 `;
-
 
 export class TitleArea extends React.Component {
 

@@ -12,12 +12,12 @@ import {PostLink} from "../Links.react";
 class Mini extends React.Component
 {
     render(){
-        const { heading, cover, children, theme, slug, full } = this.props;
+        const { heading, cover, children, theme, slug, full, transparent, onClick } = this.props;
 //        if ( typeof cover === "undefined" ) return null;
 
         return(
             <PostLink postSlug={slug}>
-                <Flex bg={theme.colors.backgroundPrimary} width="100%"
+                <Flex bg={theme.colors.backgroundPrimary} width="100%" onClick={onClick}
                       minHeight="128px" maxHeight={full ? undefined : "128px"}
                       sx={{
                           cursor: 'pointer',
@@ -35,8 +35,8 @@ class Mini extends React.Component
                                   margin={`0 0 ${theme.spacing.xs} 0`} textTransform="lowercase">
                             {heading}
                         </TagLabel>
-                        <CardText hideOwerflow maxLines={4} type="small" width={ full ? 1/3 : "156px"}
-                                  height={ full ? "100%" : "76px"} color={theme.text.secondarySecondary}>
+                        <CardText hideOwerflow maxLines={3} margin={"0"} type="small" width={ full ? 1/3 : "156px"}
+                                  height={ full ? "100%" : "60px"} color={theme.text.secondarySecondary}>
                             {children}
                         </CardText>
                     </Box>
@@ -50,6 +50,9 @@ Mini.propTypes = {
     heading: PropTypes.string,
     cover: PropTypes.object.isRequired,
     slug: PropTypes.string.isRequired,
+    onClick: PropTypes.func,
+    full: PropTypes.bool,
+    transparent: PropTypes.bool
 }
 
 export default withTheme(Mini);

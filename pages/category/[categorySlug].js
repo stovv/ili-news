@@ -107,7 +107,7 @@ class Category extends React.Component {
             let posts = null;
             await Public.loadPosts( null, this.props.category.id, start, limit, null)
                 .then(response => posts = response.data.posts)
-                .catch(reason => console.log(reason.response.statusText));
+                .catch(reason => console.log(reason));
 
             if ( posts == null || posts.length === 0){
                 this.setState({

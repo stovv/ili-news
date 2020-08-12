@@ -5502,6 +5502,13 @@ moment@^2.25.3:
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
   integrity sha512-al0MUK7cpIcglMv3YF13qSgdAIqxHTO7brRtaz3DlSULbqfazqkc5kEjNrLDOM7fsjshoFIihnU8snrP7zUvhQ==
 
+morpher-io@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/morpher-io/-/morpher-io-1.0.2.tgz#03c72d1ae162462ccbb63f88c07c1a762c87e998"
+  integrity sha512-NnJ4+mTQnu4e7Mx/5GQ4ymII1VLr1VZQ5+5juI3J1w+0oIw10exgkRaAc1Nkfw0BnB1lzto2fzOk/Q6WVOBU0A==
+  dependencies:
+    node-fetch "^2.5.0"
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -5703,7 +5710,7 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-node-fetch@2.6.0, node-fetch@^2.2.0:
+node-fetch@2.6.0, node-fetch@^2.2.0, node-fetch@^2.5.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
   integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==

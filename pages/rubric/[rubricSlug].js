@@ -73,7 +73,7 @@ class Rubric extends React.Component {
         if ( rubric !== null && !rubric.cover ){
             await Public.getPopularDuringWeek()
                 .then(response=> popularPosts = response.data)
-                .catch(reason=> console.log("LOAD POPULAR", reason.response.statusText));
+                .catch(reason=> console.log("LOAD POPULAR", reason));
         }
 
         let postsCount = 0;
@@ -102,7 +102,7 @@ class Rubric extends React.Component {
                         loadedPostsCount += response.data.posts.length;
                         posts = response.data.posts;
                     })
-                    .catch(reason => console.log("LOAD POSTS", reason.response.statusText));
+                    .catch(reason => console.log("LOAD POSTS", reason));
             }
             items.push({posts, uid})
             start += limit;
@@ -145,7 +145,7 @@ class Rubric extends React.Component {
             let posts = null;
             await Public.loadPosts( this.props.rubric.id,null, start, limit, null)
                 .then(response => posts = response.data.posts)
-                .catch(reason => console.log(reason.response.statusText));
+                .catch(reason => console.log(reason));
 
 
             if ( posts == null || posts.length === 0){
@@ -184,7 +184,7 @@ class Rubric extends React.Component {
         let posts = null;
         await Public.loadPosts( this.props.rubric.id,null, start, limit, null)
             .then(response => posts = response.data.posts)
-            .catch(reason => console.log(reason.response.statusText));
+            .catch(reason => console.log(reason));
 
 
         if ( posts == null || posts.length === 0){

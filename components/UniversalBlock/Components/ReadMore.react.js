@@ -17,8 +17,6 @@ class ReadMore extends React.Component {
     render(){
         const { theme, post, data } = this.props;
 
-        console.log("READ", data);
-
         if (data == null || data.length === 0){
             return null;
         }

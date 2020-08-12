@@ -15,7 +15,8 @@ const light = {
       secondary: '#4a4a4a',
       secondarySecondary: '#0e0e0e',
       onPrimary: '#ffffff',
-      editorSecondary: "#707684"
+      editorSecondary: "#707684",
+      disabled: "#d2d2d2"
     },
   }
   

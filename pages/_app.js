@@ -56,6 +56,7 @@ class IliApp extends App {
 
     componentDidMount() {
         if (typeof window !== 'undefined'){
+            this.handleWindowResize();
             window.addEventListener('resize', this.handleWindowResize);
         }
     }

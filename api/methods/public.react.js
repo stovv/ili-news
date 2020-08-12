@@ -274,7 +274,6 @@ export async function fetchPostsCountInRubric(rubricId){
     return api.get(`/posts/countWithParams/?rubricIds=${rubricId}&type=in`);
 }
 
-
 export async function fetchSimplePosts(skipPostIds = [], skipRubricIds = [2], skipCategorieIds = [], limit = 2) {
     return api.ql(`
         query{
@@ -362,4 +361,26 @@ export async function findImage(hash){
       }
     }
     `);
+}
+
+export async function search(query, by = "title"){
+    return api.ql(`
+    query{
+        posts(where: { ${ by === "title" ? `title_contains: "${query}"` : `description_contains: "${query}"` } }){
+          id,
+          title,
+          slug,
+          rubric{
+            title
+          },
+          cover{
+            formats
+          }
+        }
+    }
+    `);
+}
+
+export async function getWordFormats(word){
+    return api.get(`/morph?word=${word}`);
 }

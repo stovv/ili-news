@@ -15,7 +15,6 @@ class PostsWithAd extends React.Component {
     offset = "50px";
     render() {
         const { posts, uid, width, mobileAdId } = this.props;
-        console.log(posts.length);
 
         if ( width >= 1280 ){
             if ( posts.length === 1 ){

@@ -259,12 +259,7 @@ class Post extends React.Component{
         let current_post = null;
         let readMoreLinks = [];
         let popularPosts = [];
-        if (typeof window !== "undefined" && store.getState().auth.ip !== undefined && store.getState().auth.ip.length === 0 && req != null){
-            const clientIp = (req.headers['x-forwarded-for'] || '').split(',').pop() ||
-                req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
-            console.log(store.getState().auth.ip, clientIp);
-            await store.dispatch(saveIpAction(clientIp));
-        }
+
 
         //todo Add some logged client Id
         await Public.getPost(postSlug)
@@ -273,7 +268,7 @@ class Post extends React.Component{
                     current_post = response.data[0];
                 }
             }).catch(reason => {
-                console.log(reason.response.statusText)
+                console.log(reason)
             });
 
         if ( current_post === null ){
@@ -282,7 +277,13 @@ class Post extends React.Component{
             }
         }
 
-        //await Public.viewPost(current_post.rating.id, store.getState().auth.ip);
+        if (req != null ){
+            const clientIp = (req.headers['x-forwarded-for'] || '').split(',').pop() ||
+                req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
+            await Public.viewPost(current_post.rating.id, clientIp)
+                //.then(response=> console.log("View ", clientIp, response.data.views))
+                .catch(reason => console.log("View", reason));
+        }
         await Public.getReadMore(current_post.rubric.id, current_post.id)
             .then(response=>{
                 if ( response.data.posts !== null && response.data.posts.length > 0 ){
@@ -290,7 +291,7 @@ class Post extends React.Component{
                 }
             })
             .catch(reason => {
-                console.log(reason.response.statusText);
+                console.log(reason);
             })
 
         await Public.getPopularDuringWeek()
@@ -300,7 +301,7 @@ class Post extends React.Component{
                 }
             })
             .catch(reason=> {
-                console.log(reason.response.statusText)
+                console.log(reason)
             });
 
         return {
@@ -336,7 +337,7 @@ class Post extends React.Component{
         let posts = [];
         await Public.loadPosts( rubric.id, null, this.state.start, 1, this.state.skipPostIds)
             .then(response => posts = response.data.posts)
-            .catch(reason => console.log(reason.response.statusText));
+            .catch(reason => console.log(reason));
 
 
         if ( posts == null || posts.length === 0){

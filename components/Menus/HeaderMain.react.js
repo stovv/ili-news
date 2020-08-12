@@ -68,13 +68,11 @@ class HeaderNavBar extends React.Component {
                 <>
                 <Box width={searchActivated ? "100vw" : "100%"}
                      bg={searchActivated ? theme.colors.backgroundInverted : theme.colors.secondary}
-                     sx={{transition: "all 0.4s ease 0s"}} px={"25px"}>
-                    <Flex height={["72px"]} maxWidth={"1440px"} mx={"auto"}>
+                     sx={{transition: "all 0.5s ease 0s"}} px={"25px"}>
+                    <Flex height={"72px"} maxWidth={"1440px"} mx={"auto"}>
                         <Box width={1/8} height="100%" sx={{position:"relative"}}>
-                            <Box width={["55px"]} height={["55px"]}  sx={{
-                                left: width > 1400 ? "-22%" : "50%",
-                                top: "50%",
-                                position: "absolute",
+                            <Box width={"55px"} height={"55px"}  sx={{
+                                left: "50%", top: "50%", position: "absolute",
                                 transform: "translate(-50%, -50%)"
                             }}>
                                 <Link href="/" passHref>
@@ -110,7 +108,8 @@ class HeaderNavBar extends React.Component {
                 <>
                     <MobileMenu display={this.state.fullScreenMenu} menus={menus} close={()=>this.setState({fullScreenMenu: false})}/>
                     <Mini>
-                        <Flex bg={this.props.theme.colors.secondary} height={["56px"]}>
+                        <Flex bg={theme.colors.secondary}
+                              height={["56px"]}>
                             <Box float="left" my="auto" onClick={()=>this.setState({fullScreenMenu: !this.state.fullScreenMenu})}>
                                 <Icons.HamburgerMenuIcon/>
                             </Box>
@@ -127,7 +126,7 @@ class HeaderNavBar extends React.Component {
                                 </Box>
                             </Box>
                             <Box float="right" my="auto">
-                                <Click.SimpleClick >
+                                <Click.SimpleClick onClick={()=>dispatch(clickOnSearch())}>
                                     <Icons.SearchIcon />
                                 </Click.SimpleClick>
                             </Box>
