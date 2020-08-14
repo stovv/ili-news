@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import styled, { withTheme } from 'styled-components';
 import Moment from "react-moment";
 
-const TitleText = styled.p`
+const TitleText = styled.span`
   font-family: ${props => props.theme.fontFamily};
   font-size: 24px;
   font-weight: normal;
@@ -58,45 +58,128 @@ class EventBanner extends React.Component {
         const { data, width, theme } = this.props;
 
         return (
-            <Flex height={width > 1023 ? "320px" : "200px"} justifyContent={"center"}
-                 bg={theme.colors.backgroundSecondary} sx={{position: "relative"}}>
-                <Box my={"auto"} >
-                    <Flex justifyContent={"space-between"}  mx={"auto"}>
-                        <Box width={1/2}>
-                            <TitleText>где</TitleText>
-                        </Box>
-                        <Box width={1/2}>
-                            <ContentText>{data.eventLocation}</ContentText>
-                        </Box>
-                    </Flex>
-                    <Flex justifyContent={"space-between"}  mx={"auto"} mt={"32px"}>
-                        <Box width={1/2}>
-                            <TitleText>когда</TitleText>
-                        </Box>
-                        <Box width={1/2}>
-                            <ContentText>
-                                <Moment locale="ru" format="DD MMMM YYYY">{data.eventDate}</Moment>
-                            </ContentText>
-                        </Box>
-                    </Flex>
-                    <Flex justifyContent={"space-between"}  mx={"auto"} mt={"32px"}>
-                        <Box width={1/2}>
-                            <TitleText>сколько</TitleText>
-                        </Box>
-                        <Box width={1/2}>
-                            <ContentText>{data.eventPrice}</ContentText>
-                        </Box>
-                    </Flex>
-                    <Flex justifyContent={"space-between"}  mx={"auto"} mt={"32px"}>
-                        <Box width={1/2}>
-                            <TitleText>ссылка</TitleText>
-                        </Box>
-                        <Box width={1/2}>
-                            <ContentLink href={data.eventLink}>{data.eventLink}</ContentLink>
-                        </Box>
-                    </Flex>
-                </Box>
-            </Flex>
+            width > 1023
+                ? <Flex height={"320px"} justifyContent={"center"}
+                        bg={theme.colors.backgroundSecondary} sx={{position: "relative"}}>
+                    <Box my={"auto"} >
+                        <Flex justifyContent={"space-between"}  mx={"auto"}>
+                            <Box width={1/2}>
+                                <TitleText>где</TitleText>
+                            </Box>
+                            <Box width={1/2}>
+                                <ContentText>{data.eventLocation}</ContentText>
+                            </Box>
+                        </Flex>
+                        <Flex justifyContent={"space-between"}  mx={"auto"} mt={"32px"}>
+                            <Box width={1/2}>
+                                <TitleText>когда</TitleText>
+                            </Box>
+                            <Box width={1/2}>
+                                <ContentText>
+                                    <Moment locale="ru" format="DD MMMM YYYY">{data.eventDate}</Moment>
+                                </ContentText>
+                            </Box>
+                        </Flex>
+                        <Flex justifyContent={"space-between"}  mx={"auto"} mt={"32px"}>
+                            <Box width={1/2}>
+                                <TitleText>сколько</TitleText>
+                            </Box>
+                            <Box width={1/2}>
+                                <ContentText>{data.eventPrice}</ContentText>
+                            </Box>
+                        </Flex>
+                        <Flex justifyContent={"space-between"}  mx={"auto"} mt={"32px"}>
+                            <Box width={1/2}>
+                                <TitleText>ссылка</TitleText>
+                            </Box>
+                            <Box width={1/2}>
+                                <ContentLink href={data.eventLink}>{data.eventLink}</ContentLink>
+                            </Box>
+                        </Flex>
+                    </Box>
+                </Flex>
+                : <Flex height={"200px"} justifyContent={"center"}
+                        bg={theme.colors.backgroundSecondary} sx={{position: "relative"}}>
+                    {
+                        width >= 725
+                            ? <Box my={"auto"} >
+                                <Flex justifyContent={"space-between"}  mx={"auto"}>
+                                    <Box width={1/2}>
+                                        <TitleText>где</TitleText>
+                                    </Box>
+                                    <Box width={1/2}>
+                                        <ContentText>{data.eventLocation}</ContentText>
+                                    </Box>
+                                </Flex>
+                                <Flex justifyContent={"space-between"}  mx={"auto"} mt={"10px"}>
+                                    <Box width={1/2}>
+                                        <TitleText>когда</TitleText>
+                                    </Box>
+                                    <Box width={1/2}>
+                                        <ContentText>
+                                            <Moment locale="ru" format="DD MMMM YYYY">{data.eventDate}</Moment>
+                                        </ContentText>
+                                    </Box>
+                                </Flex>
+                                <Flex justifyContent={"space-between"}  mx={"auto"} mt={"10px"}>
+                                    <Box width={1/2}>
+                                        <TitleText>сколько</TitleText>
+                                    </Box>
+                                    <Box width={1/2}>
+                                        <ContentText>{data.eventPrice}</ContentText>
+                                    </Box>
+                                </Flex>
+                                <Flex justifyContent={"space-between"}  mx={"auto"} mt={"10px"}>
+                                    <Box width={1/2}>
+                                        <TitleText>ссылка</TitleText>
+                                    </Box>
+                                    <Box width={1/2}>
+                                        <ContentLink href={data.eventLink}>{data.eventLink}</ContentLink>
+                                    </Box>
+                                </Flex>
+                            </Box>
+                            : <Box my={"auto"} width={"90%"}>
+                                <Flex width={"100%"} justifyContent={"space-between"}  mx={"auto"}>
+                                    <Box width={1/2}>
+                                        <TitleText>где</TitleText>
+                                    </Box>
+                                    <Box width={1/2}>
+                                        <ContentText>{data.eventLocation}</ContentText>
+                                    </Box>
+                                </Flex>
+                                <Flex justifyContent={"space-between"}  mx={"auto"} mt={"10px"}>
+                                    <Box width={1/2}>
+                                        <TitleText>когда</TitleText>
+                                    </Box>
+                                    <Box width={1/2}>
+                                        <ContentText>
+                                            <Moment locale="ru" format="DD MMMM YYYY">{data.eventDate}</Moment>
+                                        </ContentText>
+                                    </Box>
+                                </Flex>
+                                <Flex justifyContent={"space-between"}  mx={"auto"} mt={"10px"}>
+                                    <Box width={1/2}>
+                                        <TitleText>сколько</TitleText>
+                                    </Box>
+                                    <Box width={1/2}>
+                                        <ContentText>{data.eventPrice}</ContentText>
+                                    </Box>
+                                </Flex>
+                                <Flex justifyContent={"space-between"}  mx={"auto"} mt={"10px"}>
+                                    <Box width={1/2}>
+                                        <TitleText>ссылка</TitleText>
+                                    </Box>
+                                    <Box width={1/2}>
+                                        {
+                                            width > 600
+                                             ? <ContentLink href={data.eventLink}>{data.eventLink}</ContentLink>
+                                             : <ContentLink href={data.eventLink}>здесь</ContentLink>
+                                        }
+                                    </Box>
+                                </Flex>
+                            </Box>
+                    }
+                </Flex>
         );
     }
 }

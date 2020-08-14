@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAmp } from 'next/amp'
 import Moment from "react-moment";
 import { NextSeo } from 'next-seo';
 import { Flex, Box } from 'rebass';
@@ -9,22 +8,14 @@ import YandexShare from 'react-yandex-share';
 import { withTheme } from 'styled-components';
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import Error from './error__';
-import { Public } from '../api';
-import { Icons } from '../assets';
-import { BACKEND_URL, OLD_SITE_URL, SITE_URL } from '../constants';
-import { changeInfinityState } from '../store/commonActions.react';
-import { getFormatedDate } from '../tools';
-import { UniversalBlock ,Containers, Typography, Images, Cards, Form, Blocks } from '../components';
+import Error from '../error__';
+import { Public } from '../../api';
+import { Icons } from '../../assets';
+import { BACKEND_URL, OLD_SITE_URL, SITE_URL } from '../../constants';
+import { changeInfinityState } from '../../store/commonActions.react';
+import { getFormatedDate } from '../../tools';
+import { UniversalBlock ,Containers, Typography, Images, Cards, Form, Blocks } from '../../components';
 
-
-//export const config = { amp: 'hybrid' };
-
-// const AmpMode = ({ children, ampOnly }) => {
-//     const isAmp = useAmp()
-//     console.log(isAmp);
-//     return children
-// }
 
 const iconSpacing = {
     margin: "auto 9px"
@@ -134,50 +125,23 @@ const RegularPost = ({data, theme}) => {
     // TODO Remove it after beta release
     return (
         <Containers.Default>
-            {
-                width > 1023
-                    ?
-                    <>
-                        <Typography.Heading level={4} color={theme.text.hover}
-                                            margin={`32px 0 ${theme.spacing.s} 0`}>{rubric.title}</Typography.Heading>
-                        <Flex>
-                            {
-                                ( rubric.withEventDate && eventDate ) && <>
-                                    <EventDateWrapper>
-                                        <Typography.Common type={'mega'} margin={'0 24px 0 0'} textAlign="center">
-                                            <Moment locale="ru" format="DD">{eventDate}</Moment>
-                                        </Typography.Common>
-                                        <Typography.Common type={'regular'} margin={'0 24px 0 0'} textAlign="center">
-                                            <Moment locale="ru" format="MMM">{eventDate}</Moment>
-                                        </Typography.Common>
-                                    </EventDateWrapper>
-                                </>
-                            }
-                            <Typography.Heading level={1} breakWord maxWidth="80%"
-                                                margin={`0 0 ${theme.spacing.m} 0`}>{title}</Typography.Heading>
-                        </Flex>
+            <Typography.Heading level={5} color={theme.text.hover} textTransform="lowercase"
+                                margin={`32px 0 ${theme.spacing.m} 0`}>{rubric.title}</Typography.Heading>
+            <Flex>
+                {
+                    ( rubric.withEventDate && eventDate ) && <>
+                        <EventDateWrapper mini>
+                            <Typography.Heading level={1} margin={'0 10px 0 0'} textAlign="center">
+                                <Moment locale="ru" format="DD">{eventDate}</Moment>
+                            </Typography.Heading>
+                            <Typography.Heading level={3} margin={'0 10px 0 0'} textAlign="center">
+                                <Moment locale="ru" format="MMM">{eventDate}</Moment>
+                            </Typography.Heading>
+                        </EventDateWrapper>
                     </>
-                    :
-                    <>
-                        <Typography.Heading level={5} color={theme.text.hover} textTransform="lowercase"
-                                            margin={`32px 0 ${theme.spacing.m} 0`}>{rubric.title}</Typography.Heading>
-                        <Flex>
-                            {
-                                ( rubric.withEventDate && eventDate ) && <>
-                                    <EventDateWrapper mini>
-                                        <Typography.Heading level={1} margin={'0 10px 0 0'} textAlign="center">
-                                            <Moment locale="ru" format="DD">{eventDate}</Moment>
-                                        </Typography.Heading>
-                                        <Typography.Heading level={3} margin={'0 10px 0 0'} textAlign="center">
-                                            <Moment locale="ru" format="MMM">{eventDate}</Moment>
-                                        </Typography.Heading>
-                                    </EventDateWrapper>
-                                </>
-                            }
-                            <Typography.Heading level={3} breakWord margin={`${theme.spacing.m} 0`}>{title}</Typography.Heading>
-                        </Flex>
-                    </>
-            }
+                }
+                <Typography.Heading level={3} breakWord margin={`${theme.spacing.m} 0`}>{title}</Typography.Heading>
+            </Flex>
             {
                 width > 500
                     ? <Flex mb={theme.spacing.m}>
@@ -204,10 +168,10 @@ const RegularPost = ({data, theme}) => {
                     </>
             }
             {
-                rubric.cover && <Images.Lazy cover={cover} width="100%" height={width > 1023 ? "560px" : "229px"}/>
+                rubric.cover && <Images.Lazy cover={cover} width="100%" height={"229px"}/>
             }
             <Flex mt={["54px"]}>
-                <Box width={width > 1023 ? [9/12] : '100%' } pr={width > 1023 ? ["10%"] : '0'}>
+                <Box width={'100%'}>
                     {
                         (eventLink != null && eventLocation != null && eventPrice != null)
                         && <Blocks.EventBanner data={{ eventLink, eventLocation, eventPrice, eventDate  }}/>
@@ -236,37 +200,7 @@ const RegularPost = ({data, theme}) => {
                     </Flex>
                     <Blocks.ReadMoreBlock post data={readMoreLinks}/>
                 </Box>
-                {
-                    width > 1023
-                    && <Box width={[3/12]} pl={["2%"]}>
-                        <Form.AdBlock id={'R-A-351229-6'} width={["100%"]} height={["584px"]}/>
-                        {
-                            popularPosts.length > 0 &&
-                            <>
-                                <Typography.CardText type="large" weight="bold" margin="59px 0 30px 0">Лучшее за неделю</Typography.CardText>
-                                {
-                                    popularPosts.map((item, index)=> {
-                                        if ( item.post.slug ===  slug ) return null;
-                                        return (
-                                            <React.Fragment key={index}>
-                                                <Box mb="48px">
-                                                    <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover} slug={item.post.slug}>
-                                                        {item.post.title}
-                                                    </Cards.Mini>
-                                                </Box>
-                                            </React.Fragment>
-                                        );
-
-                                    })
-
-                                }
-                            </>
-                        }
-                    </Box>
-                }
-
             </Flex>
-
         </Containers.Default>
     );
 
@@ -274,7 +208,7 @@ const RegularPost = ({data, theme}) => {
 
 
 class Post extends React.Component{
-    static async getInitialProps({ query: { postSlug, amp }, store, isServer, pathname, req, res }) {
+    static async getInitialProps({ query: { postSlug }, store, isServer, pathname, req, res }) {
         let current_post = null;
         let readMoreLinks = [];
         let popularPosts = [];
@@ -334,8 +268,7 @@ class Post extends React.Component{
             popularPosts,
             clientIp: store.getState().auth.ip,
             postId: current_post.id,
-            store,
-            amp: amp
+            store
         }
     }
 
@@ -415,7 +348,7 @@ class Post extends React.Component{
 
 
     render(){
-        const { error, current_post, postId, theme, store, width, popularPosts } = this.props;
+        const {error, current_post, postId, theme, store, width, popularPosts } = this.props;
 
         if (error !== null){
             return <Error statusCode={error}/>;
@@ -431,8 +364,6 @@ class Post extends React.Component{
         authors.map(item=>{
             authorsLinks.push(`${SITE_URL}/user/${item.id}`);
         });
-        // TODO AMP Checking
-        // TODO Use this.props.user for head component
 
         try {
             return (
@@ -478,7 +409,7 @@ class Post extends React.Component{
                         data.rubric.infinityScroll ?
                             <Containers.Default>
                                 <Flex>
-                                    <Box width={width > 1023 ? [9/12] : '100%' } pr={width > 1023 ? ["10%"] : '0'}>
+                                    <Box width={'100%'}>
                                         <InfinityPost data={data} theme={theme}/>
                                         <InfiniteScroll
                                             dataLength={this.state.items.length}
@@ -488,35 +419,6 @@ class Post extends React.Component{
                                             {this.state.items}
                                         </InfiniteScroll>
                                     </Box>
-                                    {
-                                        width > 1023
-                                        && <Box width={[3/12]} pl={["2%"]} >
-                                            <Box sx={{
-                                                position: "sticky",
-                                                top: "20px"
-                                            }}>
-                                                <Form.AdBlock id={'R-A-351229-6'} width={["100%"]} height={["584px"]}/>
-                                                {
-                                                    popularPosts.length > 0 &&
-                                                    <>
-                                                        <Typography.CardText type="large" weight="bold" margin="59px 0 30px 0">Лучшее за неделю</Typography.CardText>
-                                                        {
-                                                            popularPosts.slice(0, 4).map((item, index)=>
-                                                                <React.Fragment key={index}>
-                                                                    <Box mb="48px">
-                                                                        <Cards.Mini heading={item.post.rubric.title} cover={item.post.cover} slug={item.post.slug}>
-                                                                            {item.post.title}
-                                                                        </Cards.Mini>
-                                                                    </Box>
-                                                                </React.Fragment>
-                                                            )
-
-                                                        }
-                                                    </>
-                                                }
-                                            </Box>
-                                        </Box>
-                                    }
                                 </Flex>
                             </Containers.Default>
                             : <RegularPost data={data} theme={theme}/>

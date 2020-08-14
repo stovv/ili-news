@@ -98,7 +98,7 @@ class TagBar extends React.Component {
             return null
         }
         return(
-            <div style={{margin: "64px 0 52px 0"}}
+            <div style={{margin: width > 1023 ? "64px 0 52px 0" : "20px 0 20px 0"}}
                 onMouseOver={()=>{
                 this.setState({hover: true});
                 this.stop();

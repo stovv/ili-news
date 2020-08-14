@@ -8,6 +8,7 @@ import windowSize from 'react-window-size';
 import { Lazy } from '../Images';
 import {TagLabel, CardText, Heading} from '../Typography';
 import { PostLink } from "../Links.react";
+import Moment from "react-moment";
 
 class Post extends React.Component{
     shouldComponentUpdate(nextProps, nextState, nextContext){
@@ -16,7 +17,7 @@ class Post extends React.Component{
 
     render(){
         const { theme, float, full, width } = this.props;
-        const { slug, title, cover, publish_at, rubric, event_date } = this.props.post || {};
+        const { slug, title, cover, publish_at, rubric, eventDate } = this.props.post || {};
 
         let date = new Date(publish_at);
         let options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -29,18 +30,34 @@ class Post extends React.Component{
         };
 
         const EventDate = () => {
-            if (event_date){
-                const date = new Date(event_date);
-                let options = { month: 'long' };
-                //console.log();
+            if (eventDate){
+                const NoNumFilteer = (d) =>{
+                    return d.replace(/[0-9]/g, '');
+                };
                 return (
-                    <>
-                        <Box height="100%" width="100%" bg="#000000" sx={{opacity: '0.4', position: 'absolute'}}/>
-                        <Box style={{position: 'absolute', top: "50%", transform: 'translateY(-50%)'}} width="100%">
-                            <Heading level={1} color="#fff" textAlign="center" margin="0 0">{date.getDate()}</Heading>
-                            <Heading level={1} color="#fff" textAlign="center" margin="0 0">{date.toLocaleDateString('ru-RU', options)}</Heading>
-                        </Box>
-                    </>
+                    width > 1023
+                      ? <>
+                            <Box height="100%" width="100%" bg="#000000" sx={{opacity: '0.4', position: 'absolute'}}/>
+                            <Box style={{position: 'absolute', top: "50%", transform: 'translateY(-50%)'}} width="100%">
+                                <Heading level={1} color="#fff" textAlign="center" margin="0 0">
+                                    <Moment locale="ru" format="DD">{eventDate}</Moment>
+                                </Heading>
+                                <Heading level={1} color="#fff" textAlign="center" margin="0 0">
+                                    <Moment locale="ru" filter={NoNumFilteer} format="DD MMMM">{eventDate}</Moment>
+                                </Heading>
+                            </Box>
+                        </>
+                     : <>
+                            <Box height="100%" width="100%" bg="#000000" sx={{opacity: '0.4', position: 'absolute'}}/>
+                            <Box style={{position: 'absolute', top: "40%", transform: 'translateY(-50%)'}} width="100%">
+                                <Heading level={1} color="#fff" textAlign="center" margin="0 0">
+                                    <Moment locale="ru" format="DD">{eventDate}</Moment>
+                                </Heading>
+                                <Heading level={1} color="#fff" textAlign="center" margin="0 0">
+                                    <Moment locale="ru" filter={NoNumFilteer} format="DD MMMM">{eventDate}</Moment>
+                                </Heading>
+                            </Box>
+                       </>
                 );
             }
             return (<></>);
@@ -53,7 +70,7 @@ class Post extends React.Component{
                     <Lazy cover={cover} {...additionalProps} overflow="visible" hover float={float}
                           wrapper={PostLink} wrapperParams={{postSlug: slug}}>
                         {
-                            ( rubric.withEventDate && event_date ) && <>
+                            ( rubric.withEventDate && eventDate ) && <>
                                 <EventDate/>
                             </>
                         }
@@ -86,6 +103,11 @@ class Post extends React.Component{
             return (
                 <Box height="100%" width="100%">
                     <Lazy cover={cover} wrapper={PostLink} wrapperParams={{postSlug: slug}}>
+                        {
+                            ( rubric.withEventDate && eventDate ) && <>
+                                <EventDate/>
+                            </>
+                        }
                         <Box bg={theme.colors.backgroundPrimary} px={[theme.spacing.s]}
                              width="100%" sx={{
                                  position: "absolute",
