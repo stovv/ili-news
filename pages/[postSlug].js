@@ -300,8 +300,9 @@ class Post extends React.Component{
             }
         }
 
+        let clientIp = null
         if (req != null ){
-            const clientIp = (req.headers['x-forwarded-for'] || '').split(',').pop() ||
+            clientIp = (req.headers['x-forwarded-for'] || '').split(',').pop() ||
                 req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
             await Public.viewPost(current_post.rating.id, clientIp)
                 //.then(response=> console.log("View ", clientIp, response.data.views))
@@ -332,7 +333,7 @@ class Post extends React.Component{
             current_post,
             readMoreLinks,
             popularPosts,
-            clientIp: store.getState().auth.ip,
+            clientIp,
             postId: current_post.id,
             store,
             amp: amp
@@ -368,7 +369,7 @@ class Post extends React.Component{
     }
 
     async fetchMore(){
-        const { theme, width, dispatch } = this.props;
+        const { theme, width, dispatch, clientIp } = this.props;
         const { rubric, publish_at } = this.props.current_post;
 
         let items = [];
@@ -393,7 +394,9 @@ class Post extends React.Component{
             ...current_post,
             publishedDate: getFormatedDate(publish_at)
         };
-
+        await Public.viewPost(current_post.rating.id, clientIp)
+            //.then(response=> console.log("View ", clientIp, response.data.views))
+            .catch(reason => console.log("View", reason));
         items.push(
             <>
                 <Flex justifyContent="center" my="108px">
