@@ -11,7 +11,7 @@ import { store } from "../store";
 import IliThemeProvider from '../theme';
 import {YANDEX_METRIKA} from "../constants";
 import { Containers, Menus, Form } from '../components';
-import * as CommonActions from '../store/commonActions.react';
+import { Common } from '../actions';
 
 import 'nprogress/nprogress.css'; //styles of nprogress
 import 'filepond/dist/filepond.min.css';
@@ -44,7 +44,7 @@ class IliApp extends App {
         super(props);
         const { store } = props;
         if (typeof window !== "undefined"){
-            store.dispatch(CommonActions.setPageSize(window.innerWidth, window.innerHeight));
+            store.dispatch(Common.setPageSize(window.innerWidth, window.innerHeight));
             document.documentElement.lang="ru";
         }
 
@@ -52,7 +52,7 @@ class IliApp extends App {
     }
 
     handleWindowResize = () => {
-        this.props.store.dispatch(CommonActions.setPageSize(window.innerWidth, window.innerHeight));
+        this.props.store.dispatch(Common.setPageSize(window.innerWidth, window.innerHeight));
     }
 
     componentDidMount() {

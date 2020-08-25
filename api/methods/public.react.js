@@ -84,7 +84,7 @@ export async function fetchPosts(fields = ['id', 'slug', 'updated_at']){
 export async function loadPosts(rubric, category, start, limit, skipPostIds ){
     return api.ql(`
     query{
-        posts(sort: "publish_at:DESC", where: { ${ skipPostIds !== undefined && typeof skipPostIds === "string" ? `id_nin: [${skipPostIds.join(",")}],`: "" } ${ rubric !== null ? `rubric: ${rubric}` : (category != null ? `rubric:{ category: ${category} }` : "")}}, limit: ${limit}, start: ${start}) {
+        posts(sort: "publish_at:DESC", where: {${Array.isArray(skipPostIds) ? `id_nin: [${skipPostIds.join(",")}], ` : ""}${rubric !== null ? `rubric: ${rubric}` : (category != null ? `rubric:{ category: ${category} }` : "")}}, limit: ${limit}, start: ${start}) {
             id,
             eventDate,
             slug,

@@ -12,7 +12,7 @@ import { Click } from "../Animations";
 import { Heading } from '../Typography';
 import { Inputs, Loader } from '../Forms';
 import { UniversalLink } from "../Links.react";
-import { clickOnSearch } from "../../store/commonActions.react";
+import { Common } from "../../actions";
 
 
 const NotFound = ({theme})=>(
@@ -207,7 +207,7 @@ class Search extends React.Component{
                 }}>
                     <Box sx={{position: "absolute", top: width > 768 ? "52px" : "24px" ,
                         right: width > 768 ? "92px" : "24px"}}>
-                        <Click.SimpleClick style={{float: "right"}} onClick={()=>dispatch(clickOnSearch())}>
+                        <Click.SimpleClick style={{float: "right"}} onClick={()=>dispatch(Common.clickOnSearch())}>
                             <Icons.CloseIcon />
                         </Click.SimpleClick>
                     </Box>
@@ -226,7 +226,7 @@ class Search extends React.Component{
                                 searchItems.map((post, index)=>(
                                     <React.Fragment key={index}>
                                         <Mini cover={post.cover} slug={post.slug}
-                                              onClick={()=>dispatch(clickOnSearch())}
+                                              onClick={()=>dispatch(Common.clickOnSearch())}
                                               heading={post.rubric ? post.rubric.title : ""}>
                                             {post.title}
                                         </Mini>

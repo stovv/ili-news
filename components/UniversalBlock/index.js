@@ -1,6 +1,8 @@
 import React from 'react';
+import { Box } from 'rebass';
 import PropTypes from 'prop-types';
 
+// Block types
 import RawBlock from "./Components/Raw.react";
 import ImageBlock from './Components/Image.react';
 import EmbedBlock from "./Components/Embed.react";
@@ -9,10 +11,14 @@ import CalloutBlock from "./Components/Callout.react";
 import ReadMoreBlock from "./Components/ReadMore.react";
 import EventBanner from "./Components/EventBanner.react";
 
-
+// Block mapping
 import Components from "./ComponentMapping.react";
 
+//
 class UniversalBlock extends React.Component {
+    shouldComponentUpdate(nextProps, nextState, nextContext){
+        return false
+    }
 
     render(){
         const { block } = this.props;
@@ -32,7 +38,22 @@ UniversalBlock.propTypes = {
     block: PropTypes.object.isRequired,
 }
 
-export default UniversalBlock;
+
+// Blocks to react dom
+const PostBlocks = ({data}) =>(
+    <Box px={"2px"}>
+        {
+            data.map((item, index)=>
+                <React.Fragment key={index}>
+                    <UniversalBlock block={item}/>
+                </React.Fragment>
+            )
+        }
+    </Box>
+);
+
+
+export default PostBlocks;
 
 export {
     RawBlock,

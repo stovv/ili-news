@@ -13,7 +13,7 @@ import { Default, Mini } from '../Containers.react';
 import { UniversalLink } from '../Links.react';
 import { Click } from '../Animations';
 import MobileMenu from "./Mobile.react";
-import { clickOnSearch } from "../../store/commonActions.react";
+import { Common } from "../../actions";
 
 
 const MenuLink = styled.a`
@@ -94,7 +94,7 @@ class HeaderNavBar extends React.Component {
                             </Flex>
                         </Box>
                         <Box width={1/8} my='auto' >
-                            <Click.SimpleClick style={{float: "right"}} onClick={()=>dispatch(clickOnSearch())}>
+                            <Click.SimpleClick style={{float: "right"}} onClick={()=>dispatch(Common.clickOnSearch())}>
                                 <Icons.SearchIcon inverted={searchActivated}/>
                             </Click.SimpleClick>
                         </Box>
@@ -126,7 +126,7 @@ class HeaderNavBar extends React.Component {
                                 </Box>
                             </Box>
                             <Box float="right" my="auto">
-                                <Click.SimpleClick onClick={()=>dispatch(clickOnSearch())}>
+                                <Click.SimpleClick onClick={()=>dispatch(Common.clickOnSearch())}>
                                     <Icons.SearchIcon />
                                 </Click.SimpleClick>
                             </Box>

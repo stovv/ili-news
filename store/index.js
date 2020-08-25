@@ -1,25 +1,25 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunkMiddleware from 'redux-thunk';
-import authReducer from "./authReducer.react";
-import commonReducer from './commonReducer.react';
 import logger from 'redux-logger';
-import { loadState, saveState } from './tools';
 import throttle from 'lodash.throttle';
+import thunkMiddleware from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+
+import authReducer from "./auth";
+import commonReducer from './common';
+import { loadState, saveState } from './tools';
 
 
 const reducers = combineReducers({auth: authReducer, common: commonReducer});
-
-
 const persistedState = loadState();
 
 
 export const store = createStore(
     reducers,
     persistedState,
-    composeWithDevTools(applyMiddleware(thunkMiddleware, /*axiosMiddleware(client),*/ logger))
+    composeWithDevTools(process.env.NODE_ENV === 'development'
+        ? applyMiddleware(thunkMiddleware, logger)
+        : applyMiddleware(thunkMiddleware))
 );
-
 
 store.subscribe(
     throttle(() => {

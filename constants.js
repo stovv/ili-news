@@ -1,14 +1,14 @@
-export const BACKEND_URL = '';
-export const SITE_URL = '';
-export const OLD_SITE_URL='';
-export const YANDEX_VERIFICATION = '';
-export const YANDEX_METRIKA = { accounts: [], options: { webvisor: true }};
+export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND;
+export const SITE_URL = process.env.NEXT_PUBLIC_HOST;
+export const OLD_SITE_URL = process.env.NEXT_PUBLIC_OLD_SITE_NAME;
+export const YANDEX_VERIFICATION = process.env.NEXT_PUBLIC_YANDEX_VERIFICATION;
+export const YANDEX_METRIKA = { accounts: process.env.NEXT_PUBLIC_YANDEX_METRIKA_ACCOUNTS.split(','), options: { webvisor: process.env.NEXT_PUBLIC_YANDEX_METRIKA_WEBVISOR }};
 
 export const SITE_INFO = {
-    TITLE: "ИЛИ Молодежный журнал | Новости, История, События Нижнего",
-    DESCRIPTION: "Молодежный журнал ИЛИ. Новости, Люди Спецроекты и События Нижнего Новгорода",
+    TITLE: process.env.NEXT_PUBLIC_SITE_TITLE,
+    DESCRIPTION: process.env.NEXT_PUBLIC_SITE_DESCRIPTION,
     IMAGE: {
-        url: "https://xpan.ili-nnov.ru/uploads/icon_4398f688b4.png",
+        url: process.env.NEXT_PUBLIC_SITE_DEFAULT_IMAGE,
         width: 112,
         height: 112
     }

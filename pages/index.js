@@ -7,7 +7,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import { Public } from '../api';
 import { Containers, Form } from '../components';
-import { changeInfinityState } from "../store/commonActions.react";
+import { Common } from "../actions";
 import { SITE_INFO, SITE_URL, YANDEX_VERIFICATION } from '../constants';
 import { TopPosts, NewsPostsComps, CategoryLine, CompsBannerAd } from '../compilations';
 
@@ -106,7 +106,7 @@ class FrontPage extends React.Component {
             hasMore: true
         }
         this.fetchMore = this.fetchMore.bind(this);
-        props.dispatch(changeInfinityState(true))
+        props.dispatch(Common.changeInfinityState(true))
     }
 
     async fetchMore(){

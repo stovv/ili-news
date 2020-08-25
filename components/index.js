@@ -10,12 +10,14 @@ import * as Links from './Links.react';
 import * as Cards from './Cards';
 import * as Errors from './Errors';
 import * as Toasts from './Toasts';
+import * as Post from './Post';
 
 // EditorJS blocks to Components converter
-import UniversalBlock from "./UniversalBlock";
+import PostBlocks from "./UniversalBlock";
 import * as Blocks from "./UniversalBlock";
 
 export {
+    Post,
     Form,
     Menus,
     Cards,
@@ -26,5 +28,5 @@ export {
     Toasts,
     Typography,
     Containers,
-    UniversalBlock
+    PostBlocks
 }

@@ -12,7 +12,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import {CardText} from "../../components/Typography";
 import {PostLink} from "../../components/Links.react";
 import {connect} from "react-redux";
-import {changeInfinityState} from "../../store/commonActions.react";
+import { Common } from "../../actions";
 
 function randomChoice(arr){
     return arr[Math.floor(Math.random() * arr.length)];
@@ -125,7 +125,7 @@ class Rubric extends React.Component {
         }
         this.fetchMoreWithCover = this.fetchMoreWithCover.bind(this);
         this.fetchMoreWithoutCover = this.fetchMoreWithoutCover.bind(this);
-        props.dispatch(changeInfinityState(false))
+        props.dispatch(Common.changeInfinityState(false))
     }
 
 
@@ -154,7 +154,7 @@ class Rubric extends React.Component {
                 this.setState({
                     hasMore: false
                 })
-                this.props.dispatch(changeInfinityState(false))
+                this.props.dispatch(Common.changeInfinityState(false))
                 return;
             }
             items.push(<PostsWithAd posts={posts} uid={this.state.uid}/>)
@@ -194,7 +194,7 @@ class Rubric extends React.Component {
             this.setState({
                 hasMore: false
             })
-            this.props.dispatch(changeInfinityState(false))
+            this.props.dispatch(Common.changeInfinityState(false))
             return;
         }
 

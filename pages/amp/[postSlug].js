@@ -12,7 +12,7 @@ import Error from '../error__';
 import { Public } from '../../api';
 import { Icons } from '../../assets';
 import { BACKEND_URL, OLD_SITE_URL, SITE_URL } from '../../constants';
-import { changeInfinityState } from '../../store/commonActions.react';
+import { Common } from '../../actions';
 import { getFormatedDate } from '../../tools';
 import { UniversalBlock ,Containers, Typography, Images, Cards, Form, Blocks } from '../../components';
 
@@ -281,7 +281,7 @@ class Post extends React.Component{
             items: []
         }
         this.fetchMore = this.fetchMore.bind(this);
-        props.dispatch(changeInfinityState(props.current_post && props.current_post.rubric && props.current_post.rubric.infinityScroll))
+        props.dispatch(Common.changeInfinityState(props.current_post && props.current_post.rubric && props.current_post.rubric.infinityScroll))
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -294,7 +294,7 @@ class Post extends React.Component{
                 skipPostIds: [ this.props.current_post.id ],
                 items: []
             }
-            this.props.dispatch(changeInfinityState(this.props.current_post
+            this.props.dispatch(Common.changeInfinityState(this.props.current_post
                 && this.props.current_post.rubric
                 && this.props.current_post.rubric.infinityScroll))
         }

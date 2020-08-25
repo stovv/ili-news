@@ -1,4 +1,4 @@
-import { PAGE } from './types.react';
+import { PAGE, SITE } from './types';
 
 let initialState = {
     pageSize:{
@@ -6,7 +6,8 @@ let initialState = {
         height: 919
     },
     infinityActive: false,
-    activeSearch: false
+    activeSearch: false,
+    mod: "default"
 }
 
 const CommonReducer = (state = initialState, action) => {
@@ -17,16 +18,28 @@ const CommonReducer = (state = initialState, action) => {
                 pageSize: action.payload
             }
         }
-        case PAGE.INFINITY_PAGE:{
+        case PAGE.INFINITY:{
             return{
                 ...state,
                 infinityActive: action.payload
             }
         }
-        case PAGE.SEARCH:{
+        case SITE.SEARCH:{
             return {
                 ...state,
                 activeSearch: !state.activeSearch
+            }
+        }
+        case SITE.THEME.DARK:{
+            return {
+                ...state,
+                mod: "dark"
+            }
+        }
+        case SITE.THEME.DEFAULT:{
+            return {
+                ...state,
+                mod: "default"
             }
         }
         default:

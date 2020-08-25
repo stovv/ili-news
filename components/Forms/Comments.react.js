@@ -13,36 +13,11 @@ const iconSpacing = {
 }
 
 class Comments extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            count: 10
-        }
-    }
-
-    componentDidMount(){
-        //TODO Add get count of comments
-    }
-
-    componentDidUpdate(){
-        //TODO Add get count of comments
-    }
-
     render(){
         const { threadId, theme, width } = this.props;
         // TODO: Remove after block done
-        return(<></>);
-
         return(
-            <Flex ml={width > 1023 ? "65px" : "20px"}>
-                <Box display="flex" mr="28px">
-                    <Icons.CommentsIcon style={iconSpacing}/>
-                    {
-                        this.state.count > 0 &&
-                        <CardText type="normal" margin="0" color={theme.text.secondary}>{this.state.count}</CardText>
-                    }
-                </Box>
-            </Flex>
+            <></>
         );
     }
 }
