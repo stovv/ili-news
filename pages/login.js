@@ -9,7 +9,7 @@ import { Public } from '../api';
 import {Form, Images, Typography} from '../components';
 import { BallClipRotate } from 'react-pure-loaders';
 import { Icons, Logo } from '../assets'
-import {loginAction} from "../store/authActions.react";
+import { Auth } from "../actions";
 import {withTheme} from "styled-components";
 import Link from "next/link";
 import {Heading} from "../components/Typography";
@@ -39,7 +39,7 @@ class LoginPage extends React.Component {
     handleSubmit () {
         this.setState({loading: true})
         const {dispatch} = this.props;
-        dispatch(loginAction(this.state))
+        dispatch(Auth.loginAction(this.state))
             .then(() => this.setState({loading: false}));
     };
 
