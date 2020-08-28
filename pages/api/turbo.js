@@ -40,11 +40,15 @@ const Turbo = async (req, res) => {
     try{
         let postsNotNull = true;
         let start = 0;
-        let limit = 5;
+        let limit = 40;
         while(postsNotNull){
+            console.log("Start ", start, limit);
             await Public.loadPosts(null, null, start, limit, null)
                 .then(async response=>{
                     let posts = response.data.posts;
+                    if ( posts.length === 0 ){
+                        postsNotNull = false;
+                    }
                     await posts.map(async post => {
                         let readMore = [];
                         await Public.getReadMore(post.rubric.id, post.id)
