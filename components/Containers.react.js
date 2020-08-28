@@ -43,6 +43,36 @@ export const Offscreen = ({children}) => {
     );
 }
 
+export const LeftSidePost = styled.div`
+    width: 100%;
+    position: relative;
+    @media screen and (min-width: 1024px){
+        width: 75%;
+        padding-right: 5%;
+    }
+`;
+
+export const RightSidePost = styled.div`
+    display: none;
+    @media screen and (min-width: 1024px){
+        width: 25%;
+        display: block;
+        position: relative;
+    }
+`;
+
+export const PostMarginContainer = styled.div`
+    display: flex;
+    
+    @media screen and (min-width: 1024px){
+        margin-top: 54px;
+    }
+    
+    @media screen and (max-width: 1023px){
+        margin-top: 24px;
+    }
+`;
+
 Default.propTypes = {
     mt: PropTypes.string,
     mb: PropTypes.string

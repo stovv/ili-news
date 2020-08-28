@@ -7,7 +7,7 @@ import {SITE_URL}  from '../../constants';
 
 let sitemap;
 
-export default async (req, res) => {
+const SitemapXML = async (req, res) => {
     res.setHeader('content-type', 'application/xml');
     res.setHeader('Content-Encoding', 'gzip');
     if (!res) return {};
@@ -70,3 +70,5 @@ export default async (req, res) => {
         res.end();
     }
 };
+
+export default SitemapXML;

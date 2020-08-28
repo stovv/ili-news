@@ -12,7 +12,10 @@ import ReadMoreBlock from "./Components/ReadMore.react";
 import EventBanner from "./Components/EventBanner.react";
 
 // Block mapping
-import Components from "./ComponentMapping.react";
+import {
+    Components,
+    TurboComponents
+} from "./ComponentMapping.react";
 
 //
 class UniversalBlock extends React.Component {
@@ -52,6 +55,12 @@ const PostBlocks = ({data}) =>(
     </Box>
 );
 
+const TurboPostBlocks = (blocks) => {
+    return blocks.map(block=>{
+        if ( TurboComponents[block.type] === undefined) return '';
+        return TurboComponents[block.type](block.data);
+    }).join('');
+};
 
 export default PostBlocks;
 
@@ -62,5 +71,6 @@ export {
     EmbedBlock,
     EventBanner,
     CalloutBlock,
-    ReadMoreBlock
+    ReadMoreBlock,
+    TurboPostBlocks
 }

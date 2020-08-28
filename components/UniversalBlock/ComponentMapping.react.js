@@ -6,6 +6,11 @@ import Embed from "./Components/Embed.react";
 import Callout from './Components/Callout.react';
 import ReadMore from "./Components/ReadMore.react";
 
+
+import {
+    TurboHeading, TurboImage, TurboParagraph, TurboQuote
+} from './TurboComponents';
+
 const Components = {
     header: Typography.Heading,
     paragraph: Typography.Paragraph,
@@ -17,4 +22,17 @@ const Components = {
     raw: Raw
 };
 
-export default Components;
+const TurboComponents = {
+    header: TurboHeading,
+    paragraph: TurboParagraph,
+    // callout: Callout,
+    image: TurboImage,
+    quote: TurboQuote,
+    embed: Embed,
+    // raw: Raw
+};
+
+export {
+    TurboComponents,
+    Components
+}

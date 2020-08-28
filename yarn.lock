@@ -8648,6 +8648,13 @@ tunnel-agent@^0.6.0:
   dependencies:
     safe-buffer "^5.0.1"
 
+turbo-rss@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/turbo-rss/-/turbo-rss-1.0.8.tgz#810d82511d5e96c794e24dc24a3a5307cd35d8a4"
+  integrity sha512-xAT1ikqq6KRCK1Zzhb/Clgcwi5e1xsHGFrCPlgdJXB6LotT6ntAAt10Mgn1/BqlmzHjYjX3yxV2Yon6rQQxtsQ==
+  dependencies:
+    xml "1.0.1"
+
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
@@ -9112,6 +9119,11 @@ xml2js@^0.4.5:
   dependencies:
     sax ">=0.6.0"
     xmlbuilder "~11.0.0"
+
+xml@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/xml/-/xml-1.0.1.tgz#78ba72020029c5bc87b8a81a3cfcd74b4a2fc1e5"
+  integrity sha1-eLpyAgApxbyHuKgaPPzXS0ovweU=
 
 xmlbuilder@^13.0.2:
   version "13.0.2"

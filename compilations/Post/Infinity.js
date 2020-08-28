@@ -1,5 +1,6 @@
 import React from "react";
-import { Flex, Box } from 'rebass';
+import PropTypes from 'prop-types';
+import { Flex } from 'rebass';
 import { connect } from "react-redux";
 import styled from "styled-components";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -129,13 +130,13 @@ class InfinityPost extends React.Component{
     }
 
     render(){
-        const { post, width } = this.props;
+        const { post, popularPosts, width } = this.props;
         const { items, hasMore } = this.state;
 
         return (
             <Containers.Default>
                 <Flex>
-                    <Box id="test" width={width > 1023 ? 9/12 : '100%' }>
+                    <Containers.LeftSidePost>
                         <PostContent post={post}/>
                         <InfiniteScroll
                             dataLength={items.length}
@@ -144,8 +145,10 @@ class InfinityPost extends React.Component{
                             loader={<Form.Loader/>}>
                             {items}
                         </InfiniteScroll>
-                    </Box>
-                    <PopularPostsAdSide />
+                    </Containers.LeftSidePost>
+                    <Containers.RightSidePost>
+                        <PopularPostsAdSide posts={popularPosts} sticky/>
+                    </Containers.RightSidePost>
                 </Flex>
             </Containers.Default>
         )
@@ -159,5 +162,9 @@ function mapStateToProps(state){
     }
 }
 
+InfinityPost.propTypes = {
+    post: PropTypes.object.isRequired,
+    popularPosts: PropTypes.array
+}
 
 export default connect(mapStateToProps)(InfinityPost);

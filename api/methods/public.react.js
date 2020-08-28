@@ -10,7 +10,10 @@ export async function getReadMore(rubricId, postId){
           posts(sort: "publish_at:DESC", limit: 3, where: { rubric : ${rubricId}, id_ne: ${postId} }){
               id,
               slug,
-              title
+              title,
+              cover{
+                url
+              }
           }
         }
     `)
@@ -71,10 +74,10 @@ export async function getRubrics(){
     `);
 }
 
-export async function fetchPosts(fields = ['id', 'slug', 'updated_at']){
+export async function fetchPosts(fields = ['id', 'slug', 'updated_at'], start, limit){
     return api.ql(`
         query{
-            posts{
+            posts${start !== undefined || limit !== undefined ? `(${(start !== undefined ? `start:${start},` : '')}${(limit !== undefined ? `limit:${limit}` : '')})`: ''}{
                 ${fields.join(',\n')}
             }
         }

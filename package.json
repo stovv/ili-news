@@ -84,6 +84,7 @@
     "styled-components": "^5.1.0",
     "svg-sprite-loader": "^4.2.5",
     "toasted-notes": "^3.2.0",
+    "turbo-rss": "^1.0.8",
     "use-dark-mode": "^2.3.1"
   },
   "devDependencies": {
