@@ -8,6 +8,7 @@ import ReadMore from "./Components/ReadMore.react";
 
 
 import {
+    TurboEmbed,
     TurboHeading, TurboImage, TurboParagraph, TurboQuote
 } from './TurboComponents';
 
@@ -28,7 +29,7 @@ const TurboComponents = {
     // callout: Callout,
     image: TurboImage,
     quote: TurboQuote,
-    embed: Embed,
+    embed: TurboEmbed,
     // raw: Raw
 };
 
