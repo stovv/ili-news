@@ -4,7 +4,7 @@ import Error from '../error__';
 import { Public } from '../../api';
 import { Flex, Box } from 'rebass';
 import {SITE_URL} from "../../constants";
-import {Images, Typography, Containers, Form} from "../../components";
+import {Images, Typography, Containers, Form, Seo, Journal} from "../../components";
 import {Emoji} from "emoji-mart";
 import { withTheme } from 'styled-components';
 import {CategoryLine, CompsBannerAd, PostsWithAd, TagBar} from "../../compilations";
@@ -144,48 +144,25 @@ class Category extends React.Component {
 
     render() {
         // TODO Use this.props.user for head component
-        const { category, categorySlug, theme, items, width } = this.props;
+        const { category, items, width } = this.props;
         let empty = true;
 
         if (category === null){
             return (<Error statusCode={404}/>);
         }
 
-        let tags = [];
-        category.rubrics.map(rubric => {
-            tags.push({
-                text: rubric.title,
-                link: RubricLink,
-                linkProps: {
-                    rubricSlug: rubric.slug
-                }
-            })
-        });
+        let tags = category.rubrics.map(rubric => ({
+            text: rubric.title,
+            link: RubricLink,
+            linkProps: {
+                rubricSlug: rubric.slug
+            }
+        }));
 
         return (
             <>
-                <NextSeo title={category.title}
-                         canonical={`${SITE_URL}/category/${categorySlug}`}
-                         openGraph={{
-                             url: `${SITE_URL}/category/${categorySlug}`,
-                             locale: 'ru_RU',
-                             type: "website",
-                             title: category.title,
-                             site_name: 'Молодежный журнал ИЛИ'
-                         }}
-                         twitter={{
-                             handle: '@handle',
-                             site: '@site',
-                             cardType: 'summary_large_image',
-                         }}/>
-                <Flex justifyContent="center" m={width > 1023 ? "88px 0 14px 0" : "24px 0 5px 0"}>
-                    {
-                        width > 1023
-                            ? <Typography.Heading level={1} margin="auto 0 auto 0">{category.title}</Typography.Heading>
-                            : <Typography.Heading level={2}  textAlign="center" margin="auto 0 auto 0">{category.title}</Typography.Heading>
-                    }
-                </Flex>
-                <TagBar tags={tags}/>
+                <Seo.Category category={category}/>
+                <Journal.Header title={category.title} tags={tags}/>
                 <Containers.Default mt={0}>
                     {
                         items.map((item, index) =>{

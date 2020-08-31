@@ -1,18 +1,96 @@
 import React from 'react';
-import { Box } from "rebass";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { CardText, TagLabel } from "../../Typography";
+import { ComposeFont } from "../../Typography";
 
+
+const QuoteT1 = styled.p`   
+    ${props => ComposeFont(props.theme.post.typo.quote.t1, {
+    fontFamily: props.theme.fontFamily,
+    lineHeight: 1.33,
+    fontWeight: 500,
+    fontSize: {
+        s: "18px",
+        m: "19px",
+        l: "20px",
+        tablet: "22px",
+        laptop: "24px",
+    },
+    margin: {
+        s: 0,
+        m: 0,
+        l: 0,
+        tablet: 0,
+        laptop: 0
+    },
+    color: props.theme.text.primary
+   })};
+`;
+
+const QuoteT2 = styled.p`
+    ${props => ComposeFont(props.theme.post.typo.quote.t2, {
+        fontFamily: props.theme.fontFamily,
+        lineHeight: 1.33,
+        fontWeight: 500,
+        fontSize: {
+            s: "18px",
+            m: "19px",
+            l: "20px",
+            tablet: "22px",
+            laptop: "24px",
+        },
+        margin: {
+            s: 0,
+            m: 0,
+            l: 0,
+            tablet: 0,
+            laptop: 0
+        },
+        color: props.theme.text.primary
+    })};
+    text-align: center;
+`;
 
 const QuoteBox = styled.div`
-  margin: ${props => (props.screenWidth && props.screenWidth > 1023) ? '40px 0' : '20px 0'};
-  padding-left: ${props => (props.screenWidth && props.screenWidth > 1023) ? '37px' : '15px'};
+  margin: 20px 0;
+  padding-left: 15px;
   padding-top: 10px;
   padding-bottom: 10px;
   border-left: solid 5px ${props => props.theme.colors.primary};
+  
+  @media screen and (min-width: 1024px){
+      margin: 40px 0;
+      padding-left: 37px;
+  }
+`;
+
+const QuoteBox2 = styled.div`
+   margin: 50px 0;
+   @media screen and (min-width: 1024px){
+       margin-top: 35px;
+       margin-bottom: 40px;   
+   } 
+`;
+
+
+const QuoteHeading = styled.p`
+  font-family: ${props => props.theme.fontFamily};
+  font-size: 28px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.04;
+  letter-spacing: normal;
+  text-align: center;
+  margin: 0 0 5px 0;
+  
+  @media screen and (min-width: 1024px ){
+      margin: 0 0 23px 0;
+      font-size: 36px;
+  }
+  
 `;
 
 
@@ -29,37 +107,20 @@ class Quote extends React.Component {
 
         if (data.type === "1"){
             return (
-                <QuoteBox screenWidth={width}>
-                    {
-                        width > 1023
-                            ?
-                            <TagLabel type="large" weight="500" margin={0}>
-                                <em><div dangerouslySetInnerHTML={{__html: data.text.replace(/\n/g, '<br/>')}}/></em>
-                            </TagLabel>
-                            :
-                            <CardText type="normal" weight="500"  margin={0}>
-                                <em><div dangerouslySetInnerHTML={{__html: data.text.replace(/\n/g, '<br/>')}}/></em>
-                            </CardText>
-                    }
+                <QuoteBox>
+                    <QuoteT1>
+                        <em><div dangerouslySetInnerHTML={{__html: data.text.replace(/\n/g, '<br/>')}}/></em>
+                    </QuoteT1>
                 </QuoteBox>
             );
         }else if (data.type === "2"){
             return (
-                    width > 1023
-                    ?
-                    <Box mt="35px" mb="40px">
-                        <CardText type="xxlarge" textAlign="center" margin="0 0 23px 0">« »</CardText>
-                        <TagLabel type="large" weight="500" textAlign="center" margin="0">
-                            <em><div dangerouslySetInnerHTML={{__html: data.text.replace(/\n/g, '<br/>')}}/></em>
-                        </TagLabel>
-                    </Box>
-                    :
-                    <Box mt="50px" mb="50px">
-                        <CardText type="large" textAlign="center" margin="0 0 5px 0">« »</CardText>
-                        <CardText type="normal" weight="500" textAlign="center" margin="0">
-                            <em><div dangerouslySetInnerHTML={{__html: data.text.replace(/\n/g, '<br/>')}}/></em>
-                        </CardText>
-                    </Box>
+                <QuoteBox2>
+                    <QuoteHeading>« »</QuoteHeading>
+                    <QuoteT2>
+                        <em><div dangerouslySetInnerHTML={{__html: data.text.replace(/\n/g, '<br/>')}}/></em>
+                    </QuoteT2>
+                </QuoteBox2>
             );
         }else if (data.type === "3"){
             return null

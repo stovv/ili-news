@@ -83,7 +83,7 @@ const Turbo = async (req, res) => {
                 });
             start += limit;
         }
-        res.send(feed.xml());
+        res.send(s);
     }catch (e) {
         res.statusCode = 521;
         console.log('Something wrong with generating Turbo RSS -> ', e);

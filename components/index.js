@@ -7,16 +7,18 @@ import * as Containers from './Containers.react';
 import * as Links from './Links.react';
 
 // Fragments
-import * as Cards from './Cards';
-import * as Errors from './Errors';
-import * as Toasts from './Toasts';
+import * as Seo from './Seo';
 import * as Post from './Post';
+import * as Cards from './Cards';
+import * as Toasts from './Toasts';
+import * as Journal from './Journal';
 
 // EditorJS blocks to Components converter
 import PostBlocks from "./UniversalBlock";
 import * as Blocks from "./UniversalBlock";
 
 export {
+    Seo,
     Post,
     Form,
     Menus,
@@ -24,8 +26,8 @@ export {
     Links,
     Images,
     Blocks,
-    Errors,
     Toasts,
+    Journal,
     Typography,
     Containers,
     PostBlocks

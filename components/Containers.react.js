@@ -73,6 +73,18 @@ export const PostMarginContainer = styled.div`
     }
 `;
 
+export const JournalHeadingContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    @media screen and (min-width: 1024px){
+        margin: 88px 0 14px 0;
+    }
+    
+    @media screen and (max-width: 1023px){
+        margin-top: 20px;
+    }
+`;
+
 Default.propTypes = {
     mt: PropTypes.string,
     mb: PropTypes.string

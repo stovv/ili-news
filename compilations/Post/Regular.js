@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { Common } from "../../actions";
 import PopularPostsAdSide from "../PopularPostsAdSide";
-import { Post as PostComponents, PostBlocks, Containers, Images } from "../../components";
+import { Post as PostComponents, PostBlocks, Containers, Images, Blocks } from "../../components";
 
 
 class RegularPost extends React.Component{
@@ -24,9 +24,9 @@ class RegularPost extends React.Component{
     }
 
     render(){
-        const { post, popularPosts, readMore, width } = this.props;
+        const { post, popularPosts, readMore, width, clientIp } = this.props;
         const { title, rubric, slug, authors, cover, publish_at, eventDate, eventLink, eventLocation, eventPrice,
-            blocks: { blocks }, clientIp, commentThread, rating } = post;
+            blocks: { blocks }, commentThread, rating } = post;
 
         return (
             <Containers.Default>
@@ -39,7 +39,7 @@ class RegularPost extends React.Component{
                     <Containers.LeftSidePost>
                         {
                             (eventLink != null && eventLocation != null && eventPrice != null)
-                            && <PostBlocks.EventBanner data={{ eventLink, eventLocation, eventPrice, eventDate  }}/>
+                            && <Blocks.EventBanner data={{ eventLink, eventLocation, eventPrice, eventDate  }}/>
                         }
                         <PostBlocks data={blocks}/>
                         <PostComponents.Footer slug={slug} clientId={clientIp} commentThreadId={commentThread.id}

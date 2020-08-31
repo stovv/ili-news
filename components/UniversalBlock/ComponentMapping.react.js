@@ -3,18 +3,19 @@ import * as Typography from "../Typography";
 import Image from "./Components/Image.react";
 import Quote from "./Components/Quote.react";
 import Embed from "./Components/Embed.react";
+import Paragraph from "./Components/Paragraph";
 import Callout from './Components/Callout.react';
 import ReadMore from "./Components/ReadMore.react";
 
 
 import {
-    TurboEmbed,
-    TurboHeading, TurboImage, TurboParagraph, TurboQuote
+    TurboEmbed, TurboParagraph, TurboQuote,
+    TurboHeading, TurboImage
 } from './TurboComponents';
 
 const Components = {
     header: Typography.Heading,
-    paragraph: Typography.Paragraph,
+    paragraph: Paragraph,
     callout: Callout,
     image: Image,
     quote: Quote,

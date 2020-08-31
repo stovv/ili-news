@@ -4,8 +4,8 @@ import { useAmp } from 'next/amp'
 import Error from './error__';
 import { Public } from '../api';
 import { OLD_SITE_URL } from '../constants';
-import { Post as PostComponents } from '../components';
 import { Post as PostCompilation } from '../compilations';
+import { Seo } from '../components';
 
 
 //export const config = { amp: 'hybrid' };
@@ -97,9 +97,9 @@ class Post extends React.Component{
         try {
             return (
                 <>
-                    <PostComponents.Seo post={current_post}/>
+                    <Seo.Post post={current_post}/>
                     {
-                        current_post.rubric.infinityScroll
+                        current_post.rubric && current_post.rubric.infinityScroll
                             ? <PostCompilation.Infinity post={current_post} popularPosts={popularPosts}/>
                             : <PostCompilation.Regular post={current_post} popularPosts={popularPosts}
                                                            readMore={readMoreLinks}/>

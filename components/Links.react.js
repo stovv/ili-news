@@ -45,8 +45,7 @@ export const SocialLink = ({ item, component, route, ...props }) => {
         return <a href={item.socialUrl} {...props}>
             <img src={`${BACKEND_URL}${item.icon.url}`} alt={"social"} style={{
                 width: "24px",
-                height: "24px",
-                filter: "invert(1)"
+                height: "24px"
             }}/>
         </a>
     }

@@ -4,7 +4,7 @@ import Error from '../error__';
 import { Public } from '../../api';
 import { Flex, Box } from 'rebass';
 import {SITE_URL} from "../../constants";
-import {Images, Typography, Containers, Form, Cards, Links} from "../../components";
+import {Images, Typography, Containers, Form, Cards, Links, Seo, Journal} from "../../components";
 import {Emoji} from "emoji-mart";
 import { withTheme } from 'styled-components';
 import {CategoryLine, CompsBannerAd, PostsWithAd} from "../../compilations";
@@ -255,64 +255,8 @@ class Rubric extends React.Component {
 
         return (
             <>
-                <NextSeo title={rubric.title}
-                     description={rubric.subtitle}
-                     canonical={`${SITE_URL}/rubric/${rubricSlug}`}
-                     openGraph={{
-                         url: `${SITE_URL}/rubric/${rubricSlug}`,
-                         locale: 'ru_RU',
-                         type: "website",
-                         title: rubric.title,
-                         description: rubric.subtitle,
-                         site_name: 'Молодежный журнал ИЛИ'
-                     }}
-                     twitter={{
-                         handle: '@handle',
-                         site: '@site',
-                         cardType: 'summary_large_image',
-                     }}/>
-
-                {
-                    width > 1023
-                        ?
-                        <>
-                            <Flex justifyContent="center" m="88px 0 14px 0">
-                                <Typography.Heading level={1} margin="auto 20px auto 0">{rubric.title}</Typography.Heading>
-                                {
-                                    rubric.emoji &&
-                                    <Box my="auto">
-                                        <Emoji emoji={{id: rubric.emoji}} size={48}/>
-                                    </Box>
-                                }
-                            </Flex>
-                            {
-                                (rubric.subtitle != null && rubric.subtitle.length > 0) &&
-                                <Flex justifyContent="center">
-                                    <Typography.Heading level={5} margin={`auto 20px auto 0`} textAlign="center"
-                                                        color={theme.text.secondary}>{rubric.subtitle}</Typography.Heading>
-                                </Flex>
-                            }
-                        </>
-                        :
-                        <Flex justifyContent="center" m="20px 0 0 0">
-                            <Box>
-                                {
-                                    rubric.emoji &&
-                                    <Flex justifyContent="center" mb="10px">
-                                        <Emoji emoji={{id: rubric.emoji}} size={48}/>
-                                    </Flex>
-                                }
-                                <Typography.Heading level={4} margin="auto 0 5px 0" textAlign="center">{rubric.title}</Typography.Heading>
-                                {
-                                    (rubric.subtitle != null && rubric.subtitle.length > 0) &&
-                                    <Flex justifyContent="center">
-                                        <Typography.Heading level={6} margin={`0 auto`} textAlign="center"
-                                                            color={theme.text.secondary}>{rubric.subtitle}</Typography.Heading>
-                                    </Flex>
-                                }
-                            </Box>
-                        </Flex>
-                }
+                <Seo.Rubric rubric={rubric}/>
+                <Journal.Header title={rubric.title} subTitle={rubric.subtitle} emoji={rubric.emoji}/>
                 {
                     rubric.cover
                         ? <>
