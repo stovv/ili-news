@@ -27,6 +27,57 @@ export const SearchInput = styled.input`
   }
 `;
 
+const LoginLabel = styled.span`
+    font-family: ${props => props.theme.fontFamily};
+    margin: 0 25px 0 0;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.32;
+    letter-spacing: normal;
+    color: ${props => props.theme.colors.primary};
+`;
+
+const LoginInp = styled.input`
+  outline: none;
+  margin: ${props => props.margin ? props.margin : '0 auto'};
+  padding: 0 20px;
+  font-size: 24px;
+  min-height: 48px;
+  border-radius: 8px;
+  text-align: center;
+  color: ${props => props.theme.text.primary};
+  background: ${props => props.theme.colors.backgroundPrimary};
+  border: solid 2px ${props => props.error ? props.theme.colors.primary : props.theme.colors.backgroundSecondary};
+
+  :focus{
+      border: solid 2px ${props => props.theme.colors.backgroundInvert};  
+  }
+  
+  ::placeholder{
+      color: ${props=>props.theme.text.disabled};
+  }
+  
+  @media screen and (min-width: 1110px){
+    min-width: ${props => props.width ? props.width : "364px"};
+  }
+  
+  @media screen and (max-width: 1110px){
+    min-width: ${props => props.width ? props.width : "95%"};
+  }
+`;
+
+// TODO: Add Error label
+export const LoginInput = (props) => (
+    <>
+        {/*{*/}
+        {/* props.error && <LoginLabel>{props.label}</LoginLabel>*/}
+        {/*}*/}
+        <LoginInp {...props}/>
+    </>
+);
+
 
 const BlankInput = styled.textarea`
     font-family: ${props => props.theme.fontFamily};

@@ -10,6 +10,7 @@ import CloseIcon from './close';
 import Plus from './plus';
 import DraftIcon from './draft';
 import ArrowIcon from './arrow';
+import UserIcon from "./user";
 
 export {
     BookmarkIcon,
@@ -23,5 +24,6 @@ export {
     CloseIcon,
     DraftIcon,
     ArrowIcon,
+    UserIcon,
     Plus
 }

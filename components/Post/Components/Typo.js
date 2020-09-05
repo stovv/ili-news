@@ -107,11 +107,11 @@ export const EventDateDay = styled.h1`
             laptop: "64px",
         },
         margin: {
-            s: '0 12px 0 0',
-            m: '0 14px 0 0',
+            s: '0 0 12px 0',
+            m: '0 0 14px 0',
             l: '0 20px 0 0',
-            tablet: '0 24px 0 0',
-            laptop: '0 24px 0 0'
+            tablet: '0 0 24px 0',
+            laptop: '0 0 24px 0'
         },
         color: props.theme.colors.primary
     })};

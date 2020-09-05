@@ -1,4 +1,5 @@
 import React from 'react';
+import Router from 'next/router';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import styled, { withTheme } from 'styled-components';
@@ -56,7 +57,7 @@ class HeaderNavBar extends React.Component {
         this.route = props.route ? props.route : "";
     }
     render(){
-        const { menus, route, width, dispatch, searchActivated, theme } = this.props;
+        const { menus, route, width, dispatch, searchActivated, theme, isLoggedIn } = this.props;
         if ( !menus ){
             return null;
         }
@@ -94,9 +95,16 @@ class HeaderNavBar extends React.Component {
                             </Flex>
                         </Box>
                         <Box width={1/8} my='auto' >
-                            <Click.SimpleClick style={{float: "right"}} onClick={()=>dispatch(Common.clickOnSearch())}>
-                                <Icons.SearchIcon inverted={searchActivated}/>
-                            </Click.SimpleClick>
+                            <Flex justifyContent={"right"}>
+                                <Click.SimpleClick style={{margin: "0 32px 0 0"}} onClick={()=>dispatch(Common.clickOnSearch())}>
+                                    <Icons.SearchIcon inverted={searchActivated}/>
+                                </Click.SimpleClick>
+                                <Click.SimpleClick>
+                                    <Link href={isLoggedIn ? '/users/me' : '/login'}>
+                                        <Icons.UserIcon inverted={searchActivated}/>
+                                    </Link>
+                                </Click.SimpleClick>
+                            </Flex>
                         </Box>
                     </Flex>
                 </Box>
@@ -126,9 +134,16 @@ class HeaderNavBar extends React.Component {
                                 </Box>
                             </Box>
                             <Box float="right" my="auto">
-                                <Click.SimpleClick onClick={()=>dispatch(Common.clickOnSearch())}>
-                                    <Icons.SearchIcon />
-                                </Click.SimpleClick>
+                                <Flex>
+                                    <Click.SimpleClick style={{margin: "0 10px 0 0"}} onClick={()=>dispatch(Common.clickOnSearch())}>
+                                        <Icons.SearchIcon />
+                                    </Click.SimpleClick>
+                                    <Click.SimpleClick>
+                                        <Link href={isLoggedIn ? '/users/me' : '/login'}>
+                                            <Icons.UserIcon inverted={searchActivated}/>
+                                        </Link>
+                                    </Click.SimpleClick>
+                                </Flex>
                             </Box>
                         </Flex>
                     </Mini>
@@ -147,7 +162,8 @@ HeaderNavBar.propTypes = {
 function mapStateToProps(state){
     return {
         width: state.common.pageSize.width,
-        searchActivated: state.common.activeSearch
+        searchActivated: state.common.activeSearch,
+        isLoggedIn: state.auth.isLoggedIn
     }
 }
 

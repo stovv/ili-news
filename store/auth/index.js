@@ -1,9 +1,11 @@
-import { SIGN } from "./types";
+import {REGISTER, SIGN} from "./types";
 
 
 let initialState = {
     isLoggedIn: false,
-    user_id: null,
+    userId: null,
+    inRegister: false,
+    registered: false,
     jwt: "",
 };
 
@@ -20,8 +22,31 @@ function authReducer(state = initialState, action){
                 ...state,
                 isLoggedIn: true,
                 jwt: action.payload.jwt,
-                user_id: action.payload.user.id
+                userId: action.payload.user.id
             };
+        }
+        case REGISTER.OK:{
+            return {
+                ...state,
+                inRegister: true,
+                userId: action.payload.user.id,
+                jwt: action.payload.jwt,
+                registered: true
+            }
+        }
+        case REGISTER.BAD:{
+            return {
+                ...state,
+                inRegister: true,
+                registered: false
+            }
+        }
+        case REGISTER.STOP:{
+            return {
+                ...state,
+                inRegister: false,
+                registered: false
+            }
         }
         default:
             return state;

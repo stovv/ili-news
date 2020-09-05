@@ -12,6 +12,7 @@ import * as Post from './Post';
 import * as Cards from './Cards';
 import * as Toasts from './Toasts';
 import * as Journal from './Journal';
+import * as Layouts from './Layouts';
 
 // EditorJS blocks to Components converter
 import PostBlocks from "./UniversalBlock";
@@ -28,6 +29,7 @@ export {
     Blocks,
     Toasts,
     Journal,
+    Layouts,
     Typography,
     Containers,
     PostBlocks

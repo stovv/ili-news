@@ -7,7 +7,8 @@ let initialState = {
     },
     infinityActive: false,
     activeSearch: false,
-    mod: "default"
+    mod: "default",
+    toNotify: []
 }
 
 const CommonReducer = (state = initialState, action) => {
@@ -40,6 +41,18 @@ const CommonReducer = (state = initialState, action) => {
             return {
                 ...state,
                 mod: "default"
+            }
+        }
+        case SITE.NOTIFY.ADD:{
+            return {
+                ...state,
+                toNotify: [...state.toNotify, action.payload]
+            }
+        }
+        case SITE.NOTIFY.CLEAR:{
+            return {
+                ...state,
+                toNotify: []
             }
         }
         default:

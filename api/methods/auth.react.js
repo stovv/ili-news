@@ -7,16 +7,23 @@ export async function login(user, password){
     });
 }
 
-export async function me(user_id){
+export async function register(email, password, name, secondName){
+    return api.post('/auth/local/register', {
+        username: email,
+        email, name, secondName, password
+    });
+}
+
+export async function me(userId){
     const jwt = getJwt();
-    return api.get(`/users/${user_id}`,{
+    return api.get(`/users/${userId}`,{
         headers: { 'Authorization': `Bearer ${jwt}`}
     });
 }
 
-export async function update_user(user_id, data){
+export async function update_user(userId, data){
     const jwt = getJwt();
-    return api.put(`/users/${user_id}`, data, {
+    return api.put(`/users/${userId}`, data, {
         headers: { 'Authorization': `Bearer ${jwt}`}
     });
 }

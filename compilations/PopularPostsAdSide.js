@@ -21,7 +21,6 @@ class AdWithPopularPosts extends React.Component{
 
         return (
             <Box width="100%"{...additional}>
-                <Form.AdBlock id="R-A-351229-6" width="100%" height="584px"/>
                 {
                     posts.length > 0 &&
                     <>
@@ -39,6 +38,9 @@ class AdWithPopularPosts extends React.Component{
 
                         }
                     </>
+                }
+                {
+                    !sticky && <Form.AdBlock id="R-A-351229-6" width="100%" height="584px"/>
                 }
             </Box>
         )

@@ -2,6 +2,7 @@ import React from 'react';
 import App from 'next/app';
 import Head from 'next/head';
 import Router from 'next/router';
+import toaster from "toasted-notes";
 import withRedux from "next-redux-wrapper";
 import { Provider as StoreProvider } from "react-redux";
 import { YMInitializer } from 'react-yandex-metrika';
@@ -10,7 +11,7 @@ import { Public } from '../api';
 import { store } from "../store";
 import IliThemeProvider from '../theme';
 import {YANDEX_METRIKA} from "../constants";
-import { Containers, Menus, Form } from '../components';
+import { Containers, Menus, Form, Toasts, Typography } from '../components';
 import { Common } from '../actions';
 
 import 'nprogress/nprogress.css'; //styles of nprogress
@@ -47,17 +48,41 @@ class IliApp extends App {
             store.dispatch(Common.setPageSize(window.innerWidth, window.innerHeight));
             document.documentElement.lang="ru";
         }
-
         this.handleWindowResize = this.handleWindowResize.bind(this);
+        this.handleNotification = this.handleNotification.bind(this);
     }
 
     handleWindowResize = () => {
         this.props.store.dispatch(Common.setPageSize(window.innerWidth, window.innerHeight));
     }
 
+    handleNotification (){
+      setTimeout(function (){
+          const { toNotify } = this.props.store.getState().common;
+          if ( toNotify.length > 0){
+              toNotify.forEach(item => {
+                  toaster.notify(({ onClose }) => (
+                      <StoreProvider store={this.props.store}>
+                          <IliThemeProvider>
+                              <Toasts.Emoji color={item.color} textColor={item.textColor}>
+                                  {item.text}
+                              </Toasts.Emoji>
+                          </IliThemeProvider>
+                      </StoreProvider>
+                      ), { position: "top-right", duration: 2000 }
+                  );
+              })
+              this.props.store.dispatch(Common.clearNotify());
+          }
+
+          this.handleNotification();
+      }.bind(this), 3000);
+    }
+
     componentDidMount() {
         if (typeof window !== 'undefined'){
             this.handleWindowResize();
+            this.handleNotification();
             window.addEventListener('resize', this.handleWindowResize);
         }
     }
@@ -80,12 +105,12 @@ class IliApp extends App {
           <StoreProvider store={store}>
             <IliThemeProvider>
                 <Menus.Search/>
-                { router.route !== "/login" && <Menus.HeaderMain menus={header} route={this.props.router.asPath}/>}
+                { !["/login", "/register", "/register/success"].includes(router.route) && <Menus.HeaderMain menus={header} route={this.props.router.asPath}/>}
                 <Form.HeaderPreloader/>
                 <Containers.AppContainer>
                     <Component {...pageProps} />
                 </Containers.AppContainer>
-                { router.route !== "/login" && <Menus.FooterMain menus={footer} route={this.props.router.asPath}/>}
+                { !["/login", "/register", "/register/success"].includes(router.route)  && <Menus.FooterMain menus={footer} route={this.props.router.asPath}/>}
             </IliThemeProvider>
           </StoreProvider>
           <div>

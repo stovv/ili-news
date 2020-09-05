@@ -31,3 +31,18 @@ export function setDefaultMod(){
         type: SITE.THEME.DEFAULT
     }
 }
+
+export function notify(text, color, textColor){
+    return {
+        type: SITE.NOTIFY.ADD,
+        payload: {
+            text, color, textColor
+        }
+    }
+}
+
+export function clearNotify(){
+    return {
+        type: SITE.NOTIFY.CLEAR
+    }
+}

@@ -79,7 +79,9 @@ const defaultTheme = {
 const typoTheme = (theme) =>{
   return {
     post: {
-      heading: {},
+      heading: {
+
+      },
       rubric: {},
       date: {},
       authors: {},
@@ -94,7 +96,16 @@ const typoTheme = (theme) =>{
         h4: {},
         h5: {},
         h6: {},
-        paragraph: {},
+        paragraph: {
+          lineHeight: 1.33,
+          margin: {
+            s: '0 0 12px 0',
+            m: '0 0 14px 0',
+            l: '0 0 20px 0',
+            tablet: '0 0 24px 0',
+            laptop: '0 0 24px 0'
+          }
+        },
         quote: {
           t1: {},
           t2: {},

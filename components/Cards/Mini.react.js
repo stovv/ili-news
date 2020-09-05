@@ -22,6 +22,7 @@ class Mini extends React.Component
                       sx={{
                           cursor: 'pointer',
                           transition: "all .3s ease-out",
+                          overflow: "hidden",
                           "&:hover":{
                               boxShadow: "0px 5px 30px -5px rgba(0, 0, 0, 0.4)",
                               transform: "translateY(-3px)"

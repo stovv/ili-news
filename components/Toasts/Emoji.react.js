@@ -16,7 +16,7 @@ const Text = styled.h3`
     text-align: center;
     font-size: 16px;
     color: #ffffff;
-    margin: 0;
+    margin: 0 20px;
 `;
 
 

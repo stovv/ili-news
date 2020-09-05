@@ -1,4 +1,4 @@
-import { SIGN } from "../store/auth/types";
+import {REGISTER, SIGN} from "../store/auth/types";
 import { Auth } from '../api';
 
 
@@ -28,6 +28,32 @@ export function loginAction(loginData){
                 dispatch(signOutAction);
             })
     };
+}
+
+export function registerAction(registerData){
+    return async dispatch => {
+        await Auth.register(registerData.email, registerData.password, registerData.name, registerData.secondName)
+            .then(response =>{
+                dispatch({
+                    type: REGISTER.OK,
+                    payload: response.data
+                });
+            })
+            .catch(reason => {
+                dispatch({
+                    type: REGISTER.BAD,
+                    payload: reason.response
+                });
+            })
+    }
+}
+
+export function setRegisterBad(){
+    return async dispatch => {
+        dispatch({
+            type: REGISTER.STOP
+        });
+    }
 }
 
 
