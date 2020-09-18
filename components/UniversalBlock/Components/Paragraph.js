@@ -36,25 +36,17 @@ const ParagraphComponent = styled.p`
 
 
 const CustomLink = styled.a`
-  color: ${props=>props.theme.text.primary};
+  color: ${props=>props.theme.text.hover};
   text-decoration: none;
-  background-size: 100% 200%;
-  background-position: 0px 0px;
-  transition: background-position 120ms ease-in-out 0s, padding 120ms ease-in-out 0s;
-  ${({theme}) => {
-    const rgb = HEX2RGB(theme.colors.primary.replace('#', ''));
-    return `
-       background-image: linear-gradient(transparent 0%, transparent calc(50% - 9px), rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.3) calc(50% - 9px), rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.3) 100%);
-    `
-  }};
+  border-radius: 18px;
+  padding: 6px 9px;
+  display: inline-block;
+  transition: all 120ms ease-in-out 0s, padding 120ms ease-in-out 0s;
   :hover{
-    background-position: 0px 100%;
-    ${({theme}) => {
-    const rgb = HEX2RGB(theme.colors.primary.replace('#', ''));
-    return `
-       background-image: linear-gradient(transparent 0%, transparent calc(50% - 9px), rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.7) calc(50% - 9px), rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.7) 100%);
-    `
-}};
+    background-color: ${props=>props.theme.colors.primary};
+    color: ${props=>props.theme.text.onPrimary};
+    transform: translateY(-3px);
+    box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.07), 0px 22px 18px rgba(0, 0, 0, 0.04), 0px 6px 6px rgba(0, 0, 0, 0.03);
   }
   
 `;

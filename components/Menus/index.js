@@ -1,12 +1,16 @@
-import HeaderMain from './HeaderMain.react';
+import Context from './Context';
+import DropDown from "./DropDown";
 import MobileMenu from "./Mobile.react";
+import HeaderMain from './HeaderMain.react';
 
-import FooterMain from "./FooterMain.react";
 import Search from "./Search.react";
+import FooterMain from "./FooterMain.react";
 
 export {
-    HeaderMain,
+    Search,
+    Context,
+    DropDown,
     MobileMenu,
+    HeaderMain,
     FooterMain,
-    Search
 }

@@ -15,11 +15,11 @@ export const Heading = styled.h1`
           laptop: "48px",
         },
         margin: {
-            s: `0 0 ${props.theme.spacing.s} 0`,
-            m: `0 0 ${props.theme.spacing.s} 0`,
-            l: `0 0 ${props.theme.spacing.s} 0`,
-            tablet: `0 0 ${props.theme.spacing.s} 0`,
-            laptop: `0 0 ${props.theme.spacing.s} 0`
+            s: `auto 0`,
+            m: `auto 0`,
+            l: `auto 0`,
+            tablet: `auto 0`,
+            laptop: `auto 0`
         },
         color: props.theme.text.primary
     })}
@@ -107,11 +107,11 @@ export const EventDateDay = styled.h1`
             laptop: "64px",
         },
         margin: {
-            s: '0 0 12px 0',
-            m: '0 0 14px 0',
+            s: '0 12px 0 0',
+            m: '0 14px 0 0',
             l: '0 20px 0 0',
-            tablet: '0 0 24px 0',
-            laptop: '0 0 24px 0'
+            tablet: '0 24px 0 0',
+            laptop: '0 24px 0 0'
         },
         color: props.theme.colors.primary
     })};

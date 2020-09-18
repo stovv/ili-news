@@ -48,11 +48,11 @@ class PostFooter extends React.Component{
                 <FooterWrapper>
                     <Flex my="auto">
                         <LikeBar rating={rating} clientId={clientId}/>
-                        <Icons.CommentsIcon style={theme.post.footer.iconSpacing.comments}/>
-                        <RatingCounter>10</RatingCounter>
+                        {/*<Icons.CommentsIcon style={theme.post.footer.iconSpacing.comments}/>*/}
+                        {/*<RatingCounter>10</RatingCounter>*/}
                     </Flex>
                     <Flex my="auto">
-                        <Bookmark slug={slug}/>
+                        {/*<Bookmark slug={slug}/>*/}
                         <Icons.EyeIcon style={theme.post.footer.iconSpacing.view}/>
                         <RatingCounter>{rating.views}</RatingCounter>
                     </Flex>

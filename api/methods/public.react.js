@@ -171,56 +171,42 @@ export async function getPostCountInRubric(rubricId){
     return api.get(`/rubrics/${rubricId}/postCount`);
 }
 
-export async function fetchTopPosts(){
-    return api.ql(`
-        query{
-            tops{
-                post{
-                    id,
-                    title,
-                    description,
-                    slug,
-                    cover{
-                        caption, 
-                        alternativeText,
-                        formats,
-                        width,
-                        height,
-                        url,
-                        mime
-                    },
-                    rubric{
-                       title
-                    },
-                    publish_at
-                }
-            }
-        }
-        `);
+export async function fetchIndexPage(){
+    return api.get('/index-page');
 }
 
-export async function viewPost(raitingId, clientId){
-    return api.put(`/ratings/view/${raitingId}`, {
-        clientIp: clientId
-    });
-}
+// export async function fetchTopPosts(){
+//     return api.ql(`
+//         query{
+//             tops{
+//                 post{
+//                     id,
+//                     title,
+//                     description,
+//                     slug,
+//                     cover{
+//                         caption,
+//                         alternativeText,
+//                         formats,
+//                         width,
+//                         height,
+//                         url,
+//                         mime
+//                     },
+//                     rubric{
+//                        title
+//                     },
+//                     publish_at
+//                 }
+//             }
+//         }
+//         `);
+// }
 
-export async function likeUp(raitingId, clientId){
-    return api.put(`/ratings/likeup/${raitingId}`, {
-        clientIp: clientId
-    })
-}
-
-export async function dislikeUp(raitingId, clientId){
-    return api.put(`/ratings/dislikeup/${raitingId}`, {
-        clientIp: clientId
-    })
-}
-
-export async function fetchThemes(){
+export async function fetchTheme(id){
     return api.ql(`
     query{
-      themes(where: {published: true}, sort:"updated_at:DESC", limit: 2 ){
+      theme(id: ${id}){
         id,
         title,
         posts{
@@ -244,6 +230,24 @@ export async function fetchThemes(){
       }
     }
     `);
+}
+
+export async function viewPost(raitingId, clientId){
+    return api.put(`/ratings/view/${raitingId}`, {
+        clientIp: clientId
+    });
+}
+
+export async function likeUp(raitingId, clientId){
+    return api.put(`/ratings/likeup/${raitingId}`, {
+        clientIp: clientId
+    })
+}
+
+export async function dislikeUp(raitingId, clientId){
+    return api.put(`/ratings/dislikeup/${raitingId}`, {
+        clientIp: clientId
+    })
 }
 
 export async function fetchNews(limit = 6) {
@@ -290,6 +294,7 @@ export async function fetchSimplePosts(skipPostIds = [], skipRubricIds = [2], sk
             title,
             slug,
             publish_at,
+            description,
             cover{
               caption, 
               alternativeText,

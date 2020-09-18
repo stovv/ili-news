@@ -57,7 +57,7 @@ class PostHeader extends React.Component{
                         </Flex>
                         : <Heading>{title}</Heading>
                 }
-                <Flex mb={theme.spacing.m}>
+                <Flex my={theme.spacing.m}>
                     <PublishDate>
                         <Moment locale="ru" format={"DD MMMM YYYY"}>{date}</Moment>
                     </PublishDate>

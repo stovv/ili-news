@@ -23,7 +23,7 @@ class TopPosts extends React.Component {
                 <>
                     {
                         first !== null &&
-                            <Images.Lazy cover={first.post.cover}  blur height="384px" blackout>
+                            <Images.Lazy cover={first.cover}  blur height="384px" blackout>
                                 <Containers.Default>
                                     <Flex mt={"65px"}>
                                         <Box>
@@ -31,13 +31,13 @@ class TopPosts extends React.Component {
                                                                  color={theme.text.onPrimary}
                                                                  margin={`0 0 ${theme.spacing.m} 0`}
                                                                  textTransform="lowercase">
-                                                {first.post.rubric.title}
+                                                {first.rubric.title}
                                             </Typography.TagLabel>
                                             <Typography.Heading level={1}
                                                                 color={theme.text.onPrimary}
                                                                 maxWidth="816px"
                                                                 margin={` ${theme.spacing.m} 0 0 0`}>
-                                                {first.post.title}
+                                                {first.title}
                                             </Typography.Heading>
                                         </Box>
                                     </Flex>
@@ -50,9 +50,9 @@ class TopPosts extends React.Component {
                                 first !== null &&
                                     <Box width={[2/4]} pb={["20px"]} mr="5px" height="490px"
                                          sx={{transform: "translate(0, -20%)"}}>
-                                        <PostLink postSlug={first.post.slug}>
-                                            <Cards.Large cover={first.post.cover} type="bottomLeft">
-                                                {first.post.description}
+                                        <PostLink postSlug={first.slug}>
+                                            <Cards.Large cover={first.cover} type="bottomLeft">
+                                                {first.description}
                                             </Cards.Large>
                                         </PostLink>
                                     </Box>
@@ -61,7 +61,7 @@ class TopPosts extends React.Component {
                                 otherPosts.map((item, index) => (
                                     <React.Fragment key={index}>
                                         <Box width={[1/4]} mx="5px"  mt={["56px"]}>
-                                            <Cards.Post post={item.post} float="right"/>
+                                            <Cards.Post post={item} float="right"/>
                                         </Box>
                                     </React.Fragment>
                                 ))
@@ -78,7 +78,7 @@ class TopPosts extends React.Component {
                         posts.map((item, index) => (
                             <React.Fragment key={index}>
                                 <Box width="100%" height="350px" mx="auto" mb="40px" mt={index === 0 ? "24px" : "40px"}>
-                                    <Cards.Post post={item.post}/>
+                                    <Cards.Post post={item}/>
                                 </Box>
                             </React.Fragment>
                         ))

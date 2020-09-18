@@ -15,6 +15,7 @@ import { UniversalLink } from '../Links.react';
 import { Click } from '../Animations';
 import MobileMenu from "./Mobile.react";
 import { Common } from "../../actions";
+import DropDown from "./DropDown";
 
 
 const MenuLink = styled.a`
@@ -99,11 +100,21 @@ class HeaderNavBar extends React.Component {
                                 <Click.SimpleClick style={{margin: "0 32px 0 0"}} onClick={()=>dispatch(Common.clickOnSearch())}>
                                     <Icons.SearchIcon inverted={searchActivated}/>
                                 </Click.SimpleClick>
-                                <Click.SimpleClick>
-                                    <Link href={isLoggedIn ? '/users/me' : '/login'}>
-                                        <Icons.UserIcon inverted={searchActivated}/>
-                                    </Link>
-                                </Click.SimpleClick>
+                                {/*TODO: Check Token valid ??🤔*/}
+                                {/*{*/}
+                                {/*    isLoggedIn*/}
+                                {/*        ? <DropDown button={(props)=>*/}
+                                {/*            <Click.SimpleClick {...props}>*/}
+                                {/*                <Icons.UserIcon inverted={searchActivated}/>*/}
+                                {/*            </Click.SimpleClick>*/}
+                                {/*        } buttonProps={{*/}
+                                {/*            inverted: searchActivated*/}
+                                {/*        }} type="user-header"/>*/}
+                                {/*        : <Click.SimpleClick>*/}
+                                {/*            <Link href="/login">*/}
+                                {/*                <Icons.UserIcon inverted={searchActivated}/>*/}
+                                {/*            </Link>*/}
+                                {/*        </Click.SimpleClick>*/}
                             </Flex>
                         </Box>
                     </Flex>
@@ -138,11 +149,11 @@ class HeaderNavBar extends React.Component {
                                     <Click.SimpleClick style={{margin: "0 10px 0 0"}} onClick={()=>dispatch(Common.clickOnSearch())}>
                                         <Icons.SearchIcon />
                                     </Click.SimpleClick>
-                                    <Click.SimpleClick>
-                                        <Link href={isLoggedIn ? '/users/me' : '/login'}>
-                                            <Icons.UserIcon inverted={searchActivated}/>
-                                        </Link>
-                                    </Click.SimpleClick>
+                                    {/*<Click.SimpleClick>*/}
+                                    {/*    <Link href={isLoggedIn ? '/users/me' : '/login'}>*/}
+                                    {/*        <Icons.UserIcon inverted={searchActivated}/>*/}
+                                    {/*    </Link>*/}
+                                    {/*</Click.SimpleClick>*/}
                                 </Flex>
                             </Box>
                         </Flex>

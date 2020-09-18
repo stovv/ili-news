@@ -79,9 +79,7 @@ const defaultTheme = {
 const typoTheme = (theme) =>{
   return {
     post: {
-      heading: {
-
-      },
+      heading: {},
       rubric: {},
       date: {},
       authors: {},

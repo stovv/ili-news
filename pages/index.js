@@ -20,30 +20,46 @@ function randomChoice(arr){
 
 class FrontPage extends React.Component {
     static async getInitialProps() {
-        let topPosts = [];
-        await Public.fetchTopPosts()
-            .then(response => {
-                topPosts = response.data.tops ? response.data.tops : [];
-            })
-            .catch(reason => {
-               // console.log("REASON", reason.response);
-            });
-
         let posts = [];
+        let topPosts = [];
         let newsFeed = [];
         let postsCount = 0;
         let categories = null;
         let nonUsedCategories = null;
         let catLine = { posts: [], category: null };
-        let [ lastTheme= { title: null, posts: [] }, nextTheme = { title: null, posts: [] }  ]  = await Public.fetchThemes()
-            .then(response => response.data.themes)
-            .catch(reason => console.log(reason));
+        let lastTheme= { title: null, posts: [] };
+        let nextTheme = { title: null, posts: [] };
 
         try {
+
+            await Public.fetchIndexPage()
+                .then(
+                    async response => {
+                        console.log("NN", response.data.topPosts);
+                        if ( !response.data.topPosts || response.data.topPosts.length === 0 ){
+                            await Public.fetchSimplePosts([], [2], [], 3)
+                                .then(response => topPosts = response.data.posts);
+                        }else{
+                            topPosts = response.data.topPosts;
+                        }
+
+                        if ( response.data.themes && response.data.themes.length > 1 ){
+                            await Public.fetchTheme(response.data.themes[0].id)
+                                .then(resp => lastTheme = resp.data.theme);
+                            await Public.fetchTheme(response.data.themes[1].id)
+                                .then(resp => nextTheme = resp.data.theme);
+
+                        }
+                    }
+                )
+                .catch(reason => {
+                    console.log("Something wrong with getting index-page -> ", reason.response);
+                });
+
             await Public.fetchPostsCount([2])
                 .then(response => {
                     postsCount = response.data;
-                })
+                });
 
             await Public.fetchNews()
                 .then(response => newsFeed = response.data.posts);
@@ -53,6 +69,7 @@ class FrontPage extends React.Component {
                     categories = response.data.categories;
                     nonUsedCategories = response.data.categories;
                 });
+
             const category = randomChoice(nonUsedCategories);
             while (catLine.posts.length === 0 && nonUsedCategories.length > 0){
                 const index = nonUsedCategories.indexOf(category);
@@ -61,7 +78,7 @@ class FrontPage extends React.Component {
                 }
 
                 await Public.fetchCatPosts(4, category.id, [
-                    ...topPosts.map(post => post.post.id),
+                    ...topPosts.map(post => post.id),
                     ...lastTheme.posts.map(post => post.id),
                     ...nextTheme.posts.map(post => post.id)])
                     .then(response => {
@@ -76,14 +93,15 @@ class FrontPage extends React.Component {
 
             await Public.fetchSimplePosts([
                 ...catLine.posts.map(post => post.id),
-                ...topPosts.map(post => post.post.id),
+                ...topPosts.map(post => post.id),
                 ...lastTheme.posts.map(post => post.id),
                 ...nextTheme.posts.map(post => post.id)
             ]).then(response => posts = response.data.posts);
 
         }catch (e) {
-            //console.log("ERROR IN GETTING Initial data", e);
+            console.log("Something wrong with getting initial data -> ", e);
         }
+
         return {topPosts, lastTheme, nextTheme, newsFeed, posts, postsCount, categories, nonUsedCategories, catLine};
     }
 
@@ -93,7 +111,7 @@ class FrontPage extends React.Component {
             existsPostIds: [
                 ...props.posts.map(post => post.id),
                 ...props.catLine.posts.map(post => post.id),
-                ...props.topPosts.map(post => post.post.id),
+                ...props.topPosts.map(post => post.id),
                 ...props.lastTheme.posts.map(post => post.id),
                 ...props.nextTheme.posts.map(post => post.id)
             ],
@@ -116,7 +134,7 @@ class FrontPage extends React.Component {
 
         if (this.props.postsCount <= alreadyCount){
             this.setState({hasMore: false})
-            this.props.dispatch(changeInfinityState(false))
+            this.props.dispatch(Common.changeInfinityState(false));
             return;
         }
 
