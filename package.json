@@ -41,7 +41,7 @@
     "lqip-loader": "^2.2.0",
     "moment": "^2.25.3",
     "morpher-io": "^1.0.2",
-    "next": "^9.5.1",
+    "next": "^9.5.4",
     "next-compose-plugins": "^2.2.0",
     "next-cookie": "^2.2.2",
     "next-critical": "^0.1.1",
