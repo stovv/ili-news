@@ -1,17 +1,15 @@
 import React from 'react';
-import { Flex, Box } from 'rebass';
-import styled, {withTheme} from "styled-components";
 
 import {Containers, Images, Typography} from "../index";
 import { Context } from '../Menus';
 import { Avatar } from "../Images";
 import {getImageLink} from "../Images/tools";
+import { Flex, Box } from 'reflexbox';
 
 
 class UserAreaLayout extends React.Component{
 
     render(){
-
         const cover = {
             "id": "70",
             "name": "abstract-background-beach-color-355288.jpg",
@@ -142,8 +140,8 @@ class UserAreaLayout extends React.Component{
                 </Box>
             </Images.Lazy>
             <Flex justifyContent={"space-between"}>
-                <Box></Box>
-                <Box></Box>
+                {/*<Box></Box>*/}
+                {/*<Box></Box>*/}
             </Flex>
             <Context type="user" contextId="user-page"/>
             {/*<Box id="user-area" sx={{*/}
@@ -155,4 +153,4 @@ class UserAreaLayout extends React.Component{
 }
 //me-setting-menu
 
-export default withTheme(UserAreaLayout);
+export default UserAreaLayout;

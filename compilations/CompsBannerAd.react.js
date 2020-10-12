@@ -1,11 +1,11 @@
 import React from 'react';
-import {Flex, Box} from 'rebass';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 
 import BannerWithButton from './Banners/BannerWithButton.react';
 import { Containers, Cards, Form } from '../components';
+import { Flex, Box } from 'reflexbox';
 
 class CompsBannerAd extends React.Component {
 

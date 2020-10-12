@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import { Flex } from 'rebass';
 import { connect } from "react-redux";
-import styled from "styled-components";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { Public } from "../../api";
 import { Common } from "../../actions";
 import PopularPostsAdSide from '../PopularPostsAdSide';
 import { Post as PostComponents, PostBlocks, Containers, Form } from "../../components";
+import { Flex } from 'reflexbox';
+import styles from './styles/infinity.module.css';
 
 
 const PostContent = ({post}) =>{
@@ -25,45 +25,6 @@ const PostContent = ({post}) =>{
     );
 };
 
-const DividerWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    
-    @media screen and (max-width: 4000px){
-       margin: 100px 0;
-    }
-    
-    @media screen and (max-width: 768px){
-        margin: 50px 0;
-    }
-    
-    @media screen and (max-width: 425px){
-        margin: 45px 0;
-    }
-    
-    @media screen and (max-width: 375px){
-        margin: 40px 0;
-    }
-    
-    @media screen and (max-width: 320px){
-        margin: 40px 0;
-    }
-    
-`;
-
-const Divider = styled.div`
-    background: ${props => props.theme.colors.backgroundInvert};
-    height: 2px;
-    width: 100%;
-    max-width: 432px;
-    opacity: 0.6;
-    margin: 0 auto;
-    
-    @media screen and (max-width: 1023px){
-      width: 80%;
-    }
-`;
-
 
 class InfinityPost extends React.Component{
     constructor(props) {
@@ -78,13 +39,13 @@ class InfinityPost extends React.Component{
     }
 
     componentDidMount() {
-        this.props.dispatch(Common.changeInfinityState(true))
+        this.props.dispatch(Common.changeInfinityState(true));
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         const { post, dispatch } = this.props;
         if ( post && prevProps.post.slug !== post.slug){
-            dispatch(Common.changeInfinityState(true))
+            dispatch(Common.changeInfinityState(true));
         }
     }
 
@@ -115,7 +76,7 @@ class InfinityPost extends React.Component{
 
             return (
                 <React.Fragment key={index}>
-                    <DividerWrapper><Divider/></DividerWrapper>
+                    <div className={styles.dividerWrapper}><div className={styles.divider}/></div>
                     <PostContent post={post}/>
                 </React.Fragment>
             )

@@ -1,0 +1,11 @@
+.wrapper {
+    margin: 10px 0;
+}
+
+.calloutBox {
+    width: 98%;
+    height: fit-content;
+    border-radius: 8px;
+    margin: 0 0 20px 0;
+    background-color: var(--backgroundSecondary);
+}

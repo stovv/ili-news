@@ -1,0 +1,20 @@
+.footerWrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 70px;
+    margin-bottom: 46px;
+}
+
+@media screen and ( min-width: 1024px ){
+    .footerWrapper {
+        margin-left: 26px;
+        margin-right: 26px;
+    }
+}
+
+@media screen and ( max-width: 1023px ){
+    .footerWrapper {
+        margin-left: 4px;
+        margin-right: 4px;
+    }
+}

@@ -1,0 +1,75 @@
+.journalTitle {
+    composes: rootFont from '../../Typography/styles/compose.module.css';
+    text-align: center;
+    line-height: 1.12;
+    font-weight: bold;
+}
+
+.journalSubTitle {
+    composes: rootFont from '../../Typography/styles/compose.module.css';
+    text-align: center;
+    line-height: 1.2;
+    font-weight: bold;
+    color: var(--text-secondary);
+}
+
+
+@media screen and (max-width: 4000px) {
+    .journalTitle {
+        font-size: 48px;
+        margin: auto 20px auto 0;
+    }
+
+    .journalSubTitle {
+        font-size: 20px;
+        margin: auto 20px auto 0;
+    }
+}
+
+
+@media screen and (max-width: 768px){
+    .journalTitle {
+        font-size: 40px;
+        margin: auto 20px auto 0;
+    }
+
+    .journalSubTitle {
+        font-size: 20px;
+        margin: auto 20px auto 0;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .journalTitle {
+        font-size: 32px;
+        margin: auto 0 5px 0;
+    }
+
+    .journalSubTitle {
+        font-size: 18px;
+        margin: auto 0 5px 0;
+    }
+}
+
+@media screen and (max-width: 375px){
+    .journalTitle {
+        font-size: 20px;
+        margin: auto 0 5px 0;
+    }
+
+    .journalSubTitle {
+        font-size: 16px;
+        margin: auto 0 5px 0;
+    }
+}
+
+@media screen and (max-width: 320px){
+    .journalTitle {
+        font-size: 18px;
+        margin: auto 0 5px 0;
+    }
+    .journalSubTitle {
+        font-size: 14px;
+        margin: auto 0 5px 0;
+    }
+}

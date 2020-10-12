@@ -1,13 +1,4 @@
-import styled from "styled-components";
+import React from "react";
+import styles from "./styles/click.module.css";
 
-export const SimpleClick = styled.div`
-    background-color: Transparent;
-    border: none;
-    cursor:pointer;
-    overflow: hidden;
-    outline:none;
-    transition: all 0.25s ease-in-out;
-    :active{
-        transform: scale(0.85);
-    }
-`;
+export const SimpleClick = ({children, ...props}) => <div className={styles.simpleClick} {...props}>{children}</div>;

@@ -115,12 +115,7 @@ const typoTheme = (theme) =>{
           comments: {
             margin: "auto 9px auto 77px"
           },
-          bookmark: {
-            margin: "auto 38px auto 0"
-          },
-          view: {
-            margin: "auto 9px auto 0"
-          }
+
         }
       }
     },

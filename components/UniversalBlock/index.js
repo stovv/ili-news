@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box } from 'rebass';
 import PropTypes from 'prop-types';
+import { Box } from 'reflexbox';
 
 // Block types
 import RawBlock from "./Components/Raw.react";
@@ -20,7 +20,7 @@ import {
 //
 class UniversalBlock extends React.Component {
     shouldComponentUpdate(nextProps, nextState, nextContext){
-        return false
+        return JSON.stringify(nextProps.block) !== JSON.stringify(this.props.block);
     }
 
     render(){

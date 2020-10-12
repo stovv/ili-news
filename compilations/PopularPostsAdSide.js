@@ -1,7 +1,7 @@
 import React from "react";
-import { Box } from "rebass";
 import PropTypes from 'prop-types';
 
+import { Box } from 'reflexbox';
 import { Form, Typography, Cards } from '../components';
 
 

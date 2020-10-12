@@ -1,18 +1,16 @@
 import React from 'react';
-import Head from 'next/head';
 import Router from 'next/router';
 import {connect} from 'react-redux'
-import { Flex, Box } from 'rebass';
-import { Input } from '@rebass/forms';
 
 import { Public } from '../api';
 import {Form, Images, Layouts, Typography} from '../components';
-import {BallClipRotate, BallPulseSync} from 'react-pure-loaders';
+//import {BallPulseSync} from 'react-pure-loaders';
 import { Icons, Logo } from '../assets'
 import {Auth, Common} from "../actions";
-import {withTheme} from "styled-components";
-import Link from "next/link";
+//import Link from "next/link";
 import {Heading} from "../components/Typography";
+
+import { Flex } from 'reflexbox';
 
 
 class LoginPage extends React.Component {
@@ -46,14 +44,14 @@ class LoginPage extends React.Component {
 
 
         this.setState({loading: true})
-        const { dispatch, theme } = this.props;
+        const { dispatch } = this.props;
 
         dispatch(Auth.loginAction({
             login: e.target.email.value,
             password: e.target.password.value
         })).then(() =>{
             this.setState({loading: false});
-            dispatch(Common.notify('Отлично! Теперь вы с нами 🙌', theme.colors.backgroundPrimary, theme.text.primary));
+            dispatch(Common.notify('Отлично! Теперь вы с нами 🙌', "var(--backgroundPrimary)", "var(--text-primary)"));
             const { isLoggedIn } = this.props;
             if (isLoggedIn){
                 Router.push('/users/me');
@@ -69,15 +67,15 @@ class LoginPage extends React.Component {
     };
 
     render() {
-        const { theme, isLoggedIn } = this.props;
+        const { isLoggedIn } = this.props;
         const { loading, errors } = this.state;
         return (
             <Layouts.Login>
-                <Typography.TagLabel type={'large'} color={theme.text.onPrimary} textAlign={'center'}>
+                <Typography.TagLabel type={'large'} color={"var(--text-onPrimary)"} textAlign={'center'}>
                     Присоединись первым<br/>
                     к обновлённому журналу
                 </Typography.TagLabel>
-                <Typography.TagLabel type={'normal'} color={theme.colors.primary}
+                <Typography.TagLabel type={'normal'} color={"var(--primary)"}
                                      textAlign={'center'} margin={"166px 0 20px 0"}>
                     {
                         errors.global
@@ -105,7 +103,8 @@ class LoginPage extends React.Component {
                             <Flex justifyContent="center" >
                                 {
                                     loading
-                                        ? <BallPulseSync color={theme.colors.onPrimary} loading/>
+                                        //? <BallPulseSync color={"var(--onPrimary)"} loading/>
+                                        ? <></>
                                         : "Войти"
                                 }
                             </Flex>
@@ -125,4 +124,4 @@ function mapStateToProps(state) {
    };
 }
 
-export default connect(mapStateToProps)(withTheme(LoginPage));
+export default connect(mapStateToProps)(LoginPage);

@@ -1,11 +1,10 @@
 import React from "react";
-import { Flex, Box } from 'rebass';
 import { connect } from 'react-redux';
-import { withTheme } from "styled-components";
 
 import { Layouts, Typography, Form } from '../../components';
+import { Flex } from 'reflexbox';
 import {Auth} from "../../actions";
-import {BallPulseSync} from "react-pure-loaders";
+//import {BallPulseSync} from "react-pure-loaders";
 
 
 class RegisterPage extends React.Component{
@@ -63,24 +62,24 @@ class RegisterPage extends React.Component{
     }
 
     render(){
-        const { theme, inRegister, registered } = this.props;
+        const { inRegister, registered } = this.props;
         const { loading, errors } = this.state;
 
         return <Layouts.Login>
-            <Typography.TagLabel type={'large'} color={theme.text.onPrimary} textAlign={'center'}>
+            <Typography.TagLabel type={'large'} color={"var(--text-onPrimary)"} textAlign={'center'}>
                 Присоединись первым<br/>
                 к обновлённому журналу
             </Typography.TagLabel>
             {
                 registered
                     ? <>
-                        <Typography.TagLabel type={'large'} color={theme.text.onPrimary}
+                        <Typography.TagLabel type={'large'} color={"var(--text-onPrimary)"}
                                              textAlign={'center'} margin={"166px 0 20px 0"}>
                             Отлично! Проверьте почту 😊
                         </Typography.TagLabel>
                     </>
                     : <>
-                        <Typography.TagLabel type={'normal'} color={theme.colors.primary}
+                        <Typography.TagLabel type={'normal'} color={"var(--text-primary)"}
                                              textAlign={'center'} margin={"166px 0 20px 0"}>
                             {
                                 (inRegister && !registered) &&
@@ -106,7 +105,8 @@ class RegisterPage extends React.Component{
                                     <Flex justifyContent="center" >
                                         {
                                             loading
-                                                ? <BallPulseSync color={theme.colors.onPrimary} loading/>
+                                                ? <></>
+                                                // ? <BallPulseSync color={"var(--text-onPrimary)"} loading/>
                                                 : "Присоедениться"
                                         }
                                     </Flex>
@@ -126,4 +126,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps)(withTheme(RegisterPage));
+export default connect(mapStateToProps)(RegisterPage);

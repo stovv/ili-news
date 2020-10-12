@@ -1,0 +1,105 @@
+.quoteBox {
+    margin: 20px 0;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-left: solid 5px var(--primary);
+}
+
+.quoteBoxTwo {
+    margin: 50px 0;
+}
+
+.quoteTypeOne {
+    composes: rootFont from '../../../Typography/styles/compose.module.css';
+    line-height: 1.33;
+    font-weight: 500;
+    font-size: 24px;
+}
+
+.quoteTypeTwo {
+    composes: rootFont from '../../../Typography/styles/compose.module.css';
+    line-height: 1.33;
+    font-weight: 500;
+    font-size: 24px;
+    text-align: center;
+}
+
+.quoteBoxHeading {
+    font-family: var(--fontFamily);
+    font-size: 28px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.04;
+    letter-spacing: normal;
+    text-align: center;
+    margin: 0 0 5px 0;
+}
+
+
+@media screen and (max-width: 4000px) {
+    .quoteTypeOne {
+        font-size: 24px;
+    }
+
+    .quoteTypeTwo {
+        font-size: 24px;
+    }
+
+    .quoteBox {
+        margin: 40px 0;
+        padding-left: 37px;
+    }
+
+    .quoteBoxTwo {
+        margin-top: 35px;
+        margin-bottom: 40px;
+    }
+
+    .quoteBoxHeading {
+        margin: 0 0 23px 0;
+        font-size: 36px;
+    }
+}
+
+
+@media screen and (max-width: 768px){
+    .quoteTypeOne {
+        font-size: 22px;
+    }
+
+    .quoteTypeTwo {
+        font-size: 22px;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .quoteTypeOne {
+        font-size: 20px;
+    }
+
+    .quoteTypeTwo {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 375px){
+    .quoteTypeOne {
+        font-size: 19px;
+    }
+
+    .quoteTypeTwo {
+        font-size: 19px;
+    }
+}
+
+@media screen and (max-width: 320px){
+    .quoteTypeOne {
+        font-size: 18px;
+    }
+
+    .quoteTypeTwo {
+        font-size: 18px;
+    }
+}

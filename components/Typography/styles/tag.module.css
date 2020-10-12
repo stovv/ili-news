@@ -1,0 +1,26 @@
+.tag {
+    font-family: var(--fontFamily);
+    color: var(--text-primary);
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+}
+
+.large {
+    composes: tag;
+    font-size: 24px;
+    line-height: 1.33;
+}
+
+.normal {
+    composes: tag;
+    font-size: 16px;
+    line-height: 1.17;
+}
+
+.small {
+    composes: tag;
+    font-size: 14px;
+    line-height: 1.33;
+}

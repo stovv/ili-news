@@ -1,38 +1,33 @@
 import React from 'react';
-import { Box } from "rebass";
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import styles from './styles/list.module.css';
 
-export const Item = styled.ul`
-    list-style: none;
-    padding-inline-start: 0;
-    display: flex;
-    align-items: center;
-`;
-
-class List extends React.Component {
-    render(){
-        const { data: {items, style}  , width } = this.props;
-        return null;
-        // return (
-        //     <Box mt="35px" mb="40px">
-        //         <div dangerouslySetInnerHTML={{__html: data.html}}/>
-        //     </Box>
-        // );
-    }
+const lists = {
+    unordered: ({children}) => <ul className={styles.unordered}>{children}</ul>,
+    ordered: ({children}) => <ol className={styles.ordered}>{children}</ol>,
 }
 
+class List extends React.Component{
+    render(){
+        const { items, style } = this.props.data;
+        const ListComponent = typeof lists[style] !== "undefined" ? lists[style] : lists.unordered
+        return (
+            <ListComponent>
+                {
+                    items.map((item, index) =>
+                        <React.Fragment key={index}>
+                            <li className={styles.listItem}>{item}</li>
+                        </React.Fragment>
+                    )
+                }
+            </ListComponent>
+        );
+    }
 
+}
 
 List.propTypes = {
-    data: PropTypes.object,
+    data : PropTypes.object.isRequired
 }
 
-function mapStateToProps(state){
-    return {
-        width: state.common.pageSize.width
-    }
-}
-
-
-export default connect(mapStateToProps)(List);
+export default List;

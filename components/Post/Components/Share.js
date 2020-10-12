@@ -1,9 +1,10 @@
 import React from "react";
+import dynamic from 'next/dynamic';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import YandexShare from "react-yandex-share";
-
 import {BACKEND_URL, SITE_URL} from "../../../constants";
+const YandexShare = dynamic(import("react-yandex-share"));
+
 
 
 class Share extends React.Component{

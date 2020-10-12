@@ -1,10 +1,14 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { Common } from "../../actions";
 import PopularPostsAdSide from "../PopularPostsAdSide";
-import { Post as PostComponents, PostBlocks, Containers, Images, Blocks } from "../../components";
+import { Post as PostComponents, PostBlocks, Blocks } from "../../components";
+
+import { Default, PostMarginContainer, RightSidePost, LeftSidePost } from '../../components/Containers';
+const Images = dynamic(import("../../components/Images"));
 
 
 class RegularPost extends React.Component{
@@ -29,14 +33,14 @@ class RegularPost extends React.Component{
             blocks: { blocks }, commentThread, rating } = post;
 
         return (
-            <Containers.Default>
+            <Default>
                 <PostComponents.Header rubric={rubric.title} slug={slug} authors={authors}
                                        date={publish_at} cover={cover} eventDate={eventDate}>
                     {title}
                 </PostComponents.Header>
                 { rubric.cover && <Images.Lazy cover={cover} width="100%" height={width > 1023 ? "560px" : "229px"}/> }
-                <Containers.PostMarginContainer>
-                    <Containers.LeftSidePost>
+                <PostMarginContainer>
+                    <LeftSidePost>
                         {
                             (eventLink != null && eventLocation != null && eventPrice != null)
                             && <Blocks.EventBanner data={{ eventLink, eventLocation, eventPrice, eventDate  }}/>
@@ -44,12 +48,12 @@ class RegularPost extends React.Component{
                         <PostBlocks data={blocks}/>
                         <PostComponents.Footer slug={slug} clientId={clientIp} commentThreadId={commentThread.id}
                                                rating={rating} readMore={readMore}/>
-                    </Containers.LeftSidePost>
-                    <Containers.RightSidePost>
+                    </LeftSidePost>
+                    <RightSidePost>
                         <PopularPostsAdSide posts={popularPosts}/>
-                    </Containers.RightSidePost>
-                </Containers.PostMarginContainer>
-            </Containers.Default>
+                    </RightSidePost>
+                </PostMarginContainer>
+            </Default>
         );
     }
 }

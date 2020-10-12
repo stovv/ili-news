@@ -1,29 +1,12 @@
 import React from "react"
-import Moment from "react-moment";
 import PropTypes from 'prop-types';
-import { Flex, Box } from 'rebass';
 import { connect } from 'react-redux';
-import styled, { withTheme } from "styled-components";
 
 import Share from './Components/Share';
 import AuthorList from './Components/Author';
+import { Flex, Box } from 'reflexbox';
 import { Heading, Rubric, PublishDate, EventDateDay, EventDateMouth } from './Components/Typo';
-
-
-const EventDateWrapper = styled.div`
-     display: flex;
-
-     @media screen and ( min-width: 1024px ){
-         border-right: 2px solid ${props=> props.theme.colors.primary};
-         margin-right: 23px;
-         padding: 10px 0;
-     }
-     
-     @media screen and ( max-width: 1023px ){
-         border-right: 1px solid ${props=> props.theme.colors.primary};
-         margin-right: 18px;
-     }
-`;
+import styles from './styles/header.module.css';
 
 
 class PostHeader extends React.Component{
@@ -35,7 +18,7 @@ class PostHeader extends React.Component{
 
     render() {
         const { children: title, rubric, authors, date, slug, eventDate, cover } = this.props;
-        const { width, theme } = this.props;
+        const { width } = this.props;
 
         return (
             <>
@@ -43,24 +26,18 @@ class PostHeader extends React.Component{
                 {
                     eventDate
                         ? <Flex mb={"10px"}>
-                            <EventDateWrapper>
+                            <div className={styles.eventDateWrapper}>
                                 <Box m="auto">
-                                    <EventDateDay>
-                                        <Moment locale="ru" format="DD">{eventDate}</Moment>
-                                    </EventDateDay>
-                                    <EventDateMouth>
-                                        <Moment locale="ru" format="MMM">{eventDate}</Moment>
-                                    </EventDateMouth>
+                                    <EventDateDay>{eventDate.day}</EventDateDay>
+                                    <EventDateMouth>{eventDate.mouth}</EventDateMouth>
                                 </Box>
-                            </EventDateWrapper>
+                            </div>
                             <Heading>{title}</Heading>
                         </Flex>
                         : <Heading>{title}</Heading>
                 }
-                <Flex my={theme.spacing.m}>
-                    <PublishDate>
-                        <Moment locale="ru" format={"DD MMMM YYYY"}>{date}</Moment>
-                    </PublishDate>
+                <Flex my={"var(--spacing-m)"}>
+                    <PublishDate>{date}</PublishDate>
                     {
                         width > 600 && <AuthorList authors={authors}/>
                     }
@@ -91,4 +68,4 @@ PostHeader.propTypes = {
     cover: PropTypes.object
 }
 
-export default connect(mapStateToProps)(withTheme(PostHeader));
+export default connect(mapStateToProps)(PostHeader);

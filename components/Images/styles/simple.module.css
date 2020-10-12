@@ -1,0 +1,43 @@
+.simple {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.blurred {
+    filter: blur(24px);
+    transform: scale(1.1);
+    background-color: rgba(0, 0, 0, 0.16);
+}
+
+.overlayContainer {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.hoverable {
+    cursor: pointer;
+    transition: all .3s ease-out;
+}
+
+.hoverable:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0 8px 16px -8px;
+    transform: translateY(-3px);
+}
+
+.childrenContainer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.childrenContainer:first-child {
+    box-shadow: 0 5px 32px -5px rgba(0, 0, 0, 0.2);
+}

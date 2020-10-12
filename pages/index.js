@@ -1,17 +1,25 @@
-import React, {Component} from 'react';
-import { Box } from 'rebass';
-import { connect } from 'react-redux';
-import { NextSeo, SocialProfileJsonLd } from "next-seo";
-import InfiniteScroll from "react-infinite-scroll-component";
+import React from 'react';
+import dynamic from "next/dynamic";
+import {connect} from 'react-redux';
+//import { NextSeo, SocialProfileJsonLd } from "next-seo";
 
+import {
+    fetchFrontPageCategories, fetchSimplePosts, fetchCatPosts,
+    fetchIndexPage, fetchNews, fetchTheme, fetchPostsCount
+} from '../api/methods/public.react';
+import { changeInfinityState } from "../actions/common";
+import { Box } from 'reflexbox';
+// import { SITE_INFO, SITE_URL, YANDEX_VERIFICATION } from '../constants';
 
-import { Public } from '../api';
-import { Containers, Form } from '../components';
-import { Common } from "../actions";
-import { SITE_INFO, SITE_URL, YANDEX_VERIFICATION } from '../constants';
-import { TopPosts, NewsPostsComps, CategoryLine, CompsBannerAd } from '../compilations';
-
-
+const Loader = dynamic(import("../components/Forms/Loader.react"));
+const TopPosts = dynamic(import("../compilations/TopPosts.react"));
+const Default = dynamic(import("../components/Containers/Default"));
+const AdBlock = dynamic(import("../components/Forms/AdBlock.react"));
+const Offscreen = dynamic(import("../components/Containers/Offscreen"));
+const InfiniteScroll = dynamic(import("react-infinite-scroll-component"));
+const CategoryLine = dynamic(import("../compilations/CategoryLine.react"));
+const CompsBannerAd = dynamic(import("../compilations/CompsBannerAd.react"));
+const NewsPostsComps = dynamic(import("../compilations/NewsPostsComps.react"));
 
 function randomChoice(arr){
     return arr[Math.floor(Math.random() * arr.length)];
@@ -19,92 +27,6 @@ function randomChoice(arr){
 
 
 class FrontPage extends React.Component {
-    static async getInitialProps() {
-        let posts = [];
-        let topPosts = [];
-        let newsFeed = [];
-        let postsCount = 0;
-        let categories = null;
-        let nonUsedCategories = null;
-        let catLine = { posts: [], category: null };
-        let lastTheme= { title: null, posts: [] };
-        let nextTheme = { title: null, posts: [] };
-
-        try {
-
-            await Public.fetchIndexPage()
-                .then(
-                    async response => {
-                        console.log("NN", response.data.topPosts);
-                        if ( !response.data.topPosts || response.data.topPosts.length === 0 ){
-                            await Public.fetchSimplePosts([], [2], [], 3)
-                                .then(response => topPosts = response.data.posts);
-                        }else{
-                            topPosts = response.data.topPosts;
-                        }
-
-                        if ( response.data.themes && response.data.themes.length > 1 ){
-                            await Public.fetchTheme(response.data.themes[0].id)
-                                .then(resp => lastTheme = resp.data.theme);
-                            await Public.fetchTheme(response.data.themes[1].id)
-                                .then(resp => nextTheme = resp.data.theme);
-
-                        }
-                    }
-                )
-                .catch(reason => {
-                    console.log("Something wrong with getting index-page -> ", reason.response);
-                });
-
-            await Public.fetchPostsCount([2])
-                .then(response => {
-                    postsCount = response.data;
-                });
-
-            await Public.fetchNews()
-                .then(response => newsFeed = response.data.posts);
-
-            await Public.fetchFrontPageCategories()
-                .then(response => {
-                    categories = response.data.categories;
-                    nonUsedCategories = response.data.categories;
-                });
-
-            const category = randomChoice(nonUsedCategories);
-            while (catLine.posts.length === 0 && nonUsedCategories.length > 0){
-                const index = nonUsedCategories.indexOf(category);
-                if (index > -1) {
-                    nonUsedCategories.splice(index, 1);
-                }
-
-                await Public.fetchCatPosts(4, category.id, [
-                    ...topPosts.map(post => post.id),
-                    ...lastTheme.posts.map(post => post.id),
-                    ...nextTheme.posts.map(post => post.id)])
-                    .then(response => {
-                        if (response.data.posts.length > 0){
-                            catLine = {
-                                posts: response.data.posts,
-                                category
-                            }
-                        }
-                    });
-            }
-
-            await Public.fetchSimplePosts([
-                ...catLine.posts.map(post => post.id),
-                ...topPosts.map(post => post.id),
-                ...lastTheme.posts.map(post => post.id),
-                ...nextTheme.posts.map(post => post.id)
-            ]).then(response => posts = response.data.posts);
-
-        }catch (e) {
-            console.log("Something wrong with getting initial data -> ", e);
-        }
-
-        return {topPosts, lastTheme, nextTheme, newsFeed, posts, postsCount, categories, nonUsedCategories, catLine};
-    }
-
     constructor(props) {
         super(props);
         this.state = {
@@ -123,9 +45,11 @@ class FrontPage extends React.Component {
             uid: 2,
             hasMore: true
         }
+
         this.fetchMore = this.fetchMore.bind(this);
-        props.dispatch(Common.changeInfinityState(true))
+        this.props.dispatch(changeInfinityState(true));
     }
+
 
     async fetchMore(){
         let alreadyCount = this.state.existsPostIds.length;
@@ -134,7 +58,7 @@ class FrontPage extends React.Component {
 
         if (this.props.postsCount <= alreadyCount){
             this.setState({hasMore: false})
-            this.props.dispatch(Common.changeInfinityState(false));
+            this.props.dispatch(changeInfinityState(false));
             return;
         }
 
@@ -158,7 +82,7 @@ class FrontPage extends React.Component {
                 case 'cat':{
                     if (this.state.existsCategoryIds.length === 0){
                         if ( this.state.categories == null || this.state.categories.length === 0 ){
-                            await Public.fetchFrontPageCategories()
+                            await fetchFrontPageCategories()
                                 .then(response => {
                                     this.state.categories = response.data.categories;
                                 })
@@ -177,13 +101,11 @@ class FrontPage extends React.Component {
 
                         let start = (offsets[category.id] != null) ? offsets[category.id] : 0;
 
-                        await Public.fetchCatPosts(4, category.id, this.state.existsPostIds, start)
+                        await fetchCatPosts(4, category.id, this.state.existsPostIds, start)
                             .then(response => {
                                 if (response.data.posts != null && response.data.posts.length > 0){
                                     catLine = response.data.posts;
-                                    let nOffset = offsets[category.id] !== undefined ? offsets[category.id] + 4 : 4;
-
-                                    offsets[category.id] = nOffset;
+                                    offsets[category.id] = offsets[category.id] !== undefined ? offsets[category.id] + 4 : 4;
                                     items.push(
                                         <CategoryLine posts={response.data.posts} category={category}/>
                                     );
@@ -197,21 +119,21 @@ class FrontPage extends React.Component {
                 case 'ad':{
                     if (this.props.width > 1023){
                         items.push(
-                            <Containers.Default>
-                                <Box mx="auto" my="48px" height={["280px"]} width={["100%"]}>
-                                    <Form.AdBlock id="R-A-351229-8" width="100%"
-                                                  height="100%" infinity uid={this.state.uid}/>
+                            <Default>
+                                <Box mx="auto" my="48px" height={"280px"} width={"100%"}>
+                                    <AdBlock id="R-A-351229-8" width="100%" height="100%" infinity
+                                             uid={this.state.uid}/>
                                 </Box>
-                            </Containers.Default>
+                            </Default>
                         )
                     }else{
                         items.push(
-                            <Containers.Default>
-                                <Box mx="auto" my="48px" height={["280px"]} width={["100%"]}>
-                                    <Form.AdBlock id="R-A-351229-7" width="100%"
-                                                  height="100%" infinity uid={this.state.uid}/>
+                            <Default>
+                                <Box mx="auto" my="48px" height={"280px"} width={"100%"}>
+                                    <AdBlock id="R-A-351229-7" width="100%" height="100%" infinity
+                                             uid={this.state.uid}/>
                                 </Box>
-                            </Containers.Default>
+                            </Default>
                         )
                     }
 
@@ -237,56 +159,56 @@ class FrontPage extends React.Component {
 
         return (
             <>
-                <NextSeo title={SITE_INFO.TITLE}
-                         description={SITE_INFO.DESCRIPTION}
-                         canonical={SITE_URL}
-                         additionalMetaTags={[
-                             {
-                                 name: 'yandex-verification',
-                                 content: YANDEX_VERIFICATION
-                             },
-                             {
-                                 name: 'language',
-                                 content: 'Russian'
-                             }
-                         ]}
-                         openGraph={{
-                             url: SITE_URL,
-                             locale: 'ru_RU',
-                             type: "website",
-                             title: SITE_INFO.TITLE,
-                             description: SITE_INFO.DESCRIPTION,
-                             images: [SITE_INFO.IMAGE],
-                             site_name: SITE_INFO.TITLE,
-                         }}
-                         twitter={{
-                             title: SITE_INFO.TITLE,
-                             description: SITE_INFO.DESCRIPTION,
-                             image: SITE_INFO.IMAGE.URL,
-                             handle: '@handle',
-                             site: '@site',
-                             cardType: 'summary_large_image',
-                         }}/>
-                <SocialProfileJsonLd
-                    type="Organization"
-                    name={SITE_INFO.TITLE}
-                    url={SITE_URL}
-                    sameAs={[
-                        "https://zen.yandex.ru/ilinnov",
-                        "https://vk.com/ili_media",
-                        "https://www.instagram.com/instannov"
-                    ]}
-                />
+                {/*<NextSeo title={SITE_INFO.TITLE}*/}
+                {/*         description={SITE_INFO.DESCRIPTION}*/}
+                {/*         canonical={SITE_URL}*/}
+                {/*         additionalMetaTags={[*/}
+                {/*             {*/}
+                {/*                 name: 'yandex-verification',*/}
+                {/*                 content: YANDEX_VERIFICATION*/}
+                {/*             },*/}
+                {/*             {*/}
+                {/*                 name: 'language',*/}
+                {/*                 content: 'Russian'*/}
+                {/*             }*/}
+                {/*         ]}*/}
+                {/*         openGraph={{*/}
+                {/*             url: SITE_URL,*/}
+                {/*             locale: 'ru_RU',*/}
+                {/*             type: "website",*/}
+                {/*             title: SITE_INFO.TITLE,*/}
+                {/*             description: SITE_INFO.DESCRIPTION,*/}
+                {/*             images: [SITE_INFO.IMAGE],*/}
+                {/*             site_name: SITE_INFO.TITLE,*/}
+                {/*         }}*/}
+                {/*         twitter={{*/}
+                {/*             title: SITE_INFO.TITLE,*/}
+                {/*             description: SITE_INFO.DESCRIPTION,*/}
+                {/*             image: SITE_INFO.IMAGE.URL,*/}
+                {/*             handle: '@handle',*/}
+                {/*             site: '@site',*/}
+                {/*             cardType: 'summary_large_image',*/}
+                {/*         }}/>*/}
+                {/*<SocialProfileJsonLd*/}
+                {/*    type="Organization"*/}
+                {/*    name={SITE_INFO.TITLE}*/}
+                {/*    url={SITE_URL}*/}
+                {/*    sameAs={[*/}
+                {/*        "https://zen.yandex.ru/ilinnov",*/}
+                {/*        "https://vk.com/ili_media",*/}
+                {/*        "https://www.instagram.com/instannov"*/}
+                {/*    ]}*/}
+                {/*/>*/}
                 <TopPosts posts={topPosts}/>
                 {
                     width > 1023
                         ? <NewsPostsComps compilation={lastTheme} news={newsFeed} posts={posts}/>
-                        : <Containers.Offscreen>
+                        : <Offscreen>
                             <NewsPostsComps compilation={lastTheme} news={newsFeed} posts={posts}/>
-                          </Containers.Offscreen>
+                          </Offscreen>
                 }
 
-                <Containers.Offscreen>
+                <Offscreen>
                     <CategoryLine posts={catLine.posts} category={catLine.category}/>
                     <CompsBannerAd theme={nextTheme} bannerContent={{
                         text: "Стань членом клуба 'ИЛИ ПРЕМИУМ' и получай подарки за чтение новостей",
@@ -295,36 +217,104 @@ class FrontPage extends React.Component {
                     }} bannerAdId="R-A-351229-6" mobileBannerAdId="R-A-351229-7"/>
                     <InfiniteScroll
                         dataLength={items.length} next={this.fetchMore}
-                        hasMore={hasMore} loader={<Form.Loader/>}>
+                        hasMore={hasMore} loader={<Loader/>}>
                         {
                             this.state.items.map((item, index)=>
                                 <React.Fragment key={index}>{item}</React.Fragment>
                             )
                         }
-                        {/*{*/}
-                        {/*    typeof window !== "undefined"*/}
-                        {/*        ?*/}
-                        {/*        () => {*/}
-                        {/*            const { AnimateGroup } = require('react-animation');*/}
-
-                        {/*            return (*/}
-                        {/*                <AnimateGroup durationOut={1000} animationIn={"bounceIn"} animationOut="fadeOut">*/}
-                        {/*                    {this.state.items.map((item, index)=>*/}
-                        {/*                        <React.Fragment key={index}>{item}</React.Fragment>*/}
-                        {/*                    )}*/}
-                        {/*                </AnimateGroup>*/}
-                        {/*            );*/}
-                        {/*        }*/}
-                        {/*        : this.state.items.map((item, index)=>*/}
-                        {/*            <React.Fragment key={index}>{item}</React.Fragment>*/}
-                        {/*        )*/}
-                        {/*}*/}
                     </InfiniteScroll>
-                </Containers.Offscreen>
+                </Offscreen>
             </>
         );
     }
 }
+
+FrontPage.getInitialProps = async () => {
+    let posts = [];
+    let topPosts = [];
+    let newsFeed = [];
+    let postsCount = 0;
+    let categories = null;
+    let nonUsedCategories = null;
+    let catLine = { posts: [], category: null };
+    let lastTheme= { title: null, posts: [] };
+    let nextTheme = { title: null, posts: [] };
+
+    try {
+
+        await fetchIndexPage()
+            .then(
+                async response => {
+                    if ( !response.data.topPosts || response.data.topPosts.length === 0 ){
+                        await fetchSimplePosts([], [2], [], 3)
+                            .then(response => topPosts = response.data.posts);
+                    }else{
+                        topPosts = response.data.topPosts;
+                    }
+
+                    if ( response.data.themes && response.data.themes.length > 1 ){
+                        await fetchTheme(response.data.themes[0].id)
+                            .then(resp => lastTheme = resp.data.theme);
+                        await fetchTheme(response.data.themes[1].id)
+                            .then(resp => nextTheme = resp.data.theme);
+
+                    }
+                }
+            )
+            .catch(reason => {
+                console.log("Something wrong with getting index-page -> ", reason.response);
+            });
+
+        await fetchPostsCount([2])
+            .then(response => {
+                postsCount = response.data;
+            });
+
+        await fetchNews()
+            .then(response => newsFeed = response.data.posts);
+
+        await fetchFrontPageCategories()
+            .then(response => {
+                categories = response.data.categories;
+                nonUsedCategories = response.data.categories;
+            });
+
+        const category = randomChoice(nonUsedCategories);
+        while (catLine.posts.length === 0 && nonUsedCategories.length > 0){
+            const index = nonUsedCategories.indexOf(category);
+            if (index > -1) {
+                nonUsedCategories.splice(index, 1);
+            }
+
+            await fetchCatPosts(4, category.id, [
+                ...topPosts.map(post => post.id),
+                ...lastTheme.posts.map(post => post.id),
+                ...nextTheme.posts.map(post => post.id)])
+                .then(response => {
+                    if (response.data.posts.length > 0){
+                        catLine = {
+                            posts: response.data.posts,
+                            category
+                        }
+                    }
+                });
+        }
+
+        await fetchSimplePosts([
+            ...catLine.posts.map(post => post.id),
+            ...topPosts.map(post => post.id),
+            ...lastTheme.posts.map(post => post.id),
+            ...nextTheme.posts.map(post => post.id)
+        ]).then(response => posts = response.data.posts);
+
+    }catch (e) {
+        console.log("Something wrong with getting initial data -> ", e);
+    }
+
+    return {topPosts, lastTheme, nextTheme, newsFeed, posts, postsCount, categories, nonUsedCategories, catLine};
+}
+
 
 
 function mapStateToProps(state){

@@ -1,0 +1,19 @@
+:root{
+    /* site colors */
+    --primary: #eb5757;
+    --secondary: #4517a7;
+    --backgroundSecondary: #f6f6f6;
+    --backgroundPrimary: #ffffff;
+    --backgroundInvert: #4a4a4a;
+    --backgroundInverted: #0e0e0e;
+    --hover: #050505;
+    
+    /* text colors*/
+    --text-primary: #050505;
+    --text-hover: #eb5757;
+    --text-secondary: #4a4a4a;
+    --text-secondarySecondary: #0e0e0e;
+    --text-onPrimary: #ffffff;
+    --text-editorSecondary: #707684;
+    --text-disabled: #d2d2d2;
+}

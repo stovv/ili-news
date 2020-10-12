@@ -1,21 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, {withTheme} from 'styled-components'
-import {Flex, Box} from 'rebass';
+import { Flex, Box } from 'reflexbox';
 
-import { Images } from '../../components';
 import {CardText, TagLabel} from "../../components/Typography";
-import {Emoji} from "emoji-mart";
+import { Emoji } from '../../components';
 
-const Blackout = styled.div`
-    width: 100%;
-    height: 100%;
-`
 
 class BannerWithButton extends React.Component {
 
     render(){
-        const {cover, buttonLink, buttonText, children, theme} = this.props;
+        const {cover, buttonLink, buttonText, children} = this.props;
         return(
             // <Images.Lazy cover={cover}>
             //     <Box height="100%" sx={{
@@ -33,12 +27,10 @@ class BannerWithButton extends React.Component {
             // </Images.Lazy>
 
         <Flex height="100%" justifyContent="center" sx={{
-            background: `linear-gradient(to right, rgba(229, 103, 82, 0), ${theme.colors.primary})`
+            background: `linear-gradient(to right, rgba(229, 103, 82, 0), var(--primary))`
         }}>
-            <Box margin={"auto 0 auto 0"}>
-                <Emoji emoji='shushing_face' set='apple' size={56} />
-            </Box>
-            <CardText type="xlarge" margin="auto 0 auto 40px" color={theme.text.onPrimary}
+            <Emoji size={36} emoji={"🤔"} />
+            <CardText type="xlarge" margin="auto 0 auto 40px" color={"var(--text-onPrimary)"}
                       maxWidth="361px" maxHeight="148px" textAlign="center">Тут скоро что то будет</CardText>
         </Flex>
         );
@@ -51,4 +43,4 @@ BannerWithButton.propTypes = {
     cover: PropTypes.object,
 }
 
-export default withTheme(BannerWithButton);
+export default BannerWithButton;

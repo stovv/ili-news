@@ -1,0 +1,62 @@
+.simple {
+    padding: 10px;
+    color: var(--primary);
+    text-transform: uppercase;
+    text-decoration: none;
+    background: var(--backgroundPrimary);
+    border: 2px solid var(--primary);
+    border-radius: 5px;
+    display: inline-block;
+    transition: all 0.4s ease 0s;
+    width: 100%;
+    outline: none;
+}
+
+.simple:hover {
+    color: var(--backgroundPrimary);
+    background: var(--primary);
+    border-color: var(--primary);
+    transition: all 0.4s ease 0s;
+    cursor: pointer;
+}
+
+.simple:disabled {
+    color: var(--text-disabled);
+    background: var(--backgroundPrimary);
+    border-color: var(--backgroundInverted);
+}
+
+.login {
+    composes: simple;
+    font-family: var(--fontFamily);
+    text-decoration: none;
+    padding: 16px 0;
+    font-size: 20px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+    outline: none;
+}
+
+.outline {
+    color: var(--backgroundPrimary);
+    background: var(--primary);
+}
+
+.outline:hover {
+    color: var(--primary);
+    background: var(--backgroundPrimary);
+}
+
+@media screen and (min-width: 1110px){
+    .login {
+        min-width: 410px;
+    }
+}
+@media screen and (max-width: 1111px){
+    .login {
+        min-width: 95%
+    }
+}

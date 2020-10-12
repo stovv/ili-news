@@ -1,0 +1,42 @@
+.rootFont {
+    margin: 0;
+    text-align: left;
+    font-style: normal;
+    line-height: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+    color: var(--text-primary);
+    font-family: var(--fontFamily);
+}
+
+
+/*
+${((store.fontSize || defaultStore.fontSize) && (store.margin || defaultStore.margin) ) ?
+    `
+    @media screen and (max-width: 4000px){
+      font-size: ${(store.fontSize && store.fontSize.laptop) ? store.fontSize.laptop : defaultStore.fontSize.laptop};
+    margin: ${(store.margin && store.margin.laptop) ? store.margin.laptop : defaultStore.margin.laptop};
+}
+
+@media screen and (max-width: 768px){
+    font-size: ${(store.fontSize && store.fontSize.tablet) ? store.fontSize.tablet : defaultStore.fontSize.tablet};
+    margin: ${(store.margin && store.margin.tablet) ? store.margin.tablet : defaultStore.margin.tablet};
+}
+
+@media screen and (max-width: 425px){
+    font-size: ${(store.fontSize && store.fontSize.l) ? store.fontSize.l : defaultStore.fontSize.l};
+    margin: ${(store.margin && store.margin.l) ? store.margin.l : defaultStore.margin.l};
+}
+
+@media screen and (max-width: 375px){
+    font-size: ${(store.fontSize && store.fontSize.m) ? store.fontSize.m : defaultStore.fontSize.m};
+    margin: ${(store.margin && store.margin.m) ? store.margin.m : defaultStore.margin.m};
+}
+
+@media screen and (max-width: 320px){
+    font-size: ${(store.fontSize && store.fontSize.s) ? store.fontSize.s : defaultStore.fontSize.s};
+    margin: ${(store.margin && store.margin.s) ? store.margin.s : defaultStore.margin.s};
+}
+
+*/

@@ -1,5 +1,4 @@
 import * as React from "react"
-import {withTheme} from "styled-components";
 
 
 class HamburgerMenu extends React.Component {
@@ -11,12 +10,17 @@ class HamburgerMenu extends React.Component {
     }
 
     render(){
-        const {theme, ...props} = this.props;
+        const {...props} = this.props;
         return(
             <div onMouseEnter={()=>this.setState({hover:true})}
                  onMouseLeave={()=>this.setState({hover:false})}>
                 <svg width={24} height={24} viewBox="0 0 24 24" fill="none" {...props}>
-                    <path style={this.style} d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z" fill={this.state.hover ? theme.text.hover : theme.text.secondary} />
+                    <path style={this.style} d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"
+                          fill={this.state.hover
+                              ? "var(--text-hover)"
+                              : "var(--text-secondary)"
+                          }
+                    />
                 </svg>
             </div>
         );
@@ -24,4 +28,4 @@ class HamburgerMenu extends React.Component {
     }
 }
 
-export default withTheme(HamburgerMenu);
+export default HamburgerMenu;

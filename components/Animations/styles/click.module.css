@@ -1,0 +1,12 @@
+.simpleClick {
+    background-color: Transparent;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    transition: all 0.25s ease-in-out;
+}
+
+.simpleClick:active{
+    transform: scale(0.85);
+}

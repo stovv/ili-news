@@ -2,7 +2,7 @@ import Router from 'next/router';
 import { Auth, Common } from "../../actions";
 
 
-const Types = (theme, dispatch) => ({
+const Types = (dispatch) => ({
     user: [
         {text: 'Редактировать профиль', onClick: ()=>{
                 Router.push('/settings');
@@ -11,7 +11,7 @@ const Types = (theme, dispatch) => ({
         {text: 'Создать приглашение'},
         {text: 'Выйти', onClick: ()=>{
                 dispatch(Auth.logout());
-                dispatch(Common.notify('Ждем вас снова 😊', theme.colors.backgroundPrimary, theme.text.primary));
+                dispatch(Common.notify('Ждем вас снова 😊', "var(--backgroundPrimary)", "var(--primary)"));
                 Router.push('/');
             }
         }
@@ -26,7 +26,7 @@ const Types = (theme, dispatch) => ({
         {text: 'Коллекция'},
         {text: 'Выйти', onClick: ()=>{
                 dispatch(Auth.logout());
-                dispatch(Common.notify('Ждем вас снова 😊', theme.colors.backgroundPrimary, theme.text.primary));
+                dispatch(Common.notify('Ждем вас снова 😊', "var(--backgroundPrimary)", "var(--primary)"));
                 Router.push('/');
             }
         }

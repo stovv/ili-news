@@ -1,29 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Flex, Box } from 'rebass';
 import { Icons } from '../../assets';
-import styled, { withTheme } from "styled-components";
 import {UniversalLink} from "../Links.react";
+import { Flex, Box } from 'reflexbox';
+
+import styles from './styles/mobile.module.css';
 
 //<MenuLink>test</MenuLink>
-const MobileMenuLink = styled.p` 
-  font-family: ${props=> props.theme.fontFamily};
-  font-size: 42px;
-  font-weight: 600;
-  text-align: center;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.30;
-  margin: 10px 0;
-  text-transform: lowercase;
-  text-decoration: none;
-  letter-spacing: 0.4px;
-  color: ${props=>props.theme.text.onPrimary};
-  :active{
-      color: ${props=>props.theme.text.hover};
-  }
-`
-
 
 class MobileMenu extends React.Component {
     componentWillUnmount() {
@@ -41,23 +24,23 @@ class MobileMenu extends React.Component {
     }
 
     render(){
-        const { theme, display, close, menus } = this.props;
+        const { display, close, menus } = this.props;
 
         if (typeof window === "undefined"){
             return (<></>);
         }
 
-        const {AnimateOnChange} = require('react-animation');
+        //const {AnimateOnChange} = require('react-animation');
 
         return (
             <div style={{
                 position: 'fixed',
                 top: 0, left: 0, zIndex: 9999, overflow: 'hidden'
             }}>
-            <AnimateOnChange durationOut={500} animationIn="fadeInUp" animationOut="fadeOut">
+            {/*<AnimateOnChange durationOut={500} animationIn="fadeInUp" animationOut="fadeOut">*/}
                 {
                     display &&
-                        <Flex bg={theme.colors.backgroundInverted} height="100vh" width="100vw" sx={{
+                        <Flex bg={"var(--backgroundInverted)"} height="100vh" width="100vw" sx={{
                             opacity: 0.999
                         }} justifyContent="center">
                             <Box sx={{
@@ -71,14 +54,21 @@ class MobileMenu extends React.Component {
                                 {menus.map((item, index)=>{
                                     return (
                                         <React.Fragment key={index}>
-                                            <UniversalLink item={item} component={MobileMenuLink} onClick={close}/>
+                                            <UniversalLink item={item} onClick={close}
+                                                           component={
+                                                               ({children})=>
+                                                                   <p className={styles.link}>
+                                                                       {children}
+                                                                   </p>
+                                                           }
+                                            />
                                         </React.Fragment>
                                     )})
                                 }
                             </Flex>
                         </Flex>
                 }
-            </AnimateOnChange>
+            {/*</AnimateOnChange>*/}
             </div>
         );
 
@@ -91,4 +81,4 @@ MobileMenu.propTypes = {
     menus: PropTypes.array
 }
 
-export default withTheme(MobileMenu);
+export default MobileMenu;

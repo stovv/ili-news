@@ -1,23 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
-import styled, { withTheme } from 'styled-components';
 
 import { Action } from '../Layouts';
 import Types from './ActionMenuTypes';
+import styles from './styles/context.module.css';
 
-const Context = styled(Action.Menu)`
-    z-index: 99;
-    position: absolute;
-    top: ${props=>props.positionY}px;
-    ${({positionX, actualWidth}) => window.innerWidth < positionX+actualWidth
-        ? `right: 5px;`
-        : `left: ${positionX + 5}px;`
-    };
-    ${({hide, opened}) => (hide && !opened) && `display: none;`};
-    transition: opacity 120ms ease-in-out 0s, height 120ms ease-in-out 0s;
-    opacity: ${props => props.opened ? 1 : 0};
-`;
+const Context = ({children, positionY, positionX, actualWidth}) => (
+    <div className={`${styles.menu} ${styles.context}`} style={{
+        top: `${positionY}px`,
+        right: window.innerWidth < positionX + actualWidth ? "5px" : "unset",
+        left: window.innerWidth < positionX + actualWidth ? `${positionX + 5}px` : "unset",
+    }}>
+        {children}
+    </div>
+);
 
 
 class ContextMenu extends React.Component {
@@ -96,14 +93,14 @@ class ContextMenu extends React.Component {
     }
 
     render(){
-        const { type, theme, dispatch } = this.props;
+        const { type, dispatch } = this.props;
         const { opened, hide, clickX, clickY, contextWidth } = this.state;
 
         return (
             <Context opened={opened} positionY={clickY} positionX={clickX} hide={hide}
                      actualWidth={contextWidth} ref={this.outerRef}>
                 {
-                    Types(theme, dispatch)[type].map((menuItem, index) => (
+                    Types(dispatch)[type].map((menuItem, index) => (
                         <React.Fragment key={index}>
                             <Action.Item opened={true} onClick={menuItem.onClick}>{menuItem.text}</Action.Item>
                         </React.Fragment>
@@ -121,4 +118,4 @@ ContextMenu.propTypes = {
     ]).isRequired
 }
 
-export default connect()(withTheme(ContextMenu));
+export default connect()(ContextMenu);

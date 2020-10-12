@@ -1,5 +1,4 @@
 import React from 'react';
-import { withTheme } from "styled-components";
 
 import { Icons } from '../../assets';
 
@@ -7,11 +6,12 @@ import { Icons } from '../../assets';
 class Bookmark extends React.Component {
 
     render(){
-        const { theme } = this.props;
         return(
-            <Icons.BookmarkIcon style={theme.post.footer.iconSpacing.bookmark}/>
+            <Icons.BookmarkIcon style={{
+                margin: "auto 38px auto 0"
+            }}/>
         );
     }
 }
 
-export default withTheme(Bookmark);
+export default Bookmark;

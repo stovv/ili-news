@@ -1,18 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withTheme } from 'styled-components';
-import { Box } from 'rebass';
 
 import {Lazy} from '../Images';
 import { TagLabel, CardText } from '../Typography';
+import { Box } from 'reflexbox';
 
 
-const Types =(theme)=> ({
+const Types = {
     bottomLeft: {
         text: {
             position: "absolute",
             bottom: ["4px"],
-            left: theme.spacing.m,
+            left: "var(--spacing-m)",
             maxWidth: "576px"
         }
     },
@@ -21,12 +20,12 @@ const Types =(theme)=> ({
             sx:{
                 top: "30px",
                 position: "absolute",
-                right: theme.spacing.m,
+                right: "var(--spacing-m)",
             }
         },
         heading:{
             textAlign: "right",
-            margin: `0 0 ${theme.spacing.m} 0`
+            margin: `0 0 var(--spacing-m) 0`
         },
         text:{
             margin: "0",
@@ -40,12 +39,12 @@ const Types =(theme)=> ({
             sx:{
                 bottom: "30px",
                 position: "absolute",
-                right: theme.spacing.m,
+                right: "var(--spacing-m)",
             }
         },
         heading:{
             textAlign: "right",
-            margin: `0 0 ${theme.spacing.m} 0`
+            margin: `0 0 var(--spacing-m) 0`
         },
         text:{
             margin: "0",
@@ -54,27 +53,27 @@ const Types =(theme)=> ({
             maxWidth: "460px",
         }
     }
-});
+};
 
-/*maxWidth={["576px"]} maxHeight={["116px"]}*/
+/*maxWidth={*}*/
 
 class Large extends React.Component{
     render(){
-        const { theme, heading, children, type, cover, tight, height} = this.props;
-        var TextPosition = Types(theme)[type];
+        const { heading, children, type, cover, tight, height} = this.props;
+        let TextPosition = Types[type];
         if (TextPosition === undefined){
-            TextPosition = Object.values(Types(theme))[0];
+            TextPosition = Object.values(Types)[0];
         }
         return (
             <Lazy cover={cover} blackout height={height} hover>
                     <Box  {...TextPosition.wrap}>
                         {
                             heading &&
-                            <TagLabel type="large" color={theme.text.onPrimary} {...TextPosition.heading}
+                            <TagLabel type="large" color={"var(--text-onPrimary)"} {...TextPosition.heading}
                                       textTransform="lowercase">{heading}</TagLabel>
                         }
                         <CardText type="large" {...TextPosition.text}
-                                  color={theme.text.onPrimary}>{children}</CardText>
+                                  color={"var(--text-onPrimary)"}>{children}</CardText>
                     </Box>
             </Lazy>
         );
@@ -90,4 +89,4 @@ Large.propTypes = {
     tight: PropTypes.bool,
 }
 
-export default withTheme(Large);
+export default Large;

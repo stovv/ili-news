@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Flex, Box } from 'rebass';
 import { connect } from "react-redux";
 
+import { Flex, Box } from 'reflexbox';
 import NewsBlock from "./Banners/News.react";
 import {Cards, Containers} from '../components';
 import {PostLink} from "../components/Links.react";
@@ -21,7 +21,7 @@ class NewsPostsComps extends React.Component {
         if ( width >= 1280 ) {
             return (
                 <Containers.Default>
-                    <Flex height={["672px"]} marginTop={["55px"]}>
+                    <Flex height={"672px"} marginTop={"55px"}>
                         <Box width={1/4} >
                             {
                                 leftPosts.length > 0 &&
@@ -40,7 +40,7 @@ class NewsPostsComps extends React.Component {
                         </Box>
                         <Box width={2/4} height="100%" mr="5px">
                             <Flex flexDirection="column" height="100%">
-                                <Box height={["75%"]} width="100%" mx="auto">
+                                <Box height={"75%"} width="100%" mx="auto">
                                     {
                                         bigPost !== null &&
                                         <PostLink postSlug={bigPost.slug}>
@@ -51,7 +51,7 @@ class NewsPostsComps extends React.Component {
                                         </PostLink>
                                     }
                                 </Box>
-                                <Box height={["25%"]} mx="5px">
+                                <Box height={"25%"} mx="5px">
                                     {
                                         botPosts.length > 0 &&
                                         <Flex justifyContent="space-between" mt="32px">
@@ -79,10 +79,10 @@ class NewsPostsComps extends React.Component {
         else if ( width > 1023 ){
             return (
                 <Containers.Default>
-                    <Flex height={["672px"]} marginTop={["55px"]}>
+                    <Flex height={"672px"} marginTop={"55px"}>
                         <Box width={2/3} height="100%" mr="5px">
                             <Flex flexDirection="column" height="100%">
-                                <Box height={["75%"]} width="100%" mx="auto">
+                                <Box height={"75%"} width="100%" mx="auto">
                                     {
                                         bigPost !== null &&
                                             <PostLink postSlug={bigPost.slug}>
@@ -93,7 +93,7 @@ class NewsPostsComps extends React.Component {
                                             </PostLink>
                                     }
                                 </Box>
-                                <Box height={["25%"]} mx="5px">
+                                <Box height={"25%"} mx="5px">
                                     {
                                         botPosts.length > 0 &&
                                             <Flex justifyContent="space-between" mt="32px">
@@ -119,7 +119,7 @@ class NewsPostsComps extends React.Component {
                         {
                             leftPosts.map((item, index)=>
                                 <React.Fragment key={index}>
-                                    <Box width={[1/3]} mr={index !== leftPosts.length - 1 && "5px"} >
+                                    <Box width={1/3} mr={index !== leftPosts.length - 1 && "5px"} >
                                         <Cards.Post post={item}/>
                                     </Box>
                                 </React.Fragment>

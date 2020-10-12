@@ -1,0 +1,15 @@
+.list {
+    font-family: var(--fontFamily);
+}
+
+.unordered {
+    composes: list;
+}
+
+.ordered {
+    composes: list;
+}
+
+.listItem {
+
+}

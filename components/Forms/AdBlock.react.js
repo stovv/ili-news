@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box } from 'rebass';
-import { withTheme } from "styled-components";
 
-import { Emoji } from "emoji-mart";
-import { Typography } from "../index";
-
+import { Heading } from '../Typography';
+import { Box } from 'reflexbox';
 
 
 class YandexRTB extends React.Component {
@@ -38,22 +35,21 @@ class YandexRTB extends React.Component {
     }
 
     render(){
-        const { id, infinity, uid, width, height, theme, preview } = this.props;
+        const { id, infinity, uid, width, height, preview } = this.props;
         if (typeof window !== "undefined"){
             return(
-                <Box  width={width} height={height} sx={{position: 'relative'}} bg={preview && theme.colors.backgroundInvert}>
+                <Box  width={width} height={height} sx={{position: 'relative'}}
+                      bg={preview ? "var(--backgroundInvert)" : undefined}>
                     {
                         preview
-                            ? <Box style={{
+                            ? <Box sx={{
                                     top: "50%", left: "50%", marginRight: "-50%", position: 'absolute',
                                     transform: "translate(-50%, -50%)", zIndex: 1
                                 }}>
-                                    <Emoji emoji='money_mouth_face' set='apple' size={50}/>
-                                    <Typography.Heading margin={`10px 0`} level={1} color={theme.text.onPrimary}>
+                                    <Heading margin={`10px 0`} level={1} color={"var(--text-onPrimary)"}>
                                         РЕК<br/>
                                         ЛАМА
-                                    </Typography.Heading>
-                                    <Emoji emoji='money_with_wings' set='apple' size={50}/>
+                                    </Heading>
                                 </Box>
                                 : <div id={infinity ? `yandex_rtb_${id}_${uid}` : `yandex_rtb_${id}`} style={{
                                     position: 'relative',
@@ -90,4 +86,4 @@ YandexRTB.propTypes = {
     ]).isRequired,
 }
 
-export default withTheme(YandexRTB);
+export default YandexRTB;

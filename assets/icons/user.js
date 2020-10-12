@@ -1,5 +1,4 @@
 import * as React from "react"
-import {withTheme} from 'styled-components';
 
 
 class UserIcon extends React.Component {
@@ -10,15 +9,15 @@ class UserIcon extends React.Component {
         transition: "all 0.4s ease 0s",
     }
     render(){
-        const {theme, inverted, ...props} = this.props;
+        const {inverted, ...props} = this.props;
         return (
             <div onMouseEnter={()=>this.setState({hover:true})}
                  onMouseLeave={()=>this.setState({hover:false})}>
                 <svg width={24} height={24} fill="none" viewBox="0 0 24 24" {...props}>
                     <path
                         style={this.style}
-                        stroke={inverted ? (this.state.hover ? theme.text.hover : theme.text.onPrimary)
-                            : (this.state.hover ? theme.text.hover : theme.text.secondary)}
+                        stroke={inverted ? (this.state.hover ? "var(--text-hover)" : "var(--text-onPrimary)")
+                            : (this.state.hover ? "var(--text-hover)" : "var(--text-secondary)")}
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={2}
@@ -30,4 +29,4 @@ class UserIcon extends React.Component {
     }
 };
 
-export default withTheme(UserIcon);
+export default UserIcon;

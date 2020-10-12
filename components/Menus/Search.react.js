@@ -1,9 +1,7 @@
 import React from "react";
-import { Emoji } from 'emoji-mart';
-import { Flex, Box } from 'rebass';
+
 import { connect } from "react-redux";
 import StackGrid from "react-stack-grid";
-import { withTheme } from 'styled-components';
 
 import { Mini } from '../Cards';
 import { Public } from '../../api';
@@ -11,16 +9,17 @@ import { Icons } from "../../assets";
 import { Click } from "../Animations";
 import { Heading } from '../Typography';
 import { Inputs, Loader } from '../Forms';
-import { UniversalLink } from "../Links.react";
 import { Common } from "../../actions";
+import Emoji from "../Emoji";
+import { Flex, Box } from 'reflexbox';
 
 
-const NotFound = ({theme})=>(
+const NotFound = ()=>(
     <Box width={"100%"} mt={"182px"}>
         <Flex justifyContent={"center"}>
-            <Emoji emoji='cry' set='apple' size={72}/>
+            <Emoji emoji={"😢"} size={72}/>
         </Flex>
-        <Heading level={2} color={theme.text.disabled} textAlign={"center"}>
+        <Heading level={2} color={"var(--text-disabled)"} textAlign={"center"}>
             Упс, по вашему запросу ничего не найдено
         </Heading>
     </Box>
@@ -185,7 +184,7 @@ class Search extends React.Component{
     }
 
     render(){
-        const { activated, theme, dispatch, width } = this.props;
+        const { activated, dispatch, width } = this.props;
         const { typing, loading, notFoundTopMath, notFoundSuchMath, topMath, items } = this.state;
         const searchItems = [...topMath, ...items];
 
@@ -200,7 +199,7 @@ class Search extends React.Component{
                 transform: activated ? "scale(1)" : "scale(0.9)",
                 bottom: 0, left: 0, zIndex: 9999, overflow: 'hidden'
             }}>
-                <Box id="searchContent" bg={theme.colors.backgroundInverted} width="100vw" sx={{
+                <Box id="searchContent" bg={"var(--backgroundInverted)"} width="100vw" sx={{
                     overflowY: 'scroll',
                     opacity: 0.98, height: "100%",
                     position: "relative", display: "inline-block"
@@ -216,7 +215,7 @@ class Search extends React.Component{
                                             onChange={(e)=>this.setState({ query: e.target.value })}/>
                     </Flex>
                     { ((typing || loading) && !(notFoundTopMath && notFoundSuchMath)) && <Loader/> }
-                    { (notFoundTopMath && notFoundSuchMath) && <NotFound theme={theme}/> }
+                    { (notFoundTopMath && notFoundSuchMath) && <NotFound /> }
                     <Box width={"100%"} margin={"64px auto 0 auto"}
                          px={width > 1023 ? "80px" : "0"} pb={"20px"}>
                         <StackGrid columnWidth={width > 340 ? 300 : 270} style={{
@@ -249,4 +248,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps)(withTheme(Search));
+export default connect(mapStateToProps)(Search);

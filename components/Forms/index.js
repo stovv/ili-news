@@ -6,7 +6,6 @@ import LikeBar from "./LikeBar.react";
 import Comments from "./Comments.react";
 import AdBlock from './AdBlock.react';
 import Loader from "./Loader.react";
-//import DropImage from './DropImage.react';
 import HeaderPreloader from "./HeaderPreloader.react";
 
 export {
@@ -18,5 +17,4 @@ export {
     AdBlock,
     Loader,
     HeaderPreloader,
-    //DropImage
 }

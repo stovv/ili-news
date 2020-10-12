@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withTheme } from "styled-components";
-import { Flex, Box } from 'rebass';
 
 import { Icons } from '../../assets';
 import { CardText } from '../Typography';
-import {Typography} from "../index";
 import {Public} from "../../api";
 import {connect} from "react-redux";
+import { Flex, Box } from 'reflexbox';
 
 
 class LikeBar extends React.Component {
@@ -49,7 +47,7 @@ class LikeBar extends React.Component {
     }
 
     render(){
-        const { theme, width } = this.props;
+        const { width } = this.props;
 
         return(
             <Flex>
@@ -61,7 +59,7 @@ class LikeBar extends React.Component {
                     }} onClick={()=>this.likeUp()}/>
                     {
                         this.state.likes > 0 &&
-                        <CardText type="normal" margin="0" color={theme.text.secondary}>{this.state.likes}</CardText>
+                        <CardText type="normal" margin="0" color={"var(--text-secondary)"}>{this.state.likes}</CardText>
                     }
                 </Box>
                 <Box display="flex">
@@ -72,7 +70,7 @@ class LikeBar extends React.Component {
                     }} onClick={()=>this.dislikeUp()}/>
                     {
                         this.state.dislikes > 0 &&
-                        <CardText type="normal" margin="0" color={theme.text.secondary}>{this.state.dislikes}</CardText>
+                        <CardText type="normal" margin="0" color={"var(--text-secondary)"}>{this.state.dislikes}</CardText>
                     }
                 </Box>
             </Flex>
@@ -93,4 +91,4 @@ function mapStateToProps(state){
 }
 
 
-export default connect(mapStateToProps)(withTheme(LikeBar));
+export default connect(mapStateToProps)(LikeBar);

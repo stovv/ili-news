@@ -1,22 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
-
-
-const ParagraphComponent = styled.p`
-  font-family: ${props=>props.theme.fontFamily};
-  font-size: 20px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.33;
-  letter-spacing: normal;
-  color: ${props => props.theme.text.backgroundInverted};
-  
-  :first-child {
-    margin-top: 0;
-  }
-
-`;
+import PropTypes from 'prop-types';
+import styles from './styles/paragraph.module.css';
 
 
 class Paragraph extends React.Component{
@@ -28,10 +12,13 @@ class Paragraph extends React.Component{
         }
 
         return (
-            <ParagraphComponent dangerouslySetInnerHTML={{__html: data.text}}/>
+            <p className={styles.postParagraph} dangerouslySetInnerHTML={{__html: data.text}}/>
         )
     }
+}
 
+Paragraph.propTypes = {
+    data: PropTypes.object.isRequired
 }
 
 export default Paragraph;

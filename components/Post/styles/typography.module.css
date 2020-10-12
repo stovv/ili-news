@@ -1,0 +1,174 @@
+.heading {
+    composes: rootFont from '../../Typography/styles/compose.module.css';
+    line-height: 1.12;
+    font-weight: bold;
+    font-size: 48px;
+}
+
+.rubric {
+    composes: rootFont from '../../Typography/styles/compose.module.css';
+    font-size: 20px;
+    margin: 32px 0 var(--spacing-m) 0;
+    line-height: 1.2;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.publishDate {
+    composes: rootFont from '../../Typography/styles/compose.module.css';
+    line-height: 1.2;
+    font-weight: bold;
+    color: var(--text-secondary);
+    font-size: 20px;
+    margin: auto 0;
+}
+
+.authors {
+    composes: rootFont from '../../Typography/styles/compose.module.css';
+    line-height: 1.2;
+    font-weight: bold;
+    color: var(--primary);
+    font-size: 20px;
+    margin: auto 0 auto 5px;
+}
+
+.eventDateDay {
+    composes: rootFont from '../../Typography/styles/compose.module.css';
+    line-height: 1.33;
+    font-weight: 500;
+    color: var(--primary);
+    text-align: center;
+    font-size: 64px;
+    margin: 0 24px 0 0;
+}
+
+.eventDateMouth {
+    composes: rootFont from '../../Typography/styles/compose.module.css';
+    line-height: 1.20;
+    font-weight: bold;
+    color: var(--primary);
+    text-align: center;
+    font-size: 28px;
+    margin: 0 24px 0 0;
+}
+
+.ratingCount {
+    composes: rootFont from '../../Typography/styles/compose.module.css';
+    line-height: 1.33;
+    font-weight: normal;
+    color: var(--text-secondary);
+    user-select: none;
+    font-size: 20px;
+    margin: auto 0;
+}
+
+@media screen and (max-width: 4000px) {
+    .heading {
+        font-size: 48px;
+        margin: auto 0;
+    }
+
+    .eventDateDay {
+        font-size: 64px;
+        margin: 0 24px 0 0;
+    }
+
+    .eventDateMouth {
+        font-size: 28px;
+        margin: 0 24px 0 0;
+    }
+
+    .ratingCount {
+        font-size: 20px;
+        margin: auto 0;
+    }
+}
+
+
+@media screen and (max-width: 768px){
+    .heading {
+        font-size: 40px;
+        margin: auto 0;
+    }
+
+    .eventDateDay {
+        font-size: 50px;
+        margin: 0 24px 0 0;
+    }
+
+    .eventDateMouth {
+        font-size: 24px;
+        margin: 0 24px 0 0;
+    }
+
+    .ratingCount {
+        font-size: 20px;
+        margin: auto 0;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .heading {
+        font-size: 32px;
+        margin: auto 0;
+    }
+
+    .eventDateDay {
+        font-size: 42px;
+        margin: 0 20px 0 0;
+    }
+
+    .eventDateMouth {
+        font-size: 20px;
+        margin: 0 20px 0 0;
+    }
+
+    .ratingCount {
+        font-size: 18px;
+        margin: auto 0;
+    }
+}
+
+@media screen and (max-width: 375px){
+    .heading {
+        font-size: 20px;
+        margin: auto 0;
+    }
+
+    .eventDateDay {
+        font-size: 40px;
+        margin: 0 14px 0 0;
+    }
+
+    .eventDateMouth {
+        font-size: 18px;
+        margin: 0 14px 0 0;
+    }
+
+    .ratingCount {
+        font-size: 16px;
+        margin: auto 0;
+    }
+}
+
+@media screen and (max-width: 320px){
+    .heading {
+        font-size: 18px;
+        margin: auto 0;
+    }
+
+    .eventDateDay {
+        font-size: 20px;
+        margin: 0 12px 0 0;
+    }
+
+    .eventDateMouth {
+        font-size: 16px;
+        margin: 0 12px 0 0;
+    }
+
+    .ratingCount {
+        font-size: 16px;
+        margin: auto 0;
+    }
+}

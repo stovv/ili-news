@@ -30,7 +30,7 @@ export const UniversalLink = ({ item, component, route, componentParams, ...prop
             </Component>
         </PostLink>
     } else if (item.url != null){
-        return <Link  href={`/${item.url.link}`} {...props}>
+        return <Link  href={`/${item.url.link}`} scroll={true} prefetch={false} {...props}>
             <Component active={route === `/${item.url.link}`} {...componentParams}>
                 {item.url.title}
             </Component>
@@ -53,25 +53,31 @@ export const SocialLink = ({ item, component, route, ...props }) => {
 }
 
 
-export const PostLink = ({postSlug, children, ...props}) => (
-    <Link href={"/[postSlug]"} as={`/${postSlug}`} passHref prefetch={false} {...props}>
+export const PostLink = ({postSlug, children,
+                             prefetch = false, passHref = true, scroll = true, ...props}) => (
+    <Link href={"/[postSlug]"} as={`/${postSlug}`}
+          passHref={passHref} prefetch={prefetch} scroll={scroll}>
         <a style={noDecoration} {...props}>
             {children}
         </a>
     </Link>
 );
 
-export const RubricLink = ({ rubricSlug, children, ...props }) => (
-    <Link href={"/rubric/[rubricSlug]"} as={`/rubric/${rubricSlug}`} passHref>
+export const RubricLink = ({ rubricSlug, children,
+                               prefetch = false, passHref = true, scroll = true, ...props }) => (
+    <Link href={"/rubric/[rubricSlug]"} as={`/rubric/${rubricSlug}`}
+          passHref={passHref} prefetch={prefetch} scroll={scroll} >
         <a style={noDecoration} {...props}>
             {children}
         </a>
     </Link>
 );
 
-export const CategoryLink = ({ categorySlug, children, ...props }) => (
+export const CategoryLink = ({ categorySlug, children,
+                                 prefetch = false, passHref = true, scroll = true, ...props }) => (
     <div {...props}>
-        <Link href={"/category/[categorySlug]"} as={`/category/${categorySlug}`} passHref>
+        <Link href={"/category/[categorySlug]"} as={`/category/${categorySlug}`}
+              passHref={passHref} prefetch={prefetch} scroll={scroll} >
             {children}
         </Link>
     </div>

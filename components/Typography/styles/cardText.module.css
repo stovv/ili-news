@@ -1,0 +1,68 @@
+/* root class */
+.cardText {
+    font-family: var(--fontFamily);
+    color: var(--text-primary);
+    font-weight: 600;
+    user-select: none;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+}
+
+/* params classes */
+.hoverable:hover {
+    transition: all 0.4s ease 0s !important;
+    color: var(--text-hover) !important;
+    cursor: pointer !important;
+}
+
+.wrapped {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.hiddenOverflow {
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* type classes */
+.xxlarge {
+    composes: cardText;
+    font-size: 36px;
+    line-height: 1.04;
+}
+
+.xlarge {
+    composes: cardText;
+    font-size: 30px;
+    line-height: 1.04;
+}
+
+.large {
+    composes: cardText;
+    font-size: 28px;
+    line-height: 1.04;
+}
+
+.normal {
+    composes: cardText;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.33;
+}
+
+.small {
+    composes: cardText;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.09;
+}
+
+.xsmall {
+    font-size: 14px;
+    line-height: 1.29;
+    font-weight: 400;
+}

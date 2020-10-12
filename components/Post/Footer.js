@@ -1,51 +1,20 @@
 import React from "react"
-import { Flex } from 'rebass';
 import PropTypes from 'prop-types';
-import styled, { withTheme } from "styled-components";
 
 import { Icons } from "../../assets";
 import { ReadMoreBlock } from '../UniversalBlock';
 import { RatingCounter } from './Components/Typo';
 import { LikeBar, Bookmark, Comments } from '../Forms';
-
-
-const FooterWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  
-  margin-top: 70px;
-  margin-bottom: 46px;
-  
-  @media screen and ( min-width: 1024px ){
-      margin-left: 26px;
-      margin-right: 26px;
-  }
-  
-  @media screen and ( max-width: 1023px ){
-      margin-left: 4px;
-      margin-right: 4px;
-  }
-`;
-
+import { Flex } from 'reflexbox';
+import styles from './styles/footer.module.css';
 
 class PostFooter extends React.Component{
-    // shouldComponentUpdate(nextProps, nextState, nextContext) {
-    //     return nextProps.slug !== this.props.slug;
-    // }
-    //
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     if ( prevProps.slug !== this.props.slug ){
-    //         this.forceUpdate();
-    //     }
-    // }
-
     render() {
         const { rating, clientId, slug, readMore, commentThreadId } = this.props;
-        const { theme } = this.props;
 
         return (
             <>
-                <FooterWrapper>
+                <div className={styles.footerWrapper}>
                     <Flex my="auto">
                         <LikeBar rating={rating} clientId={clientId}/>
                         {/*<Icons.CommentsIcon style={theme.post.footer.iconSpacing.comments}/>*/}
@@ -53,10 +22,12 @@ class PostFooter extends React.Component{
                     </Flex>
                     <Flex my="auto">
                         {/*<Bookmark slug={slug}/>*/}
-                        <Icons.EyeIcon style={theme.post.footer.iconSpacing.view}/>
+                        <Icons.EyeIcon style={{
+                            margin: "auto 9px auto 0"
+                        }}/>
                         <RatingCounter>{rating.views}</RatingCounter>
                     </Flex>
-                </FooterWrapper>
+                </div>
                 {
                     commentThreadId && <Comments threadId={commentThreadId}/>
                 }
@@ -77,4 +48,4 @@ PostFooter.propTypes = {
     commentThreadId: PropTypes.number,
 }
 
-export default withTheme(PostFooter);
+export default PostFooter;

@@ -1,0 +1,39 @@
+.menu {
+    border-radius: 8px;
+    box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.08);
+    background-color: var(--backgroundPrimary);
+}
+
+.itemWrap {
+    font-family: var(--fontFamily);
+    color: var(--text-primary);
+    user-select: none;
+}
+
+.itemHover {
+    background-color: var(--backgroundPrimary);
+    cursor: pointer;
+    padding: 8px 52px 8px 16px;
+}
+
+.itemHover:first-child {
+    margin-top: 8px;
+}
+
+.itemHover:last-child {
+    margin-bottom: 8px;
+}
+
+.itemHover:hover {
+    background-color: var(--backgroundSecondary);
+}
+
+.itemHoverIcon {
+    composes: itemHover;
+    padding: 8px 16px;
+}
+
+.opened {
+    display: unset;
+    opacity: 1;
+}

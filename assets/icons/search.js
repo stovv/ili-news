@@ -1,5 +1,4 @@
 import * as React from "react"
-import {withTheme} from 'styled-components';
 
 
 class SearchIcon extends React.Component {
@@ -10,7 +9,7 @@ class SearchIcon extends React.Component {
         transition: "all 0.4s ease 0s",
     }
     render(){
-        const {theme, inverted, ...props} = this.props;
+        const {inverted, ...props} = this.props;
         return (
             <div onMouseEnter={()=>this.setState({hover:true})}
                  onMouseLeave={()=>this.setState({hover:false})}>
@@ -18,8 +17,8 @@ class SearchIcon extends React.Component {
                     <path
                         d="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.35-4.35"
                         style={this.style}
-                        stroke={inverted ? (this.state.hover ? theme.text.hover : theme.text.onPrimary)
-                            : (this.state.hover ? theme.text.hover : theme.text.secondary)}
+                        stroke={inverted ? (this.state.hover ? "var(--text-hover)" : "var(--text-onPrimary)")
+                            : (this.state.hover ? "var(--text-hover)" : "var(--text-secondary)")}
                         strokeWidth={2}
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -30,4 +29,4 @@ class SearchIcon extends React.Component {
     }
 };
 
-export default withTheme(SearchIcon);
+export default SearchIcon;

@@ -1,4 +1,5 @@
 import Raw from "./Components/Raw.react";
+import List from "./Components/List.react";
 import * as Typography from "../Typography";
 import Image from "./Components/Image.react";
 import Quote from "./Components/Quote.react";
@@ -20,6 +21,7 @@ const Components = {
     image: Image,
     quote: Quote,
     embed: Embed,
+    list: List,
     readmore: ReadMore,
     raw: Raw
 };

@@ -1,0 +1,9 @@
+@import "../../Layouts/styles/actionMenu.module.css";
+
+.context {
+    z-index: 99;
+    position: absolute;
+    transition: opacity 120ms ease-in-out 0s, height 120ms ease-in-out 0s;
+    display: none;
+    opacity: 0;
+}

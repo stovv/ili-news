@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Emoji } from "emoji-mart";
-import { Flex, Box } from 'rebass';
+import { Flex, Box } from 'reflexbox';
 
-import { JournalHeadingContainer } from '../Containers.react';
-import { JournalTitle, JournalSubTitle } from './components/Typo';
+import Emoji from "../Emoji";
 import {TagBar} from "../../compilations";
+import { JournalHeadingContainer } from '../Containers';
+import typoStyles from './styles/typo.module.css';
 
 
 class JournalHeader extends React.Component{
@@ -20,23 +20,18 @@ class JournalHeader extends React.Component{
         return (
             <>
             <JournalHeadingContainer >
-                <JournalTitle>{title}</JournalTitle>
+                <h1 className={typoStyles.journalTitle}>{title}</h1>
                 {
-                    emoji &&
-                    <Box my="auto">
-                        <Emoji emoji={{id: emoji}} size={48}/>
-                    </Box>
+                    emoji && <Emoji emoji={emoji} size={48} />
                 }
             </JournalHeadingContainer>
             {
                 subTitle &&
                 <Flex justifyContent="center">
-                    <JournalSubTitle>{subTitle}</JournalSubTitle>
+                    <h2 className={typoStyles.journalSubTitle}>{subTitle}</h2>
                 </Flex>
             }
-            {
-                tags && <TagBar tags={tags}/>
-            }
+            { tags && <TagBar tags={tags} defaultSpeed={6}/> }
             </>
         );
     }

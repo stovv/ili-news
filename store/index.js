@@ -1,4 +1,4 @@
-import logger from 'redux-logger';
+//import logger from 'redux-logger';
 import throttle from 'lodash.throttle';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -17,7 +17,7 @@ export const store = createStore(
     reducers,
     persistedState,
     composeWithDevTools(process.env.NODE_ENV === 'development'
-        ? applyMiddleware(thunkMiddleware, logger)
+        ? applyMiddleware(thunkMiddleware, /*logger*/)
         : applyMiddleware(thunkMiddleware))
 );
 

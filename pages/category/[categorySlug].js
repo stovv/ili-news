@@ -1,16 +1,20 @@
 import React from 'react';
-import { NextSeo } from 'next-seo';
+import dynamic from "next/dynamic";
+//import { NextSeo } from 'next-seo';
 import Error from '../error__';
-import { Public } from '../../api';
-import { Flex, Box } from 'rebass';
-import {SITE_URL} from "../../constants";
-import {Images, Typography, Containers, Form, Seo, Journal} from "../../components";
-import {Emoji} from "emoji-mart";
-import { withTheme } from 'styled-components';
-import {CategoryLine, CompsBannerAd, PostsWithAd, TagBar} from "../../compilations";
-import InfiniteScroll from "react-infinite-scroll-component";
-import {RubricLink} from "../../components/Links.react";
-import {connect} from "react-redux";
+import { fetchCategories, getCategory, fetchPostsCountInCategory, loadPosts } from '../../api/methods/public.react';
+//import { Containers } from "../../components";
+
+//CategoryLine, CompsBannerAd, TagBar
+
+import { connect } from "react-redux";
+const InfiniteScroll = dynamic(import("react-infinite-scroll-component"));
+const Loader = dynamic(import("../../components/Forms/Loader.react"));
+const Header = dynamic(import("../../components/Journal/Header"));
+const Seo = dynamic(import("../../components/Seo/Category"));
+const DefaultContainer = dynamic(import("../../components/Containers/Default"));
+const Links = dynamic(import("../../components/Links.react"));
+const PostsWithAd = dynamic(import("../../compilations/PostsWithAd.react"));
 
 
 function randomChoice(arr){
@@ -18,58 +22,6 @@ function randomChoice(arr){
 }
 
 class Category extends React.Component {
-    static async getInitialProps({ query: { categorySlug } }) {
-        let category_id = null;
-        await Public.fetchCategories(['slug', 'id'])
-            .then(response => {
-                response.data.categories.map(category =>{
-                    if (category.slug === categorySlug){
-                        category_id = category.id;
-                    }
-                });
-            })
-            .catch(reason => {
-                // TODO Add Reason processing
-            });
-
-        let category = null;
-        let postsCount = 0;
-        if (category_id != null){
-            await Public.getCategory(category_id)
-                .then(response => {
-                    category = response.data;
-                })
-                .catch(reason=>{
-                    //console.log(reason);
-                    // TODO Add Reason processing
-                });
-            postsCount = await Public.fetchPostsCountInCategory(category_id)
-                .then(response=> response.data);
-        }
-
-
-        let prevBlocks = [];
-        let start = 0;
-        let uid = 2;
-        let items = [];
-        for (let i = 0; i < 4; i++){
-            let limit = randomChoice([1, 4, 6, 8]);
-            while (prevBlocks.length > 0 && prevBlocks[prevBlocks.length - 1] === limit || (prevBlocks.length > 1 && prevBlocks[prevBlocks.length - 2] === limit)) {
-                limit = randomChoice([1, 4, 6, 8]);
-            }
-
-            prevBlocks.push(limit);
-            let posts = null;
-            await Public.loadPosts( null, category_id, start, limit, null)
-                .then(response => posts = response.data.posts)
-                .catch(reason => console.log(reason));
-            items.push({posts, uid})
-            start += limit;
-            uid += 1;
-        }
-
-        return { category, categorySlug, prevBlocks, uid, start, items, postsCount };
-    }
 
     constructor(props){
         super(props);
@@ -82,7 +34,6 @@ class Category extends React.Component {
         }
         this.fetchMore = this.fetchMore.bind(this);
     }
-
 
     async fetchMore(){
         let items = [];
@@ -131,6 +82,7 @@ class Category extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.categorySlug !== prevProps.categorySlug){
+            console.log("UPDATE RUBRIC");
             this.setState({
                 prevBlocks: this.props.prevBlocks,
                 items: [],
@@ -153,7 +105,7 @@ class Category extends React.Component {
 
         let tags = category.rubrics.map(rubric => ({
             text: rubric.title,
-            link: RubricLink,
+            link: Links.RubricLink,
             linkProps: {
                 rubricSlug: rubric.slug
             }
@@ -161,9 +113,9 @@ class Category extends React.Component {
 
         return (
             <>
-                <Seo.Category category={category}/>
-                <Journal.Header title={category.title} tags={tags}/>
-                <Containers.Default mt={0}>
+                <Seo category={category}/>
+                <Header title={category.title} tags={tags}/>
+                <DefaultContainer mt={0}>
                     {
                         items.map((item, index) =>{
                             if ( item.posts.length > 0 ){
@@ -180,11 +132,11 @@ class Category extends React.Component {
                             dataLength={this.state.items.length}
                             next={this.fetchMore}
                             hasMore={!empty && this.state.hasMore}
-                            loader={<Form.Loader/>}>
+                            loader={<Loader/>}>
                             {this.state.items}
                         </InfiniteScroll>
                     }
-                </Containers.Default>
+                </DefaultContainer>
             </>
         );
     }
@@ -198,4 +150,72 @@ function mapStateToProps(state){
 }
 
 
-export default connect(mapStateToProps)(withTheme(Category));
+export default connect(mapStateToProps)(Category);
+
+
+Category.getInitialProps = async ({ query: { categorySlug } }) => {
+    let category_id = null;
+    await fetchCategories(['slug', 'id'])
+        .then(response => {
+            response.data.categories.map(category =>{
+                if (category.slug === categorySlug){
+                    category_id = category.id;
+                }
+            });
+        })
+        .catch(reason => {
+            // TODO Add Reason processing
+        });
+
+    let category = null;
+    let postsCount = 0;
+    if (category_id != null){
+        await getCategory(category_id)
+            .then(response => {
+                category = response.data;
+            })
+            .catch(reason=>{
+                //console.log(reason);
+                // TODO Add Reason processing
+            });
+        postsCount = await fetchPostsCountInCategory(category_id)
+            .then(response=> response.data);
+    }
+
+
+    let prevBlocks = [];
+    let start = 0;
+    let uid = 2;
+    let items = [];
+    const moment = (await import('moment')).default()
+    moment.locale("ru");
+
+    for (let i = 0; i < 4; i++){
+        let limit = randomChoice([1, 4, 6, 8]);
+        while (prevBlocks.length > 0 && prevBlocks[prevBlocks.length - 1] === limit || (prevBlocks.length > 1 && prevBlocks[prevBlocks.length - 2] === limit)) {
+            limit = randomChoice([1, 4, 6, 8]);
+        }
+
+        prevBlocks.push(limit);
+        let posts = null;
+        await loadPosts( null, category_id, start, limit, null)
+            .then(response => posts = response.data.posts.map(post => {
+                if ( post.eventDate != null ) {
+                    const eventDate = moment(post.eventDate);
+                    post.eventDate = {
+                        day: eventDate.format("DD"),
+                        mouth: eventDate.format("DD MMMM").replace(/\d|\s/g, ''),
+                        full: eventDate.format("DD MMMM YYYY")
+                    }
+                }
+                return post;
+            }))
+            .catch(reason => console.log(reason));
+        items.push({posts, uid})
+        start += limit;
+        uid += 1;
+    }
+
+    return { category, categorySlug, prevBlocks, uid, start, items, postsCount };
+}
+

@@ -1,0 +1,18 @@
+.eventDateWrapper {
+    display: flex;
+}
+
+@media screen and ( min-width: 1024px ){
+    .eventDateWrapper {
+        border-right: 2px solid var(--primary);
+        margin-right: 23px;
+        padding: 10px 0;
+    }
+}
+
+@media screen and ( max-width: 1023px ){
+    .eventDateWrapper {
+        border-right: 1px solid var(--primary);
+        margin-right: 18px;
+    }
+}

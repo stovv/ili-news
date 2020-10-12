@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box } from "rebass";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import { Box } from 'reflexbox';
 
 class Raw extends React.Component {
     render(){

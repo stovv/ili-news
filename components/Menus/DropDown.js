@@ -1,18 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
-import styled, { withTheme } from 'styled-components';
 
 import { Action } from '../Layouts';
 import Types from './ActionMenuTypes';
-
-const DropDown = styled(Action.Menu)`
-    z-index: 99;
-    position: fixed;
-    ${({opened}) => opened ? `height: max-content;` : `height: 0;`};
-    transition: height 120ms ease-in-out 0s;
-`;
-
+import styles from './styles/dropdown.module.css'
 
 class DropDownMenu extends React.Component {
     constructor(props) {
@@ -20,52 +12,60 @@ class DropDownMenu extends React.Component {
         this.outerRef = React.createRef(null);
         this.state = {
             opened: false,
+            //hide: true
         }
         this.close = this.close.bind(this);
+        this.clickOutside = this.clickOutside.bind(this);
     }
 
     waitRefAvailable(type){
         setTimeout(()=>{
             if ( this.outerRef.current === null ){
                 this.waitRefAvailable(type);
-            }else{
-                if (type === 'add'){
-                    this.outerRef.current.addEventListener('click', this.close);
-                }else if ('remove'){
-                    this.outerRef.current.removeEventListener('click', this.close);
-                }
+                return;
             }
+
+            if ( type === 'remove' ) document.removeEventListener('click', this.clickOutside);
+            else if ( type === 'add' ) document.addEventListener('click', this.clickOutside);
         }, 10);
     }
 
+
     close(event){
-        this.setState({
-            opened: false
-        });
+        this.waitRefAvailable('remove');
+        this.setState({ opened: false });
+        //setTimeout(()=> this.setState({hide: true}), 410);
     }
 
-    // componentDidMount() {
-    //     if (typeof window === "undefined") return;
-    //     this.waitRefAvailable('add');
-    // }
-    //
-    // componentWillUnmount() {
-    //     if (typeof window === "undefined") return;
-    //     this.waitRefAvailable('remove');
-    // }
+    clickOutside(event){
+        if ( this.outerRef.current && !this.outerRef.current.contains(event.target) && this.state.opened ) {
+            this.close();
+        }
+    }
+
+    componentWillUnmount() {
+        if (typeof window === "undefined") return;
+        this.waitRefAvailable('remove');
+    }
 
     render(){
-        const { type, theme, button, dispatch } = this.props;
+        const { type, button, dropMargin, dispatch } = this.props;
         const { opened } = this.state;
-
         const Button = button;
-        console.log(opened);
+
         return (
             <>
-                <Button onClick={()=>this.setState({opened: true})}/>
-                <DropDown opened={opened} ref={this.outerRef}>
+                <Button onClick={()=>{
+                    this.waitRefAvailable("add");
+                    this.setState({opened: true, hide: false})
+                }}/>
+
+                <div className={`${styles.dropDown}${opened ? ` ${styles.opened}` : ''}`} ref={this.outerRef}
+                     style={{
+                       margin: dropMargin
+                     }}>
                     {
-                        Types(theme, dispatch)[type].map((menuItem, index) => (
+                        Types(dispatch)[type].map((menuItem, index) => (
                             <React.Fragment key={index}>
                                 <Action.Item opened={opened} onClick={()=>{
                                     if (menuItem.onClick){
@@ -76,7 +76,7 @@ class DropDownMenu extends React.Component {
                             </React.Fragment>
                         ))
                     }
-                </DropDown>
+                </div>
             </>
         );
     }
@@ -87,7 +87,8 @@ DropDownMenu.propTypes = {
     type: PropTypes.oneOf([
         "user"
     ]).isRequired,
-    button: PropTypes.node.isRequired
+    button: PropTypes.node.isRequired,
+    dropMargin: PropTypes.string
 }
 
-export default connect()(withTheme(DropDownMenu));
+export default connect()(DropDownMenu);

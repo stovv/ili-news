@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Flex, Box } from 'rebass';
 
-import {Cards, Containers, Form, Typography} from '../components';
+import {Cards, Form } from '../components';
+import { Flex, Box } from 'reflexbox';
 import {connect} from "react-redux";
 
 
@@ -27,7 +27,7 @@ class PostsWithAd extends React.Component {
                                 <Box width={3/4} mx="15px">
                                     <Form.AdBlock uid={uid} id="R-A-351229-8" width="100%" height="100%" infinity/>
                                 </Box>
-                                <Box width={[1/4]}>
+                                <Box width={1/4}>
                                     <Cards.Post post={posts[0]}/>
                                 </Box>
                             </Flex>
@@ -36,7 +36,7 @@ class PostsWithAd extends React.Component {
                     case 'right':{
                         return(
                             <Flex height="248px" mb="100px">
-                                <Box width={[1/4]}>
+                                <Box width={1/4}>
                                     <Cards.Post post={posts[0]}/>
                                 </Box>
                                 <Box width={3/4} mx="15px">
@@ -54,7 +54,7 @@ class PostsWithAd extends React.Component {
                         {
                             posts.map((item, index)=>
                                 <React.Fragment key={index}>
-                                    <Box width={[1/4]}>
+                                    <Box width={1/4}>
                                         <Cards.Post post={item}/>
                                     </Box>
                                 </React.Fragment>
@@ -72,7 +72,7 @@ class PostsWithAd extends React.Component {
                             {
                                 tempPosts.map((item, index)=>
                                     <React.Fragment key={index}>
-                                        <Box width={[1/3]}>
+                                        <Box width={1/3}>
                                             <Cards.Post post={item}/>
                                         </Box>
                                     </React.Fragment>
@@ -101,7 +101,7 @@ class PostsWithAd extends React.Component {
                             {
                                 tempPosts.map((item, index)=>
                                     <React.Fragment key={index}>
-                                        <Box width={[1/4]}>
+                                        <Box width={1/4}>
                                             <Cards.Post post={item}/>
                                         </Box>
                                     </React.Fragment>
@@ -124,7 +124,7 @@ class PostsWithAd extends React.Component {
                                 <Box width={2/3} mx="15px">
                                     <Form.AdBlock uid={uid} id="R-A-351229-8" width="100%" height="100%" infinity/>
                                 </Box>
-                                <Box width={[1/3]}>
+                                <Box width={1/3}>
                                     <Cards.Post post={posts[0]}/>
                                 </Box>
                             </Flex>
@@ -133,7 +133,7 @@ class PostsWithAd extends React.Component {
                     case 'right':{
                         return(
                             <Flex height="248px" mb="100px">
-                                <Box width={[1/3]}>
+                                <Box width={1/3}>
                                     <Cards.Post post={posts[0]}/>
                                 </Box>
                                 <Box width={2/3} mx="15px">
@@ -152,7 +152,7 @@ class PostsWithAd extends React.Component {
                             {
                                 posts.slice(0, 3).map((item, index)=>
                                     <React.Fragment key={index}>
-                                        <Box width={[1/3]}>
+                                        <Box width={1/3}>
                                             <Cards.Post post={item}/>
                                         </Box>
                                     </React.Fragment>
@@ -163,7 +163,7 @@ class PostsWithAd extends React.Component {
                             {
                                 posts.slice(3).map((item, index)=>
                                     <React.Fragment key={index}>
-                                        <Box width={[1/3]}>
+                                        <Box width={1/3}>
                                             <Cards.Post post={item}/>
                                         </Box>
                                     </React.Fragment>
@@ -185,7 +185,7 @@ class PostsWithAd extends React.Component {
                             {
                                 tempPosts.map((item, index)=>
                                     <React.Fragment key={index}>
-                                        <Box width={[1/2]}>
+                                        <Box width={1/2}>
                                             <Cards.Post post={item}/>
                                         </Box>
                                     </React.Fragment>
@@ -217,7 +217,7 @@ class PostsWithAd extends React.Component {
                                 {
                                     tempPosts.map((item, index)=>
                                         <React.Fragment key={index}>
-                                            <Box width={[1/2]}>
+                                            <Box width={1/2}>
                                                 <Cards.Post post={item}/>
                                             </Box>
                                         </React.Fragment>
@@ -283,7 +283,7 @@ class PostsWithAd extends React.Component {
                         {
                             tempPosts.map((item, index)=>
                                 <React.Fragment key={index}>
-                                    <Box width={[1/sliceCount]}>
+                                    <Box width={1/sliceCount}>
                                         <Cards.Post post={item}/>
                                     </Box>
                                 </React.Fragment>

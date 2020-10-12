@@ -1,12 +1,11 @@
 import React from 'react';
-import { NextSeo } from 'next-seo';
+//import { NextSeo } from 'next-seo';
 import Error from '../error__';
 import { Public } from '../../api';
-import { Flex, Box } from 'rebass';
-import {SITE_URL} from "../../constants";
-import {Images, Typography, Containers, Form, Cards, Links, Seo, Journal} from "../../components";
-import {Emoji} from "emoji-mart";
-import { withTheme } from 'styled-components';
+import {Typography, Form, Cards, Links, Seo, Journal} from "../../components";
+import { Default, Mini } from '../../components/Containers';
+import { Flex, Box } from 'reflexbox';
+// import {Emoji} from "emoji-mart";
 import {CategoryLine, CompsBannerAd, PostsWithAd} from "../../compilations";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {CardText} from "../../components/Typography";
@@ -83,6 +82,8 @@ class Rubric extends React.Component {
                 .then(response=> postsCount = response.data);
         }
 
+        const moment = (await import('moment')).default()
+        moment.locale("ru");
 
         let prevBlocks = [];
         let start = 0;
@@ -101,7 +102,17 @@ class Rubric extends React.Component {
                 await Public.loadPosts( rubric.id, null, start, limit, null)
                     .then(response => {
                         loadedPostsCount += response.data.posts.length;
-                        posts = response.data.posts;
+                        posts = response.data.posts.map(post => {
+                            if ( post.eventDate != null ) {
+                                const eventDate = moment(post.eventDate);
+                                post.eventDate = {
+                                    day: eventDate.format("DD"),
+                                    mouth: eventDate.format("DD MMMM").replace(/\d|\s/g, ''),
+                                    full: eventDate.format("DD MMMM YYYY")
+                                }
+                            }
+                            return post;
+                        });
                     })
                     .catch(reason => console.log("LOAD POSTS", reason));
             }
@@ -174,7 +185,7 @@ class Rubric extends React.Component {
 
     async fetchMoreWithoutCover(){
 
-        const { theme, width } = this.props;
+        const { width } = this.props;
 
         let items = [];
         let start = this.state.start;
@@ -203,7 +214,7 @@ class Rubric extends React.Component {
                 let dateHeading = null;
                 if (this.state.latestDate === null || !isEqualDate(this.state.latestDate, post.publish_at)){
                     dateHeading = (
-                        <Typography.Heading color={theme.text.hover} margin={`${this.state.latestDate === null ? "32px" : "85px"} 0 40px auto`}
+                        <Typography.Heading color={"var(--text-hover)"} margin={`${this.state.latestDate === null ? "32px" : "85px"} 0 40px auto`}
                                             level={width > 1023 ? 2 : 3}>{DateSting(post.publish_at)}</Typography.Heading>
                     );
                     this.state.latestDate = post.publish_at;
@@ -215,18 +226,18 @@ class Rubric extends React.Component {
                                 ? <>
                                     {dateHeading}
                                     <Flex mb="30px">
-                                        <Typography.CardText margin="0 35px auto 0" type="xlarge" color={theme.text.primary}>{TimeString(post.publish_at)}</Typography.CardText>
+                                        <Typography.CardText margin="0 35px auto 0" type="xlarge" color={"var(--text-primary)"}>{TimeString(post.publish_at)}</Typography.CardText>
                                         <PostLink postSlug={post.slug}>
-                                            <Typography.CardText hover margin="auto 0 auto 0" type="large" color={theme.text.secondary}>{post.title}</Typography.CardText>
+                                            <Typography.CardText hover margin="auto 0 auto 0" type="large" color={"var(--text-secondary)"}>{post.title}</Typography.CardText>
                                         </PostLink>
                                     </Flex>
                                 </>
                                 : <>
                                     {dateHeading}
                                     <Flex mb="30px">
-                                        <Typography.CardText margin={"0 10px auto 0"} type="normal" color={theme.text.primary}>{TimeString(post.publish_at)}</Typography.CardText>
+                                        <Typography.CardText margin={"0 10px auto 0"} type="normal" color={"var(--text-primary)"}>{TimeString(post.publish_at)}</Typography.CardText>
                                         <PostLink postSlug={post.slug}>
-                                            <Typography.CardText hover wrap margin="auto 0 auto 0" type="normal" color={theme.text.secondary}>{post.title}</Typography.CardText>
+                                            <Typography.CardText hover wrap margin="auto 0 auto 0" type="normal" color={"var(--text-secondary)"}>{post.title}</Typography.CardText>
                                         </PostLink>
                                     </Flex>
                                 </>
@@ -248,7 +259,7 @@ class Rubric extends React.Component {
     render() {
         // TODO Use this.props.user for head component
         let empty = true;
-        const { rubric, rubricSlug, theme, items, width, popularPosts } = this.props;
+        const { rubric, rubricSlug, items, width, popularPosts } = this.props;
         if (rubric === null){
             return (<Error statusCode={404}/>);
         }
@@ -260,7 +271,7 @@ class Rubric extends React.Component {
                 {
                     rubric.cover
                         ? <>
-                            <Containers.Default mt={'52px'}>
+                            <Default mt={'52px'}>
                                 {
                                     items.map((item, index) => {
                                         if (item.posts.length > 0) {
@@ -280,21 +291,21 @@ class Rubric extends React.Component {
                                     loader={<Form.Loader/>}>
                                     {this.state.items}
                                 </InfiniteScroll>
-                            </Containers.Default>
+                            </Default>
                         </>
                         : <>
                             {
                                 width > 1023
-                                    ? <Containers.Default>
+                                    ? <Default>
                                         <Flex heigth={"300px"} mt="50px">
-                                            <Box width={[9/12]} pr={["10%"]} >
+                                            <Box width={"75%"} pr={"10%"} >
                                                 {
                                                     items.map(item=>Object.values(item.posts).map((post, index)=>{
                                                         empty = false;
                                                         let dateHeading = null;
                                                         if (this.state.latestDate === null || !isEqualDate(this.state.latestDate, post.publish_at)){
                                                             dateHeading = (
-                                                                <Typography.Heading color={theme.text.hover} margin={`${this.state.latestDate === null ? "32px" : "85px"} 0 40px auto`}
+                                                                <Typography.Heading color={"var(--text-hover)"} margin={`${this.state.latestDate === null ? "32px" : "85px"} 0 40px auto`}
                                                                                     level={2}>{DateSting(post.publish_at)}</Typography.Heading>
                                                             );
                                                             this.state.latestDate = post.publish_at;
@@ -304,9 +315,9 @@ class Rubric extends React.Component {
                                                             <React.Fragment key={index}>
                                                                 {dateHeading}
                                                                 <Flex mb="30px">
-                                                                    <Typography.CardText margin={"0 35px auto 0"} type="xlarge" color={theme.text.primary}>{TimeString(post.publish_at)}</Typography.CardText>
+                                                                    <Typography.CardText margin={"0 35px auto 0"} type="xlarge" color={"var(--text-primary)"}>{TimeString(post.publish_at)}</Typography.CardText>
                                                                     <PostLink postSlug={post.slug}>
-                                                                        <Typography.CardText hover margin="auto 0 auto 0" type="large" color={theme.text.secondary}>{post.title}</Typography.CardText>
+                                                                        <Typography.CardText hover margin="auto 0 auto 0" type="large" color={"var(--text-secondary)"}>{post.title}</Typography.CardText>
                                                                     </PostLink>
                                                                 </Flex>
                                                             </React.Fragment>
@@ -321,11 +332,11 @@ class Rubric extends React.Component {
                                                     {this.state.items}
                                                 </InfiniteScroll>
                                             </Box>
-                                            <Box width={[3/12]} pl={["2%"]} height="max-content" sx={{
+                                            <Box width={"25%"} pl={"2%"} height="max-content" sx={{
                                                 position: "sticky",
                                                 top: "20px"
                                             }}>
-                                                <Form.AdBlock id={'R-A-351229-6'} width={["100%"]} height={["584px"]}/>
+                                                <Form.AdBlock id={'R-A-351229-6'} width={"100%"} height={"584px"}/>
                                                 {
                                                     popularPosts.length > 0 &&
                                                     <>
@@ -346,15 +357,15 @@ class Rubric extends React.Component {
                                                 }
                                             </Box>
                                         </Flex>
-                                    </Containers.Default>
-                                    : <Containers.Mini>
+                                    </Default>
+                                    : <Mini>
                                         {
                                             items.map(item=>Object.values(item.posts).map((post, index)=>{
                                                 empty = false;
                                                 let dateHeading = null;
                                                 if (this.state.latestDate === null || !isEqualDate(this.state.latestDate, post.publish_at)){
                                                     dateHeading = (
-                                                        <Typography.Heading color={theme.text.hover} margin={`${this.state.latestDate === null ? "32px" : "85px"} 0 40px auto`}
+                                                        <Typography.Heading color={"var(--text-hover)"} margin={`${this.state.latestDate === null ? "32px" : "85px"} 0 40px auto`}
                                                                             level={3}>{DateSting(post.publish_at)}</Typography.Heading>
                                                     );
                                                     this.state.latestDate = post.publish_at;
@@ -364,9 +375,9 @@ class Rubric extends React.Component {
                                                     <React.Fragment key={index}>
                                                         {dateHeading}
                                                         <Flex mb="30px">
-                                                            <Typography.CardText margin={"0 10px auto 0"} type="normal" color={theme.text.primary}>{TimeString(post.publish_at)}</Typography.CardText>
+                                                            <Typography.CardText margin={"0 10px auto 0"} type="normal" color={"var(--text-primary)"}>{TimeString(post.publish_at)}</Typography.CardText>
                                                             <PostLink postSlug={post.slug}>
-                                                                <Typography.CardText hover wrap margin="auto 0 auto 0" type="normal" color={theme.text.secondary}>{post.title}</Typography.CardText>
+                                                                <Typography.CardText hover wrap margin="auto 0 auto 0" type="normal" color={"var(--text-secondary)"}>{post.title}</Typography.CardText>
                                                             </PostLink>
                                                         </Flex>
                                                     </React.Fragment>
@@ -380,7 +391,7 @@ class Rubric extends React.Component {
                                             loader={<Form.Loader/>}>
                                             {this.state.items}
                                         </InfiniteScroll>
-                                    </Containers.Mini>
+                                    </Mini>
                             }
                         </>
                 }
@@ -398,4 +409,4 @@ function mapStateToProps(state){
 }
 
 
-export default connect(mapStateToProps)(withTheme(Rubric));
+export default connect(mapStateToProps)(Rubric);

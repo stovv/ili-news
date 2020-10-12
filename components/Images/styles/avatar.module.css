@@ -1,0 +1,36 @@
+.avatar {
+    width: 144px;
+    height: 144px;
+    border-radius: 50%;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+    border: solid 4px var(--backgroundPrimary);
+    background-size: cover;
+}
+
+@media screen and (min-width: 1024px){
+    .avatar {
+        width: 144px;
+        height: 144px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .avatar {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .avatar {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+@media screen and (max-width: 375px){
+    .avatar {
+        width: 40px;
+        height: 40px;
+    }
+}

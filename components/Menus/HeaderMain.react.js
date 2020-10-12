@@ -1,52 +1,20 @@
 import React from 'react';
-import Router from 'next/router';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import styled, { withTheme } from 'styled-components';
-import { Flex, Box } from 'rebass';
 import {connect} from 'react-redux';
+import { Flex, Box } from 'reflexbox';
 
 import {
     Logo,
     Icons
 } from '../../assets';
-import { Default, Mini } from '../Containers.react';
+import { Default, Mini } from '../Containers';
 import { UniversalLink } from '../Links.react';
 import { Click } from '../Animations';
 import MobileMenu from "./Mobile.react";
 import { Common } from "../../actions";
 import DropDown from "./DropDown";
-
-
-const MenuLink = styled.a`
-  max-width: 128px;
-  max-height: 22px;
-  font-family: ${props=> props.theme.fontFamily};
-  font-size: 20px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.12;
-  text-transform: lowercase;
-  text-decoration: none;
-  letter-spacing: 0.4px;
-  transition: all 0.4s ease 0s;
-  color: ${props=> props.inverted ? (props.active ? props.theme.text.hover : props.theme.text.onPrimary) : (props.active ? props.theme.text.hover : props.theme.text.secondarySecondary) };
-  :after{
-    content: '';
-    display: block;
-    width: 0;
-    height: 4px;
-    background: ${props=>props.theme.text.hover};
-    transition: width .3s;
-  }
-  :hover:after{
-       width: 100%;
-  }
-  :hover{
-      color: ${props=>props.theme.text.hover};
-  }
-`
+import styles from './styles/header.module.css';
 
 
 class HeaderNavBar extends React.Component {
@@ -58,7 +26,7 @@ class HeaderNavBar extends React.Component {
         this.route = props.route ? props.route : "";
     }
     render(){
-        const { menus, route, width, dispatch, searchActivated, theme, isLoggedIn } = this.props;
+        const { menus, route, width, dispatch, searchActivated, isLoggedIn } = this.props;
         if ( !menus ){
             return null;
         }
@@ -69,7 +37,7 @@ class HeaderNavBar extends React.Component {
             return (
                 <>
                 <Box width={searchActivated ? "100vw" : "100%"}
-                     bg={searchActivated ? theme.colors.backgroundInverted : theme.colors.secondary}
+                     bg={searchActivated ? "var(--backgroundInverted)" : "var(--backgroundPrimary)"}
                      sx={{transition: "all 0.5s ease 0s"}} px={"25px"}>
                     <Flex height={"72px"} maxWidth={"1440px"} mx={"auto"}>
                         <Box width={1/8} height="100%" sx={{position:"relative"}}>
@@ -77,8 +45,10 @@ class HeaderNavBar extends React.Component {
                                 left: "50%", top: "50%", position: "absolute",
                                 transform: "translate(-50%, -50%)"
                             }}>
-                                <Link href="/" passHref>
-                                    <a><Logo width="100%" primary={this.props.theme.colors.primary} background={this.props.theme.colors.secondary}/></a>
+                                <Link href="/" passHref prefetch={false}>
+                                    <a>
+                                        <Logo width="100%" primary={"var(--primary)"} background={"transparent"}/>
+                                    </a>
                                 </Link>
                             </Box>
                         </Box>
@@ -88,7 +58,15 @@ class HeaderNavBar extends React.Component {
                                     return (
                                         <React.Fragment key={index}>
                                             <Box mr={index < menus.length -1 ? "80px" : 0} sx={{position: "relative"}}>
-                                                <UniversalLink item={item} component={MenuLink} route={route} componentParams={{ inverted: searchActivated }}/>
+                                                <UniversalLink item={item}
+                                                               route={route}
+                                                               componentParams={{ inverted: searchActivated }}
+                                                               component={({children, ...props})=>(
+                                                                   <a className={styles.menuLink} {...props}>
+                                                                       {children}
+                                                                   </a>
+                                                               )}
+                                                />
                                             </Box>
                                         </React.Fragment>
                                     )})
@@ -101,20 +79,21 @@ class HeaderNavBar extends React.Component {
                                     <Icons.SearchIcon inverted={searchActivated}/>
                                 </Click.SimpleClick>
                                 {/*TODO: Check Token valid ??🤔*/}
-                                {/*{*/}
-                                {/*    isLoggedIn*/}
-                                {/*        ? <DropDown button={(props)=>*/}
-                                {/*            <Click.SimpleClick {...props}>*/}
-                                {/*                <Icons.UserIcon inverted={searchActivated}/>*/}
-                                {/*            </Click.SimpleClick>*/}
-                                {/*        } buttonProps={{*/}
-                                {/*            inverted: searchActivated*/}
-                                {/*        }} type="user-header"/>*/}
-                                {/*        : <Click.SimpleClick>*/}
-                                {/*            <Link href="/login">*/}
-                                {/*                <Icons.UserIcon inverted={searchActivated}/>*/}
-                                {/*            </Link>*/}
-                                {/*        </Click.SimpleClick>*/}
+                                {
+                                    isLoggedIn
+                                        ? <DropDown button={(props) =>
+                                            <Click.SimpleClick {...props}>
+                                                <Icons.UserIcon inverted={searchActivated}/>
+                                            </Click.SimpleClick>
+                                        } buttonProps={{
+                                            inverted: searchActivated
+                                        }} type="user-header" dropMargin={"35px 0 0 0"}/>
+                                        : <Click.SimpleClick>
+                                            <Link href="/login" prefetch={false}>
+                                                <Icons.UserIcon inverted={searchActivated}/>
+                                            </Link>
+                                        </Click.SimpleClick>
+                                }
                             </Flex>
                         </Box>
                     </Flex>
@@ -127,20 +106,23 @@ class HeaderNavBar extends React.Component {
                 <>
                     <MobileMenu display={this.state.fullScreenMenu} menus={menus} close={()=>this.setState({fullScreenMenu: false})}/>
                     <Mini>
-                        <Flex bg={theme.colors.secondary}
-                              height={["56px"]}>
+                        <Flex bg={"var(--backgroundPrimary)"}
+                              height={"56px"}>
                             <Box float="left" my="auto" onClick={()=>this.setState({fullScreenMenu: !this.state.fullScreenMenu})}>
                                 <Icons.HamburgerMenuIcon/>
                             </Box>
                             <Box mx="auto" height="100%" sx={{position:"relative"}}>
-                                <Box width={["55px"]} height={["55px"]}  sx={{
+                                <Box width={"55px"} height={"55px"}  sx={{
                                     top: "50%",
                                     left: "50%",
                                     position: "absolute",
                                     transform: "translate(-50%, -50%)"
                                 }}>
-                                    <Link href="/" passHref>
-                                        <a><Logo width="100%" primary={this.props.theme.colors.primary} background={this.props.theme.colors.secondary}/></a>
+                                    <Link href="/" passHref prefetch={false}>
+                                        <a>
+                                            <Logo width="100%" primary={"var(--primary)"}
+                                                  background={"transparent"}/>
+                                        </a>
                                     </Link>
                                 </Box>
                             </Box>
@@ -149,11 +131,11 @@ class HeaderNavBar extends React.Component {
                                     <Click.SimpleClick style={{margin: "0 10px 0 0"}} onClick={()=>dispatch(Common.clickOnSearch())}>
                                         <Icons.SearchIcon />
                                     </Click.SimpleClick>
-                                    {/*<Click.SimpleClick>*/}
-                                    {/*    <Link href={isLoggedIn ? '/users/me' : '/login'}>*/}
-                                    {/*        <Icons.UserIcon inverted={searchActivated}/>*/}
-                                    {/*    </Link>*/}
-                                    {/*</Click.SimpleClick>*/}
+                                    <Click.SimpleClick>
+                                        <Link href={isLoggedIn ? '/users/me' : '/login'} prefetch={false}>
+                                            <Icons.UserIcon inverted={searchActivated}/>
+                                        </Link>
+                                    </Click.SimpleClick>
                                 </Flex>
                             </Box>
                         </Flex>
@@ -179,4 +161,4 @@ function mapStateToProps(state){
 }
 
 
-export default connect(mapStateToProps)(withTheme(HeaderNavBar));
+export default connect(mapStateToProps)(HeaderNavBar);

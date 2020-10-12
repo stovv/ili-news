@@ -1,58 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import styled, { withTheme } from 'styled-components';
-import { Flex, Box } from 'rebass';
 import {connect} from 'react-redux';
 
 import {
     Logo,
     Icons
 } from '../../assets';
+import { Flex, Box } from 'reflexbox';
 import { UniversalLink, SocialLink } from '../Links.react';
-import { Heading } from '../Typography';
 
+import styles from './styles/footer.module.css';
 
-const MenuLink = styled.a`
-  max-width: 128px;
-  max-height: 22px;
-  font-family: ${props=> props.theme.fontFamily};
-  font-size: 20px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.2;
-  text-decoration: none;
-  letter-spacing: 0.4px;
-  transition: all 0.4s ease 0s;
-  color: ${props=>props.active ? props.theme.text.hover : props.theme.text.onPrimary};
-  cursor: pointer;
-  :hover{
-      color: ${props=>props.theme.text.hover};
-  }
-`;
+const MenuLink = ({children, ...props})=>(
+    <a className={styles.menuLink} {...props}>
+        {children}
+    </a>
+);
 
-const FooterText = styled.p`
-  opacity: 0.64;
-  font-family: ${props=>props.theme.fontFamily};
-  font-size: 20px;
-  font-weight: 400;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.2;
-  text-align: center;
-  letter-spacing: normal;
-  margin: 50px 0 0 0;
-  color: ${props=>props.theme.text.onPrimary};
-`;
-
-
-const FooterWrapper = styled.div`
-  margin: ${props => props.mini ? "20px": "120px"}  0 0 0;
-  width: 100%;
-  height: 256px;
-  background-color: ${props=>props.theme.colors.backgroundInverted};
-`;
 
 class FooterMenu extends React.Component {
     constructor(props){
@@ -64,14 +29,14 @@ class FooterMenu extends React.Component {
         this.route = props.route ? props.route : "";
     }
     componentDidMount() {
-        const { menus, theme } = this.props;
+        const { menus } = this.props;
         let items = [];
         let filteredMenu = menus.filter(item=>item.socialUrl != null && item.icon != null);
         for (let i = 0; i < filteredMenu.length; i+= 3) {
             items.push(
                 <React.Fragment key={i}>
                     <Flex justifyContent={"center"} mt={i === 0 ? "40px" : undefined}
-                          mb={theme.spacing.m}>
+                          mb={"var(--spacing-m)"}>
                         {
                             filteredMenu.slice(i, i + 3).map((item, index)=>
                                 <React.Fragment key={index}>
@@ -89,7 +54,7 @@ class FooterMenu extends React.Component {
     }
 
     render(){
-        const { menus, route, width, infinityActive, theme } = this.props;
+        const { menus, route, width, infinityActive } = this.props;
         const { social } = this.state;
 
         if ( !menus || infinityActive ){
@@ -97,14 +62,13 @@ class FooterMenu extends React.Component {
         }
 
         if ( width > 1023 ){
-
             return (
-            <FooterWrapper>
+            <div className={styles.footerWrapper}>
                 <Flex justifyContent="center" height={"100%"} py={"23px"} maxWidth={"1440px"} mx={"auto"}>
                     <Box width={2/10} sx={{position: 'relative'}}>
-                        <Box width={["70px"]} height={["70px"]} mx={"auto"}>
-                            <Link href="/" passHref>
-                                <a><Logo width="100%" primary={this.props.theme.colors.primary} background={this.props.theme.colors.secondary}/></a>
+                        <Box width={"70px"} height={"70px"} mx={"auto"}>
+                            <Link href="/" passHref prefetch={false}>
+                                <a><Logo width="100%" primary={"var(--primary)"} background={"var(--backgroundInverted)"}/></a>
                             </Link>
                         </Box>
                         {social}
@@ -114,7 +78,7 @@ class FooterMenu extends React.Component {
                             {
                                 menus.map((item, index)=>
                                     <React.Fragment key={index}>
-                                        <Box mr={index < menus.length -1 ? theme.spacing.block : 0}
+                                        <Box mr={index < menus.length -1 ? "var(--spacing-block)" : 0}
                                              sx={{position: "relative"}}>
                                             <UniversalLink item={item} component={MenuLink} route={route}/>
                                         </Box>
@@ -122,14 +86,14 @@ class FooterMenu extends React.Component {
                                 )
                             }
                         </Flex>
-                        <FooterText>
+                        <p className={styles.footerText}>
                             Городской интернет-журнал «ИЛИ» 2020<br/><br/>
                             Использование материалов Журнала ИЛИ разрешено только с предварительного согласия правообладателей.
                             Мнение редакции может не совпадать с мнением автора.
-                        </FooterText>
+                        </p>
                     </Box>
                 </Flex>
-            </FooterWrapper>
+            </div>
             );
 
         }else{
@@ -142,9 +106,9 @@ class FooterMenu extends React.Component {
                             {
                                 menus.slice(i, i+2).map((item, index)=>
                                     <React.Fragment key={index}>
-                                        <Box mr={index < menus.length -1 ? theme.spacing.block : 0}
+                                        <Box mr={index < menus.length -1 ? "var(--spacing-block)" : 0}
                                              sx={{position: "relative"}}>
-                                            <UniversalLink item={item} component={MenuLink} route={route}/>
+                                            <UniversalLink item={item} route={route} component={MenuLink}/>
                                         </Box>
                                     </React.Fragment>
                                 )
@@ -155,12 +119,14 @@ class FooterMenu extends React.Component {
             }
 
             return (
-                <FooterWrapper mini>
+                <div className={styles.footerWrapper} style={{marginTop: "20px"}}>
                     <Flex sx={{position: 'relative'}} pt={"23px"}>
                         <Box width={1/2}>
-                            <Box width={["70px"]} height={["70px"]} mx={"auto"}>
-                                <Link href="/" passHref>
-                                    <a><Logo width="100%" primary={this.props.theme.colors.primary} background={this.props.theme.colors.secondary}/></a>
+                            <Box width={"70px"} height={"70px"} mx={"auto"}>
+                                <Link href="/" passHref prefetch={false}>
+                                    <a>
+                                        <Logo width="100%" primary={"var(--primary)"} background={"var(--backgroundInverted)"}/>
+                                    </a>
                                 </Link>
                             </Box>
                         </Box>
@@ -177,14 +143,14 @@ class FooterMenu extends React.Component {
                     {/*        <Flex justifyContent={"center"}>*/}
 
                     {/*        </Flex>*/}
-                    {/*        <FooterText>*/}
+                    {/*        <p className={styles.footerText}>*/}
                     {/*            Городской интернет-журнал «ИЛИ» 2020<br/><br/>*/}
                     {/*            Использование материалов Журнала ИЛИ разрешено только с предварительного согласия правообладателей.*/}
                     {/*            Мнение редакции может не совпадать с мнением автора.*/}
-                    {/*        </FooterText>*/}
+                    {/*        </p>*/}
                     {/*    </Box>*/}
                     {/*</Flex>*/}
-                </FooterWrapper>
+                </div>
             );
         }
     }
@@ -204,4 +170,4 @@ function mapStateToProps(state){
 }
 
 
-export default connect(mapStateToProps)(withTheme(FooterMenu));
+export default connect(mapStateToProps)(FooterMenu);

@@ -1,0 +1,64 @@
+.postParagraph {
+    composes: rootFont from '../../../Typography/styles/compose.module.css';
+    line-height: 1.02;
+    font-weight: normal;
+    font-size: 20px;
+    margin: 0 24px 0 0;
+}
+
+.postParagraph:first-child {
+    margin-top: 0;
+}
+
+.animatedLink {
+    color: var(--text-hover);
+    text-decoration: none;
+    border-radius: 18px;
+    padding: 6px 9px;
+    display: inline-block;
+    transition: all 120ms ease-in-out 0s, padding 120ms ease-in-out 0s;
+}
+
+.animatedLink:hover {
+    background-color: var(--primary);
+    color: var(--text-onPrimary);
+    transform: translateY(-3px);
+    box-shadow: 0 100px 80px rgba(0, 0, 0, 0.07), 0px 22px 18px rgba(0, 0, 0, 0.04), 0 6px 6px rgba(0, 0, 0, 0.03);
+}
+
+
+@media screen and (max-width: 4000px) {
+    .postParagraph {
+        font-size: 20px;
+        margin: 0 24px 0 0;
+    }
+}
+
+
+@media screen and (max-width: 768px){
+    .postParagraph {
+        font-size: 20px;
+        margin: 0 24px 0 0;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .postParagraph {
+        font-size: 18px;
+        margin: 0 20px 0 0;
+    }
+}
+
+@media screen and (max-width: 375px){
+    .postParagraph {
+        font-size: 16px;
+        margin: 0 14px 0 0;
+    }
+}
+
+@media screen and (max-width: 320px){
+    .postParagraph {
+        font-size: 14px;
+        margin: 0 12px 0 0;
+    }
+}

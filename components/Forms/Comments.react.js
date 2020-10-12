@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withTheme } from "styled-components";
-import { Flex, Box } from 'rebass';
 
-import { Icons } from "../../assets";
-import { CardText } from "../Typography";
+// import { Icons } from "../../assets";
+// import { CardText } from "../Typography";
 import {connect} from "react-redux";
 
 
@@ -14,7 +12,7 @@ const iconSpacing = {
 
 class Comments extends React.Component {
     render(){
-        const { threadId, theme, width } = this.props;
+        const { threadId, width } = this.props;
         // TODO: Remove after block done
         return(
             <></>
@@ -33,4 +31,4 @@ function mapStateToProps(state){
 }
 
 
-export default connect(mapStateToProps)(withTheme(Comments));
+export default connect(mapStateToProps)(Comments);

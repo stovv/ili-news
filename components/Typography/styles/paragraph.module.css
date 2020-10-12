@@ -1,0 +1,14 @@
+.postParagraph {
+    font-family: var(--fontFamily);
+    font-size: 20px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    color: var(--backgroundInverted);
+}
+
+.postParagraph:first-child {
+    margin-top: 0;
+}

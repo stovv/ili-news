@@ -1,66 +1,37 @@
 import React from "react";
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-import blurImage from './blur.svg';
-import {BACKEND_URL} from "../../constants";
-import {Upper} from '../Animations';
-
-const Simple = styled.div`
-    position: ${props => props.withParent ? 'absolute' : 'relative'};
-    ${ ({withLoading, error, errorSrc, loading, loadingSrc, actualSrc, url}) => withLoading 
-        ? `background: url(${error ? errorSrc : (loading ? loadingSrc : actualSrc)}) center no-repeat`
-        : `
-           background: url(${url}) center no-repeat
-        `
-    };
-    background-size: ${props => props.bgSize ? props.bgSize : 'cover'};
-    cursor: ${props=> props.hover && 'pointer'};
-    width: ${props=> props.width ? props.width : '100%'};
-    height: ${props=> props.height ? props.height : '100%'};
-    max-width: ${props=> props.maxWidth && props.maxWidth};
-    max-height: ${props=> props.maxHeight && props.maxHeight};
-    ${({blur}) => blur && `
-       filter: blur(24px);
-       background-color: rgba(0, 0, 0, 0.16);
-       transform: scale(1.1);
-    `}
-    
-`;
+import styles from './styles/simple.module.css';
 
 
-const OverlayContainer = styled.div`
-  position: relative;
-  margin: ${props=> props.margin ? props.margin : "unset"};
-  overflow: ${props=> props.overflow ? props.overflow : 'hidden'};
-  width: ${props=> props.width ? props.width : '100%'};
-  height: ${props=> props.height ? props.height : '100%'};
-  max-width: ${props=> props.maxWidth && props.maxWidth};
-  max-height: ${props=> props.maxHeight && props.maxHeight};
-  transform: ${props=>props.transform};
-  z-index: ${props=> props.zIndex};
-  float: ${props=>props.float};
-  ${({transform, hover}) => hover && `
-       cursor: pointer;
-       transition: all .3s ease-out;
-       &:hover{
-           box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.7);
-           transform: translateY(-3px) ${transform ? transform : ''};
-       }
-  `}
-`;
 
-const ChildrenContainer = styled.div`
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: ${props=>props.blackout && "rgba(0, 0, 0, 0.30)"};
-    :first-child {
-      box-shadow: 0px 5px 32px -5px rgba(0, 0, 0, 0.2);
-    }
-`;
+const Simple = ({children, withLoading, withParent, blur, bgSize,
+                    url, error, errorSrc, loading, loadingSrc, hover,
+                    actualSrc, maxWidth, maxHeight, height, width}) => (
+    <div className={`${styles.simple}${blur ? ` ${styles.blurred}` : ''}`} style={{
+        backgroundImage: withLoading
+            ? `url(${error ? errorSrc : (loading ? loadingSrc : actualSrc)})`
+            : `url(${url})`,
+        cursor: hover ? "pointer" : "auto",
+        position: withParent ? "absolute" : "relative",
+        backgroundSize: bgSize !== undefined ? bgSize : 'cover',
+        width, height, maxHeight, maxWidth
+    }}>{children}</div>
+);
+
+
+const OverlayContainer = ({children, transform, hover, margin, overflow,
+                              zIndex, float, maxWidth, maxHeight, height, width}) => (
+    <div className={`${styles.overlayContainer}${hover ? ` ${styles.hoverable}` : ''}`} style={{
+        margin, overflow, width, height,
+        maxHeight, maxWidth, transform, zIndex, float,
+    }}>{children}</div>
+);
+
+const ChildrenContainer = ({children, blackout}) => (
+    <div className={styles.childrenContainer} style={{
+        backgroundColor: blackout ? "rgba(0, 0, 0, 0.30)" : undefined
+    }}>{children}</div>
+);
 
 class SimpleImage extends React.Component {
 
@@ -119,23 +90,10 @@ SimpleImage.propTypes = {
     float: PropTypes.string,
     margin: PropTypes.string,
     wrapper: PropTypes.node,
-    width: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number
-    ]),
-    height: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number
-    ]),
-    maxWidth: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number
-    ]),
-    maxHeight: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number
-    ]),
-    children: PropTypes.node,
+    width: PropTypes.string,
+    height: PropTypes.string,
+    maxWidth: PropTypes.string,
+    maxHeight: PropTypes.string,
 }
 
 export default SimpleImage;

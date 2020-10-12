@@ -1,0 +1,45 @@
+.menuLink {
+    max-width: 128px;
+    max-height: 22px;
+    font-family: var(--fontFamily);
+    font-size: 20px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.12;
+    text-transform: lowercase;
+    text-decoration: none;
+    letter-spacing: 0.4px;
+    transition: all 0.4s ease 0s;
+    color: var(--text-secondarySecondary);
+}
+
+.active {
+    color: var(--text-hover);
+}
+
+.inverted {
+    color: var(--text-onPrimary);
+}
+
+.inverted .active{
+    color: var(--text-hover);
+}
+
+
+.menuLink:hover{
+    color: var(--text-hover);
+}
+
+.menuLink:hover:after {
+    width: 100%;
+}
+
+.menuLink:after{
+    content: '';
+    display: block;
+    width: 0;
+    height: 4px;
+    background: var(--text-hover);
+    transition: width .3s;
+}

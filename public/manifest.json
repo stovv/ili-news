@@ -3,7 +3,7 @@
   "name": "ИЛИ Молодежный Журнал",
   "lang": "ru",
   "description": "Новости, Люди Спецроекты и События Нижнего Новгорода",
-  "start_url": "https://dev.ili-nnov.ru",
+  "start_url": "https://ili-nnov.ru",
   "background_color": "#eb5757",
   "theme_color": "#eb5757",
   "dir": "ltr",

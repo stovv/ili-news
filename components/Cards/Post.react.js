@@ -1,22 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Flex, Box } from 'rebass';
 import { connect } from 'react-redux';
-import { withTheme } from 'styled-components';
-import windowSize from 'react-window-size';
 
 import { Lazy } from '../Images';
 import {TagLabel, CardText, Heading} from '../Typography';
 import { PostLink } from "../Links.react";
-import Moment from "react-moment";
+import { Box } from 'reflexbox';
 
 class Post extends React.Component{
     shouldComponentUpdate(nextProps, nextState, nextContext){
-        return false;
+        const { slug } = this.props.post || {};
+        const { nextSlug } = nextProps.post || {};
+        return slug !== nextSlug;
     }
 
     render(){
-        const { theme, float, full, width } = this.props;
+        const { float, full, width } = this.props;
         const { slug, title, cover, publish_at, rubric, eventDate } = this.props.post || {};
 
         let date = new Date(publish_at);
@@ -31,30 +30,27 @@ class Post extends React.Component{
 
         const EventDate = () => {
             if (eventDate){
-                const NoNumFilteer = (d) =>{
-                    return d.replace(/[0-9]/g, '');
-                };
                 return (
                     width > 1023
                       ? <>
                             <Box height="100%" width="100%" bg="#000000" sx={{opacity: '0.4', position: 'absolute'}}/>
-                            <Box style={{position: 'absolute', top: "50%", transform: 'translateY(-50%)'}} width="100%">
+                            <Box sx={{position: 'absolute', top: "50%", transform: 'translateY(-50%)'}} width="100%">
                                 <Heading level={1} color="#fff" textAlign="center" margin="0 0">
-                                    <Moment locale="ru" format="DD">{eventDate}</Moment>
+                                    {eventDate.day}
                                 </Heading>
                                 <Heading level={1} color="#fff" textAlign="center" margin="0 0">
-                                    <Moment locale="ru" filter={NoNumFilteer} format="DD MMMM">{eventDate}</Moment>
+                                    {eventDate.mouth}
                                 </Heading>
                             </Box>
                         </>
                      : <>
                             <Box height="100%" width="100%" bg="#000000" sx={{opacity: '0.4', position: 'absolute'}}/>
-                            <Box style={{position: 'absolute', top: "40%", transform: 'translateY(-50%)'}} width="100%">
+                            <Box sx={{position: 'absolute', top: "40%", transform: 'translateY(-50%)'}} width="100%">
                                 <Heading level={1} color="#fff" textAlign="center" margin="0 0">
-                                    <Moment locale="ru" format="DD">{eventDate}</Moment>
+                                    {eventDate.day}
                                 </Heading>
                                 <Heading level={1} color="#fff" textAlign="center" margin="0 0">
-                                    <Moment locale="ru" filter={NoNumFilteer} format="DD MMMM">{eventDate}</Moment>
+                                    {eventDate.mouth}
                                 </Heading>
                             </Box>
                        </>
@@ -74,8 +70,8 @@ class Post extends React.Component{
                                 <EventDate/>
                             </>
                         }
-                        <Box bg={theme.colors.backgroundPrimary}
-                             maxWidth={full ? undefined : ["264px"]} px={[theme.spacing.s]}
+                        <Box bg={"var(--backgroundPrimary)"}
+                             maxWidth={full ? undefined : "264px"} px={"var(--spacing-s)"}
                              sx={{
                                  position: "absolute",
                                  bottom: "-75px",
@@ -84,15 +80,15 @@ class Post extends React.Component{
 
                             {
                                 rubric &&
-                                <TagLabel type="normal" color={theme.text.hover}
-                                          textTransform="lowercase" margin={`${theme.spacing.xs} 0`}>
+                                <TagLabel type="normal" color={"var(--text-hover)"}
+                                          textTransform="lowercase" margin={`var(--spacing-xs) 0`}>
                                     {rubric.title}
                                 </TagLabel>
                             }
-                            <CardText type="normal" maxWidth={"240px"} margin="0" color={theme.text.secondarySecondary}>
+                            <CardText type="normal" maxWidth={"240px"} margin="0" color={"var(--text-secondarySecondary)"}>
                                 {title}
                             </CardText>
-                            <TagLabel type="small" color={theme.text.secondary} margin={`${theme.spacing.xs} 0`}>
+                            <TagLabel type="small" color={"var(--text-secondary)"} margin={`var(--spacing-xs) 0`}>
                                 {publishDate}
                             </TagLabel>
                         </Box>
@@ -108,7 +104,7 @@ class Post extends React.Component{
                                 <EventDate/>
                             </>
                         }
-                        <Box bg={theme.colors.backgroundPrimary} px={[theme.spacing.s]}
+                        <Box bg={"var(--backgroundPrimary)"} px={"var(--spacing-s)"}
                              width="100%" sx={{
                                  position: "absolute",
                                  bottom: 0,
@@ -116,15 +112,15 @@ class Post extends React.Component{
                              }}>
                             {
                                 rubric &&
-                                <TagLabel type="normal" color={theme.text.hover}
-                                          textTransform="lowercase" margin={`${theme.spacing.xs} 0`}>
+                                <TagLabel type="normal" color={"var(--text-hover)"}
+                                          textTransform="lowercase" margin={`var(--spacing-xs) 0`}>
                                     {rubric.title}
                                 </TagLabel>
                             }
-                            <CardText type="normal" margin="0" color={theme.text.secondarySecondary}>
+                            <CardText type="normal" margin="0" color={"var(--text-secondarySecondary)"}>
                                 {title}
                             </CardText>
-                            <TagLabel type="small" color={theme.text.secondary} margin={`${theme.spacing.xs} 0`}>
+                            <TagLabel type="small" color={"var(--text-secondary)"} margin={`var(--spacing-xs) 0`}>
                                 {publishDate}
                             </TagLabel>
                         </Box>
@@ -151,4 +147,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps)(withTheme(Post));
+export default connect(mapStateToProps)(Post);

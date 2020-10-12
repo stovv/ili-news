@@ -1,0 +1,64 @@
+.def {
+    margin: 0 80px;
+}
+
+
+.leftSidePost {
+    width: 100%;
+    position: relative;
+}
+
+.rightSidePost {
+    width: 25%;
+    display: none;
+    position: relative;
+}
+
+.postMarginContainer {
+    display: flex;
+}
+
+.journalHeadingContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.appContainer {
+    background-color: var(--backgroundPrimary);
+}
+
+@media screen and (min-width: 1024px){
+    .leftSidePost {
+        width: 75%;
+        padding-right: 5%;
+    }
+
+    .rightSidePost {
+        display: block;
+    }
+
+    .postMarginContainer {
+        margin-top: 54px;
+    }
+
+    .journalHeadingContainer {
+        margin: 88px 0 14px 0;
+    }
+}
+
+@media screen and  (max-width: 1405px) {
+    .def {
+        margin: 0 10px;
+    }
+}
+
+
+@media screen and (max-width: 1023px){
+    .postMarginContainer {
+        margin-top: 24px;
+    }
+
+    .journalHeadingContainer {
+        margin-top: 20px;
+    }
+}

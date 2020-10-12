@@ -1,11 +1,9 @@
 import React from "react";
-import { Flex, Box } from 'rebass';
 import { connect } from 'react-redux';
-import {withTheme} from "styled-components";
 
 import { Public } from '../../api';
 import { Logo } from '../../assets';
-
+import { Flex, Box } from 'reflexbox';
 
 class LoginLayout extends React.Component{
 
@@ -25,11 +23,11 @@ class LoginLayout extends React.Component{
     }
 
     render(){
-        const { theme, width, children } = this.props;
+        const { width, children } = this.props;
         const { cover } = this.state;
 
         return (
-            <Flex height="100vh" width="100vw" bg={theme.colors.backgroundInverted}>
+            <Flex height="100vh" width="100vw" bg={"var(--backgroundInvert)"}>
                 {
                     width > 768 &&
                     <Box width={3/5} sx={{
@@ -43,10 +41,10 @@ class LoginLayout extends React.Component{
                         <Box ml="auto" mr="36px" mt="36px">
                             {/*<Icons.HelpIcon/>*/}
                         </Box>
-                        <Box width={["150px"]} height={["150px"]} mx="auto">
+                        <Box width={"150px"} height={"150px"} mx="auto">
                             <a href="/">
-                                <Logo width="100%" primary={theme.colors.primary}
-                                      background={theme.colors.secondary}/>
+                                <Logo width="100%" primary={"var(--primary)"}
+                                      background={"var(--backgroundInvert)"}/>
                             </a>
                         </Box>
                         <Box mt="auto" mx="10%">
@@ -65,4 +63,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps)(withTheme(LoginLayout));
+export default connect(mapStateToProps)(LoginLayout);

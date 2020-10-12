@@ -1,37 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Ticker from 'react-ticker';
-import styled, { withTheme } from "styled-components";
 import {TagLabel} from "../../components/Typography";
 import {connect} from "react-redux";
+import styles from './styles/tagBar.module.css'
 
-
-const TagWrap = styled.div`
-    border-radius: ${props => props.mini ? '10px' : '40px'};
-    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.25);
-    background-color: ${props => props.theme.colors.primary};
-    margin: 10px ${props=> props.theme.spacing.m} 10px 0;
-    padding:  ${props => props.theme.spacing.xxs} 32px;
-    transition: all 0.1s ease-out;
-    &:hover{
-        background-color: ${props => props.theme.colors.hover};
-        box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.50);
-        transform: translateY(-3px);
-    }
-`;
-
-const Tag = ({children, theme, mini}) =>(
-    <TagWrap min={mini}>
+const Tag = ({children, mini}) =>(
+    <div className={mini ? styles.tagWrapperMini : styles.tagWrapper}>
         {
             mini
-                ? <TagLabel type="normal" color={theme.text.onPrimary} margin={0}>{children}</TagLabel>
-                : <TagLabel type="large" weight="400" color={theme.text.onPrimary} margin={0}>{children}</TagLabel>
+                ? <TagLabel type="normal" color={"var(--text-onPrimary)"} margin={0}>{children}</TagLabel>
+                : <TagLabel type="large" weight="400" color={"var(--text-onPrimary)"} margin={0}>{children}</TagLabel>
         }
-    </TagWrap>
+    </div>
 );
 
 
 class TagBar extends React.Component {
+    static defaultProps = {
+        defaultSpeed: 10
+    };
 
     constructor(props) {//width
         super(props);
@@ -42,7 +30,7 @@ class TagBar extends React.Component {
     state = {
         tagIndex: -1,
         hover: false,
-        speed: 10,
+        speed: this.props.defaultSpeed,
         reload: false
     }
 
@@ -81,7 +69,7 @@ class TagBar extends React.Component {
             if (this.state === undefined){
                 timerId = setTimeout(speedUp.bind(this), timeout); // (*)
             }
-            else if (this.state.speed < 10 && ! this.state.hover){
+            else if (this.state.speed < this.props.defaultSpeed && ! this.state.hover){
                 this.setState({speed: this.state.speed + 1})
                 if (timeout > 20){
                     timeout -= 10;
@@ -92,7 +80,8 @@ class TagBar extends React.Component {
     }
 
     render(){
-        const { theme, tags, width } = this.props;
+        const { tags, width } = this.props;
+
         if (this.state.reload){
             this.setState({reload: false})
             return null
@@ -113,10 +102,9 @@ class TagBar extends React.Component {
                             this.state.tagIndex = 0;
                         }
                         const Link = tags[this.state.tagIndex].link;
-                        const props = tags[this.state.tagIndex].linkProps;
                         return(
-                            <Link {...props}>
-                                <Tag theme={theme} mini={width <= 1023}>{tags[this.state.tagIndex].text}</Tag>
+                            <Link {...tags[this.state.tagIndex].linkProps}>
+                                <Tag mini={width <= 1023}>{tags[this.state.tagIndex].text}</Tag>
                             </Link>
                         )
                     }}
@@ -127,6 +115,7 @@ class TagBar extends React.Component {
 }
 
 TagBar.propTypes = {
+    defaultSpeed: PropTypes.number,
     tags: PropTypes.object.isRequired
 }
 
@@ -139,4 +128,4 @@ function mapStateToProps(state){
 }
 
 
-export default connect(mapStateToProps)(withTheme(TagBar));
+export default connect(mapStateToProps)(TagBar);

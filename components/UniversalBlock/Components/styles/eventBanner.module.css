@@ -1,0 +1,40 @@
+.titleText {
+    font-family: var(--fontFamily);
+    font-size: 24px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: 1.92px;
+    text-transform:  uppercase;
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+.contentText {
+    font-family: var(--fontFamily);
+    font-size: 20px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    margin: 0;
+    letter-spacing: 1.92px;
+    color: var(--text-secondary);
+}
+
+.contentLink {
+    font-family: var(--fontFamily);
+    font-size: 20px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    margin: 0;
+    letter-spacing: 1.92px;
+    color: var(--text-hover);
+}
+
+.contentLink:hover{
+    color: var(--text-secondarySecondary)
+}
