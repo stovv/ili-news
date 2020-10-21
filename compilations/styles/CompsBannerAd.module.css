@@ -1,0 +1,32 @@
+.bannerRoot {
+    composes: SimpleFlex from "../../styles/Containers.module.css";
+    justify-content: space-between;
+    height: 672px;
+    max-width: 1280px;
+}
+
+.topSide {
+    display: flex;
+    justify-content: space-between;
+    width: min-content;
+    gap: 32px;
+    height: min-content;
+}
+
+.leftSide {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.miniSide {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.rightSide {
+    width: 296px;
+    height: 100%;
+}

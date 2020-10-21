@@ -1,0 +1,176 @@
+.headerRoot {
+    width: 100%;
+    background: var(--backgroundPrimary);
+    transition: all 0.5s ease 0s;
+}
+
+.searchActivated {
+    composes: headerRoot;
+    width: 100vw;
+    background: var(--backgroundInverted);
+}
+
+.headerWrapper {
+    display: flex;
+    height: 72px;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.sideContainer {
+    height: 100%;
+    position: relative;
+}
+
+/* sides */
+.leftSide {
+    composes: sideContainer;
+    display: none;
+    width: calc(1/4*100%);
+    height: 100%;
+    padding-left: var(--spacing-m);
+    justify-content: left;
+}
+
+.leftSideLaptop {
+    composes: sideContainer;
+    width: calc(1/8*100%);
+    padding-left: 25px;
+}
+
+.centerSideLaptop {
+    composes: sideContainer;
+    width: calc(6/8*100%);
+    display: flex;
+    justify-content: center;
+}
+
+.centerSideWrapper {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 48px;
+}
+
+.rightSide {
+    composes: sideContainer;
+    width: calc(1/8*100%);
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+
+
+/* link style */
+
+.menuLink {
+    font-family: var(--fontFamily);
+    font-size: 20px;
+    font-weight: 500;
+    margin: auto 0;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-drag: none;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 24px;
+    text-transform: lowercase;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: all 0.4s ease 0s;
+    color: var(--text-secondarySecondary);
+}
+
+.menuLinkHover:hover {
+    color: var(--text-hover);
+}
+
+.menuLinkHover:hover:after {
+    width: 100%;
+}
+
+.menuLinkHover:after{
+    content: '';
+    display: block;
+    width: 0;
+    height: 4px;
+    background: var(--text-hover);
+    transition: width .3s;
+}
+
+.active{
+    composes: menuLink;
+    color: var(--text-hover);
+}
+
+.active:after{
+    content: '';
+    display: block;
+    width: 0;
+    height: 4px;
+    background: transparent;
+    transition: width .3s;
+}
+
+.loadingLogo {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.logo {
+    height: 100%;
+}
+
+.icons {
+    margin: auto 25px auto 0;
+}
+
+.iconsLeft {
+    composes: icons;
+    margin: auto 0;
+}
+
+/* screen breakpoints */
+
+@media screen and (max-width: 1024px){
+    .centerSideWrapper{
+        gap: 20px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .leftSideLaptop {
+        padding-left: 0;
+        width: calc(2/4*100%);
+        display: flex;
+        justify-content: center;
+    }
+
+    .centerSideLaptop{
+        display: none;
+    }
+
+    .rightSide{
+        width: calc(1/4*100%);
+    }
+
+    .icons {
+        margin-right: var(--spacing-m);
+    }
+
+    /* mobile Sides*/
+    .leftSide {
+        display: flex;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .logo {
+        width: 48px;
+    }
+}
+
+@media screen and (max-width: 375px){
+
+}

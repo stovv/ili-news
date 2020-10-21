@@ -1,0 +1,65 @@
+.topPostBgRoot {
+    position: relative;
+    width: 100%;
+    height: 384px;
+    overflow: hidden;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.16);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.bgImage {
+    overflow: hidden;
+    filter: blur(10px);
+    transform: scale(1.1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.topPostContainer {
+    composes: CommonContainer from "../../styles/Containers.module.css";
+    margin-top: 56px;
+}
+
+.hideLaptop {
+    display: none;
+}
+
+.hideMobile {
+    display: block;
+}
+
+@media screen and (max-width: 1300px){
+    .hideLaptop {
+        display: block;
+    }
+
+    .hideMobile {
+        display: none;
+    }
+
+    .topPostContainer {
+        margin-top: 24px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .topPostBgRoot {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 320px){
+    .topPostContainer {
+        padding: 0;
+    }
+}

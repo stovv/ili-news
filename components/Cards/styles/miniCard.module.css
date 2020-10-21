@@ -1,0 +1,24 @@
+.miniCardRoot {
+    height: 128px;
+    display: flex;
+    width: min-content;
+    cursor: pointer;
+    background-color: var(--backgroundPrimary);
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.miniCardImage {
+    width: 128px;
+    height: 128px;
+    padding: 5px;
+}
+
+.miniCardText {
+    width: 168px;
+    padding: 14px var(--spacing-xs);
+}
+
+.miniCardRoot:hover {
+    transform: translateY(-4px);
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}

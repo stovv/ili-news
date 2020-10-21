@@ -1,0 +1,22 @@
+.NewsContainer {
+    width: 296px;
+    min-width: 296px;
+    height: min-content;
+    max-width: 672px;
+    overflow: hidden;
+    background-color: var(--backgroundSecondary);
+    padding: 0 var(--spacing-m) var(--spacing-block) var(--spacing-m);
+}
+
+.newsItem {
+    border-bottom: solid var(--backgroundInvert) 1px;
+}
+
+
+@media screen and (max-width: 683px){
+    .NewsContainer {
+        max-width: unset;
+        width: 100%;
+    }
+}
+

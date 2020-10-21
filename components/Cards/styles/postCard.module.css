@@ -1,0 +1,56 @@
+.postRoot {
+    position: relative;
+    width: 296px;
+    height: 324px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.postImage {
+    width: 296px;
+    height: 248px;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-position: center;
+    background-size: cover;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.postTextCard {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 264px;
+    height: max-content;
+    min-height: 118px;
+    background-color: var(--backgroundPrimary);
+    padding: var(--spacing-xs) var(--spacing-s);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    z-index: 2;
+}
+
+.postRoot:hover .postImage, .postRoot:hover .postTextCard{
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    transform: translateY(-4px);
+}
+
+
+@media screen and (max-width: 683px){
+    .postRoot{
+        width: 100%;
+        height: 326px;
+        margin-bottom: var(--spacing-block);
+    }
+
+    .postImage{
+        width: 100%;
+        height: 248px;
+    }
+
+    .postTextCard {
+        width: 100%;
+        min-height: 110px;
+    }
+}

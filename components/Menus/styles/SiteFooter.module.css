@@ -1,0 +1,151 @@
+.footerRoot {
+    display: flex;
+    width: 100%;
+    min-height: 256px;
+    justify-content: center;
+    background: var(--backgroundInverted);
+}
+
+.footerWrapper {
+    display: flex;
+    max-width: 1440px;
+    width: 100%;
+    padding: 0 76px;
+    justify-content: space-between;
+}
+
+.logo {
+    width: 104px;
+    height: 104px;
+}
+
+.logoWithSocial {
+    margin-top: 32px;
+    width: calc(1/8*100%);
+}
+
+.linksWithText {
+    width: calc(7/8*100%);
+}
+
+.socialLinks {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, max-content);
+    grid-gap: 24px;
+}
+
+.menuLinks {
+    margin-top: 44px;
+    text-align: center;
+    list-style-type: none;
+    padding-left: 10px !important;
+    padding-top: 16px;
+    padding-right: 10px;
+    padding-bottom: 0;
+}
+
+.centerizeContent {
+    display: flex;
+    justify-content: center;
+}
+
+
+.siteLink {
+    font-family: var(--fontFamily);
+    font-size: 20px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 24px;
+    letter-spacing: normal;
+    text-decoration: none;
+    color: var(--text-onPrimary);
+    transition: all 0.4s ease;
+}
+
+.siteLink:hover {
+    color: var(--text-hover);
+}
+
+.footerText {
+    opacity: 0.64;
+    font-family: var(--fontFamily);
+    font-size: 20px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+    text-align: center;
+    max-width: 851px;
+    color: var(--text-onPrimary);
+}
+
+.footerTextSecond {
+    composes: footerText;
+}
+
+.menuLinksItem {
+    display: inline-block;
+    margin: 0 calc(var(--spacing-block)/2);
+}
+
+.menuLinksItem:first-child{
+    margin-left: 0;
+}
+
+.menuLinksItem:last-child {
+    margin-right: 0;
+}
+
+
+@media screen and ( max-width: 1024px ){
+    .footerWrapper {
+        padding: 0 30px;
+    }
+
+    .footerTextSecond {
+        max-width: 550px;
+    }
+}
+
+
+@media screen and ( max-width: 768px){
+    .footerWrapper {
+        display: block;
+        padding: 0 16px;
+    }
+
+    .logoWithSocial{
+        width: 100%;
+    }
+
+    .linksWithText {
+        width: 100%;
+    }
+
+    .logo {
+        height: 80px;
+        width: 80px;
+    }
+
+    .socialLinks{
+        grid-template-columns: repeat(3, max-content);
+    }
+
+    .menuLinks {
+        margin-top: 10px;
+    }
+
+    .siteLink {
+        font-family: var(--fontFamily);
+        font-size: 14px;
+        line-height: 1.29;
+    }
+
+    .footerTextSecond {
+        font-size: 14px;
+        line-height: 1.29;
+    }
+}

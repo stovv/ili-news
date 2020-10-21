@@ -1,0 +1,35 @@
+.categoryRoot {
+    composes: CommonContainer from '../../styles/Containers.module.css';
+}
+
+.postsLine {
+    display: flex;
+    justify-content: left;
+    gap: 32px;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 1260px){
+    .postsLine{
+        display: grid;
+        grid-template-columns: repeat(3, max-content);
+        justify-content: space-between;
+        align-content: space-around;
+        gap: 20px;
+    }
+}
+
+@media screen and (max-width: 950px){
+    .postsLine{
+        grid-template-columns: repeat(2, max-content);
+        width: min-content;
+    }
+}
+
+@media screen and (max-width: 683px){
+    .postsLine{
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,7 @@
+.noDecoration {
+    text-decoration: none;
+}
+
+.socialLinkHover:hover {
+    opacity: 0.5;
+}

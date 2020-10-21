@@ -5,11 +5,31 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
+    "axios": "^0.20.0",
+    "moment": "^2.29.1",
     "next": "9.5.5",
+    "next-redux-wrapper": "^6.0.2",
+    "nprogress": "^0.2.0",
     "react": "16.14.0",
-    "react-dom": "16.14.0"
+    "react-animation": "^1.2.2",
+    "react-dom": "16.14.0",
+    "react-infinite-scroll-component": "^5.1.0",
+    "react-loading-skeleton": "^2.1.1",
+    "react-on-screen": "^2.1.1",
+    "react-redux": "^7.2.1",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^9.5.5",
+    "cross-env": "^7.0.2",
+    "next-compose-plugins": "^2.2.0",
+    "webpack-filter-warnings-plugin": "^1.2.1"
   }
 }

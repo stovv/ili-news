@@ -1,0 +1,11 @@
+.rootFont {
+    margin: 0;
+    text-align: left;
+    font-style: normal;
+    line-height: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+    color: var(--text-primary);
+    font-family: var(--fontFamily);
+}

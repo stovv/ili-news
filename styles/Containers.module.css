@@ -1,0 +1,57 @@
+.SimpleFlex {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 72px;
+}
+
+.CommonContainer {
+    max-width: 1440px;
+    margin: 0 auto 72px auto;
+    padding: 0 80px;
+}
+
+@media screen and (max-width: 1400px){
+    .CommonContainer {
+        padding: 0 20px;
+        margin: 0 auto var(--spacing-m) auto;
+    }
+}
+
+@media screen and (max-width: 1300px){
+    .SimpleFlex {
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 1080px){
+    .SimpleFlex {
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 955px){
+    .SimpleFlex {
+        display: grid;
+        grid-template-columns: repeat(2, max-content);
+        gap: 24px;
+        width: min-content;
+        margin: 0 auto;
+    }
+}
+
+
+@media screen and (max-width: 683px){
+    .SimpleFlex {
+        display: block;
+        width: 100%;
+        margin-bottom: 0;
+    }
+}
+
+@media screen and (max-width: 375px){
+    .CommonContainer {
+        padding: 0 0;
+    }
+}

@@ -1,0 +1,13 @@
+.commonContainer {
+    margin: 0 auto;
+}
+
+.defaultContainer {
+    margin: 0 80px;
+}
+
+@media screen and  (max-width: 1405px) {
+    .defaultContainer {
+        margin: 0 10px;
+    }
+}

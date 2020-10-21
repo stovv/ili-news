@@ -1,0 +1,30 @@
+
+/* light colors theme */
+:root{
+    /* hex site colors */
+    --primary: #eb5757;
+    --secondary: #4517a7;
+    --backgroundSecondary: #f6f6f6;
+    --backgroundPrimary: #ffffff;
+    --backgroundInvert: #4a4a4a;
+    --backgroundInverted: #0e0e0e;
+    --hover: #050505;
+
+    /*  rgb site colors */
+    --primary-rgb: 235,87,87;
+    --secondary-rgb: 69,23,167;
+    --backgroundSecondary-rgb: 246,246,246;
+    --backgroundPrimary-rgb: 255,255,255;
+    --backgroundInvert-rbg: 74,74,74;
+    --backgroundInverted-rbg: 14,14,14;
+    --hover-rgb: 5,5,5;
+
+    /* text colors*/
+    --text-primary: #050505;
+    --text-hover: #eb5757;
+    --text-secondary: #4a4a4a;
+    --text-secondarySecondary: #0e0e0e;
+    --text-onPrimary: #ffffff;
+    --text-editorSecondary: #707684;
+    --text-disabled: #d2d2d2;
+}

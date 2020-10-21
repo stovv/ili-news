@@ -1,0 +1,54 @@
+.postHeading {
+    margin: 0 0 24px 0;
+}
+
+.heading {
+    font-family: var(--fontFamily);
+    color: var(--text-primary);
+    font-weight: bold;
+    font-stretch: normal;
+    letter-spacing: normal;
+    user-select: text;
+}
+
+.hoverable:hover {
+    transition: all 0.4s ease 0s;
+    color: var(--text-hover);
+    cursor: pointer;
+}
+
+.one {
+    composes: heading;
+    font-size: 56px;
+    line-height: 64px;
+}
+
+.two {
+    composes: heading;
+    font-size: 40px;
+    line-height: 48px;
+}
+
+.three {
+    composes: heading;
+    font-size: 30px;
+    line-height: 38px;
+}
+
+.four {
+    composes: heading;
+    font-size: 24px;
+    line-height: 26px;
+}
+
+.five {
+    composes: heading;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.six {
+    composes: heading;
+    font-size: 18px;
+    line-height: 1.2;
+}

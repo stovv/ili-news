@@ -1,0 +1,33 @@
+.bannerRoot{
+    position: relative;
+    width: 952px;
+    height: 320px;
+    overflow: hidden;
+}
+
+.bannerImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.bannerGradient{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background-image: linear-gradient(to right, rgba(229, 103, 82, 0), var(--primary));
+}
+
+.bannerContent {
+    position: absolute;
+    top: 45px;
+    right: 31px;
+    z-index: 3;
+    width: min-content;
+}

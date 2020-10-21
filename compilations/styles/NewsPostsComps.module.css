@@ -1,0 +1,82 @@
+.compilationComps {
+    composes: SimpleFlex from "../../styles/Containers.module.css";
+    margin-bottom: 0;
+}
+
+.leftSide {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.centerSide {
+    display: block;
+}
+
+.centerSideMobile {
+    display: none;
+}
+
+.rightSide {
+    display: block;
+}
+
+.bottomSide {
+    display: none;
+    margin-top: 32px;
+    gap: 20px;
+}
+
+.miniSide {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+}
+
+@media screen and (max-width: 1300px){
+    .leftSide {
+        display: none;
+    }
+
+    .centerSide {
+        width: 100%;
+        margin-right: 20px;
+    }
+
+    .topPostContainer {
+        margin-top: 24px;
+    }
+
+    .bottomSide {
+        display: flex;
+    }
+}
+
+@media screen and (max-width: 980px){
+    .centerSide {
+        display: none;
+    }
+
+    .centerSideMobile {
+        display: grid;
+        width: 100%;
+        grid-template-columns: repeat(2, max-content);
+        align-content: space-around;
+        justify-content: space-between;
+        margin-right: 10px;
+    }
+}
+
+@media screen and (max-width: 955px){
+    .centerSideMobile {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+@media screen and (max-width: 683px){
+    .bottomSide{
+        display: block;
+    }
+}
