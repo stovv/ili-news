@@ -4,10 +4,12 @@ import '../styles/light.css';
 import '../assets/lato/lato.css';
 
 import wrapper from '../store';
+import Header from "../components/Menus/Header";
+import Footer from "../components/Menus/Footer";
 import { HEADER_IGNORE, FOOTER_IGNORE } from "../constants";
-const Header = dynamic(() => import("../components/Menus/Header"));
-const Footer = dynamic(() => import("../components/Menus/Footer"));
+
 const HeaderPreloader = dynamic(() => import("../components/Forms/HeaderPreloader"));
+
 
 const IliApp = ({ Component, pageProps, router }) => {
     return (
