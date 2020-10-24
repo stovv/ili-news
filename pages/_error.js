@@ -1,10 +1,11 @@
+import styles from "../styles/NotFound.module.css";
+
 function Error({ statusCode }) {
     return (
-        <p>
-            {statusCode
-                ? `An error ${statusCode} occurred on server`
-                : 'An error occurred on client'}
-        </p>
+        <>
+            <h1 className={styles.code}>{statusCode}</h1>
+            <h2 className={styles.textCode}>{statusCode === 404 ? "страница не найдена" : "что то не так"}</h2>
+        </>
     )
 }
 

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import dynamic from "next/dynamic";
 import { randomChoice } from '../../tools';
 import styles from './styles/postCard.module.css'
@@ -48,7 +49,7 @@ export default function PostCard({post: {slug, title, cover, publish_at, rubric,
                     <TagLabel type={"small"} color={"var(--backgroundInvert)"} margin={"0"}>
                         {
                             publish_at
-                                ? publish_at
+                                ? dayjs(publish_at).format("D MMMM YYYY")
                                 : <Skeleton width={"8em"} />
                         }
                     </TagLabel>

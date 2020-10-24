@@ -53,7 +53,7 @@ export default function CategoryLine({posts = [{}, {}, {}, {}], category}){
             <CardText type={"large"} margin={"0 0 24px 0"}>
                 {category ? category.title : <Skeleton width={"8em"}/> }
             </CardText>
-            <div className={styles.postsLine}>
+            <div className={`${styles.postsLine}${posts.length < 4 ? ` ${styles.postsLineMin}` : ''}` }>
                 {
                     posts.map((post, index) =>
                         <Fragment key={index}>

@@ -1,6 +1,6 @@
 .bannerRoot{
     position: relative;
-    width: 952px;
+    max-width: 952px;
     height: 320px;
     overflow: hidden;
 }
@@ -21,7 +21,7 @@
     width: 100%;
     height: 100%;
     z-index: 2;
-    background-image: linear-gradient(to right, rgba(229, 103, 82, 0), var(--primary));
+    background-image: linear-gradient(to right, rgba(var(--secondary-rgb), 0.5), var(--primary));
 }
 
 .bannerContent {
@@ -30,4 +30,40 @@
     right: 31px;
     z-index: 3;
     width: min-content;
+}
+
+.laptopText {
+    display: block;
+}
+
+.mobileText {
+    display: none;
+}
+
+@media screen and (max-width: 955px){
+    .bannerRoot{
+        width: 296px;
+        height: 260px;
+    }
+
+    .mobileText{
+        display: block;
+    }
+
+    .laptopText {
+        display: none;
+    }
+
+    .bannerContent{
+        top: 25px;
+        right: 10px;
+    }
+}
+
+@media screen and (max-width: 683px){
+    .bannerRoot{
+        width: 100%;
+        height: 260px;
+        margin-bottom: 20px;
+    }
 }

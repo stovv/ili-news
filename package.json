@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.20.0",
-    "moment": "^2.29.1",
+    "dayjs": "^1.9.4",
     "next": "9.5.5",
     "next-redux-wrapper": "^6.0.2",
     "nprogress": "^0.2.0",
@@ -21,6 +21,7 @@
     "react-loading-skeleton": "^2.1.1",
     "react-on-screen": "^2.1.1",
     "react-redux": "^7.2.1",
+    "react-ticker": "^1.2.2",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",

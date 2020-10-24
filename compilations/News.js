@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { Fragment } from 'react';
 import dynamic from "next/dynamic";
 import styles from './styles/News.module.css';
@@ -18,16 +19,16 @@ const NewsItem = ({title, slug, publish_at}) => (
             </CardText>
         </PostLink>
         <TagLabel type={"small"} margin={"0 0 20px 0"} color={"var(--text-secondary)"}>
-            { publish_at ? publish_at : <Skeleton width={"10em"}/> }
+            { publish_at ? dayjs(publish_at).format("D MMMM YYYY") : <Skeleton width={"10em"}/> }
         </TagLabel>
     </div>
 );
 
-export default function News({ news }){
+export default function News({ news = [{}] }){
     return (
         <div className={styles.NewsContainer}>
             <Heading level={4} textTransform={"uppercase"} margin={"24px 0"}
-                     color={"var(--primary)"}>Новости города</Heading>
+                     color={"var(--primary)"} userSelect={"none"}>Новости города</Heading>
             {
                 news.map((item, index) =>
                         <Fragment key={index}>

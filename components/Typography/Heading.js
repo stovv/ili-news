@@ -14,7 +14,7 @@ const headings = {
 
 export default function Heading({level = 1, children, hover, margin = 0, textAlign = "left", color,
                                     maxWidth, maxHeight, textTransform, breakWord,
-                                    width = "auto", height = "auto", ...props}){
+                                    width = "auto", height = "auto", userSelect, ...props}){
 
     const headingsKeys = Object.keys(headings);
     if (level > headingsKeys.length || level == null){
@@ -24,7 +24,7 @@ export default function Heading({level = 1, children, hover, margin = 0, textAli
     const HeadingTag = `h${level}`;
     return (
         <HeadingTag className={hover ? `${headingClass} ${styles.hoverable}` : headingClass} style={{
-            color, textAlign, margin, width, height, textTransform, maxHeight, maxWidth,
+            color, textAlign, margin, width, height, textTransform, maxHeight, maxWidth, userSelect,
             overflowWrap: breakWord ? 'break-word' : undefined
         }}>
             {children}

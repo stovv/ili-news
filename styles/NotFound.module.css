@@ -1,0 +1,59 @@
+.code {
+    composes: rootFont from "../components/Typography/styles/compose.module.css";
+    font-size: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.textCode {
+    composes: rootFont from "../components/Typography/styles/compose.module.css";
+    font-size: 100px;
+    margin: 0 auto 100px auto;
+    text-align: center;
+}
+
+@media screen and (max-width: 1040px){
+    .code {
+        font-size: 400px;
+    }
+
+    .textCode {
+        font-size: 80px;
+    }
+}
+
+@media screen and (max-width: 830px){
+    .code {
+        font-size: 300px;
+        margin-top: 150px;
+    }
+
+    .textCode {
+        font-size: 70px;
+        margin-bottom: 150px;
+    }
+}
+
+@media screen and (max-width: 730px){
+    .code {
+        font-size: 200px;
+        margin-top: 150px;
+    }
+
+    .textCode {
+        font-size: 40px;
+        margin-bottom: 150px;
+    }
+}
+
+@media screen and (max-width: 375px){
+    .code {
+        font-size: 100px;
+        margin-top: 150px;
+    }
+
+    .textCode {
+        font-size: 30px;
+        margin-bottom: 150px;
+    }
+}

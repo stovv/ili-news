@@ -1,12 +1,17 @@
 .categoryRoot {
     composes: CommonContainer from '../../styles/Containers.module.css';
+    margin-bottom: 72px;
 }
 
 .postsLine {
     display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.postsLineMin {
     justify-content: left;
     gap: 32px;
-    margin: 0 auto;
 }
 
 @media screen and (max-width: 1260px){
@@ -17,9 +22,10 @@
         align-content: space-around;
         gap: 20px;
     }
+
 }
 
-@media screen and (max-width: 950px){
+@media screen and (max-width: 952px){
     .postsLine{
         grid-template-columns: repeat(2, max-content);
         width: min-content;

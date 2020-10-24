@@ -56,7 +56,15 @@ class Footer extends Component {
                 getMenu('footer')
                     .then(response => this.setState({
                         socialMenus: response.data.menus[0].item.filter(item => item.socialUrl != null && item.icon != null),
-                        siteMenus: response.data.menus[0].item.filter(item => item.socialUrl == null || item.icon == null),
+                        siteMenus: [
+                            {
+                                url: {
+                                    link: "archive",
+                                    title: "Архив"
+                                }
+                            },
+                            ...response.data.menus[0].item.filter(item => item.socialUrl == null || item.icon == null)
+                        ],
                     }));
             }catch (e){
                 console.log("Something wrong with getting header menus, try again -> ", e);

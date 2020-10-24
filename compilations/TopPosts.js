@@ -54,7 +54,9 @@ class TopPosts extends Component {
                 </div>
             </div>
             <div className={`${styles.topPostContainer} ${styles.hideLaptop}`}>
-                <Heading level={5} color={"var(--primary)"} margin={"var(--spacing-block) 0 0 0"}>Популярное</Heading>
+                <Heading level={5} color={"var(--primary)"} margin={"var(--spacing-block) 0 0 0"} userSelect={"none"}>
+                    Популярное
+                </Heading>
             </div>
             <div className={styles.topPostContainer}>
                 <div className={containers.SimpleFlex}>

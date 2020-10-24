@@ -13,11 +13,11 @@
 @media screen and (max-width: 1400px){
     .CommonContainer {
         padding: 0 20px;
-        margin: 0 auto var(--spacing-m) auto;
     }
 }
 
 @media screen and (max-width: 1300px){
+
     .SimpleFlex {
         width: 90%;
         margin: 0 auto;
@@ -32,6 +32,10 @@
 }
 
 @media screen and (max-width: 955px){
+    .CommonContainer {
+        margin: 0 auto var(--spacing-m) auto;
+    }
+
     .SimpleFlex {
         display: grid;
         grid-template-columns: repeat(2, max-content);
@@ -52,6 +56,6 @@
 
 @media screen and (max-width: 375px){
     .CommonContainer {
-        padding: 0 0;
+        padding: 0 var(--spacing-xs);
     }
 }

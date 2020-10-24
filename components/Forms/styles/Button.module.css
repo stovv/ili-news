@@ -24,3 +24,9 @@
     transition: all 0.4s ease 0s;
     cursor: pointer;
 }
+
+@media screen and (max-width: 955px){
+    .Simple {
+        font-size: 20px;
+    }
+}

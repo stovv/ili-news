@@ -23,11 +23,11 @@ const BurgerIcon = dynamic(() => import("../../assets/burger"));
 
 const LoadingLink = () => (
     <div className={styles.menuLink}>
-        <Skeleton width={"120px"}/>
+        <Skeleton width={"5em"}/>
     </div>
 );
 
-const LinksSkeleton = () => [...Array(5).keys()]
+const LinksSkeleton = () => [...Array(4).keys()]
     .map(index=>(
         <Fragment key={index}>
             <LoadingLink/>
@@ -52,7 +52,17 @@ class Header extends Component {
     getMenus(){
         setTimeout(()=>{
             try {
-                getMenu('header').then(response => this.setState({menus: response.data.menus[0].item}));
+                getMenu('header').then(response => this.setState({
+                    menus: [
+                        ...response.data.menus[0].item,
+                        {
+                            url: {
+                                link: "archive",
+                                title: "Статьи"
+                            }
+                        },
+                    ]
+                }));
             }catch (e){
                 console.log("Something wrong with getting header menus, try again -> ", e);
                 this.getMenus();

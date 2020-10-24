@@ -21,8 +21,8 @@ export default function UniversalLink ({ item, Component = React.Fragment, route
             </Component>
         </RubricLink>;
     }else if (item.post != null){
-        return <PostLink postId={item.post.id} {...props}>
-            <Component active={route === `/post/${item.post.id}`} {...componentParams}>
+        return <PostLink postSlug={item.post.slug} {...props}>
+            <Component active={route === `/post/${item.post.slug}`} {...componentParams}>
                 {item.post.title}
             </Component>
         </PostLink>
@@ -35,5 +35,5 @@ export default function UniversalLink ({ item, Component = React.Fragment, route
             </Component>
         </Link>
     }
-    return null
+    return Component;
 }

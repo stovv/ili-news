@@ -47,6 +47,13 @@
     line-height: 36px;
 }
 
+.mlarge {
+    composes: cardText;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.33;
+}
+
 .normal {
     composes: cardText;
     font-size: 20px;

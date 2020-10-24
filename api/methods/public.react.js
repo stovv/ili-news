@@ -59,15 +59,17 @@ export async function getPopularDuringWeek(){
     return api.get(`/popular-posts`);
 }
 
-export async function getCategory(id){
-    return api.get(`/categories/${id}`)
+export async function getCategory(slug){
+    return api.get(`/categories?slug=${slug}`)
 }
+
 
 export async function getRubrics(){
     return api.ql(`
         query{
           rubrics{
             id,
+            slug,
             title
           }
         }
@@ -127,6 +129,18 @@ export async function loadPosts(rubric, category, start, limit, skipPostIds ){
               views
             },
             updated_at
+        }
+    }
+    `);
+}
+
+export async function loadEvents(skipPostIds, rubric, category, dateGTE, dateLTE, start, limit){
+    return api.ql(`
+    query{
+        posts(sort: "publish_at:DESC", where: { eventDate_gte: "${dateGTE}", eventDate_lte: "${dateLTE}" ${Array.isArray(skipPostIds) ? `, id_nin: [${skipPostIds.join(",")}], ` : ""}${rubric !== null ? `rubric: ${rubric}` : (category != null ? `rubric:{ category: ${category} }` : "")}}, limit: ${limit}, start: ${start}) {
+            eventDate,
+            slug,
+            title
         }
     }
     `);

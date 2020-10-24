@@ -58,8 +58,3 @@
     }
 }
 
-@media screen and (max-width: 320px){
-    .topPostContainer {
-        padding: 0;
-    }
-}

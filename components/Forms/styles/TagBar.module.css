@@ -1,0 +1,38 @@
+.tagWrapper {
+    border-radius: 40px;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.10);
+    background-color: var(--primary);
+    margin: 10px var(--spacing-m) 10px 0;
+    padding: var(--spacing-xxs) 32px;
+    transition: all 0.1s ease-out;
+    width: min-content;
+    height: min-content;
+}
+
+.tagWrapper:hover{
+    background-color: var(--hover);
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.50);
+    transform: translateY(-3px);
+}
+
+.tagTextLarge {
+    display: block;
+}
+
+.tagTextMini {
+    display: none;
+}
+
+@media screen and (max-width: 768px){
+    .tagTextLarge{
+        display: none;
+    }
+
+    .tagTextMini {
+        display: block;
+    }
+
+    .tagWrapper {
+        padding: var(--spacing-m) 32px;
+    }
+}

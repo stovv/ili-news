@@ -1,0 +1,43 @@
+.kudaGoWrapper {
+    height: 160px;
+    background-color: var(--backgroundSecondary);
+    padding-top: 20px;
+    margin-bottom: 72px;
+}
+
+.kudaGoText {
+    padding: 0 0 24px 80px;
+}
+
+.kudaGoTextMini {
+    composes: kudaGoText;
+    display: none;
+}
+
+@media screen and (max-width: 1023px){
+    .kudaGoText {
+        padding: 0 0 24px 40px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .kudaGoText {
+        padding: 0 0 24px 20px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .kudaGoText {
+        padding: 0 0 24px 20px;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .kudaGoText {
+        display: none;
+    }
+
+    .kudaGoTextMini{
+        display: block !important;
+    }
+}

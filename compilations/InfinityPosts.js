@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { connect } from 'react-redux';
 import { Fragment, Component as ReactComponent } from 'react';
-import { node, arrayOf, shape, func, string, object } from 'prop-types';
+import { node, arrayOf, shape, func, string, object, number, bool } from 'prop-types';
 
 import { shuffleChoice } from "../tools";
 import { changeInfinityState } from '../actions/common';
@@ -17,6 +17,7 @@ class InfinityPosts extends ReactComponent {
             items: [],
             hasMore: true,
             previousBlocks: [],
+            componentCount: {},
             components: props.components || []
         };
         this.fetchMoreBlocks = this.fetchMoreBlocks.bind(this);
@@ -38,6 +39,10 @@ class InfinityPosts extends ReactComponent {
                 this.state.components.some(component => component.required)){
             const item = shuffleChoice(this.state.components, previousBlocks, this.state.components.length);
 
+            if ( item.maxCount !== undefined &&
+                this.state.componentCount[item.id] !== undefined &&
+                this.state.componentCount[item.id] >= item.maxCount ) continue;
+
             const { fetchMore, Component } = item;
             let data = await fetchMore({state: this.state, ...props, ...common });
 
@@ -55,7 +60,11 @@ class InfinityPosts extends ReactComponent {
                 previousBlocks: [
                     ...previousBlocks.slice(Math.max(previousBlocks.length - this.state.components.length - 1 , 0)),
                     item.id
-                ]
+                ],
+                componentCount: {
+                    ...this.state.componentCount,
+                    [item.id]: this.state.componentCount[item.id] ? this.state.componentCount[item.id] + 1 : 1
+                }
             });
             return;
         }
@@ -88,8 +97,11 @@ InfinityPosts.propTypes = {
     additionalProps: object,
     components: arrayOf(
         shape({
-            key: string,
+            id: string,
+            required: bool,
+            lambda: number,
             fetchMore: func,
+            maxCount: number,
             Component: node.isRequired
         })
     )
