@@ -12,7 +12,7 @@ export default function ImageWithButtonBanner({title, cover, buttonUrl, buttonTe
                 {({children, url}) =>
                     <div className={styles.bannerImage}
                          style={{
-                             backgroundImage: `url("${url}")`,
+                             backgroundImage: url !== undefined ? `url("${url}")` : undefined,
                              backgroundSize: "cover",
                              backgroundPosition: "center"
                          }}>

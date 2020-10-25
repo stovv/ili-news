@@ -18,7 +18,7 @@ export default function PostCard({post: {slug, title, cover, publish_at, rubric,
                     {({children, url}) =>
                         <div className={styles.postImage}
                              style={{
-                                 backgroundImage: `url("${url}")`,
+                                 backgroundImage: url !== undefined ? `url("${url}")` : undefined,
                                  backgroundSize: "cover",
                                  backgroundPosition: "center"
                              }}>

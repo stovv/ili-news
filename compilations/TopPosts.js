@@ -26,7 +26,7 @@ class TopPosts extends Component {
                 <LazyImage cover={first.cover} typeFull={"full"} skeleton>
                     {({children, url}) =>
                         <div style={{
-                            backgroundImage: `url("${url}")`,
+                            backgroundImage: url !== undefined ? `url("${url}")` : undefined,
                             backgroundSize: "cover",
                             backgroundPosition: "center"
                         }} className={styles.bgImage}>

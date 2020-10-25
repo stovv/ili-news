@@ -62,7 +62,7 @@ export default function LargeCard ({theme, post: {slug, title, cover, rubric, de
                 <LazyImage cover={cover} typeFull={"full"} skeleton>
                     {({children, url}) =>
                         <div className={styles.imageCard} style={{
-                            backgroundImage: `url("${url}")`,
+                            backgroundImage: url !== undefined ? `url("${url}")` : undefined,
                             backgroundSize: "cover",
                             backgroundPosition: "center"
                         }}>{children}</div>

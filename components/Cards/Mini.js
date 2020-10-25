@@ -13,7 +13,7 @@ export default function MiniCard({post: {slug, title, cover, rubric} = {}}){
                 <LazyImage cover={cover} typeFull={"min"} skeleton>
                     {({children, url}) => (
                         <div className={styles.miniCardImage} style={{
-                            backgroundImage: `url("${url}")`,
+                            backgroundImage: url !== undefined ? `url("${url}")` : undefined,
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                         }}>
