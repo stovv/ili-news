@@ -1,5 +1,4 @@
 import styles from "./styles/miniCard.module.css";
-import Heading from "../Typography/Heading";
 import TagLabel from "../Typography/Tag";
 import CardText from "../Typography/Card";
 import PostLink from "../Links/Post";

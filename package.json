@@ -11,7 +11,7 @@
   "dependencies": {
     "axios": "^0.20.0",
     "dayjs": "^1.9.4",
-    "next": "9.5.5",
+    "next": "^10.0.3",
     "next-redux-wrapper": "^6.0.2",
     "nprogress": "^0.2.0",
     "react": "16.14.0",
@@ -25,7 +25,8 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "shuffle-array": "^1.0.1"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^9.5.5",

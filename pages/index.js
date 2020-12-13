@@ -1,19 +1,10 @@
 import dynamic from "next/dynamic";
-import dayjs from "dayjs";
 //import { NextSeo, SocialProfileJsonLd } from "next-seo";
 
 import wrapper from "../store";
 import { randomChoice } from '../tools';
-import {
-    fetchFrontPageCategories, fetchSimplePosts,
-    fetchCatPosts, fetchIndexPage, loadEvents,
-    fetchNews, fetchTheme, fetchPostsCount, countPostsByCategory, loadPosts
-} from '../api/methods/public.react';
-import { fetchMore as fetchMoreCatLines } from '../compilations/CategoryLine';
-import { setAvailableCategories, setCategoryOffset, setExistsPosts, setPrevCategories } from "../actions/common";
+import { CategoryPosts, Ad, KudaGo } from '../infinityBlocks';
 
-const AdBanner = dynamic(() => import("../compilations/Ad"));
-const KudaGo = dynamic(() => import("../components/Forms/KudaGo"));
 const TopPosts = dynamic(() => import("../compilations/TopPosts"));
 const CategoryLine = dynamic(() => import("../compilations/CategoryLine"));
 const OffScreen = dynamic(() => import("../components/Containers/OffScreen"));
@@ -23,12 +14,23 @@ const InfinityPosts = dynamic(() => import("../compilations/InfinityPosts"));
 
 
 
-export const getServerSideProps = wrapper.getServerSideProps(
-    async ({store, ...props}) => {
+export const getStaticProps = wrapper.getStaticProps(
+    async ({store}) => {
         let topPosts = [];
         let catLine = { posts: [], category: null };
         let lastTheme= { title: null, posts: [] };
         let nextTheme = { title: null, posts: [] };
+
+        const {
+            fetchFrontPageCategories, fetchSimplePosts, fetchCatPosts,
+            fetchIndexPage, fetchNews, fetchTheme, fetchPostsCount,
+            countPostsByCategory
+        } = require('../api/methods/public.react');
+
+        const {
+            setAvailableCategories, setCategoryOffset,
+            setExistsPosts, setPrevCategories
+        } = require("../actions/common");
 
         await fetchIndexPage()
             .then(
@@ -138,54 +140,31 @@ export const getServerSideProps = wrapper.getServerSideProps(
         ]));
 
         return {
+            revalidate: 3600,
             props: { topPosts, lastTheme, nextTheme, newsFeed, posts, postsCount, catLine }
         };
     }
 );
 
 
-const InfinityComponents = [
-    {
-        id: "category",
-        required: true,
-        lambda: 2,
-        fetchMore: fetchMoreCatLines,
-        Component: (props) => <CategoryLine {...props}/>
-    },
-    {
-        id: "ad",
-        fetchMore: async ({}) => {
-            //console.log("AD")
-            return {}
-        },
-        Component: (props) => <div style={{width: "300px", height: "120px"}}><AdBanner/></div>
-    },
-    {
-        id: "kuda-go-weekend",
-        maxCount: 1,
-        fetchMore: async (props) => {
-            const posts = await loadEvents(null, null, null,
-                dayjs().day(6).toISOString(), dayjs().day(7).toISOString(), 0, 20)
-                .then(response => response.data.posts)
-                .catch(reason => []);
-            return {posts}
-        },
-        Component: ({posts}) => posts.length > 0 ? <KudaGo posts={posts} dateName={"выходных"}/> : null
-    }
-];
+const InfinityComponents = {
+    ...CategoryPosts("category", 3),
+    ...Ad("ad"),
+    ...KudaGo("kuda-go-weekend", 1, 1)
+};
 
 
-export function FrontPage({topPosts, lastTheme, nextTheme, newsFeed, posts, catLine}){
+export function FrontPage({topPosts, lastTheme, nextTheme, newsFeed, posts, postsCount,catLine}){
     return (
-        <>
+        <section>
           <TopPosts posts={topPosts}/>
+          <NewsPostsComps compilation={lastTheme} news={newsFeed} posts={posts}/>
           <OffScreen>
-              <NewsPostsComps compilation={lastTheme} news={newsFeed} posts={posts}/>
               <CategoryLine {...catLine}/>
               <CompsBannerAd compilation={nextTheme}/>
-              <InfinityPosts components={InfinityComponents}/>
+              <InfinityPosts blocks={InfinityComponents} postsCount={postsCount} otherCount={postsCount}/>
           </OffScreen>
-        </>
+        </section>
     );
 }
 

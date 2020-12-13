@@ -48,7 +48,6 @@
 .centerSideWrapper {
     display: inline-flex;
     flex-wrap: wrap;
-    gap: 48px;
 }
 
 .rightSide {
@@ -67,7 +66,7 @@
     font-family: var(--fontFamily);
     font-size: 20px;
     font-weight: 500;
-    margin: auto 0;
+    margin: auto 48px auto 0;
     cursor: pointer;
     user-select: none;
     -webkit-user-drag: none;

@@ -2,6 +2,24 @@ export function randomChoice(arr){
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
+export function shuffle(arr) {
+    let array = new Array(...arr);
+    let copy = [], n = array.length, i;
+
+    // While there remain elements to shuffle…
+    while (n) {
+
+        // Pick a remaining element…
+        i = Math.floor(Math.random() * n--);
+
+        // And move it to the new array.
+        copy.push(array.splice(i, 1)[0]);
+    }
+
+    return copy;
+}
+
+
 export function shuffleChoice(arr, prevBlocks, uniqLength){
     let choice = randomChoice(arr);
     if (prevBlocks.length < uniqLength - 1) return choice;

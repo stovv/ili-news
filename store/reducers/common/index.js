@@ -7,6 +7,7 @@ let initialState = {
     infinityActive: false,
     prevCategoryIds: [],
     categoryOffsets: {},
+    postsOffset: 0,
     availableCategories: []
 }
 
@@ -47,7 +48,7 @@ const CommonReducer = (state = initialState, action) => {
                 ...state,
                 prevCategoryIds: [
                     ...state.prevCategoryIds,
-                    action.payload
+                    ...action.payload
                 ]
             }
         }
@@ -65,6 +66,12 @@ const CommonReducer = (state = initialState, action) => {
             return {
                 ...state,
                 availableCategories: action.payload
+            }
+        }
+        case SITE.INFINITY.SET_POSTS_OFFSET:{
+            return {
+                ...state,
+                postsOffset: action.payload
             }
         }
         default:

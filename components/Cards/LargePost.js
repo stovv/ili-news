@@ -9,11 +9,11 @@ const LazyImage = dynamic(() => import("../Images/LazyImage"));
 const Skeleton = dynamic(() => import("react-loading-skeleton"));
 
 
-const Content = ({theme, description, title, type = "large"}) => (
+const Content = ({theme, description, title, type = "large", style}) => (
     <>
         {
             theme
-                ? <div className={styles.themeText}>
+                ? <div className={styles.themeText} style={style}>
                     <TagLabel type={type} color={"var(--text-onPrimary)"} textTransform={"lowercase"}
                               margin={"0"} textAlign={"right"}>
                         { theme.length > 0 ? theme : <Skeleton width={"5em"}/> }
@@ -33,7 +33,7 @@ const Content = ({theme, description, title, type = "large"}) => (
                         }
                     </CardText>
                 </div>
-                : <div className={styles.description}>
+                : <div className={styles.description} style={style}>
                     <CardText type={type} color={"var(--text-onPrimary)"}
                               margin={"0"} maxWidth={"576px"}>
                         {

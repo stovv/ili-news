@@ -1,0 +1,38 @@
+
+
+.simplePostsLine {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.simplePostsLinemin {
+    justify-content: left;
+    gap: 32px;
+}
+
+@media screen and (max-width: 1260px){
+    .simplePostsLine{
+        display: grid;
+        grid-template-columns: repeat(3, max-content);
+        justify-content: space-between;
+        align-content: space-around;
+        gap: 20px;
+    }
+
+}
+
+@media screen and (max-width: 952px){
+    .simplePostsLine{
+        grid-template-columns: repeat(2, max-content);
+        width: min-content;
+    }
+}
+
+@media screen and (max-width: 683px){
+    .simplePostsLine{
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+    }
+}

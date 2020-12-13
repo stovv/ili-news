@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Link.module.css';
 
 
-export default function SocialLink({ Component = React.Fragment, item, component, route  }) {
+export default function SocialLink({ item  }) {
     return (
         <a className={styles.noDecoration} href={item.socialUrl}>
             <img src={`${process.env.NEXT_PUBLIC_BACKEND}${item.icon.url}`}

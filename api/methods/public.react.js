@@ -79,7 +79,7 @@ export async function getRubrics(){
 export async function fetchPosts(fields = ['id', 'slug', 'updated_at'], start, limit){
     return api.ql(`
         query{
-            posts${start !== undefined || limit !== undefined ? `(${(start !== undefined ? `start:${start},` : '')}${(limit !== undefined ? `limit:${limit}` : '')})`: ''}{
+            posts${start !== undefined || limit !== undefined ? `(${(start !== undefined ? `start:${start},` : '')}${(limit !== undefined ? `limit:${limit}` : '')}, sort: "publish_at:DESC")`: ''}{
                 ${fields.join(',\n')}
             }
         }

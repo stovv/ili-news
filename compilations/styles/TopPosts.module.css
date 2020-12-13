@@ -30,6 +30,11 @@
     margin-top: 56px;
 }
 
+.flexContainer {
+    composes: SimpleFlex from "../../styles/Containers.module.css";
+    width: 100%;
+}
+
 .hideLaptop {
     display: none;
 }
@@ -38,7 +43,7 @@
     display: block;
 }
 
-@media screen and (max-width: 1300px){
+@media screen and (max-width: 1250px){
     .hideLaptop {
         display: block;
     }

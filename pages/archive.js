@@ -2,12 +2,15 @@ import containers from "../styles/Containers.module.css";
 import JournalHeader from "../components/Journal/Header";
 import wrapper from "../store";
 
-import { getRubrics, loadPosts } from '../api/methods/public.react';
+import { randomChoice } from "../tools";
 import Error from "./_error";
 
-export const getServerSideProps = wrapper.getServerSideProps(
-    async ({store, res, ...props}) => {
+import InfinityPosts from "../compilations/InfinityPosts";
+import { PostsLine } from "../infinityBlocks";
 
+export const getStaticProps = wrapper.getStaticProps(
+    async ({store, res, ...props}) => {
+        const { getRubrics } = require('../api/methods/public.react');
         const rubrics = await getRubrics()
             .then(response => response.data.rubrics)
             .catch(reason => {
@@ -15,26 +18,25 @@ export const getServerSideProps = wrapper.getServerSideProps(
                 return 502;
             });
 
-        const posts = await loadPosts(null, null, 0, 7, null)
-            .then(response => response.data.posts)
-            .catch(reason => {
-                console.log("Something wrong with loading archive posts -> ", reason);
-                return 502;
-            });
-
-        if ( typeof rubrics === "number" || typeof posts === "number") {
-            res.statusCode = typeof rubrics === "number" ? rubrics : posts;
-            return { props: { errorCode: typeof rubrics === "number" ? rubrics : posts } }
+        if ( typeof rubrics === "number") {
+            res.statusCode = rubrics;
+            return { props: { errorCode: rubrics } }
         }
 
         return {
-            props: { rubrics, posts }
+            revalidate: 36000,
+            props: { rubrics }
         };
     }
 );
 
-export default function Archive({rubrics, errorCode, posts}){
+const InfinityComponents = {
+    ...PostsLine("posts-line", 3, 4),
+    ...PostsLine("post-ad", 1, 1, "leftAd"),
+    ...PostsLine("six-posts-ad", 1, 6, () => randomChoice(["leftAd", "rightAd"])),
+}
 
+export default function Archive({rubrics, errorCode}){
     if ( errorCode ){
         return <Error statusCode={errorCode}/>
     }
@@ -43,7 +45,7 @@ export default function Archive({rubrics, errorCode, posts}){
         <>
             <JournalHeader rubrics={rubrics}>Статьи</JournalHeader>
             <div className={containers.CommonContainer}>
-
+                <InfinityPosts blocks={InfinityComponents}/>
             </div>
         </>
     );

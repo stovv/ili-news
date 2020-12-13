@@ -1,7 +1,7 @@
 .cardContainer {
     overflow: hidden;
     position: relative;
-    min-width: 624px;
+    width: 624px;
     max-width: 624px;
     height: 470px;
     transition: all 0.3s ease-in-out;
@@ -38,5 +38,5 @@
 
 .cardContainer:hover {
     transform: translateY(-4px);
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    box-shadow: rgb(38, 57, 77) 0 20px 30px -10px;
 }

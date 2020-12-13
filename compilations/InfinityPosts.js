@@ -1,9 +1,9 @@
 import dynamic from "next/dynamic";
 import { connect } from 'react-redux';
 import { Fragment, Component as ReactComponent } from 'react';
-import { node, arrayOf, shape, func, string, object, number, bool } from 'prop-types';
+import { node, shape, func, string, object, bool } from 'prop-types';
 
-import { shuffleChoice } from "../tools";
+import { shuffle } from '../tools';
 import { changeInfinityState } from '../actions/common';
 
 const Loader = dynamic(() => import("../components/Forms/Loader"));
@@ -11,65 +11,99 @@ const InfiniteScroll = dynamic(() => import("react-infinite-scroll-component"));
 
 
 class InfinityPosts extends ReactComponent {
+    defaultProps = {
+        postCount: 0,
+        otherCount: 0
+    }
+
     constructor(props) {
         super(props);
         this.state = {
             items: [],
-            hasMore: true,
-            previousBlocks: [],
-            componentCount: {},
-            components: props.components || []
+            schema: [],
+            previous: [],
+            lock: false,
+            blockCounter: {},
+            hasMore: false
         };
         this.fetchMoreBlocks = this.fetchMoreBlocks.bind(this);
+        this.getBlock = this.getBlock.bind(this);
         this.props.dispatch(changeInfinityState(true));
+    }
+
+    async componentDidMount() {
+        await this.fetchMoreBlocks()
+            .then(() => this.setState({
+                hasMore: true
+            }));
     }
 
     componentWillUnmount() {
         this.props.dispatch(changeInfinityState(false));
     }
 
-    async fetchMoreBlocks(){
-        let { additionalProps, common, components: IncomComponents, ...props } = this.props;
-        let { previousBlocks } = this.state;
+    async getBlock(id){
+        let { additionalProps, common, blocks, ...props } = this.props;
+        const { fetchMore, Component, required } = blocks[id];
 
-        let errors = 0;
-
-        while ( this.state.components.length > 0 &&
-                this.state.components.length > errors &&
-                this.state.components.some(component => component.required)){
-            const item = shuffleChoice(this.state.components, previousBlocks, this.state.components.length);
-
-            if ( item.maxCount !== undefined &&
-                this.state.componentCount[item.id] !== undefined &&
-                this.state.componentCount[item.id] >= item.maxCount ) continue;
-
-            const { fetchMore, Component } = item;
-            let data = await fetchMore({state: this.state, ...props, ...common });
-
-            if ( data.error ){
-                errors++;
-                this.state.components = this.state.components.filter(component => component.id !== item.id);
-                continue;
-            }
-
-            this.setState({
-                items: [
-                    ...this.state.items,
-                    <Component {...data}/>
-                ],
-                previousBlocks: [
-                    ...previousBlocks.slice(Math.max(previousBlocks.length - this.state.components.length - 1 , 0)),
-                    item.id
-                ],
-                componentCount: {
-                    ...this.state.componentCount,
-                    [item.id]: this.state.componentCount[item.id] ? this.state.componentCount[item.id] + 1 : 1
-                }
-            });
-            return;
+        let data = await fetchMore({
+            blockCounter: this.state.blockCounter,
+            ...common,
+            ...additionalProps,
+            ...props
+        });
+        if ( data.error ){
+            delete this.props.blocks[id];
+            if ( required ) return {hasMore: false, error: true};
+            return {error: true}
         }
 
-        this.setState({ hasMore: false });
+        this.state.blockCounter[id] = this.state.blockCounter[id] !== undefined
+            ? this.state.blockCounter[id] + 1
+            : 1;
+
+        return <Component {...data}/>;
+    }
+
+    async fetchMoreBlocks(){
+        let { blocks } = this.props;
+        let { previous } = this.state;
+
+        let items = [];
+        let prev = [];
+        let hasMore = true;
+
+        if (Object.keys(blocks).length === 1){
+            const item = await this.getBlock(Object.keys(blocks)[0].id);
+            if (item.error === undefined){
+                items.push(item);
+            }else if (item.hasMore !== undefined && !item.hasMore){
+                hasMore = false
+            }
+        }else{
+            let part = shuffle(Object.keys(blocks).filter(el => el !== previous[previous.length - 1]));
+            for (let id of part){
+                const item = await this.getBlock(id);
+                if (item.error === undefined){
+                    items.push(item);
+                }else if (item.hasMore !== undefined && !item.hasMore){
+                    hasMore = false
+                }
+            }
+            prev.push.apply(prev, part);
+        }
+
+        this.setState({
+            previous: [
+                ...previous,
+                ...prev
+            ],
+            items: [
+                ...this.state.items,
+                ...items
+            ],
+            hasMore
+        });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -95,16 +129,13 @@ class InfinityPosts extends ReactComponent {
 
 InfinityPosts.propTypes = {
     additionalProps: object,
-    components: arrayOf(
-        shape({
-            id: string,
+    blocks: shape({
+        [string]: shape({
             required: bool,
-            lambda: number,
             fetchMore: func,
-            maxCount: number,
             Component: node.isRequired
         })
-    )
+    })
 }
 
 function mapStateToProps(state){

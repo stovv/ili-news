@@ -90,7 +90,7 @@ class Header extends Component {
                         </Link>
                     </div>
                     <div className={styles.centerSideLaptop}>
-                        <div className={styles.centerSideWrapper}>
+                        <nav className={styles.centerSideWrapper}>
                             {
                                 menus.length > 0
                                     ? menus.map((item, index)=>(
@@ -112,7 +112,7 @@ class Header extends Component {
                                     ))
                                     : <LinksSkeleton/>
                             }
-                        </div>
+                        </nav>
                     </div>
                     <div className={styles.rightSide}>
                         <div className={styles.icons}>
@@ -120,9 +120,9 @@ class Header extends Component {
                         </div>
                         <UniversalLink item={{url:{link: "login"} }} route={route} Component={
                             ({href})=>(
-                                 <a className={styles.icons} href={href}>
-                                     <UserIcon/>
-                                 </a>
+                                <a className={styles.icons} href={href}>
+                                    <UserIcon/>
+                                </a>
                             )
                         }/>
                     </div>

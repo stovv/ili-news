@@ -18,9 +18,9 @@ const IliApp = ({ Component, pageProps, router }) => {
         <>
             <HeaderPreloader/>
             { !HEADER_IGNORE.includes(router.route) && <Header route={router.asPath}/>}
-            <div>
+            <main>
                 <Component {...pageProps}/>
-            </div>
+            </main>
             { !FOOTER_IGNORE.includes(router.route) && <Footer route={router.asPath}/>}
         </>
     );

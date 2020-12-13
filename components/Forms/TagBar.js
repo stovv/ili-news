@@ -9,7 +9,7 @@ import UniversalLink from "../Links/Universal";
 
 const TagItem = ({children, linkItem = {} }) => (
     <UniversalLink item={linkItem} covered Component={
-        (props)=>(
+        ()=>(
             <div className={styles.tagWrapper}>
                 <div className={styles.tagTextLarge}>
                     <TagLabel type="large" weight="400" width={"max-content"}
@@ -101,7 +101,7 @@ class TagBar extends Component {
                 {
                     tags && tags.length > 0
                         ? <Ticker move={speed > 0} speed={speed}>
-                            {({ index }) => {
+                            {({ /*index*/ }) => {
                                 tagIndex += 1;
                                 if (tags[tagIndex] === undefined){
                                     tagIndex = 0;

@@ -11,13 +11,13 @@ const LargePost = dynamic(() => import("../components/Cards/LargePost"));
 export default function NewsPostsComps({compilation, news, posts}){
     const { title: theme, posts: themePosts } = compilation;
     const [ first, second, third ] = themePosts;
-    const postsCards = posts.map(post => <PostCard post={post}/>);
+    const postsCards = (style) => posts.map(post => <PostCard post={post} style={style} />);
 
     return (
         <div className={containers.CommonContainer}>
             <div className={styles.compilationComps}>
                 <div className={styles.leftSide}>
-                    {postsCards}
+                    {postsCards({marginBottom: "32px"})}
                 </div>
 
                 <div className={styles.centerSide}>

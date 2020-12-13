@@ -17,9 +17,12 @@
 }
 
 @media screen and (max-width: 1300px){
+    .CommonContainer {
+        padding: 0 10px;
+    }
 
     .SimpleFlex {
-        width: 90%;
+        /*width: 90%;*/
         margin: 0 auto;
     }
 }

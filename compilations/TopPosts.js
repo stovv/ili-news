@@ -59,7 +59,7 @@ class TopPosts extends Component {
                 </Heading>
             </div>
             <div className={styles.topPostContainer}>
-                <div className={containers.SimpleFlex}>
+                <div className={styles.flexContainer}>
                     <div className={styles.hideMobile}>
                         <LargePost margin={"-146px 0 0 0"} post={first}/>
                     </div>

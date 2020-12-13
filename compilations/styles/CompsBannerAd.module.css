@@ -10,7 +10,6 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    gap: 32px;
     height: min-content;
 }
 
@@ -29,6 +28,7 @@
 .miniSide {
     display: flex;
     flex-direction: column;
+    margin-left: 32px;
     justify-content: space-between;
 }
 

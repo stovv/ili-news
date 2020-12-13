@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { Component, Fragment } from 'react';
-import { oneOfType, oneOf, string, object, node, bool } from 'prop-types';
+import { oneOfType, oneOf, string, object, bool } from 'prop-types';
 
 import { getImageLink } from '../../tools';
 const Skeleton = dynamic(() => import("react-loading-skeleton"));

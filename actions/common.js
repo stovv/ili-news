@@ -50,6 +50,13 @@ export function setCategoryOffset(categoryId, offset){
     }
 }
 
+export function setPostsOffset(offset){
+    return {
+        type: SITE.INFINITY.SET_POSTS_OFFSET,
+        payload: offset
+    }
+}
+
 export function setAvailableCategories(categories){
     return {
         type: SITE.INFINITY.SET_AVAILABLE_CATEGORIES,

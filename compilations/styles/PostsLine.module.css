@@ -1,0 +1,44 @@
+.postsLine {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto 32px auto;
+    width: 100%;
+}
+
+.postsLineMin {
+    display: flex;
+    justify-content: space-between;
+    margin-right: auto;
+}
+
+.sixPosts {
+    justify-content: space-between;
+    display: flex;
+    margin-bottom: 32px;
+}
+
+@media screen and (max-width: 1260px){
+    .postsLine{
+        display: grid;
+        grid-template-columns: repeat(3, max-content);
+        justify-content: space-between;
+        align-content: space-around;
+        gap: 20px;
+    }
+
+}
+
+@media screen and (max-width: 952px){
+    .postsLine{
+        grid-template-columns: repeat(2, max-content);
+        width: min-content;
+    }
+}
+
+@media screen and (max-width: 683px){
+    .postsLine{
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+    }
+}

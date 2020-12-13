@@ -10,10 +10,10 @@ const LazyImage = dynamic(() => import("../Images/LazyImage"));
 const Skeleton = dynamic(() => import("react-loading-skeleton"));
 
 
-export default function PostCard({post: {slug, title, cover, publish_at, rubric, eventDate} = {} }){
+export default function PostCard({post: {slug, title, cover, publish_at, rubric, eventDate} = {}, style }){
     return (
         <PostLink postSlug={slug} covered>
-            <div className={styles.postRoot}>
+            <div className={styles.postRoot} style={style}>
                 <LazyImage cover={cover} typeFull={"medium"} skeleton>
                     {({children, url}) =>
                         <div className={styles.postImage}
