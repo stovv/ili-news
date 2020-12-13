@@ -16,6 +16,9 @@ module.exports = withPlugins(
             // config.plugins.push(new MomentLocalesPlugin({
             //     localesToKeep: ['es-us', 'ru'],
             // }))
+            if (isServer){
+                require('./scripts/generate-sitemap');
+            }
             config.plugins.push(new FilterWarningsPlugin({
                 exclude: /.+/
             }))

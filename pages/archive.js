@@ -18,14 +18,27 @@ export const getStaticProps = wrapper.getStaticProps(
                 return 502;
             });
 
+        let props_data = { rubrics };
+
         if ( typeof rubrics === "number") {
             res.statusCode = rubrics;
-            return { props: { errorCode: rubrics } }
+            props_data.errorCode = rubrics;
+        }else{
+            const blockIdentifier = Object.keys(InfinityComponents)[0];
+            const blockData = await InfinityComponents[blockIdentifier].fetchMore({
+                ...store.getState().common,
+                dispatch: store.dispatch
+            });
+
+            props_data.initial = [{
+                id: blockIdentifier,
+                data: blockData
+            }];
         }
 
         return {
             revalidate: 36000,
-            props: { rubrics }
+            props: props_data
         };
     }
 );
@@ -36,7 +49,7 @@ const InfinityComponents = {
     ...PostsLine("six-posts-ad", 1, 6, () => randomChoice(["leftAd", "rightAd"])),
 }
 
-export default function Archive({rubrics, errorCode}){
+export default function Archive({rubrics, errorCode, initial}){
     if ( errorCode ){
         return <Error statusCode={errorCode}/>
     }
@@ -45,6 +58,12 @@ export default function Archive({rubrics, errorCode}){
         <>
             <JournalHeader rubrics={rubrics}>Статьи</JournalHeader>
             <div className={containers.CommonContainer}>
+                {
+                    initial.map(({id, data}) => {
+                        const { Component } = InfinityComponents[id];
+                        return <Component {...data}/>
+                    })
+                }
                 <InfinityPosts blocks={InfinityComponents}/>
             </div>
         </>

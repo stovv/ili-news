@@ -1,6 +1,5 @@
 import Heading from "../Typography/Heading";
 import TagBar from "../Forms/TagBar";
-//import containers from "../../styles/Containers.module.css";
 
 
 export default function JournalHeader({children, rubrics, emoji}){

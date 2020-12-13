@@ -11,11 +11,6 @@ const InfiniteScroll = dynamic(() => import("react-infinite-scroll-component"));
 
 
 class InfinityPosts extends ReactComponent {
-    defaultProps = {
-        postCount: 0,
-        otherCount: 0
-    }
-
     constructor(props) {
         super(props);
         this.state = {
@@ -24,18 +19,11 @@ class InfinityPosts extends ReactComponent {
             previous: [],
             lock: false,
             blockCounter: {},
-            hasMore: false
+            hasMore: true
         };
         this.fetchMoreBlocks = this.fetchMoreBlocks.bind(this);
         this.getBlock = this.getBlock.bind(this);
         this.props.dispatch(changeInfinityState(true));
-    }
-
-    async componentDidMount() {
-        await this.fetchMoreBlocks()
-            .then(() => this.setState({
-                hasMore: true
-            }));
     }
 
     componentWillUnmount() {

@@ -12,6 +12,11 @@ import { randomChoice } from "../../tools";
 const JournalHeader = dynamic(() => import("../../components/Journal/Header"));
 const InfinityPosts = dynamic(() => import("../../compilations/InfinityPosts"));
 
+const InfinityComponents = {
+    ...PostsLine("posts-line", 2, 4),
+    ...PostsLine("post-ad", 1, 1, "leftAd"),
+    ...PostsLine("six-posts-ad", 1, 6, () => randomChoice(["leftAd", "rightAd"])),
+}
 
 export const getStaticProps = wrapper.getStaticProps(
     async ({store, params: {categorySlug}, ...props}) => {
@@ -27,6 +32,18 @@ export const getStaticProps = wrapper.getStaticProps(
         let props_data = { category };
         if ( typeof category === "number" ) {
             props_data = { errorCode: category, category: {} }
+        }else{
+            const blockIdentifier = Object.keys(InfinityComponents)[0];
+            const blockData = await InfinityComponents[blockIdentifier].fetchMore({
+                ...store.getState().common,
+                category: category.id,
+                dispatch: store.dispatch
+            });
+
+            props_data.initial = [{
+                id: blockIdentifier,
+                data: blockData
+            }];
         }
 
         return {
@@ -78,12 +95,6 @@ export async function getStaticPaths() {
     // },
 //];
 
-const InfinityComponents = {
-    ...PostsLine("posts-line", 2, 4),
-    ...PostsLine("post-ad", 1, 1, "leftAd"),
-    ...PostsLine("six-posts-ad", 1, 6, () => randomChoice(["leftAd", "rightAd"])),
-}
-
 class Category extends Component {
     state = {
         rebuild: false
@@ -95,7 +106,7 @@ class Category extends Component {
     }
 
     render(){
-        const { router, category: { id, title, rubrics } = {}, errorCode } = this.props;
+        const { router, category: { id, title, rubrics } = {}, initial = [], errorCode } = this.props;
         const { rebuild } = this.state;
 
         if (router.isFallback) {
@@ -105,21 +116,30 @@ class Category extends Component {
         if ( errorCode ){
             return <Error statusCode={errorCode}/>
         }
+        const initialBlocks = initial.map(({id, data}) => {
+            const { Component } = InfinityComponents[id];
+            return <Component {...data}/>
+        });
 
         if (rebuild) {
             this.setState({rebuild: false});
-            return <JournalHeader rubrics={rubrics}>{title}</JournalHeader>
+            return <section>
+                <JournalHeader rubrics={rubrics}>{title}</JournalHeader>
+                <div className={containers.CommonContainer}>
+                    { initialBlocks }
+                </div>
+            </section>
         }
 
         return (
-            <>
+            <section>
                 <JournalHeader rubrics={rubrics}>{title}</JournalHeader>
                 <div className={containers.CommonContainer}>
+                    { initialBlocks }
                     <InfinityPosts blocks={InfinityComponents}
-                                   initialCount={2}
                                    additionalProps={{category: id}}/>
                 </div>
-            </>
+            </section>
         );
 
     }
