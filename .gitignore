@@ -14,7 +14,10 @@
 
 # production
 /build
-
+/public/sitemaps/
+/public/sitemap*.xml
+/public/robots.txt
+/scripts/.env*
 # misc
 .DS_Store
 *.pem
