@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 
 import { shuffleChoice } from "../tools";
-import {fetchCatPosts, fetchPosts, loadEvents} from "../api/methods/public.react";
+import {fetchCatPosts, loadEvents, loadPosts} from "../api/methods/public.react";
 import {setAvailableCategories, setCategoryOffset, setPostsOffset, setPrevCategories} from "../actions/common";
 
 
@@ -51,7 +51,7 @@ export async function fetchKudaGo({}){
 }
 
 export async function fetchPostLine({count = 4, categoryOffsets,
-                                        postsOffset, dispatch, category}){
+                                        postsOffset, dispatch, category, rubric}){
     let postsLine = {
         posts: []
     }
@@ -68,12 +68,8 @@ export async function fetchPostLine({count = 4, categoryOffsets,
                 }
             })
             .catch(reason => console.log("Something wrong with getting posts in infinity -> ", reason));
-    }else{
-        await fetchPosts(
-            ['slug', 'title', 'publish_at',
-                'cover{ caption,alternativeText,url,width,mime,height,formats }',
-                'rubric{ slug, title }'
-        ], postsOffset, count)
+    } else{
+        await loadPosts(rubric, null, postsOffset, count)
             .then(response => {
                 if (response.data.posts != null && response.data.posts.length > 0) {
                     postsLine = {

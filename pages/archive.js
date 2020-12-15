@@ -1,12 +1,19 @@
+import { Component } from 'react';
+import dynamic from "next/dynamic";
+import { connect } from 'react-redux';
+import { withRouter } from "next/router";
+
 import containers from "../styles/Containers.module.css";
-import JournalHeader from "../components/Journal/Header";
+
 import wrapper from "../store";
-
 import { randomChoice } from "../tools";
-import Error from "./_error";
-
-import InfinityPosts from "../compilations/InfinityPosts";
 import { PostsLine } from "../infinityBlocks";
+import { changeInfinityState } from "../actions/common";
+
+const Error = dynamic(() => import("./_error"));
+const JournalHeader = dynamic(() => import("../components/Journal/Header"));
+const InfinityPosts = dynamic( () => import("../compilations/InfinityPosts"));
+
 
 export const getStaticProps = wrapper.getStaticProps(
     async ({store, res, ...props}) => {
@@ -24,16 +31,20 @@ export const getStaticProps = wrapper.getStaticProps(
             res.statusCode = rubrics;
             props_data.errorCode = rubrics;
         }else{
-            const blockIdentifier = Object.keys(InfinityComponents)[0];
-            const blockData = await InfinityComponents[blockIdentifier].fetchMore({
-                ...store.getState().common,
-                dispatch: store.dispatch
-            });
+            props_data.initial = [];
 
-            props_data.initial = [{
-                id: blockIdentifier,
-                data: blockData
-            }];
+            for ( let i = 0; i < 2; i++ ){
+                const blockIdentifier = Object.keys(InfinityComponents)[0];
+                const blockData = await InfinityComponents[blockIdentifier].fetchMore({
+                    ...store.getState().common,
+                    dispatch: store.dispatch
+                });
+
+                props_data.initial.push({
+                    id: blockIdentifier,
+                    data: blockData
+                });
+            }
         }
 
         return {
@@ -49,23 +60,32 @@ const InfinityComponents = {
     ...PostsLine("six-posts-ad", 1, 6, () => randomChoice(["leftAd", "rightAd"])),
 }
 
-export default function Archive({rubrics, errorCode, initial}){
-    if ( errorCode ){
-        return <Error statusCode={errorCode}/>
+class Archive extends Component {
+    componentDidMount() {
+        this.props.dispatch(changeInfinityState(true));
     }
 
-    return (
-        <>
-            <JournalHeader rubrics={rubrics}>Статьи</JournalHeader>
-            <div className={containers.CommonContainer}>
-                {
-                    initial.map(({id, data}) => {
-                        const { Component } = InfinityComponents[id];
-                        return <Component {...data}/>
-                    })
-                }
-                <InfinityPosts blocks={InfinityComponents}/>
-            </div>
-        </>
-    );
+
+    render(){
+        const { rubrics, initial, errorCode } = this.props;
+        if ( errorCode ) return <Error statusCode={errorCode}/>;
+
+        return (
+            <>
+                <JournalHeader rubrics={rubrics}>Статьи</JournalHeader>
+                <div className={containers.CommonContainer}>
+                    {
+                        initial.map(({id, data}) => {
+                            if ( InfinityComponents[id] === undefined ) return <></>;
+                            const { Component } = InfinityComponents[id];
+                            return <Component {...data}/>
+                        })
+                    }
+                    <InfinityPosts blocks={InfinityComponents}/>
+                </div>
+            </>
+        );
+    }
 }
+
+export default connect()(withRouter(Archive));

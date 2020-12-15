@@ -19,7 +19,9 @@ module.exports = withPlugins(
             if (isServer){
                 // Generate sitemaps and robots.txt
                 const { generate } = require('./scripts/generate-sitemap');
-                generate(process.env.NEXT_PUBLIC_HOST);
+                generate(process.env.NEXT_PUBLIC_HOST, 'sitemaps',
+                    './public', ['/api/', '/login']
+                );
             }
             config.plugins.push(new FilterWarningsPlugin({
                 exclude: /.+/

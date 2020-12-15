@@ -23,6 +23,8 @@ class InfinityPosts extends ReactComponent {
         };
         this.fetchMoreBlocks = this.fetchMoreBlocks.bind(this);
         this.getBlock = this.getBlock.bind(this);
+    }
+    componentDidMount() {
         this.props.dispatch(changeInfinityState(true));
     }
 

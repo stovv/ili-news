@@ -83,11 +83,15 @@ class Header extends Component {
                         </div>
                     </div>
                     <div className={styles.leftSideLaptop}>
-                        <Link href="/" passHref>
-                            <a>
-                                <Logo className={styles.logo} primary={"var(--primary)"} background={"transparent"}/>
-                            </a>
-                        </Link>
+                        {
+                            route === '/'
+                                 ? <Logo className={styles.logo} primary={"var(--primary)"} background={"transparent"}/>
+                                 : <Link href="/" passHref>
+                                    <a>
+                                        <Logo className={styles.logo} primary={"var(--primary)"} background={"transparent"}/>
+                                    </a>
+                                </Link>
+                        }
                     </div>
                     <div className={styles.centerSideLaptop}>
                         <nav className={styles.centerSideWrapper}>

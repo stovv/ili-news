@@ -2955,6 +2955,11 @@ next-redux-wrapper@^6.0.2:
   resolved "https://registry.yarnpkg.com/next-redux-wrapper/-/next-redux-wrapper-6.0.2.tgz#b8dcd214e7b5cedd7a2a611ddb60422384d24374"
   integrity sha512-I9CnIYhQwI/qEoNdc9VAPjIyuq4rFFhCTa4rKhoDHWEVHGB1DXZy8TAyGpwvWizESd8IoTI/OKlP6bFpCbXsOw==
 
+next-seo@^4.17.0:
+  version "4.17.0"
+  resolved "https://registry.yarnpkg.com/next-seo/-/next-seo-4.17.0.tgz#fb3dbe0ed7414aa9d83872ef5d8510980a6dae7e"
+  integrity sha512-/hnb3oq7bhi8s7bup7+Lm6VzzgRucj+JrWtp+dJiYs/04H0N/NhmE9MpepixQ16fFj6G/39JLYxhzsO/QZG/Kw==
+
 next-tick@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
@@ -3623,6 +3628,11 @@ react-animation@^1.2.2:
   dependencies:
     react-transition-group "^2.7.0"
     regenerator-runtime "^0.13.1"
+
+react-apple-emojis@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-apple-emojis/-/react-apple-emojis-1.1.1.tgz#12a83cb86d4c0da73a58c2737e2332c3d12b91af"
+  integrity sha512-Dsg5+A50aBSg80w0wkOcfGAg9xyX/HLLXVM/4KNORkbYJJJqLfaCCG8EfNrnWwYX5hzOTwrE5HuijCUO3ZyXHQ==
 
 react-dom@16.14.0:
   version "16.14.0"

@@ -19,7 +19,8 @@ app.post('/', async (req, res) => {
     } else if (['entry.create', 'entry.update', 'entry.delete'].includes(req.body.event) &&
                ['post', 'category', 'rubric'].includes(req.body.model)){
         console.log("Trigger regenerate sitemap...");
-        generate(process.env.HOST)
+        generate(process.env.HOST, 'sitemaps', './public',
+            ['/api/', '/login'])
             .then(() => {
                 console.log("Sitemap successfully regenerated!");
             })
