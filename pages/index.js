@@ -8,7 +8,7 @@ import { randomChoice } from '../tools';
 import { CategoryPosts, Ad, KudaGo } from '../infinityBlocks';
 import { changeInfinityState } from "../actions/common";
 
-const Seo = dynamic(() => import("../components/Seo"));
+const Seo = dynamic(() => import("../components/Seo/Index"));
 const TopPosts = dynamic(() => import("../compilations/TopPosts"));
 const CategoryLine = dynamic(() => import("../compilations/CategoryLine"));
 const OffScreen = dynamic(() => import("../components/Containers/OffScreen"));
