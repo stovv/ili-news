@@ -1,6 +1,4 @@
-import { Component } from 'react';
 import dynamic from "next/dynamic";
-import { connect } from 'react-redux';
 //import { NextSeo, SocialProfileJsonLd } from "next-seo";
 
 import wrapper from "../store";
@@ -157,30 +155,19 @@ const InfinityComponents = {
     ...KudaGo("kuda-go-weekend", 1, 1)
 };
 
-class FrontPage extends Component {
-    componentDidMount() {
-        this.props.dispatch(changeInfinityState(true));
-    }
-
-    render(){
-        const {topPosts, lastTheme, nextTheme, newsFeed, posts, postsCount, catLine} = this.props;
-
-        return(
-            <>
-                <Seo/>
-                <section>
-                    <TopPosts posts={topPosts}/>
-                    <NewsPostsComps compilation={lastTheme} news={newsFeed} posts={posts}/>
-                    <OffScreen>
-                        <CategoryLine {...catLine}/>
-                        <CompsBannerAd compilation={nextTheme}/>
-                        <InfinityPosts blocks={InfinityComponents} postsCount={postsCount} otherCount={postsCount}/>
-                    </OffScreen>
-                </section>
-            </>
-        );
-    }
+export default function FrontPage({topPosts, lastTheme, nextTheme, newsFeed, posts, postsCount, catLine}){
+    return(
+        <>
+            <Seo/>
+            <section>
+                <TopPosts posts={topPosts}/>
+                <NewsPostsComps compilation={lastTheme} news={newsFeed} posts={posts}/>
+                <OffScreen>
+                    <CategoryLine {...catLine}/>
+                    <CompsBannerAd compilation={nextTheme}/>
+                    <InfinityPosts blocks={InfinityComponents} postsCount={postsCount} otherCount={postsCount}/>
+                </OffScreen>
+            </section>
+        </>
+    );
 }
-
-
-export default connect()(FrontPage);

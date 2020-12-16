@@ -108,6 +108,7 @@ class Rubric extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.rubric.id !== this.props.rubric.id) {
             this.setState({rebuild: true});
+            this.props.dispatch(changeInfinityState(true));
         }
     }
 

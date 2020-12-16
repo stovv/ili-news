@@ -44,10 +44,11 @@ export async function fetchKudaGo({}){
         dayjs().day(1).toISOString(), dayjs().day(7).toISOString(), 0, 20)
         .then(response => response.data.posts)
         .catch(reason => []);
+
     if (posts.length === 0){
         return {error: true};
     }
-    return {posts}
+    return { posts }
 }
 
 export async function fetchPostLine({count = 4, categoryOffsets,

@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import {Component, Fragment} from 'react';
 import dynamic from "next/dynamic";
 import { connect } from 'react-redux';
 import { withRouter } from "next/router";
@@ -124,6 +124,7 @@ class Category extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.category !== undefined && prevProps.category.id !== this.props.category.id) {
             this.setState({rebuild: true});
+            this.props.dispatch(changeInfinityState(true));
         }
     }
 
@@ -135,12 +136,12 @@ class Category extends Component {
         if (router.isFallback) return <></>;
         if ( errorCode ) return <Error statusCode={errorCode}/>;
 
-        let initialBlocks = initial.map(({id, data}) => {
+        let initialBlocks = initial.map(({id, data}, index) => {
             if ( InfinityComponents[id] === undefined ){
-                return <></>;
+                return null;
             }
             const { Component } = InfinityComponents[id];
-            return <Component {...data}/>
+            return <Fragment key={index}><Component {...data}/></Fragment>
         });
 
         if (rebuild) this.setState({rebuild: false});

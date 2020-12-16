@@ -112,7 +112,7 @@ class Footer extends Component {
                                             <Fragment key={index}>
                                                 <li className={styles.menuLinksItem}>
                                                     <UniversalLink item={item} route={route}
-                                                          Component={({href, children, ...props})=>(
+                                                          Component={({href, children, active, ...props})=>(
                                                             <a href={href} className={styles.siteLink} {...props}>
                                                                 {children}
                                                             </a>)

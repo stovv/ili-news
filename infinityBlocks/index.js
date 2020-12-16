@@ -3,6 +3,7 @@ import { fetchCategoryLine, fetchKudaGo, fetchPostLine } from './fetches';
 import AdBanner from "../compilations/Ad";
 import CategoryLine from "../compilations/CategoryLine";
 import PostsLineComponent from "../compilations/PostsLine";
+import KudaGoComponent from "../components/Forms/KudaGo";
 
 
 
@@ -52,7 +53,7 @@ export const Ad = (id, count = 1, maxCount = null, additionalProps = {}) => {
 export const KudaGo = (id, count = 1, maxCount = 1, additionalProps = {}) => {
     return RootBlock({
         fetchMore: fetchKudaGo,
-        Component: ({posts}) => posts.length > 0 ? <KudaGo posts={posts} dateName={"выходных"}/> : null,
+        Component: ({posts}) => <KudaGoComponent posts={posts} dateName={"выходных"}/>,
         ...additionalProps
     }, id, count, maxCount);
 }

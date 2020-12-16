@@ -1,16 +1,14 @@
-import { Component } from 'react';
+import {Component, Fragment} from 'react';
 import dynamic from "next/dynamic";
-import { connect } from 'react-redux';
-import { withRouter } from "next/router";
 
 import containers from "../styles/Containers.module.css";
 
 import wrapper from "../store";
 import { randomChoice } from "../tools";
 import { PostsLine } from "../infinityBlocks";
-import { changeInfinityState } from "../actions/common";
 
 const Error = dynamic(() => import("./_error"));
+const Seo = dynamic(() => import("../components/Seo/Archive"));
 const JournalHeader = dynamic(() => import("../components/Journal/Header"));
 const InfinityPosts = dynamic( () => import("../compilations/InfinityPosts"));
 
@@ -60,32 +58,23 @@ const InfinityComponents = {
     ...PostsLine("six-posts-ad", 1, 6, () => randomChoice(["leftAd", "rightAd"])),
 }
 
-class Archive extends Component {
-    componentDidMount() {
-        this.props.dispatch(changeInfinityState(true));
-    }
+export default function Archive({ rubrics, initial, errorCode }){
+    if ( errorCode ) return <Error statusCode={errorCode}/>;
 
-
-    render(){
-        const { rubrics, initial, errorCode } = this.props;
-        if ( errorCode ) return <Error statusCode={errorCode}/>;
-
-        return (
-            <>
-                <JournalHeader rubrics={rubrics}>Статьи</JournalHeader>
-                <div className={containers.CommonContainer}>
-                    {
-                        initial.map(({id, data}) => {
-                            if ( InfinityComponents[id] === undefined ) return <></>;
-                            const { Component } = InfinityComponents[id];
-                            return <Component {...data}/>
-                        })
-                    }
-                    <InfinityPosts blocks={InfinityComponents}/>
-                </div>
-            </>
-        );
-    }
+    return (
+        <>
+            <Seo/>
+            <JournalHeader rubrics={rubrics}>Статьи</JournalHeader>
+            <div className={containers.CommonContainer}>
+                {
+                    initial.map(({id, data}, index) => {
+                        if ( InfinityComponents[id] === undefined ) return null;
+                        const { Component } = InfinityComponents[id];
+                        return <Fragment key={index}><Component {...data}/></Fragment>
+                    })
+                }
+                <InfinityPosts blocks={InfinityComponents}/>
+            </div>
+        </>
+    );
 }
-
-export default connect()(withRouter(Archive));
