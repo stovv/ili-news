@@ -1,35 +1,21 @@
-import dynamic from "next/dynamic";
+import Heading from "../Typography/Heading";
+import TagBar from "../Forms/TagBar";
+//import containers from "../../styles/Containers.module.css";
 
-const Emoji = dynamic(() => import('react-apple-emojis'));
-const TagBar = dynamic(() => import("../Forms/TagBar"));
-const Heading = dynamic(() => import("../Typography/Heading"));
 
-// Emoji list here https://emojipedia.org/apple/
-export default function JournalHeader({children, rubrics, emoji, description}){
+export default function JournalHeader({children, rubrics, emoji}){
     return (
         <>
-            <Heading level={1} margin={"88px 0 0 0"} textAlign={"center"} >
-                {children}
-                { emoji && <Emoji name={emoji} width={46}/> }
-            </Heading>
-            {
-                description &&
-                <Heading level={5} margin={"14px 0 0 0"}
-                         textAlign={"center"} color={"var(--text-secondary)"}>
-                    {description}
-                </Heading>
-            }
-            <div style={{marginBottom: "32px"}}/>
+            <Heading level={1} margin={"88px 0 32px 0"} textAlign={"center"}>{children}</Heading>
             {
                 rubrics &&
-                    <div style={{height: "104px", padding: "var(--spacing-block) 0"}}>
+                    <div style={{height: "104px", padding: "var(--spacing-block) 0", marginBottom: "24px"}}>
                         <TagBar tags={rubrics.map(rubric => ({
                             text: rubric.title,
                             link: { rubric }
                         }))}/>
                     </div>
             }
-            <div style={{marginBottom: "26px"}}/>
         </>
 
     );

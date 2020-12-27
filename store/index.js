@@ -9,7 +9,7 @@ import common from "./reducers/common";
 const bindMiddleware = (middleware = []) => {
     if (process.env.NODE_ENV !== 'production') {
         const { composeWithDevTools } = require('redux-devtools-extension')
-        middleware = [/*logger,*/ ...middleware];
+        middleware = [logger, ...middleware];
         return composeWithDevTools(applyMiddleware(...middleware))
     }
     return applyMiddleware(...middleware)

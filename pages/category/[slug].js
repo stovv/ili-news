@@ -6,9 +6,8 @@ import { withRouter } from "next/router";
 import wrapper from "../../store";
 import containers from '../../styles/Containers.module.css';
 
-import { PostsLine } from '../../infinityBlocks';
 import { randomChoice } from "../../tools";
-import { changeInfinityState } from "../../actions/common";
+import { PostsLine, DoublePostsLine } from '../../infinityBlocks';
 
 const Error = dynamic(() => import('../_error'));
 const Seo = dynamic(() => import("../../components/Seo/Category"));
@@ -20,6 +19,7 @@ const InfinityComponents = {
     ...PostsLine("post-ad", 1, 1, "leftAd"),
     ...PostsLine("six-posts-ad", 1, 6, () => randomChoice(["leftAd", "rightAd"])),
 }
+const Initial = Object.values({...DoublePostsLine("double-posts-line", 1)})[0];
 
 export const getStaticProps = wrapper.getStaticProps(
     async ({store, params: {slug}, ...props}) => {
@@ -45,21 +45,11 @@ export const getStaticProps = wrapper.getStaticProps(
             props_data.postsCount = postsCount;
 
             if (postsCount > 0){
-                props_data.initial = [];
-
-                for ( let i = 0; i < 2; i++ ){
-                    const blockIdentifier = Object.keys(InfinityComponents)[0];
-                    const blockData = await InfinityComponents[blockIdentifier].fetchMore({
-                        ...store.getState().common,
-                        category: category.id,
-                        dispatch: store.dispatch
-                    });
-
-                    props_data.initial.push({
-                        id: blockIdentifier,
-                        data: blockData
-                    });
-                }
+                props_data.initial = await Initial.fetchMore({
+                    ...store.getState().common,
+                    category: category.id,
+                    dispatch: store.dispatch
+                });
             }
         }
 
@@ -117,33 +107,19 @@ class Category extends Component {
         rebuild: false
     }
 
-    componentDidMount() {
-        this.props.dispatch(changeInfinityState(true));
-    }
-
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.category !== undefined && prevProps.category.id !== this.props.category.id) {
             this.setState({rebuild: true});
-            this.props.dispatch(changeInfinityState(true));
         }
     }
 
     render(){
-        const { router, postsCount, errorCode, initial = [],
+        const { router, postsCount, errorCode, initial = null,
             category: { id, slug, title, description, rubrics } = {}} = this.props;
         const { rebuild } = this.state;
 
-        if (router.isFallback) return <></>;
+        if (router.isFallback) return null;
         if ( errorCode ) return <Error statusCode={errorCode}/>;
-
-        let initialBlocks = initial.map(({id, data}, index) => {
-            if ( InfinityComponents[id] === undefined ){
-                return null;
-            }
-            const { Component } = InfinityComponents[id];
-            return <Fragment key={index}><Component {...data}/></Fragment>
-        });
-
         if (rebuild) this.setState({rebuild: false});
 
         return (
@@ -153,7 +129,8 @@ class Category extends Component {
                     <JournalHeader rubrics={rubrics}>{title}</JournalHeader>
                     <div className={containers.CommonContainer}>
                         {
-                            !rebuild && initialBlocks
+                            ( !rebuild && postsCount > 0&& initial !== null ) &&
+                            <Initial.Component {...initial}/>
                         }
                         {
                             postsCount === 0 &&

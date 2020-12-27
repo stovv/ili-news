@@ -58,10 +58,10 @@ module.exports = {
         });
         smStream.pipe(createWriteStream(resolve(realFolder, 'sitemap.xml')));
 
-        const arciveLastmod = await fetchPosts(['publish_at'], 0, 1)
+        const arciveLastmod = await fetchPosts(['published_at'], 0, 1)
             .then(response=>{
                 let last = response.data.posts[0];
-                return new Date(last.publish_at);
+                return new Date(last.published_at);
             })
             .catch(reason=>{
                 console.log("Something wrong with getting last post for sitemap -> ", reason);

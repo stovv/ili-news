@@ -120,5 +120,5 @@ export default function PostsLine({posts = [{}, {}, {}, {}], type = "simple"}){
 
 PostsLine.propTypes = {
     posts: array,
-    type: oneOf(["rightAd", "leftAd", "simple"]),
+    type: oneOf(["rightAd", "leftAd"]),
 };

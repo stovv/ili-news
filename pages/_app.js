@@ -1,10 +1,9 @@
-import dayjs from "dayjs";
 import dynamic from 'next/dynamic';
-import 'dayjs/locale/ru';
-
 import '../styles/globals.css';
 import '../styles/light.css';
 import '../assets/lato/lato.css';
+import 'dayjs/locale/ru';
+import dayjs from "dayjs";
 
 import wrapper from '../store';
 import Header from "../components/Menus/Header";

@@ -4,9 +4,7 @@ import dynamic from "next/dynamic";
 import wrapper from "../store";
 import { randomChoice } from '../tools';
 import { CategoryPosts, Ad, KudaGo } from '../infinityBlocks';
-import { changeInfinityState } from "../actions/common";
 
-const Seo = dynamic(() => import("../components/Seo/Index"));
 const TopPosts = dynamic(() => import("../compilations/TopPosts"));
 const CategoryLine = dynamic(() => import("../compilations/CategoryLine"));
 const OffScreen = dynamic(() => import("../components/Containers/OffScreen"));
@@ -155,19 +153,19 @@ const InfinityComponents = {
     ...KudaGo("kuda-go-weekend", 1, 1)
 };
 
-export default function FrontPage({topPosts, lastTheme, nextTheme, newsFeed, posts, postsCount, catLine}){
-    return(
-        <>
-            <Seo/>
-            <section>
-                <TopPosts posts={topPosts}/>
-                <NewsPostsComps compilation={lastTheme} news={newsFeed} posts={posts}/>
-                <OffScreen>
-                    <CategoryLine {...catLine}/>
-                    <CompsBannerAd compilation={nextTheme}/>
-                    <InfinityPosts blocks={InfinityComponents} postsCount={postsCount} otherCount={postsCount}/>
-                </OffScreen>
-            </section>
-        </>
+
+export function FrontPage({topPosts, lastTheme, nextTheme, newsFeed, posts, postsCount,catLine}){
+    return (
+        <section>
+          <TopPosts posts={topPosts}/>
+          <NewsPostsComps compilation={lastTheme} news={newsFeed} posts={posts}/>
+          <OffScreen>
+              <CategoryLine {...catLine}/>
+              <CompsBannerAd compilation={nextTheme}/>
+              <InfinityPosts blocks={InfinityComponents} postsCount={postsCount} otherCount={postsCount}/>
+          </OffScreen>
+        </section>
     );
 }
+
+export default FrontPage;

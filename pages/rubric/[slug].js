@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import dynamic from "next/dynamic";
-import { connect } from "react-redux";
 import { withRouter } from "next/router";
 
 // css
@@ -8,9 +7,8 @@ import containers from "../../styles/Containers.module.css";
 
 // local functions
 import wrapper from "../../store";
-import { PostsLine } from "../../infinityBlocks";
 import { randomChoice } from "../../tools";
-import {changeInfinityState} from "../../actions/common";
+import { DoublePostsLine, PostsLine } from "../../infinityBlocks";
 
 // local blocks
 const Error = dynamic(() => import("../_error"));
@@ -24,6 +22,7 @@ const InfinityComponents = {
     ...PostsLine("post-ad", 1, 1, "leftAd"),
     ...PostsLine("six-posts-ad", 1, 6, () => randomChoice(["leftAd", "rightAd"])),
 }
+const Initial = Object.values({...DoublePostsLine("double-posts-line", 1)})[0];
 
 export const getStaticProps = wrapper.getStaticProps(
     async ({store, params: {slug}, ...props}) => {
@@ -40,7 +39,7 @@ export const getStaticProps = wrapper.getStaticProps(
 
         if ( typeof rubric === "number") {
             props_data.errorCode = rubric;
-        }else{
+        } else {
             const postsCount = await getPostCountInRubric(rubric.id)
                 .then(response => response.data)
                 .catch(reason => {
@@ -49,21 +48,12 @@ export const getStaticProps = wrapper.getStaticProps(
                 });
             props_data.postsCount = postsCount;
 
-            if ( postsCount > 0 ){
-                props_data.initial = [];
-
-                for (let i = 0; i < 2; i++){
-                    const blockIdentifier = Object.keys(InfinityComponents)[0];
-                    const blockData = await InfinityComponents[blockIdentifier].fetchMore({
-                        ...store.getState().common,
-                        rubric: rubric.id,
-                        dispatch: store.dispatch
-                    });
-                    props_data.initial.push({
-                        id: blockIdentifier,
-                        data: blockData
-                    });
-                }
+            if (postsCount > 0){
+                props_data.initial = await Initial.fetchMore({
+                    ...store.getState().common,
+                    rubric: rubric.id,
+                    dispatch: store.dispatch
+                });
             }
 
             if ( props_data.rubric.category === null ){
@@ -101,14 +91,9 @@ class Rubric extends Component {
         rebuild: false
     }
 
-    componentDidMount() {
-        this.props.dispatch(changeInfinityState(true));
-    }
-
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.rubric.id !== this.props.rubric.id) {
             this.setState({rebuild: true});
-            this.props.dispatch(changeInfinityState(true));
         }
     }
 
@@ -121,13 +106,7 @@ class Rubric extends Component {
 
         if (router.isFallback) return <></>;
         if ( errorCode ) return <Error statusCode={errorCode}/>;
-
-        const initialBlocks = initial.map(({id, data}) => {
-            const { Component } = InfinityComponents[id];
-            return <Component {...data}/>
-        });
-
-        if (rebuild) this.setState({rebuild: false});
+        if ( rebuild ) this.setState({rebuild: false});
 
         return (
             <>
@@ -136,7 +115,8 @@ class Rubric extends Component {
                     <JournalHeader emoji={emoji} description={subtitle}>{title}</JournalHeader>
                     <div className={containers.CommonContainer}>
                         {
-                            !rebuild && initialBlocks
+                            ( !rebuild && postsCount > 0 && initial !== null ) &&
+                            <Initial.Component {...initial}/>
                         }
                         {
                             postsCount === 0 &&
@@ -154,4 +134,4 @@ class Rubric extends Component {
     }
 }
 
-export default connect()(withRouter(Rubric));
+export default withRouter(Rubric);

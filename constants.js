@@ -49,17 +49,3 @@ export const BUTTON_BANNER_COVER = {
     },
     "url": "/uploads/photo_1457369804613_52c61a468e7d_ba8e57c3dc"
 }
-export const DEFAULT_SITE_OG_IMAGES = (backendHost, alt) => [
-    {
-        url: `${backendHost}/uploads/small_site_cover_9fa00748ea.jpg`,
-        width: 500,
-        height: 271,
-        alt,
-    },
-    {
-        url: `${backendHost}/uploads/thumbnail_site_cover_9fa00748ea.jpg`,
-        width: 245,
-        height: 133,
-        alt,
-    },
-];

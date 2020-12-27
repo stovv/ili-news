@@ -1,7 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-/.idea
-
 # dependencies
 /node_modules
 /.pnp
@@ -16,10 +14,7 @@
 
 # production
 /build
-/public/sitemaps/
-/public/sitemap*.xml
-/public/robots.txt
-/scripts/.env*
+
 # misc
 .DS_Store
 *.pem
