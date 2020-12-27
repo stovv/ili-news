@@ -4,10 +4,11 @@ let initialState = {
     toNotify: [],
     existsPostIds: [],
     activeSearch: false,
-    infinityActive: false,
+    infinityActive: true,
     prevCategoryIds: [],
     categoryOffsets: {},
     postsOffset: 0,
+    dateOffset: 0,
     availableCategories: []
 }
 
@@ -72,6 +73,12 @@ const CommonReducer = (state = initialState, action) => {
             return {
                 ...state,
                 postsOffset: action.payload
+            }
+        }
+        case SITE.INFINITY.SET_DATE_OFFSET:{
+            return {
+                ...state,
+                dateOffset: action.payload
             }
         }
         default:

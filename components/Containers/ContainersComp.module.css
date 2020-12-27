@@ -6,6 +6,24 @@
     margin: 0 80px;
 }
 
+.sideRootContainer {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+}
+
+.sideRootLeft {
+    width: 968px;
+    padding-right: 16px;
+}
+
+.sideRootRight {
+    width: 296px;
+    top: 10px;
+    position: sticky;
+    height: 100%;
+}
+
 @media screen and  (max-width: 1405px) {
     .defaultContainer {
         margin: 0 10px;

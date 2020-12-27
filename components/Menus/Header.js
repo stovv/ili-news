@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import PropTypes from 'prop-types';
 import { Component, Fragment } from 'react';
 
-import { getMenu } from "../../api/methods/public.react";
+import { getHeader } from "../../api/methods/public.react";
 import styles from "./styles/SiteHeader.module.css";
 import UniversalLink from "../Links/Universal";
 
@@ -52,16 +52,8 @@ class Header extends Component {
     getMenus(){
         setTimeout(()=>{
             try {
-                getMenu('header').then(response => this.setState({
-                    menus: [
-                        ...response.data.menus[0].item,
-                        {
-                            url: {
-                                link: "archive",
-                                title: "Статьи"
-                            }
-                        },
-                    ]
+                getHeader().then(response => this.setState({
+                    menus: response.data.item
                 }));
             }catch (e){
                 console.log("Something wrong with getting header menus, try again -> ", e);
@@ -83,11 +75,15 @@ class Header extends Component {
                         </div>
                     </div>
                     <div className={styles.leftSideLaptop}>
-                        <Link href="/" passHref>
-                            <a>
-                                <Logo className={styles.logo} primary={"var(--primary)"} background={"transparent"}/>
-                            </a>
-                        </Link>
+                        {
+                            route === '/'
+                                 ? <Logo className={styles.logo} fill={"var(--primary)"} background={"transparent"}/>
+                                 : <Link href="/" passHref>
+                                    <a>
+                                        <Logo className={styles.logo} fill={"var(--primary)"} background={"transparent"}/>
+                                    </a>
+                                </Link>
+                        }
                     </div>
                     <div className={styles.centerSideLaptop}>
                         <nav className={styles.centerSideWrapper}>

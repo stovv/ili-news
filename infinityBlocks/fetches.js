@@ -1,8 +1,14 @@
 import dayjs from "dayjs";
 
 import { shuffleChoice } from "../tools";
-import {fetchCatPosts, fetchPosts, loadEvents} from "../api/methods/public.react";
-import {setAvailableCategories, setCategoryOffset, setPostsOffset, setPrevCategories} from "../actions/common";
+import { fetchCatPosts, loadEvents, loadPosts } from "../api/methods/public.react";
+import {
+    setAvailableCategories,
+    setCategoryOffset,
+    setDateOffset,
+    setPostsOffset,
+    setPrevCategories
+} from "../actions/common";
 
 
 export async function fetchCategoryLine({ availableCategories: categories, existsPostIds,
@@ -43,15 +49,19 @@ export async function fetchKudaGo({}){
     const posts = await loadEvents(null, null, null,
         dayjs().day(1).toISOString(), dayjs().day(7).toISOString(), 0, 20)
         .then(response => response.data.posts)
-        .catch(reason => []);
-    if (posts.length === 0){
+        .catch(reason => {
+            console.log("Something went wrong with fetch KUDA GO events -> ", reason);
+            return []
+        });
+
+    if (posts == null || posts.length === 0){
         return {error: true};
     }
-    return {posts}
+    return { posts }
 }
 
 export async function fetchPostLine({count = 4, categoryOffsets,
-                                        postsOffset, dispatch, category}){
+                                        postsOffset, dispatch, category, rubric}){
     let postsLine = {
         posts: []
     }
@@ -68,12 +78,8 @@ export async function fetchPostLine({count = 4, categoryOffsets,
                 }
             })
             .catch(reason => console.log("Something wrong with getting posts in infinity -> ", reason));
-    }else{
-        await fetchPosts(
-            ['slug', 'title', 'publish_at',
-                'cover{ caption,alternativeText,url,width,mime,height,formats }',
-                'rubric{ slug, title }'
-        ], postsOffset, count)
+    } else{
+        await loadPosts(rubric, null, postsOffset, count)
             .then(response => {
                 if (response.data.posts != null && response.data.posts.length > 0) {
                     postsLine = {
@@ -85,6 +91,27 @@ export async function fetchPostLine({count = 4, categoryOffsets,
             .catch(reason => console.log("Something wrong with getting posts in infinity -> ", reason));
     }
 
+
+    if (postsLine.posts.length === 0){
+        return { error: true }
+    }
+
+    return postsLine;
+}
+
+export async function fetchNewsDate({postsOffset, rubric, dispatch, latestDate}){
+    let postsLine = {
+        posts: []
+    }
+
+    await loadPosts(rubric, null, postsOffset, 100, [],)
+        .then(response => {
+            if (response.data.posts != null && response.data.posts.length > 0) {
+                postsLine.posts = response.data.posts;
+                dispatch(setPostsOffset(postsOffset + response.data.posts.length));
+            }
+        })
+        .catch(reason => console.log("Something wrong with getting posts in infinity -> ", reason));
 
     if (postsLine.posts.length === 0){
         return { error: true }

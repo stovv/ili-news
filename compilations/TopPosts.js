@@ -10,7 +10,7 @@ const PostCard = dynamic(() => import("../components/Cards/Post"));
 const TagText = dynamic(() => import("../components/Typography/Tag"));
 const LargePost = dynamic(() => import("../components/Cards/LargePost"));
 const Heading = dynamic(() => import("../components/Typography/Heading"));
-const LazyImage = dynamic(() => import("../components/Images/LazyImage"));
+const AdoptImage = dynamic(() => import("../components/Images/AdoptImage"));
 
 
 class TopPosts extends Component {
@@ -23,17 +23,7 @@ class TopPosts extends Component {
         const [ first = {}, second = {}, third = {} ] = posts;
         return (<>
             <div className={`${styles.topPostBgRoot}`}>
-                <LazyImage cover={first.cover} typeFull={"full"} skeleton>
-                    {({children, url}) =>
-                        <div style={{
-                            backgroundImage: url !== undefined ? `url("${url}")` : undefined,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center"
-                        }} className={styles.bgImage}>
-                            {children}
-                        </div>
-                    }
-                </LazyImage>
+                <AdoptImage cover={first.cover} className={styles.bgImage} alt={first.title}/>
                 <div className={styles.overlay}>
                     <div className={containers.CommonContainer}>
                         <TagText color={"var(--text-onPrimary)"} textTransform={"lowercase"} margin={"48px 0 13px 0"}>

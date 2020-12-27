@@ -22,8 +22,8 @@ export default function CompsBannerAd({compilation: { title, posts }}) {
                         <LargeCard height={"304px"} width={"100%"}
                                    minWidth={"20px"} theme={title} post={first}/>
                         <div className={styles.miniSide}>
-                            <MiniCard post={second}/>
-                            <MiniCard post={third}/>
+                            <MiniCard post={second} themeTitle={title}/>
+                            <MiniCard post={third} themeTitle={title}/>
                         </div>
                     </div>
                     <div className={styles.topSideMini}>

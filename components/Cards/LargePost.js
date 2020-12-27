@@ -5,7 +5,7 @@ import TagLabel from "../Typography/Tag";
 
 
 const CardText = dynamic(() => import("../Typography/Card"));
-const LazyImage = dynamic(() => import("../Images/LazyImage"));
+const AdoptImage = dynamic(() => import("../Images/AdoptImage"));
 const Skeleton = dynamic(() => import("react-loading-skeleton"));
 
 
@@ -59,15 +59,7 @@ export default function LargeCard ({theme, post: {slug, title, cover, rubric, de
     return (
         <PostLink postSlug={slug} covered width={"100%"}>
             <div className={styles.cardContainer} style={{margin, maxWidth, width, height, minWidth}}>
-                <LazyImage cover={cover} typeFull={"full"} skeleton>
-                    {({children, url}) =>
-                        <div className={styles.imageCard} style={{
-                            backgroundImage: url !== undefined ? `url("${url}")` : undefined,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center"
-                        }}>{children}</div>
-                    }
-                </LazyImage>
+                <AdoptImage cover={cover} className={styles.imageCard} alt={title}/>
                 <div className={styles.overlay}>
                     <Content title={title} theme={theme} description={description} type={"large"}/>
                 </div>

@@ -1,0 +1,44 @@
+.newsLine{
+    display: flex;
+    justify-content: left;
+    margin-bottom: 20px;
+}
+
+.newsDate{
+    composes: rootFont from "../../components/Typography/styles/compose.module.css";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 48px;
+    color: var(--text-hover);
+    margin-bottom: 40px;
+    margin-top: 72px;
+}
+
+.newsDate:first-child{
+    margin-top: 0;
+}
+
+.newsTime{
+    composes: rootFont from "../../components/Typography/styles/compose.module.css";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 38px;
+    color: var(--text-primary);
+    margin-right: 24px;
+}
+
+.newTitle{
+    composes: rootFont from "../../components/Typography/styles/compose.module.css";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 36px;
+    color: var(--text-secondary);
+    transition: all 0.3s ease-in-out;
+}
+
+.newTitle:hover {
+    color: var(--text-hover);
+}

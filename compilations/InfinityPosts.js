@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { connect } from 'react-redux';
 import { Fragment, Component as ReactComponent } from 'react';
-import { node, shape, func, string, object, bool } from 'prop-types';
+import { node, shape, func, string, object, bool, number } from 'prop-types';
 
 import { shuffle } from '../tools';
 import { changeInfinityState } from '../actions/common';
@@ -11,11 +11,6 @@ const InfiniteScroll = dynamic(() => import("react-infinite-scroll-component"));
 
 
 class InfinityPosts extends ReactComponent {
-    defaultProps = {
-        postCount: 0,
-        otherCount: 0
-    }
-
     constructor(props) {
         super(props);
         this.state = {
@@ -24,22 +19,14 @@ class InfinityPosts extends ReactComponent {
             previous: [],
             lock: false,
             blockCounter: {},
-            hasMore: false
+            hasMore: true
         };
         this.fetchMoreBlocks = this.fetchMoreBlocks.bind(this);
         this.getBlock = this.getBlock.bind(this);
-        this.props.dispatch(changeInfinityState(true));
-    }
-
-    async componentDidMount() {
-        await this.fetchMoreBlocks()
-            .then(() => this.setState({
-                hasMore: true
-            }));
     }
 
     componentWillUnmount() {
-        this.props.dispatch(changeInfinityState(false));
+        this.props.dispatch(changeInfinityState(true));
     }
 
     async getBlock(id){
@@ -107,7 +94,7 @@ class InfinityPosts extends ReactComponent {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if ( this.state.hasMore !== prevState.hasMore){
+        if (this.state.hasMore !==  this.props.common.infinityActive ){
             this.props.dispatch(changeInfinityState(this.state.hasMore));
         }
     }
@@ -135,7 +122,8 @@ InfinityPosts.propTypes = {
             fetchMore: func,
             Component: node.isRequired
         })
-    })
+    }),
+    initialCount: number
 }
 
 function mapStateToProps(state){

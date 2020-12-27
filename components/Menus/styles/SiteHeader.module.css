@@ -80,6 +80,10 @@
     color: var(--text-secondarySecondary);
 }
 
+.menuLink:last-child{
+    margin-right: 0;
+}
+
 .menuLinkHover:hover {
     color: var(--text-hover);
 }
@@ -132,9 +136,9 @@
 
 /* screen breakpoints */
 
-@media screen and (max-width: 1024px){
-    .centerSideWrapper{
-        gap: 20px;
+@media screen and (max-width: 960px){
+    .menuLink{
+        margin-right: 20px;
     }
 }
 

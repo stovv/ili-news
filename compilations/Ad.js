@@ -1,4 +1,4 @@
-export default function AdBanner({ horizontal, vertical, mobile, maxWidth, maxHeight }){
+export default function AdBanner({ horizontal, vertical, mobile, width, height, maxWidth, maxHeight }){
     if(horizontal){
         return (
             <div style={{
@@ -13,8 +13,8 @@ export default function AdBanner({ horizontal, vertical, mobile, maxWidth, maxHe
     }else if (vertical) {
         return (
             <div style={{
-                width: "296px",
-                height: "672px",
+                width: width ? width : "296px",
+                height: height ? height : "472px",
                 maxWidth, maxHeight,
                 background: "var(--backgroundInvert)"
             }}>

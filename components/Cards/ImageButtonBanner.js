@@ -1,5 +1,5 @@
 import styles from './styles/ImageWithButton.module.css'
-import LazyImage from "../Images/LazyImage";
+import AdoptImage from "../Images/AdoptImage";
 import CardText from "../Typography/Card";
 import Button from "../Forms/Button";
 import UniversalLink from "../Links/Universal";
@@ -8,18 +8,7 @@ import Skeleton from "react-loading-skeleton";
 export default function ImageWithButtonBanner({title, cover, buttonUrl, buttonText}){
     return (
         <div className={styles.bannerRoot}>
-            <LazyImage cover={cover} typeFull={"medium"} skeleton>
-                {({children, url}) =>
-                    <div className={styles.bannerImage}
-                         style={{
-                             backgroundImage: url !== undefined ? `url("${url}")` : undefined,
-                             backgroundSize: "cover",
-                             backgroundPosition: "center"
-                         }}>
-                        {children}
-                    </div>
-                }
-            </LazyImage>
+            <AdoptImage className={styles.bannerImage} cover={cover} al={title}/>
             <div className={styles.bannerGradient}/>
             <div className={styles.bannerContent}>
                 <div className={styles.laptopText}>
@@ -58,7 +47,7 @@ export default function ImageWithButtonBanner({title, cover, buttonUrl, buttonTe
                     buttonText &&
                     <UniversalLink item={{url: {link: buttonUrl}}}
                                    Component={({active, ...props})=>
-                                       <a {...props}><Button float={"right"}>{buttonText}</Button></a>
+                                       <Button float={"right"} link {...props}>{buttonText}</Button>
                                    }
                     />
                 }

@@ -7,18 +7,27 @@
 .CommonContainer {
     max-width: 1440px;
     margin: 0 auto 72px auto;
-    padding: 0 80px;
+    padding-left: 80px;
+    padding-right: 80px;
+}
+
+.PostContainer {
+    composes: CommonContainer;
+    padding-top: 32px;
+    padding-bottom: 32px;
 }
 
 @media screen and (max-width: 1400px){
     .CommonContainer {
-        padding: 0 20px;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 }
 
 @media screen and (max-width: 1300px){
     .CommonContainer {
-        padding: 0 10px;
+        padding-left: 15px;
+        padding-right: 15px;
     }
 
     .SimpleFlex {
@@ -59,6 +68,7 @@
 
 @media screen and (max-width: 375px){
     .CommonContainer {
-        padding: 0 var(--spacing-xs);
+        padding-left: var(--spacing-xs);
+        padding-right: var(--spacing-xs);
     }
 }

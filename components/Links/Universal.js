@@ -26,7 +26,7 @@ export default function UniversalLink ({ item, Component = React.Fragment, route
                 {item.post.title}
             </Component>
         </PostLink>
-    } else if ( item.socialUrl != null && item.icon != null){
+    } else if ( item.url != null && item.icon != null){
         return <SocialLink item={item} {...props}/>
     } else if (item.url != null){
         return <Link href={`/${item.url.link}`} passHref scroll={true} {...props}>

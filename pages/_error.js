@@ -1,6 +1,11 @@
-import styles from "../styles/NotFound.module.css";
+import { connect } from 'react-redux';
 
-function Error({ statusCode }) {
+import styles from "../styles/NotFound.module.css";
+import { changeInfinityState } from "../actions/common";
+
+function Error({ dispatch, statusCode }) {
+    dispatch(changeInfinityState(false));
+
     return (
         <>
             <h1 className={styles.code}>{statusCode}</h1>
@@ -14,4 +19,4 @@ Error.getInitialProps = ({ res, err }) => {
     return { statusCode }
 }
 
-export default Error
+export default connect()(Error);

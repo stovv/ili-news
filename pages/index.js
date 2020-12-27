@@ -4,7 +4,9 @@ import dynamic from "next/dynamic";
 import wrapper from "../store";
 import { randomChoice } from '../tools';
 import { CategoryPosts, Ad, KudaGo } from '../infinityBlocks';
+import { changeInfinityState } from "../actions/common";
 
+const Seo = dynamic(() => import("../components/Seo/Index"));
 const TopPosts = dynamic(() => import("../compilations/TopPosts"));
 const CategoryLine = dynamic(() => import("../compilations/CategoryLine"));
 const OffScreen = dynamic(() => import("../components/Containers/OffScreen"));
@@ -17,6 +19,8 @@ const InfinityPosts = dynamic(() => import("../compilations/InfinityPosts"));
 export const getStaticProps = wrapper.getStaticProps(
     async ({store}) => {
         let topPosts = [];
+        let ignoreRubrics = [];
+        let ignoreCategories = [];
         let catLine = { posts: [], category: null };
         let lastTheme= { title: null, posts: [] };
         let nextTheme = { title: null, posts: [] };
@@ -66,13 +70,19 @@ export const getStaticProps = wrapper.getStaticProps(
                                 return { title: null, posts: [] };
                             });
                     }
+                    if (response.data.ignoreRubrics){
+                        ignoreRubrics = response.data.ignoreRubrics.map(rubric => rubric.id);
+                    }
+                    if (response.data.ignoreCategories){
+                        ignoreCategories = response.data.ignoreCategories.map(category => category.id);
+                    }
                 }
             )
             .catch(reason => {
                 console.log("Something wrong with getting index-page -> ", reason.response);
             });
 
-        const postsCount = await fetchPostsCount([2])
+        const postsCount = await fetchPostsCount(ignoreRubrics, ignoreCategories)
             .then(response => response.data)
             .catch(reason=> {
                 console.log("Something wrong with getting index-page -> ", reason.response)
@@ -87,7 +97,7 @@ export const getStaticProps = wrapper.getStaticProps(
             });
 
 
-        let categories = await Promise.all(await fetchFrontPageCategories()
+        let categories = await Promise.all(await fetchFrontPageCategories(ignoreRubrics, ignoreCategories)
             .then(response => response.data.categories.map(async (category) => ({
                     ...category,
                     postCount: await countPostsByCategory(category.id).then(response=>response.data)
@@ -153,19 +163,19 @@ const InfinityComponents = {
     ...KudaGo("kuda-go-weekend", 1, 1)
 };
 
-
-export function FrontPage({topPosts, lastTheme, nextTheme, newsFeed, posts, postsCount,catLine}){
-    return (
-        <section>
-          <TopPosts posts={topPosts}/>
-          <NewsPostsComps compilation={lastTheme} news={newsFeed} posts={posts}/>
-          <OffScreen>
-              <CategoryLine {...catLine}/>
-              <CompsBannerAd compilation={nextTheme}/>
-              <InfinityPosts blocks={InfinityComponents} postsCount={postsCount} otherCount={postsCount}/>
-          </OffScreen>
-        </section>
+export default function FrontPage({topPosts, lastTheme, nextTheme, newsFeed, posts, postsCount, catLine}){
+    return(
+        <>
+            <Seo/>
+            <section>
+                <TopPosts posts={topPosts}/>
+                <NewsPostsComps compilation={lastTheme} news={newsFeed} posts={posts}/>
+                <OffScreen>
+                    <CategoryLine {...catLine}/>
+                    <CompsBannerAd compilation={nextTheme}/>
+                    <InfinityPosts blocks={InfinityComponents}/>
+                </OffScreen>
+            </section>
+        </>
     );
 }
-
-export default FrontPage;

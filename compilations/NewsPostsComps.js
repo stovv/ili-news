@@ -23,8 +23,8 @@ export default function NewsPostsComps({compilation, news, posts}){
                 <div className={styles.centerSide}>
                     <LargePost maxWidth={"unset"} width={"100%"} theme={theme} post={first}/>
                     <div className={styles.miniSide}>
-                        <Mini post={second}/>
-                        <Mini post={third}/>
+                        <Mini post={second} themeTitle={theme}/>
+                        <Mini post={third} themeTitle={theme}/>
                     </div>
                 </div>
 

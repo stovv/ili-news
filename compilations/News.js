@@ -10,16 +10,15 @@ const CardText = dynamic(() => import("../components/Typography/Card"));
 const Heading = dynamic(() => import("../components/Typography/Heading"));
 
 
-const NewsItem = ({title, slug, publish_at}) => (
+const NewsItem = ({title, slug, published_at}) => (
     <div className={styles.newsItem}>
         <PostLink postSlug={slug} covered>
-            <CardText type={"small"} color={"var(--text-primary)"} margin={"20px 0 var(--spacing-xs) 0"}
-                     breakWord hover maxLines={2}>
+            <CardText type={"small"} color={"var(--text-primary)"} margin={"20px 0 var(--spacing-xs) 0"} hover maxLines={2}>
                 { title ? title : <Skeleton width={"10em"}/> }
             </CardText>
         </PostLink>
         <TagLabel type={"small"} margin={"0 0 20px 0"} color={"var(--text-secondary)"}>
-            { publish_at ? dayjs(publish_at).format("D MMMM YYYY") : <Skeleton width={"10em"}/> }
+            { published_at ? dayjs(published_at).format("D MMMM YYYY") : <Skeleton width={"10em"}/> }
         </TagLabel>
     </div>
 );

@@ -57,6 +57,13 @@ export function setPostsOffset(offset){
     }
 }
 
+export function setDateOffset(offset){
+    return {
+        type: SITE.INFINITY.SET_DATE_OFFSET,
+        payload: offset
+    }
+}
+
 export function setAvailableCategories(categories){
     return {
         type: SITE.INFINITY.SET_AVAILABLE_CATEGORIES,

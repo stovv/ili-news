@@ -6,26 +6,15 @@ import styles from './styles/postCard.module.css'
 const PostLink = dynamic(() => import("../Links/Post"));
 const TagLabel = dynamic(() => import("../Typography/Tag"));
 const CardText = dynamic(() => import("../Typography/Card"));
-const LazyImage = dynamic(() => import("../Images/LazyImage"));
+const AdoptImage = dynamic(() => import("../Images/AdoptImage"));
 const Skeleton = dynamic(() => import("react-loading-skeleton"));
 
 
-export default function PostCard({post: {slug, title, cover, publish_at, rubric, eventDate} = {}, style }){
+export default function PostCard({post: {slug, title, cover, published_at, rubric, event} = {}, style }){
     return (
         <PostLink postSlug={slug} covered>
             <div className={styles.postRoot} style={style}>
-                <LazyImage cover={cover} typeFull={"medium"} skeleton>
-                    {({children, url}) =>
-                        <div className={styles.postImage}
-                             style={{
-                                 backgroundImage: url !== undefined ? `url("${url}")` : undefined,
-                                 backgroundSize: "cover",
-                                 backgroundPosition: "center"
-                             }}>
-                            {children}
-                        </div>
-                    }
-                </LazyImage>
+                <AdoptImage cover={cover} className={styles.postImage} alt={title}/>
                 <div className={styles.postTextCard}>
                     <TagLabel type={"normal"} color={"var(--primary)"}
                               textTransform={"lowercase"} margin={"0"}>
@@ -48,8 +37,8 @@ export default function PostCard({post: {slug, title, cover, publish_at, rubric,
                     </CardText>
                     <TagLabel type={"small"} color={"var(--backgroundInvert)"} margin={"0"}>
                         {
-                            publish_at
-                                ? dayjs(publish_at).format("D MMMM YYYY")
+                            published_at
+                                ? dayjs(published_at).format("D MMMM YYYY")
                                 : <Skeleton width={"8em"} />
                         }
                     </TagLabel>

@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { connect } from 'react-redux';
 import { Component, Fragment } from 'react';
 
-import { getMenu } from "../../api/methods/public.react";
+import { getFooter } from "../../api/methods/public.react";
 import styles from './styles/SiteFooter.module.css';
 
 const Skeleton = dynamic(() => import("react-loading-skeleton"));
@@ -53,18 +53,10 @@ class Footer extends Component {
     getMenus(){
         setTimeout(()=>{
             try {
-                getMenu('footer')
+                getFooter()
                     .then(response => this.setState({
-                        socialMenus: response.data.menus[0].item.filter(item => item.socialUrl != null && item.icon != null),
-                        siteMenus: [
-                            {
-                                url: {
-                                    link: "archive",
-                                    title: "Архив"
-                                }
-                            },
-                            ...response.data.menus[0].item.filter(item => item.socialUrl == null || item.icon == null)
-                        ],
+                        siteMenus: response.data.item,
+                        socialMenus: response.data.social_item,
                     }));
             }catch (e){
                 console.log("Something wrong with getting header menus, try again -> ", e);
@@ -80,9 +72,8 @@ class Footer extends Component {
     render(){
         const { route, active } = this.props;
         const { socialMenus, siteMenus } = this.state;
-
         return (
-            <div className={styles.footerRoot} style={{display: active ? undefined : "none"}}>
+            <footer className={styles.footerRoot} style={{display: active ? undefined : "none"}}>
                 <div className={styles.footerWrapper}>
                     <div className={styles.logoWithSocial}>
                         <Link href="/" passHref>
@@ -112,7 +103,7 @@ class Footer extends Component {
                                             <Fragment key={index}>
                                                 <li className={styles.menuLinksItem}>
                                                     <UniversalLink item={item} route={route}
-                                                          Component={({href, children, ...props})=>(
+                                                          Component={({href, children, active, ...props})=>(
                                                             <a href={href} className={styles.siteLink} {...props}>
                                                                 {children}
                                                             </a>)
@@ -138,7 +129,7 @@ class Footer extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </footer>
         );
     }
 }
