@@ -9,7 +9,7 @@ const mediaMapping = {
 
 export default function AdoptImage({ cover, style, className, alt }){
     if (cover === undefined) return null
-    const { formats:{ jpg: sourceImage  = {}, ...formats }, ...defaultImage} = cover;
+    const { formats:{ jpg: defaultImage = {}, ...formats }, ...sourceImage} = cover;
 
     return (
         <picture>
