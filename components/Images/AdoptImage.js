@@ -9,22 +9,17 @@ const mediaMapping = {
 
 export default function AdoptImage({ cover, style, className, alt }){
     if (cover === undefined) return null
-    const { formats:{ jpeg: defaultImage = {}, ...formats }, ...sourceImage} = cover;
+    const { formats:{ jpg: sourceImage  = {}, ...formats }, ...defaultImage} = cover;
 
     return (
         <picture>
             {
                 Object.keys(formats).map((formatType, index) =>{
                     if (mediaMapping[formatType] === undefined) return null;
-                    let needFormats = [".jpg", ".webp"];
-                    return formats[formatType].map(format => {
-                        let ext = format.ext.toLowerCase() === '.jpeg' ? '.jpg' : format.ext;
-                        let mime = format.mime ? format.mime : (ext === '.jpg' ? 'image/jpeg' : `image/${ext.replace('.', '')}`);
-                        if ( !needFormats.includes(ext) ) return null;
-                        delete needFormats[needFormats.indexOf(ext)];
+                    return Object.values(formats[formatType]).map(format => {
                         return (
                             <Fragment key={index}>
-                                <source media={mediaMapping[formatType]} type={mime}
+                                <source media={mediaMapping[formatType]} type={format.mime}
                                         srcSet={`${process.env.NEXT_PUBLIC_BACKEND}${format.url}`}/>
                             </Fragment>
                         );

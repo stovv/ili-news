@@ -76,7 +76,7 @@ export async function getStaticPaths() {
 
     const slugs = await fetchRubrics(["slug"])
         .then(response => {
-            return response.data.rubrics.map(rubric => ({
+            return response.data.rubrics.filter(rubric => rubric.slug !== 'news').map(rubric => ({
                 params: {
                     slug: rubric.slug
                 }

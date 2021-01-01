@@ -59,50 +59,6 @@ export async function fetchPosts(fields = ['id', 'slug', 'updated_at'], start, l
 }
 
 export async function loadPosts(rubric = null, category = null, start, limit, skipPostIds, additionalWhere = "" ){
-    console.log(`
-    query{
-        posts(sort: "published_at:DESC", where: {${Array.isArray(skipPostIds) ? `id_nin: [${skipPostIds.join(",")}], ` : ""}${rubric !== null ? `rubric: ${rubric}` : (category != null ? `rubric:{ category: ${category} }` : "")}${additionalWhere} }, limit: ${limit}, start: ${start}) {
-            id,
-            event{
-                date
-            },
-            slug,
-            rubric{
-              id,
-              slug,
-              title
-            },
-            title,
-            description,
-            published_at,
-            authors(limit: 4){
-              id,
-              name,
-              secondName
-            },
-            cover{
-              caption, 
-              alternativeText,
-              url,
-              width,
-              mime,
-              height,
-              formats
-            },
-            content,
-            comment_thread{
-                id
-            },
-            rating{
-              id,
-              likes,
-              dislikes,
-              views
-            },
-            updated_at
-        }
-    }
-    `);
     return api.ql(`
     query{
         posts(sort: "published_at:DESC", where: {${Array.isArray(skipPostIds) ? `id_nin: [${skipPostIds.join(",")}], ` : ""}${rubric !== null ? `rubric: ${rubric}` : (category != null ? `rubric:{ category: ${category} }` : "")}${additionalWhere} }, limit: ${limit}, start: ${start}) {
@@ -439,3 +395,4 @@ export async function search(query, by = "title"){
 export async function getWordFormats(word){
     return api.get(`/morph?word=${word}`);
 }
+//https://localhost:1337/comments/article:1/flat
