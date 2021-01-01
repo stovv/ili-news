@@ -90,9 +90,6 @@ export async function loadPosts(rubric = null, category = null, start, limit, sk
               formats
             },
             content,
-            comment_thread{
-                id
-            },
             rating{
               id,
               likes,
