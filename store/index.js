@@ -37,7 +37,6 @@ const store = createStore(reducer, persistedState, bindMiddleware([thunkMiddlewa
 store.subscribe(
   throttle(() => {
     const state = store.getState();
-    console.log("STORE", state);
     saveState({
       auth: state.auth,
       cache: state.cache
