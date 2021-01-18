@@ -1,0 +1,26 @@
+.textStyle{
+    composes: rootFont from '../../../Typography/styles/compose.module.css';
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0;
+    text-align: left;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+}
+
+.textStyle em {
+    font-weight: 400;
+}
+
+.textStyle b {
+    font-weight: bold;
+}
+
+.textStyle span {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 128%;
+    text-transform: uppercase;
+    color: var(--text-hover);
+}

@@ -25,10 +25,6 @@ class InfinityPosts extends ReactComponent {
         this.getBlock = this.getBlock.bind(this);
     }
 
-    componentWillUnmount() {
-        this.props.dispatch(changeInfinityState(true));
-    }
-
     async getBlock(id){
         let { additionalProps, common, blocks, ...props } = this.props;
         const { fetchMore, Component, required } = blocks[id];
@@ -94,7 +90,7 @@ class InfinityPosts extends ReactComponent {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.state.hasMore !==  this.props.common.infinityActive ){
+        if (this.state.hasMore !== this.props.common.infinityActive ){
             this.props.dispatch(changeInfinityState(this.state.hasMore));
         }
     }

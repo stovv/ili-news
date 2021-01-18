@@ -80,8 +80,8 @@ body {
   pointer-events: none;
 }
 #nprogress .bar {
-  background: rgb(235,87,87);
-  background: linear-gradient(155deg, rgba(235,87,87,1) 37%, rgba(162,98,235,0.9136029411764706) 77%);
+  background: rgb(231,91,124);
+  background: linear-gradient(90deg, rgba(231,91,124,1) 0%, rgba(69,23,167,1) 40%, rgba(85,40,159,1) 58%, rgba(237,192,83,1) 100%);
   position: fixed;
   z-index: 1031;
   top: 0;
@@ -111,6 +111,14 @@ body {
 .nprogress-custom-parent #nprogress .spinner,
 .nprogress-custom-parent #nprogress .bar {
   position: absolute;
+}
+
+/* embed blocks styles */
+.instagram-media-rendered{
+  max-width: unset !important;
+}
+.embedBlock twitter-widget, iframe{
+  width: 100% !important;
 }
 
 

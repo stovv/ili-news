@@ -1,137 +1,142 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { connect } from 'react-redux';
-import { Component, Fragment } from 'react';
+import { connect } from "react-redux";
+import { Component, Fragment } from "react";
 
-import { getFooter } from "../../api/methods/public.react";
-import styles from './styles/SiteFooter.module.css';
+import { setCache } from "../../actions/cache";
+import styles from "./styles/SiteFooter.module.css";
+import { getFooter } from "../../api/methods/public";
 
+const isEqual = require("react-fast-compare");
 const Skeleton = dynamic(() => import("react-loading-skeleton"));
 const Logo = dynamic(() => import("../../assets/logo"), {
-        loading: () => <Skeleton width={"104px"} height={"104px"}/>
-    }
-);
-const UniversalLink = dynamic(() => import('../Links/Universal'));
-
+  loading: () => <Skeleton width={"104px"} height={"104px"} />,
+});
+const UniversalLink = dynamic(() => import("../Links/Universal"));
 
 const LoadingLink = () => (
-    <li className={styles.menuLinksItem}>
-        <div className={styles.siteLink}>
-            <Skeleton width={"120px"}/>
-        </div>
-    </li>
+  <li className={styles.menuLinksItem}>
+    <div className={styles.siteLink}>
+      <Skeleton width={"120px"} />
+    </div>
+  </li>
 );
 
-const LinksSkeleton = () => [...Array(5).keys()]
-    .map(index=>(
-            <Fragment key={index}>
-                <LoadingLink/>
-            </Fragment>
-        )
-    );
+const LinksSkeleton = () =>
+  [...Array(5).keys()].map((index) => (
+    <Fragment key={index}>
+      <LoadingLink />
+    </Fragment>
+  ));
 
-const SocialLinksSkeleton = () => [...Array(6).keys()]
-    .map(index=>(
-            <Fragment key={index}>
-                <Skeleton width="24px" height="24px"/>
-            </Fragment>
-        )
-    );
+const SocialLinksSkeleton = () =>
+  [...Array(6).keys()].map((index) => (
+    <Fragment key={index}>
+      <Skeleton width="24px" height="24px" />
+    </Fragment>
+  ));
 
 class Footer extends Component {
-    state = {
-        socialMenus: [],
-        siteMenus: []
-    }
+  componentDidMount() {
+    const { dispatch, siteMenus, socialMenus } = this.props;
+    getFooter()
+      .then((response) =>{
+        if (!isEqual(response.data.item, siteMenus)){
+          dispatch(setCache('siteMenus', response.data.item));
+        }
+        if (!isEqual(response.data.social_item, socialMenus)){
+          dispatch(setCache('socialMenus', response.data.social_item));
+        }
+      })
+      .catch(e => console.log("Something wrong with getting footer menus, try again -> ", e))
+  }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return nextProps.active !== this.props.active ||
-            nextState.siteMenus.length > 0 ||
-            nextState.socialMenus.length > 0;
-    }
+  render() {
+    const { route, active, socialMenus, siteMenus } = this.props;
 
-    getMenus(){
-        setTimeout(()=>{
-            try {
-                getFooter()
-                    .then(response => this.setState({
-                        siteMenus: response.data.item,
-                        socialMenus: response.data.social_item,
-                    }));
-            }catch (e){
-                console.log("Something wrong with getting header menus, try again -> ", e);
-                this.getMenus();
-            }
-        }, 100);
-    }
-
-    componentDidMount() {
-        this.getMenus();
-    }
-
-    render(){
-        const { route, active } = this.props;
-        const { socialMenus, siteMenus } = this.state;
-        return (
-            <footer className={styles.footerRoot} style={{display: active ? undefined : "none"}}>
-                <div className={styles.footerWrapper}>
-                    <div className={styles.logoWithSocial}>
-                        <Link href="/" passHref>
-                            <a className={styles.centerizeContent}>
-                                <Logo className={styles.logo} primary={"var(--primary)"} background={"transparent"}/>
+    return (
+      <footer
+        className={styles.footerRoot}
+        style={{ display: active ? undefined : "none" }}
+      >
+        <div className={styles.footerWrapper}>
+          <div className={styles.logoWithSocial}>
+            <Link href="/" passHref>
+              <a className={styles.centerizeContent}>
+                <Logo
+                  className={styles.logo}
+                  primary={"var(--primary)"}
+                  background={"transparent"}
+                />
+              </a>
+            </Link>
+            <div className={styles.centerizeContent}>
+              <div className={styles.socialLinks}>
+                {socialMenus.length > 0 ? (
+                  socialMenus.map((item, index) => (
+                    <Fragment key={index}>
+                      <UniversalLink item={item} route={route} />
+                    </Fragment>
+                  ))
+                ) : (
+                  <SocialLinksSkeleton />
+                )}
+              </div>
+            </div>
+          </div>
+          <div className={styles.linksWithText}>
+            <div className={styles.centerizeContent}>
+              <ul className={styles.menuLinks}>
+                {siteMenus.length > 0 ? (
+                  siteMenus.map((item, index) => (
+                    <Fragment key={index}>
+                      <li className={styles.menuLinksItem}>
+                        <UniversalLink
+                          item={item}
+                          route={route}
+                          Component={({ href, children, active, ...props }) => (
+                            <a
+                              href={href}
+                              className={styles.siteLink}
+                              {...props}
+                            >
+                              {children}
                             </a>
-                        </Link>
-                        <div className={styles.centerizeContent}>
-                            <div className={styles.socialLinks}>
-                                {
-                                    socialMenus.length > 0
-                                        ? socialMenus.map((item, index) => (
-                                            <Fragment key={index}>
-                                                <UniversalLink item={item} route={route}/>
-                                            </Fragment>))
-                                        : <SocialLinksSkeleton/>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                    <div className={styles.linksWithText}>
-                        <div className={styles.centerizeContent}>
-                            <ul className={styles.menuLinks} >
-                                {
-                                    siteMenus.length > 0
-                                      ? siteMenus.map((item, index) => (
-                                            <Fragment key={index}>
-                                                <li className={styles.menuLinksItem}>
-                                                    <UniversalLink item={item} route={route}
-                                                          Component={({href, children, active, ...props})=>(
-                                                            <a href={href} className={styles.siteLink} {...props}>
-                                                                {children}
-                                                            </a>)
-                                                          }/>
-                                                </li>
-                                            </Fragment>
-                                      ))
-                                      : <LinksSkeleton/>
-                                }
-                            </ul>
-                        </div>
-                        <div className={styles.centerizeContent}>
-                            <div>
-                                <p className={styles.footerText}>
-                                    Городской интернет-журнал «ИЛИ» 2020
-                                </p>
-                                <p className={styles.footerTextSecond}>
-                                    Использование материалов Журнала ИЛИ разрешено только с
-                                    предварительного согласия правообладателей.
-                                    Мнение редакции может не совпадать с мнением автора.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        );
-    }
+                          )}
+                        />
+                      </li>
+                    </Fragment>
+                  ))
+                ) : (
+                  <LinksSkeleton />
+                )}
+              </ul>
+            </div>
+            <div className={styles.centerizeContent}>
+              <div>
+                <p className={styles.footerText}>
+                  Городской интернет-журнал «ИЛИ» 2020
+                </p>
+                <p className={styles.footerTextSecond}>
+                  Использование материалов Журнала ИЛИ разрешено только с
+                  предварительного согласия правообладателей. Мнение редакции
+                  может не совпадать с мнением автора.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    );
+  }
 }
 
-export default connect(state => ({active: !state.common.infinityActive}))(Footer);
+function mapStateToProps(state) {
+  return {
+    active: !state.common.infinityActive,
+    siteMenus: state.cache.siteMenus || [],
+    socialMenus: state.cache.socialMenus || []
+  }
+}
+
+export default connect(mapStateToProps)(Footer);

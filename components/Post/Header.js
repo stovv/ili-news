@@ -4,11 +4,12 @@ import { object } from 'prop-types';
 
 import styles from './styles/postHeader.module.css';
 import typo from './styles/postTypography.module.css';
-//import AuthorList from './Author';
 
+//import AuthorList from './Author';
 const RubricLink = dynamic(() => import("../Links/Rubric"));
 const YandexShare = dynamic(() => import("react-yandex-share"));
 const AuthorIcon = dynamic(() => import("../../assets/author"));
+const AdoptImage = dynamic(() => import("../Images/AdoptImage"));
 const AuthorsIcon = dynamic(() => import("../../assets/authors"));
 
 
@@ -73,7 +74,14 @@ export default function PostHeader(props){
             </RubricLink>
             <h1 className={typo.postHeading}>{title}</h1>
             <TimeAuthorsShare {...props.data}/>
-            <img className={styles.postImage} src={`${process.env.NEXT_PUBLIC_BACKEND}${cover.url}`} alt={title}/>
+            <AdoptImage cover={cover} className={styles.postImage} alt={title}
+                        mediaMapping={{
+                            large: "(max-width: 1000px)",
+                            medium: "(max-width: 960px)",
+                            small: "(max-width: 750px)",
+                            thumbnail: "(max-width: 300px)"
+                        }}
+            />
         </header>
     );
 }

@@ -1,0 +1,36 @@
+.rootHeading {
+    composes: rootFont from '../../../Typography/styles/compose.module.css';
+    color: var(--text-primary);
+    margin-bottom: 24px;
+}
+
+.one{
+    composes: rootHeading;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 48px;
+}
+
+.two{
+    composes: rootHeading;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 38px;
+}
+
+.three{
+    composes: rootHeading;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 26px;
+}
+
+.four {
+    composes: rootHeading;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+}

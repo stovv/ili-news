@@ -1,9 +1,9 @@
 import dynamic from "next/dynamic";
 import styles from './ContainersComp.module.css';
 
-export default function SideContainer ({children, type = 'right', sideChildren}){
+export default function SideContainer ({children, type = 'right', sideChildren, style}){
     return (
-        <div className={styles.sideRootContainer}>
+        <div className={styles.sideRootContainer} style={style}>
             <div className={styles.sideRootLeft} style={{order : type === 'left' ? 1 : 0}}>
                 {children}
             </div>

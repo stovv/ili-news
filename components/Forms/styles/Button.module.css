@@ -21,7 +21,7 @@
 .Simple:hover {
     color: var(--backgroundPrimary);
     background: var(--primary);
-    transition: all 0.4s ease 0s;
+    transition: all 0.2s ease 0s;
     cursor: pointer;
 }
 
@@ -29,4 +29,30 @@
     .Simple {
         font-size: 20px;
     }
+}
+
+.Normal {
+    composes: Simple;
+    background: var(--primary);
+    color: var(--text-onPrimary);
+    border-radius: 8px;
+
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0;
+    text-transform: unset;
+    text-align: center;
+}
+
+.Normal:hover {
+    color: var(--primary);
+    background: var(--text-onPrimary);
+}
+
+.Normal:active {
+    background: var(--backgroundInvert);
+    color: var(--text-onPrimary);
+    transform: scale(0.99);
 }

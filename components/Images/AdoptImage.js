@@ -1,15 +1,16 @@
 import { Fragment } from 'react';
 import { string, object } from 'prop-types';
 
-const mediaMapping = {
-    medium: "(min-width: 750px)",
-    small: "(min-width: 320px)",
-    thumbnail: "(min-width: 100px)"
+const defaultMediaMapping = {
+    medium: "(min-width: 751px)",
+    small: "(max-width: 750px)",
+    thumbnail: "(max-width: 300px)"
 }
 
-export default function AdoptImage({ cover, style, className, alt }){
+export default function AdoptImage({ cover, style, className, alt, mediaMapping }){
     if (cover === undefined) return null
     const { formats:{ jpg: defaultImage = {}, ...formats }, ...sourceImage} = cover;
+    mediaMapping = mediaMapping === undefined ? defaultMediaMapping : mediaMapping;
 
     return (
         <picture>

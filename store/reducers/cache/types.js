@@ -1,0 +1,6 @@
+export const CACHE = {
+    SET: "SET_CACHE",
+    CLEAR: "CLEAR_CACHE",
+    UPDATE: "UPDATE_CACHE",
+    REMOVE: "REMOVE_CACHE"
+};

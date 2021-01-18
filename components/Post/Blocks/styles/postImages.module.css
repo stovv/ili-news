@@ -1,0 +1,18 @@
+.simpleImage {
+    object-fit: contain;
+    width: 100%;
+    margin-bottom: 24px;
+    max-height: 400px;
+}
+
+.simpleImageCaption{
+    composes: rootFont from '../../../Typography/styles/compose.module.css';
+    margin-top: -8px;
+    margin-bottom: 24px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    color: var(--text-secondary);
+}
