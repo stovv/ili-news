@@ -28,7 +28,7 @@
 
 .topPostContainer {
     composes: CommonContainer from "../../styles/Containers.module.css";
-    margin-top: 56px;
+    margin-top: 56px !important;
 }
 
 .flexContainer {
