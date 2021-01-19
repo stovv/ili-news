@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@rebass/forms": "^4.0.6",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "dayjs": "^1.9.4",
     "lodash.throttle": "^4.1.1",
     "lottie-react": "^2.1.0",
